@@ -39,4 +39,4 @@ setxkbmap ckbcomp xkeyboard-config lvm2 dosfstools dracut xrandr
 bsdtar rpm zenity
 
 # the store, update notifier and driver manager
-chamesle-store chamesle-updater chamesle-drivers chamesle-base
+chamesle-store chamesle-updater chamesle-drivers chamesle-base chamesle-wine

@@ -1,0 +1,4 @@
+/* no grab handles on the panel's window list and tray, the panel is locked anyway */
+MatePanelAppletFrameDBus {
+    -gtk-icon-source: none;
+}

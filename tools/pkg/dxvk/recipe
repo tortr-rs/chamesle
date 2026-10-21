@@ -1,0 +1,16 @@
+name=dxvk
+version=3.1.1
+rel=1
+desc="Vulkan-based Direct3D 8, 9, 10 and 11 for Wine, what makes most Windows games run fast"
+url=https://github.com/doitsujin/dxvk
+license=Zlib
+source=https://github.com/doitsujin/dxvk/releases/download/v$version/dxvk-$version.tar.gz
+sha256=40565b4a724aadc4433fa4e010b4b23916d9b1f1baeee64e17186db94f54e608
+makedeps=""
+depends="vulkan-loader"
+
+build() {
+    # windows dlls, copied into a wine prefix by chamesle-exe
+    install -d "$pkgdir/usr/share/dxvk"
+    cp -r x32 x64 "$pkgdir/usr/share/dxvk/"
+}

@@ -296,7 +296,20 @@ class InstallerWindow:
 
         self.builder.get_object("button_lets_go").connect("clicked", self.on_lets_go_clicked)
 
+        # the pages scroll when the screen is short, so Back and Next never end up under the panel
+        notebook = self.builder.get_object("notebook1")
+        holder = notebook.get_parent()
+        holder.remove(notebook)
+        scroll = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                    propagate_natural_height=True, propagate_natural_width=True)
+        scroll.add(notebook)
+        holder.add(scroll)
+
         self.window.show_all()
+        area = Gdk.Display.get_default().get_monitor_at_window(self.window.get_window()).get_workarea()
+        width, height = self.window.get_size()
+        if height > area.height - 60:
+            self.window.resize(width, area.height - 60)
 
     def on_key_press(self, widget, event):
         # CTRL+T key
@@ -1193,7 +1206,6 @@ class InstallerWindow:
                 self.slideshow_browser.connect('context-menu', self.on_context_menu)
                 self.builder.get_object("title_eventbox").hide()
                 self.builder.get_object("button_eventbox").hide()
-                self.window.resize(100, 100)
             elif(sel == self.PAGE_CUSTOMPAUSED):
                 self.activate_page(self.PAGE_INSTALL)
                 self.builder.get_object("button_next").set_sensitive(False)
@@ -1201,7 +1213,6 @@ class InstallerWindow:
                 self.builder.get_object("button_quit").set_sensitive(False)
                 self.builder.get_object("title_eventbox").hide()
                 self.builder.get_object("button_eventbox").hide()
-                self.window.resize(100, 100)
                 self.paused = False
         else:
             self.builder.get_object("button_back").set_sensitive(True)

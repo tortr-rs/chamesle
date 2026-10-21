@@ -1,0 +1,13 @@
+name=chamesle-wine
+version=0.2.1
+rel=1
+desc="Double-click a Windows program and it runs, with Wine and DXVK"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="zenity chamesle-store"
+
+build() {
+    cp -a . "$pkgdir/"
+}

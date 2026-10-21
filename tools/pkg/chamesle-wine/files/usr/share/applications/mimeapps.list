@@ -1,0 +1,7 @@
+[Default Applications]
+application/x-ms-dos-executable=chamesle-exe.desktop
+application/x-msdownload=chamesle-exe.desktop
+application/vnd.microsoft.portable-executable=chamesle-exe.desktop
+application/x-msi=chamesle-exe.desktop
+application/x-ms-shortcut=chamesle-exe.desktop
+application/x-bat=chamesle-exe.desktop
