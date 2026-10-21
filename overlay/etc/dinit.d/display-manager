@@ -1,4 +1,4 @@
-# The graphical login (LightDM). On the live system it logs the live user in by itself.
+# lightdm
 type = process
 command = /usr/bin/lightdm
 depends-on = dbus

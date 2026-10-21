@@ -1,6 +1,5 @@
 #!/bin/sh
-# Install the Fluent GTK/Xfwm4 theme and the Fluent icons (vinceliuice, GPL-3.0) into an image: the Windows 11 look.
-# Pinned tags, checked against their sha256; the projects' own install scripts do the work (prebuilt CSS, no sassc).
+# fluent gtk theme and icons (vinceliuice) into an image
 # usage: themes.sh ROOT
 set -eu
 ROOT=${1:?usage: themes.sh ROOT}

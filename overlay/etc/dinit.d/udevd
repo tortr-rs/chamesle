@@ -1,8 +1,7 @@
-# Device manager: eudev's udevd (built by tools/eudev/build.sh; systemd is not part of the image).
+# eudev
 type = process
 command = /usr/bin/udevd
 depends-on = early-filesystems
 restart = true
 smooth-recovery = true
-# output goes to a log file, not over the console and the login prompt
 logfile = /var/log/udevd.log

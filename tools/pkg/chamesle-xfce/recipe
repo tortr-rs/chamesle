@@ -1,0 +1,15 @@
+name=chamesle-xfce
+version=0.2.0
+rel=1
+desc="The Chamesle look for Xfce: wallpaper, panel, theme settings, login screen"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="font-inter papirus-icon-theme lightdm-slick-greeter"
+# our settings win over the stock ones these ship
+replaces="xfce4-settings xfce4-panel xfwm4 xfdesktop xfce4-whiskermenu-plugin lightdm-slick-greeter"
+
+build() {
+    cp -a . "$pkgdir/"
+}

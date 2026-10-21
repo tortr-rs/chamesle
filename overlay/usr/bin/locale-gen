@@ -1,0 +1,10 @@
+#!/bin/sh
+# generate the locales enabled in /etc/default/libc-locales
+set -e
+grep -v '^[[:space:]]*#' /etc/default/libc-locales | while read -r locale charset; do
+    [ -n "$locale" ] || continue
+    # de_DE.UTF-8 -> de_DE, de_DE@euro stays
+    input=$(echo "$locale" | sed 's/\.[^@]*//')
+    echo "  $locale"
+    localedef -c -i "$input" -f "${charset:-UTF-8}" "$locale" || true
+done

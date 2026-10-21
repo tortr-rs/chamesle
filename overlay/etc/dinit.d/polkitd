@@ -1,4 +1,4 @@
-# PolicyKit: lets desktop programs ask for administrator rights (mounting disks, network settings, the store).
+# lets desktop apps ask for admin rights
 type = process
 command = /usr/lib/polkit-1/polkitd --no-debug
 depends-on = dbus

@@ -1,21 +1,8 @@
 #!/bin/bash
-# Build a Chamesle Linux live/installer ISO for one edition, from Void Linux's glibc packages (no compiling):
-#
-#   sudo EDITION=xfce ./build.sh        -> out/chamesle-VERSION-EDITION-x86_64.iso (+ .sha256)
-#
-# 1. installs editions/base.packages + editions/EDITION/packages into a new root with xbps (runit is blocked:
-#    dinit is the init system), from Void's repository, packages cached in XBPS_CACHE
-# 2. copies overlay/ (services, branding, Flathub, artwork) and editions/EDITION/overlay/ (the desktop's look) on top
-# 3. installs the Fluent theme and icons, sets up the live user, locale and Chamesle branding
-# 4. builds the initramfs from the image (tools/initrd), packs the root into a squashfs and masters a hybrid
-#    BIOS+UEFI ISO with GRUB
-#
-# Needs: xbps (xbps-install; Void's static build works on any distribution), mksquashfs, xorriso, grub-mkrescue with
-# the i386-pc and x86_64-efi platforms, readelf, zstd, cpio, depmod and curl. Run it as root (sudo).
-#   EDITION=...     xfce (default), and later mate, cinnamon, gnome, kde
-#   VOID_REPO=...   the Void mirror (default https://repo-default.voidlinux.org/current)
-#   XBPS_CACHE=...  downloaded packages, kept between builds (default ~/.cache/chamesle-xbps of the sudo user)
-#   WORK=... OUT=... work and output directories (default work/EDITION and out/)
+# builds the iso for one edition
+#   sudo EDITION=xfce ./build.sh   -> out/chamesle-VERSION-EDITION-x86_64.iso
+# REPO= a dir or url with x86_64/Packages.adb (default work/repo, else the public one), WORK= OUT=
+# needs apk-tools 3, mksquashfs, xorriso, grub-mkrescue (bios + efi), readelf, zstd, cpio, depmod, curl
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 EDITION=${EDITION:-xfce}
@@ -24,36 +11,47 @@ VERSION=$(cat "$HERE/VERSION"); CODENAME=$(cat "$HERE/CODENAME" 2>/dev/null || t
 EDITION_NAME=$(sed -n 's/^name=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null || echo "$EDITION")
 WORK=${WORK:-$HERE/work/$EDITION}; ROOT=$WORK/root; ISO_DIR=$WORK/iso
 OUT=${OUT:-$HERE/out}; ISO=$OUT/chamesle-$VERSION-$EDITION-x86_64.iso
-REPO=${VOID_REPO:-https://repo-default.voidlinux.org/current}
-home=$(getent passwd "${SUDO_USER:-$(id -un)}" | cut -d: -f6)
-CACHE=${XBPS_CACHE:-$home/.cache/chamesle-xbps}
+PUBLIC_REPO=https://downloads.sourceforge.net/project/chameslerepos
+REPO=${REPO:-$( [ -f "$HERE/work/repo/x86_64/Packages.adb" ] && echo "$HERE/work/repo" || echo "$PUBLIC_REPO")}
+APK=${APK:-apk}
 IN=$HERE/tools/in-image.sh
 
 missing=
-for t in xbps-install mksquashfs xorriso readelf zstd cpio depmod curl; do command -v "$t" >/dev/null || missing="$missing $t"; done
+for t in "$APK" mksquashfs xorriso readelf zstd cpio depmod curl; do command -v "$t" >/dev/null || missing="$missing $t"; done
 command -v grub-mkrescue >/dev/null || command -v grub2-mkrescue >/dev/null || missing="$missing grub-mkrescue"
 [ -z "$missing" ] || { echo "build: missing tools:$missing" >&2; exit 1; }
 GRUB_MKRESCUE=$(command -v grub-mkrescue || command -v grub2-mkrescue)
 packages() { sed 's/#.*//' "$HERE/editions/base.packages" "$HERE/editions/$EDITION/packages" | tr ' \t' '\n\n' | grep -v '^$' | sort -u; }
 
-echo "=== [1/5] INSTALLING THE SYSTEM ($EDITION_NAME, from Void Linux's packages)"
-rm -rf "$WORK"; mkdir -p "$ROOT/var/db/xbps/keys" "$ROOT/etc/xbps.d" "$CACHE" "$ISO_DIR/live" "$OUT"
-cp "$HERE"/keys/*.plist "$ROOT/var/db/xbps/keys/"
-cp "$HERE/overlay/etc/xbps.d/00-chamesle.conf" "$ROOT/etc/xbps.d/"
-# the packages' install scripts run chrooted in the new root: give them /dev and /proc (Python's bytecode compiler
-# and the kernel's hooks need them)
+echo "=== [1/5] INSTALLING THE SYSTEM ($EDITION_NAME, from $REPO)"
+rm -rf "$WORK"; mkdir -p "$ROOT/etc/apk/keys" "$ISO_DIR/live" "$OUT"
+cp "$HERE"/keys/apk/*.pub "$ROOT/etc/apk/keys/"
+echo "v3 $REPO" > "$ROOT/etc/apk/repositories"
+# install scripts need /dev and /proc
 mkdir -p "$ROOT/dev" "$ROOT/proc"
 mount --rbind /dev "$ROOT/dev"; mount --make-rslave "$ROOT/dev"; mount -t proc proc "$ROOT/proc"
 trap 'umount "$ROOT/proc" 2>/dev/null; umount -lR "$ROOT/dev" 2>/dev/null; true' EXIT
-XBPS_ARCH=x86_64 xbps-install -S -y -r "$ROOT" -R "$REPO" -R "$REPO/nonfree" -c "$CACHE" $(packages)
+pkg() { "$APK" --root "$ROOT" --arch x86_64 --no-cache --no-interactive "$@"; }
+# scripts need sh and coreutils, so those go first without scripts
+pkg add --initdb --no-scripts base-files bash coreutils sed grep findutils
+pkg fix --reinstall $(pkg info --quiet)
+# no runit, ever
+pkg add '!runit' '!runit-void' $(packages)
+# apk runs a package's script right after unpacking it, so many ran before what they need (useradd, icon and
+# font caches...) was there. now everything is: run them all again
+mkdir -p "$ROOT/tmp/scripts"
+tar -xzf "$ROOT/lib/apk/db/scripts.tar.gz" -C "$ROOT/tmp/scripts"
+chroot "$ROOT" /bin/sh -c 'cd / && for s in /tmp/scripts/*.post-install; do sh "$s" >/dev/null; done'
+rm -rf "$ROOT/tmp/scripts"
 umount "$ROOT/proc" 2>/dev/null || true; umount -lR "$ROOT/dev" 2>/dev/null || true; trap - EXIT
-if [ -e "$ROOT/usr/bin/runit" ]; then echo "build: runit got installed; dinit must be the only init" >&2; exit 1; fi
+# what the installed system updates from
+echo "v3 $PUBLIC_REPO" > "$ROOT/etc/apk/repositories"
 
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
 cp -a "$HERE/editions/$EDITION/overlay/." "$ROOT/"
 "$HERE/tools/themes.sh" "$ROOT"
-# Xfce's built-in wallpapers point at Chamesle's, so a monitor of any name gets it before xfce4-desktop.xml knows it
+# xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
 for f in xfce-x.svg xfce-shapes.svg xfce-stripes.png xfce-teal.png xfce-verticals.png; do
     [ -d "$ROOT/usr/share/backgrounds/xfce" ] && ln -sf ../chamesle/default.png "$ROOT/usr/share/backgrounds/xfce/$f"
 done
@@ -68,7 +66,6 @@ cat > "$ROOT/etc/os-release" <<EOF
 NAME="Chamesle Linux"
 PRETTY_NAME="Chamesle Linux $VERSION$SUFFIX ($EDITION_NAME)"
 ID=chamesle
-ID_LIKE=void
 VERSION="$VERSION${CODENAME:+ ($CODENAME)}"
 VERSION_ID="$VERSION"
 ${CODENAME:+VERSION_CODENAME=$(echo "$CODENAME" | tr '[:upper:]' '[:lower:]')}
@@ -82,17 +79,15 @@ printf 'Chamesle Linux %s%s \\r (\\l)\n\n' "$VERSION" "$SUFFIX" > "$ROOT/etc/iss
 echo chamesle > "$ROOT/etc/hostname"
 mkdir -p "$ROOT/usr/share/chamesle"
 echo "$VERSION" > "$ROOT/usr/share/chamesle/version"; echo "$EDITION" > "$ROOT/usr/share/chamesle/edition"
-# English (US) UTF-8 by default; the installer changes it
 grep -qx 'en_US.UTF-8 UTF-8' "$ROOT/etc/default/libc-locales" 2>/dev/null || echo 'en_US.UTF-8 UTF-8' >> "$ROOT/etc/default/libc-locales"
 echo 'LANG=en_US.UTF-8' > "$ROOT/etc/locale.conf"
 ln -sf /usr/share/zoneinfo/UTC "$ROOT/etc/localtime"
-"$IN" "$ROOT" /usr/bin/xbps-reconfigure -f glibc-locales
+"$IN" "$ROOT" /usr/bin/locale-gen
 "$IN" "$ROOT" /usr/bin/fc-cache -f
 "$IN" "$ROOT" /usr/bin/gtk-update-icon-cache -q -f /usr/share/icons/hicolor 2>/dev/null || true
 
 echo "=== [3/5] THE LIVE USER"
-# "live", no password, administrator without a password, logged in by LightDM by itself. Only the live image
-# has this: the installer removes the autologin and the passwordless sudo, and creates your own user.
+# live user: no password, autologin, sudo. the installer removes all that
 "$IN" "$ROOT" /usr/bin/useradd -m -c "Live session" -s /bin/bash -G wheel,audio,video,input,network,storage,optical,scanner,lp,plugdev,users live
 "$IN" "$ROOT" /usr/bin/passwd -d live
 "$IN" "$ROOT" /usr/bin/passwd -l root
@@ -101,8 +96,19 @@ SESSION=$(sed -n 's/^session=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null 
 printf '# the live session only (the installer removes this file)\n[Seat:*]\nautologin-user=live\nautologin-session=%s\n' "$SESSION" \
     > "$ROOT/etc/lightdm/lightdm.conf.d/90-live.conf"
 "$IN" "$ROOT" /usr/bin/xdg-user-dirs-update 2>/dev/null || true
+# installer icon on the desktop, marked trusted at login or xfce asks first
+mkdir -p "$ROOT/home/live/Desktop" "$ROOT/home/live/.config/autostart"
+install -m755 "$ROOT/usr/share/applications/chamesle-install.desktop" "$ROOT/home/live/Desktop/"
+cat > "$ROOT/home/live/.config/autostart/trust-installer.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Trust the installer icon
+Exec=sh -c 'f=$HOME/Desktop/chamesle-install.desktop; gio set "$f" metadata::xfce-exe-checksum "$(sha256sum "$f" | cut -d" " -f1)"'
+NoDisplay=true
+EOF
+"$IN" "$ROOT" /usr/bin/chown -R live:live /home/live
 rm -f "$ROOT/etc/machine-id" "$ROOT/var/lib/dbus/machine-id"
-rm -rf "$ROOT/var/cache/xbps"/*
+rm -rf "$ROOT/var/cache/apk"/*
 
 echo "=== [4/5] KERNEL AND INITRAMFS"
 KVER=$(ls "$ROOT/usr/lib/modules" | sort -V | tail -n1)
@@ -110,7 +116,6 @@ BUILD_ID="$VERSION-$EDITION-$(date +%s)"
 cp "$ROOT/boot/vmlinuz-$KVER" "$ISO_DIR/live/vmlinuz"
 "$HERE/tools/initrd/build-initrd.sh" "$ROOT" "$KVER" "$ISO_DIR/live/initrd.img" "$BUILD_ID"
 echo "$BUILD_ID" > "$ISO_DIR/live/build-id"
-# installed systems boot with the same initramfs (root=UUID=...)
 cp "$ISO_DIR/live/initrd.img" "$ROOT/boot/initramfs-$KVER.img"
 
 echo "=== [5/5] SQUASHFS AND ISO"

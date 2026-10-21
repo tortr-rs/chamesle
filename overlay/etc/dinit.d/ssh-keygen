@@ -1,4 +1,4 @@
-# Generate any missing SSH host keys (first boot of an install; sshd waits for it).
+# missing ssh host keys
 type = scripted
 command = /usr/bin/ssh-keygen -A
 depends-on = early-filesystems

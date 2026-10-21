@@ -1,5 +1,7 @@
-# Chamesle Xfce: light, and set up to look and work like Windows (taskbar, Start menu, Fluent theme)
+# xfce edition, set up like windows
 xfce4 xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-notifyd xfce4-screenshooter xfce4-power-manager
 xfce4-taskmanager xfce4-clipman-plugin network-manager-applet blueman
 thunar-volman thunar-archive-plugin ristretto mousepad xarchiver pavucontrol gvfs
 lightdm lightdm-gtk-greeter xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme gnome-themes-extra
+xfce-polkit
+chamesle-xfce

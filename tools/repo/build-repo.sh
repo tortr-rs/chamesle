@@ -1,12 +1,12 @@
 #!/bin/bash
-# build the chamesle apk repo out of void's glibc packages
+# build the chamesle apk repo from upstream xbps packages
 #   tools/repo/build-repo.sh                 everything the editions use (from the xbps cache)
-#   ALL=1 tools/repo/build-repo.sh           the whole void repo (big, ~50G)
+#   ALL=1 tools/repo/build-repo.sh           the whole upstream repo (big, ~50G)
 # needs apk-tools 3. the signing key lives outside the repo, in ~/.config/chamesle/
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 APK=${APK:-apk}
-VOID=${VOID_REPO:-https://repo-default.voidlinux.org/current}
+UPSTREAM=${UPSTREAM:-https://repo-default.voidlinux.org/current}
 CACHE=${XBPS_CACHE:-$HOME/.cache/chamesle-xbps}
 OUT=${OUT:-$HERE/../../work/repo}
 KEYDIR=${KEYDIR:-$HOME/.config/chamesle}
@@ -28,46 +28,51 @@ export SIGN_KEY=$KEY
 
 mkdir -p "$OUT/$ARCH" "$CACHE"
 if [ "${ALL:-0}" = 1 ]; then
-    # every package in void's index, fetched one by one (skips what's cached)
-    for r in "$VOID" "$VOID/nonfree"; do
-        curl -sfL "$r/$ARCH-repodata" | tar -xO --zstd index.plist 2>/dev/null | python3 -c '
+    # every package in the upstream index, fetched one by one (skips what's cached)
+    for r in "$UPSTREAM" "$UPSTREAM/nonfree"; do
+        f=$OUT/index-${r##*/}.plist
+        curl -sfL "$r/$ARCH-repodata" | tar -xO --zstd index.plist > "$f" 2>/dev/null
+        python3 -c '
 import plistlib, sys
 r = sys.argv[1]
-for name, p in plistlib.loads(sys.stdin.buffer.read()).items():
-    print(r + "/" + p["pkgver"] + "." + p["architecture"] + ".xbps")' "$r"
-    done > "$OUT/void.list"
-    echo "$(wc -l < "$OUT/void.list") packages in void"
-    while read -r u; do [ -e "$CACHE/${u##*/}" ] || echo "$u"; done < "$OUT/void.list" > "$OUT/fetch.list"
+for name, p in plistlib.load(open(sys.argv[2], "rb")).items():
+    print(r + "/" + p["pkgver"] + "." + p["architecture"] + ".xbps")' "$r" "$f"
+    done > "$OUT/upstream.list"
+    echo "$(wc -l < "$OUT/upstream.list") packages upstream"
+    while read -r u; do [ -e "$CACHE/${u##*/}" ] || echo "$u"; done < "$OUT/upstream.list" > "$OUT/fetch.list"
     echo "$(wc -l < "$OUT/fetch.list") to download"
-    (cd "$CACHE" && xargs -a "$OUT/fetch.list" -P 8 -n 20 curl -sfL --remote-name-all --retry 3) || true
+    (cd "$CACHE" && xargs -r -a "$OUT/fetch.list" -P 8 -n 20 curl -sfL --remote-name-all --retry 3) || true
 fi
 
-# only convert what isn't there yet
+# only convert what isn't there yet, what the editions need first
 todo=$OUT/todo.list
-: > "$todo"
-for x in "$CACHE"/*.xbps; do
-    b=$(basename "$x" ".$ARCH.xbps"); b=${b%.noarch.xbps}
-    v=${b##*-}; n=${b%-*}
-    [ -e "$OUT/$ARCH/$n-${v%_*}-r${v##*_}.apk" ] || echo "$x" >> "$todo"
-done
+FIRST=
+if ls "$OUT"/index-*.plist >/dev/null 2>&1; then
+    FIRST=$OUT/first.list
+    sed 's/#.*//' "$HERE"/../../editions/*.packages "$HERE"/../../editions/*/packages | tr ' \t' '\n\n' | grep -v '^$' |
+        python3 "$HERE/xbps2apk.py" --closure "$OUT"/index-*.plist > "$FIRST"
+fi
+python3 "$HERE/xbps2apk.py" --todo "$CACHE" "$OUT/$ARCH" $FIRST > "$todo"
+if ls "$OUT"/index-*.plist >/dev/null 2>&1; then
+    python3 "$HERE/xbps2apk.py" --multi "$OUT"/index-*.plist > "$OUT/multi.list"
+fi
+[ -s "$OUT/multi.list" ] && export MULTI_PROVIDES=$OUT/multi.list
 echo "$(wc -l < "$todo") packages to convert"
-xargs -a "$todo" -P "$JOBS" -I{} python3 "$HERE/xbps2apk.py" {} "$OUT/$ARCH" 2>> "$OUT/errors.log" || true
+# big packages don't fit in a tmpfs /tmp
+export TMPDIR=$OUT/tmp
+mkdir -p "$TMPDIR"
+: > "$OUT/errors.log"
+# as root of a user namespace, so files keep their real owners
+unshare --map-root-user --map-auto xargs -a "$todo" -P "$JOBS" -I{} python3 "$HERE/xbps2apk.py" {} "$OUT/$ARCH" \
+    2>> "$OUT/errors.log" || true
 
 # drop old versions, then index
-python3 - "$OUT/$ARCH" <<'EOF'
-import os, re, subprocess, sys
-d = sys.argv[1]; latest = {}
-for f in sorted(os.listdir(d)):
-    m = re.match(r'^(.+)-([^-]+-r[0-9]+)\.apk$', f)
-    if m:
-        latest.setdefault(m.group(1), []).append(f)
-for name, files in latest.items():
-    files.sort(key=lambda f: [int(x) if x.isdigit() else x for x in re.split(r'(\d+)', f)])
-    for old in files[:-1]:
-        os.remove(os.path.join(d, old))
-EOF
+python3 "$HERE/xbps2apk.py" --prune "$OUT/$ARCH"
 "$APK" mkndx --keys-dir "$HERE/../../keys/apk" --sign-key "$KEY" --description "chamesle $(date +%Y-%m-%d)" \
     --output "$OUT/$ARCH/Packages.adb" "$OUT/$ARCH"/*.apk
 echo "$(ls "$OUT/$ARCH"/*.apk | wc -l) packages in $OUT/$ARCH"
-[ -s "$OUT/errors.log" ] && echo "failed: $(wc -l < "$OUT/errors.log") (see $OUT/errors.log)"
+unshare --map-root-user --map-auto rm -rf "$TMPDIR"
+python3 "$HERE/xbps2apk.py" --todo "$CACHE" "$OUT/$ARCH" > "$OUT/failed.list"
+n=$(wc -l < "$OUT/failed.list")
+[ "$n" -gt 0 ] && echo "$n failed (names in $OUT/failed.list, details in $OUT/errors.log)"
 true

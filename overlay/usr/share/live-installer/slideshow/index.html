@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+html, body { margin: 0; height: 100%; background: #f7f6f6; color: #333; font: 14px/1.5 sans-serif;
+  -webkit-user-select: none; user-select: none; cursor: default; overflow: hidden; }
+.slide { position: absolute; inset: 0; display: none; }
+.slide.on { display: block; }
+h1 { margin: 0; padding: 14px 24px; background: #0b1f3a; color: #fff; font-size: 20px; font-weight: 600; }
+.body { display: flex; gap: 24px; padding: 22px 24px; align-items: flex-start; }
+.text { flex: 1; }
+.text p { margin: 0 0 12px; }
+code { background: #e6e9ee; padding: 1px 5px; border-radius: 3px; }
+img { width: 52%; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,.2); }
+img.logo { width: 150px; box-shadow: none; }
+.nav { position: absolute; bottom: 10px; right: 16px; }
+.nav span { display: inline-block; padding: 2px 10px; margin-left: 4px; background: #dde3ea; border-radius: 3px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>Welcome to Chamesle</h1>
+  <div class="body">
+    <div class="text">
+      <p>Thanks for choosing Chamesle. This will take a few minutes, here's a quick tour while you wait.</p>
+      <p>The start menu is bottom left, or press the Windows key. The taskbar and the clock are where you'd expect.</p>
+    </div>
+    <img src="desktop.png" alt="">
+  </div>
+</div>
+
+<div class="slide">
+  <h1>Apps</h1>
+  <div class="body">
+    <div class="text">
+      <p>Flathub is already set up. Spotify, Discord, Steam, OBS, GIMP and thousands more are one command or one
+      click away, and they update on their own.</p>
+      <p><code>flatpak install flathub com.spotify.Client</code></p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>.deb and .rpm? Just double-click</h1>
+  <div class="body">
+    <div class="text">
+      <p>Found an app that only comes for Ubuntu or Fedora? Download the <code>.deb</code> or <code>.rpm</code> and
+      double-click it. pkgimport installs it with everything it needs.</p>
+      <p>In a terminal: <code>sudo pkgimport install app.deb</code></p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>Keeping up to date</h1>
+  <div class="body">
+    <div class="text">
+      <p>Almost 15,000 packages come from the Chamesle repo, all signed. Update the whole system with:</p>
+      <p><code>sudo apk upgrade</code></p>
+      <p>and your Flathub apps with <code>flatpak update</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>Your computer, not ours</h1>
+  <div class="body">
+    <div class="text">
+      <p>No telemetry, no ads, no account to sign into.</p>
+      <p>Drivers and firmware for most Wi-Fi, Bluetooth and graphics cards are already there. Printers are in
+      Printers in the menu.</p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>Need a hand?</h1>
+  <div class="body">
+    <div class="text">
+      <p>Guides and the FAQ are at <b>chamesle.org/docs.html</b>.</p>
+      <p>Found a bug? Tell us at <b>github.com/tortr-rs/chamesle</b>.</p>
+    </div>
+    <img class="logo" src="logo.png" alt="">
+  </div>
+</div>
+
+<div class="nav"><span id="prev">&lsaquo;</span><span id="next">&rsaquo;</span></div>
+
+<script>
+var slides = document.querySelectorAll('.slide'), cur = 0, timer;
+function show(i) {
+  slides[cur].classList.remove('on');
+  cur = (i + slides.length) % slides.length;
+  slides[cur].classList.add('on');
+  clearTimeout(timer);
+  timer = setTimeout(function () { show(cur + 1); }, 30000);
+}
+document.getElementById('prev').onclick = function () { show(cur - 1); };
+document.getElementById('next').onclick = function () { show(cur + 1); };
+show(0);
+</script>
+</body>
+</html>

@@ -1,2 +1,2 @@
-# members of wheel (the first user the installer creates) may administer the system
+# wheel can sudo
 %wheel ALL=(ALL:ALL) ALL

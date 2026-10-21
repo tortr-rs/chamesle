@@ -4,10 +4,15 @@
 set -eu
 cd "$(dirname "$0")"
 out=../overlay/usr/share
+# wallpapers go in the xfce look package
+look=../tools/pkg/chamesle-xfce/files/usr/share
 resvg=${RESVG:-resvg}
 
-mkdir -p $out/backgrounds/chamesle $out/plymouth/themes/chamesle
-$resvg -w 1920 -h 1080 wallpaper.svg $out/backgrounds/chamesle/default.png
+mkdir -p $look/backgrounds/chamesle $out/plymouth/themes/chamesle
+python3 wallpaper.py > wallpaper.svg
+$resvg -w 3840 -h 2160 wallpaper.svg $look/backgrounds/chamesle/default.png
+# the boot menu of an installed system (grub is slow with big images)
+$resvg -w 1920 -h 1080 wallpaper.svg $look/backgrounds/chamesle/grub.png
 
 tmp=$(mktemp -d)
 cp logo.png $tmp/
@@ -17,4 +22,21 @@ for s in 16 24 32 48 64 128 256; do
     $resvg --resources-dir $tmp -w $s -h $s $tmp/logo.svg $out/icons/hicolor/${s}x$s/apps/chamesle-start.png
 done
 $resvg --resources-dir $tmp -w 512 -h 512 $tmp/logo.svg $out/plymouth/themes/chamesle/logo.png
+rm -rf $tmp
+
+# text logo for fastfetch
+mkdir -p $out/chamesle
+python3 ascii.py logo.png 34 > $out/chamesle/logo.txt
+
+# login screen logo: the mark and the name, white text (FONTS=dir with Inter in it)
+mkdir -p $look/chamesle
+tmp=$(mktemp -d)
+cp logo.png $tmp/
+cat > $tmp/greeter.svg <<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="340" height="80">
+  <image xlink:href="logo.png" x="0" y="4" width="72" height="72"/>
+  <text x="88" y="54" font-family="Inter, Noto Sans, sans-serif" font-size="40" font-weight="600" fill="#ffffff">Chamesle</text>
+</svg>
+SVG
+$resvg --resources-dir $tmp ${FONTS:+--use-fonts-dir $FONTS} $tmp/greeter.svg $look/chamesle/greeter-logo.png
 rm -rf $tmp

@@ -1,4 +1,4 @@
-# hand the screen over from the boot splash
+# get rid of the splash
 type = scripted
 command = /bin/sh -c "plymouth quit --retain-splash || true"
 depends-on = early-filesystems

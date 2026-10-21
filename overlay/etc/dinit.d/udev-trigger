@@ -1,4 +1,4 @@
-# Coldplug: replay kernel events so devices that exist already get their udev rules applied.
+# replay events for devices that are already there
 type = scripted
 command = /usr/lib/dinit/udev-trigger
 depends-on = udevd
