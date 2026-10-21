@@ -12,6 +12,7 @@
 <header>
   <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
   <nav>
+    <a href="new.html">What's new</a>
     <a href="download.html">Download</a>
     <a href="editions.html">Editions</a>
     <a href="packages.html">Packages</a>
@@ -31,8 +32,8 @@ know, has the drivers and apps already sorted, and stays out of the way.</p>
 <h2 id="roadmap">Roadmap</h2>
 <table>
   <tr><td><b>0.1</b></td><td>Xfce live ISO, Windows-like layout, Flathub, firmware and drivers. <span class="tag">done</span></td></tr>
-  <tr><td><b>0.2</b></td><td>Installer (with dual boot), switch the system to apk, update notifier, driver manager.</td></tr>
-  <tr><td><b>0.3</b></td><td>The Chamesle store: one place for Flathub apps and system packages.</td></tr>
+  <tr><td><b>0.2</b></td><td>Installer (dual boot, encryption), the system on apk and the Chamesle repo, .deb and .rpm support. <span class="tag soon">in testing</span></td></tr>
+  <tr><td><b>0.3</b></td><td>The Chamesle store: one place for Flathub apps and system packages. Update notifier, driver manager.</td></tr>
   <tr><td><b>0.4</b></td><td>MATE and Cinnamon editions.</td></tr>
   <tr><td><b>0.5</b></td><td>GNOME and KDE Plasma editions.</td></tr>
 </table>
@@ -42,8 +43,8 @@ know, has the drivers and apps already sorted, and stays out of the way.</p>
 <p>Each ISO is made by one script, <code>build.sh</code>, from a list of packages per edition. The init system is dinit,
 the boot is GRUB with a small initramfs of our own, and the desktop look is the Fluent theme and icons.
 All of it is in the <a href="https://github.com/tortr-rs/chamesle">GitHub repo</a> if you want to build your own.</p>
-<p>The package repo is generated from Void Linux's packages: each one is unpacked, converted to an apk package,
-signed and indexed. Thanks to everyone at Void for the work that makes that possible.</p>
+<p>The package repo is built by our own tools: every package is converted to apk, signed with the Chamesle
+key and indexed. The tools are in <code>tools/repo/</code>.</p>
 
 <h2>Help out</h2>
 <ul>
@@ -55,7 +56,7 @@ signed and indexed. Thanks to everyone at Void for the work that makes that poss
 
 <h2>License</h2>
 <p>Chamesle's own code is open source on GitHub. The packages keep their own licenses; source code for every
-package is available on request (open an issue, or get it from <a href="https://github.com/void-linux/void-packages">void-packages</a>).
+package is available on request (<a href="https://github.com/tortr-rs/chamesle/issues">open an issue</a>).
 Some packages, like firmware and the NVIDIA driver, are not open source.</p>
 
 <h2>Contact</h2>
@@ -66,7 +67,7 @@ Some packages, like firmware and the NVIDIA driver, are not open source.</p>
 <footer>
   <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
   <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
-  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
 </footer>
 
 </body>

@@ -12,6 +12,7 @@
 <header>
   <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
   <nav>
+    <a href="new.html">What's new</a>
     <a href="download.html">Download</a>
     <a href="editions.html">Editions</a>
     <a href="packages.html">Packages</a>
@@ -25,6 +26,7 @@
 <h1>Docs</h1>
 <p class="toc">
   <a href="#first">First steps</a> &middot;
+  <a href="#install">Installing Chamesle</a> &middot;
   <a href="#apps">Installing apps</a> &middot;
   <a href="#updates">Updates</a> &middot;
   <a href="#services">Services</a> &middot;
@@ -42,19 +44,33 @@
   <li>Nothing you do in the live session is saved when you restart, unless you save it to a disk or USB stick.</li>
 </ul>
 
+<h2 id="install">Installing Chamesle <span class="tag soon">0.2</span></h2>
+<p>Boot the USB stick, then double-click <b>Install Chamesle</b> on the desktop.</p>
+<ol>
+  <li><b>Welcome:</b> pick your language. It checks you have enough space and are plugged in.</li>
+  <li><b>Location</b> and <b>keyboard:</b> click your city on the map, try the keyboard in the box.</li>
+  <li><b>Partitions:</b> &ldquo;Install alongside&rdquo; keeps Windows (drag the slider to share the space),
+  &ldquo;Erase disk&rdquo; uses the whole thing. Tick <b>Encrypt system</b> if you want it.</li>
+  <li><b>Users:</b> your name, a login name, a password and a name for the computer.</li>
+  <li><b>Summary:</b> check it and click Install. Restart when it's done and take the stick out.</li>
+</ol>
+<p>Back up anything important first. Shrinking Windows works fine almost always, but &ldquo;almost&rdquo; isn't
+&ldquo;always&rdquo;. If Windows uses BitLocker, turn it off (or have the recovery key) before you start.</p>
+
 <h2 id="apps">Installing apps</h2>
 <p>For desktop apps, use Flathub. You can browse it at <a href="https://flathub.org/">flathub.org</a>,
 click Install there, and it opens on your computer. Or in a terminal:</p>
 <pre><code>flatpak search obs
 flatpak install flathub com.obsproject.Studio</code></pre>
-<p>For everything else there's the system package manager. See the <a href="packages.html">packages page</a>.</p>
+<p>For everything else there's the system package manager. See the <a href="packages.html">packages page</a>.
+Got a <code>.deb</code> or <code>.rpm</code>? From 0.2 you can double-click it.</p>
 
 <h2 id="updates">Updates</h2>
 <p>Flathub apps:</p>
 <pre><code>flatpak update</code></pre>
-<p>The system, on 0.1:</p>
-<pre><code>sudo xbps-install -Su</code></pre>
-<p>From 0.2 that becomes <code>sudo apk upgrade</code>, and there'll be an update notifier so you don't have to remember.</p>
+<p>The system, from 0.2:</p>
+<pre><code>sudo apk upgrade</code></pre>
+<p>On 0.1 it's <code>sudo xbps-install -Su</code>. An update notifier is coming in 0.3 so you don't have to remember.</p>
 
 <h2 id="services">Services</h2>
 <p>Chamesle uses dinit instead of systemd. Services are small text files in <code>/etc/dinit.d/</code>.
@@ -76,7 +92,7 @@ depends-on = network</code></pre>
 and AMD graphics work out of the box. Printers are handled by CUPS: open Printers from the menu or go to
 <code>http://localhost:631</code>.</p>
 <p>NVIDIA cards work with the open-source driver. The proprietary one is in the repo (<code>nvidia</code>), and
-the driver manager coming in 0.2 will set it up for you.</p>
+the driver manager coming in 0.3 will set it up for you.</p>
 
 <h2 id="faq">FAQ</h2>
 
@@ -87,7 +103,8 @@ the driver manager coming in 0.2 will set it up for you.</p>
 
 <details>
   <summary>Can I install it next to Windows?</summary>
-  <p>That's the plan for the installer in 0.2, and it'll detect Windows so you can pick at boot. For now 0.1 is live-only.</p>
+  <p>Yes, from 0.2. The installer finds Windows, makes room next to it, and you pick which one to start at boot.
+  See <a href="#install">Installing Chamesle</a>.</p>
 </details>
 
 <details>
@@ -110,8 +127,8 @@ the driver manager coming in 0.2 will set it up for you.</p>
 
 <details>
   <summary>What's it based on?</summary>
-  <p>The packages are built from Void Linux's glibc packages, repackaged for apk and signed by us. The init
-  setup, installer, look, defaults and tools are Chamesle's own.</p>
+  <p>Chamesle is its own distro: glibc, dinit, apk packages from the Chamesle repo signed with our key,
+  and our own installer, look, defaults and tools.</p>
 </details>
 
 <details>
@@ -125,7 +142,7 @@ the driver manager coming in 0.2 will set it up for you.</p>
 <footer>
   <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
   <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
-  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
 </footer>
 
 </body>
