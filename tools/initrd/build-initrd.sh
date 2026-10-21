@@ -12,6 +12,7 @@ R=$W/root
 # the image's merged /usr layout: /bin, /sbin -> usr/bin, /lib, /lib64 -> usr/lib
 mkdir -p "$R"/usr/bin "$R"/usr/lib "$R"/{proc,sys,dev,mnt,newroot,overlay,etc}
 ln -s usr/bin "$R/bin"; ln -s usr/bin "$R/sbin"; ln -s usr/lib "$R/lib"; ln -s usr/lib "$R/lib64"
+ln -s lib "$R/usr/lib64"   # void's loader looks in /usr/lib64
 
 # resolve PATH (absolute, inside the image) through symlinks, inside the image
 resolve() {
@@ -49,6 +50,28 @@ applets=$(BB --list)
 [ -n "$applets" ] || { echo "initrd: cannot list busybox's applets" >&2; exit 1; }
 for a in $applets; do [ -e "$R/usr/bin/$a" ] || ln -s busybox "$R/usr/bin/$a"; done
 echo "$applets" | grep -x modprobe >/dev/null || { echo "initrd: busybox has no modprobe applet" >&2; exit 1; }
+# plymouth for the boot splash (init starts it when the kernel line says "splash")
+if [ -x "$ROOT/usr/bin/plymouthd" ]; then
+    echo "== plymouth"
+    copy_elf /usr/bin/plymouthd
+    copy_elf /usr/bin/plymouth
+    copy_elf /usr/bin/udevd
+    copy_elf /usr/bin/udevadm
+    install -Dm644 "$ROOT/usr/lib/udev/rules.d/71-plymouth-seat.rules" "$R/usr/lib/udev/rules.d/71-plymouth-seat.rules"
+    for p in script text details label renderers/frame-buffer renderers/drm; do
+        [ -e "$ROOT/usr/lib/plymouth/$p.so" ] && copy_elf "/usr/lib/plymouth/$p.so"
+    done
+    theme=$(sed -n 's/^Theme=//p' "$ROOT/etc/plymouth/plymouthd.conf" 2>/dev/null)
+    mkdir -p "$R/usr/share/plymouth/themes" "$R/etc/plymouth"
+    cp "$ROOT/usr/share/plymouth/plymouthd.defaults" "$R/usr/share/plymouth/"
+    cp "$ROOT/etc/plymouth/plymouthd.conf" "$R/etc/plymouth/" 2>/dev/null || true
+    [ -n "$theme" ] && cp -a "$ROOT/usr/share/plymouth/themes/$theme" "$R/usr/share/plymouth/themes/"
+    # a font for the passphrase prompt
+    cp -a "$ROOT/etc/fonts" "$R/etc/" 2>/dev/null || true
+    font=$(find "$ROOT/usr/share/fonts" -name DejaVuSans.ttf | head -n1)
+    [ -n "$font" ] && install -Dm644 "$font" "$R/usr/share/fonts/DejaVuSans.ttf"
+fi
+
 install -m755 "$HERE/init" "$R/init"
 [ -z "$BUILD_ID" ] || echo "$BUILD_ID" > "$R/build-id"
 

@@ -46,7 +46,7 @@ mkdir -p "$ROOT/dev" "$ROOT/proc"
 mount --rbind /dev "$ROOT/dev"; mount --make-rslave "$ROOT/dev"; mount -t proc proc "$ROOT/proc"
 trap 'umount "$ROOT/proc" 2>/dev/null; umount -lR "$ROOT/dev" 2>/dev/null; true' EXIT
 XBPS_ARCH=x86_64 xbps-install -S -y -r "$ROOT" -R "$REPO" -R "$REPO/nonfree" -c "$CACHE" $(packages)
-umount "$ROOT/proc"; umount -lR "$ROOT/dev"; trap - EXIT
+umount "$ROOT/proc" 2>/dev/null || true; umount -lR "$ROOT/dev" 2>/dev/null || true; trap - EXIT
 if [ -e "$ROOT/usr/bin/runit" ]; then echo "build: runit got installed; dinit must be the only init" >&2; exit 1; fi
 
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
@@ -121,10 +121,14 @@ cat > "$ISO_DIR/boot/grub/grub.cfg" <<EOF
 set default=0
 set timeout=5
 insmod all_video
+insmod gfxterm
+set gfxmode=1280x800,1024x768,auto
+set gfxpayload=keep
+terminal_output gfxterm
 if [ ! -f /live/vmlinuz ]; then search --no-floppy --set=root --file /live/vmlinuz; fi
 
 menuentry "Try or install $TITLE" {
-    linux /live/vmlinuz quiet loglevel=3
+    linux /live/vmlinuz quiet splash loglevel=3
     initrd /live/initrd.img
 }
 menuentry "$TITLE (safe graphics)" {
@@ -132,7 +136,7 @@ menuentry "$TITLE (safe graphics)" {
     initrd /live/initrd.img
 }
 menuentry "$TITLE (copy to RAM)" {
-    linux /live/vmlinuz chamesle.toram=1 quiet loglevel=3
+    linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3
     initrd /live/initrd.img
 }
 menuentry "$TITLE (show boot messages)" {

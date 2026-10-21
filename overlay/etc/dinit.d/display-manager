@@ -4,6 +4,7 @@ command = /usr/bin/lightdm
 depends-on = dbus
 depends-on = elogind
 waits-for = polkitd
+waits-for = plymouth-quit
 waits-for = udev-trigger
 waits-for = network
 restart = true

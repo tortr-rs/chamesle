@@ -1,0 +1,33 @@
+// Chamesle boot splash: the logo spinning in the middle of a black screen.
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
+
+logo.image = Image("logo.png");
+// about a quarter of the screen's height, whatever the resolution
+size = Math.Int(Window.GetHeight() / 4);
+logo.image = logo.image.Scale(size, size);
+logo.sprite = Sprite();
+angle = 0;
+
+fun refresh_callback() {
+    angle = angle + 0.04;
+    if (angle > 6.2832) angle = angle - 6.2832;
+    turned = logo.image.Rotate(angle);
+    logo.sprite.SetImage(turned);
+    logo.sprite.SetX(Window.GetX() + Window.GetWidth() / 2 - turned.GetWidth() / 2);
+    logo.sprite.SetY(Window.GetY() + Window.GetHeight() / 2 - turned.GetHeight() / 2);
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+// a LUKS passphrase prompt (encrypted installs): a line of dots under the logo
+fun display_password_callback(prompt, bullets) {
+    text = prompt + "  ";
+    for (i = 0; i < bullets; i++) text = text + "*";
+    message.image = Image.Text(text, 1, 1, 1);
+    message.sprite = Sprite(message.image);
+    message.sprite.SetX(Window.GetX() + Window.GetWidth() / 2 - message.image.GetWidth() / 2);
+    message.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.8);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+fun display_normal_callback() { message.sprite = Sprite(); }
+Plymouth.SetDisplayNormalFunction(display_normal_callback);

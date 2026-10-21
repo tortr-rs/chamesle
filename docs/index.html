@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chamesle Linux</title>
+<meta name="description" content="A Linux desktop that gets out of your way. Xfce edition out now.">
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="#download">Download</a>
+    <a href="#packages">Packages</a>
+    <a href="https://github.com/tortr-rs/chamesle">Source</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="intro">
+  <h1>Linux for people who just want their computer to work.</h1>
+  <p>Chamesle is a desktop Linux distro. You boot it, it looks like what you're used to, and you get apps from
+  Flathub without hunting around. If you like poking at things there's a full package manager
+  underneath, but you never have to touch them.</p>
+  <p><a class="button" href="#download">Get 0.1 "Margit"</a> <span class="small">Xfce edition, 64-bit, 1.8&nbsp;GB</span></p>
+</section>
+
+<figure class="shot">
+  <img src="img/xfce.png" alt="The Chamesle Xfce desktop: a blue wave wallpaper and a taskbar along the bottom" width="1280" height="800">
+  <figcaption>The Xfce edition, right after it boots.</figcaption>
+</figure>
+
+<section>
+  <h2>What you get</h2>
+  <p>Out of the box: Firefox, a file manager, Flathub already set up, printing, Bluetooth,
+  Wi-Fi, and the firmware and drivers most laptops need. An installer, an app store and a driver manager are next on the list.</p>
+  <p>Under the hood it uses <b>dinit</b> to start things, so it boots fast and doesn't get in your way.
+  There's no telemetry. There's no account to sign into.</p>
+</section>
+
+<section>
+  <h2>Editions</h2>
+  <table>
+    <tr><td><b>Xfce</b></td><td>Out now. Light, and laid out like Windows: start menu bottom left, clock bottom right.</td></tr>
+    <tr><td>MATE</td><td>Coming. For older machines.</td></tr>
+    <tr><td>Cinnamon</td><td>Coming.</td></tr>
+    <tr><td>GNOME</td><td>Coming.</td></tr>
+    <tr><td>KDE Plasma</td><td>Coming.</td></tr>
+  </table>
+</section>
+
+<section id="packages">
+  <h2>Packages</h2>
+  <p>Starting with the next release, Chamesle uses <b>apk</b>:</p>
+<pre><code>sudo apk update
+sudo apk add gimp
+sudo apk upgrade</code></pre>
+  <p>Packages come from our own signed repository. They're built from Void Linux's glibc packages, so there's
+  a lot of them.</p>
+</section>
+
+<section id="download">
+  <h2>Download</h2>
+  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/">Chamesle 0.1 Xfce (x86_64)</a></p>
+  <p>Write it to a USB stick with <a href="https://etcher.balena.io/">Etcher</a> or
+  <a href="https://www.ventoy.net/">Ventoy</a>, boot from it, and you're in a live session. It doesn't touch your disk.
+  (There's no installer in 0.1 yet.)</p>
+  <p class="small">Needs a 64-bit PC, 2&nbsp;GB of RAM (4 is nicer). The live session runs from the stick.
+  This is an early release, so expect rough edges and tell us about them.</p>
+</section>
+
+<section>
+  <h2>Help out</h2>
+  <p>Everything is on <a href="https://github.com/tortr-rs/chamesle">GitHub</a>. Bug reports are welcome,
+  and so are pull requests.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+</footer>
+
+</body>
+</html>

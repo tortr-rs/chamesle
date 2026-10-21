@@ -23,7 +23,9 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 exec </dev/console >/dev/console 2>&1
 
 log() { echo "[live] $*"; }
+SPLASH=0
 emergency() {
+    [ "$SPLASH" = 1 ] && { plymouth quit; SPLASH=0; }
     echo "[live] $*"
     echo "[live] starting a shell; leave it with 'exit' to try again"
     setsid cttyhack sh
@@ -80,6 +82,19 @@ load_hw_modules() {
     return 0
 }
 load_hw_modules
+
+# boot splash
+if grep -qw splash /proc/cmdline && [ -x /usr/bin/plymouthd ]; then
+    mkdir -p /run/plymouth /run/udev /dev/pts
+    mount -t devpts devpts /dev/pts 2>/dev/null
+    # plymouth only finds the framebuffer through udev
+    if [ -x /usr/bin/udevd ]; then
+        udevd --daemon --resolve-names=never 2>/dev/null
+        udevadm trigger --action=add --subsystem-match=graphics --subsystem-match=drm
+        udevadm settle --timeout=5
+    fi
+    plymouthd --mode=boot --attach-to-session --pid-file=/run/plymouth/pid && plymouth show-splash && SPLASH=1
+fi
 
 [ "$SHELL_FIRST" = 1 ] && emergency "chamesle.shell=1"
 
@@ -162,7 +177,12 @@ if [ -n "$ROOT" ]; then
     if is_luks "$DEV"; then
         log "encrypted root partition: enter the passphrase to unlock it"
         until [ -e /dev/mapper/root ]; do
-            cryptsetup open "$DEV" root || log "wrong passphrase, try again"
+            if [ "$SPLASH" = 1 ]; then
+                plymouth ask-for-password --prompt="Passphrase" --command="cryptsetup open --key-file=- $DEV root" ||
+                    plymouth display-message --text="Wrong passphrase, try again"
+            else
+                cryptsetup open "$DEV" root || log "wrong passphrase, try again"
+            fi
         done
         DEV=/dev/mapper/root
     fi
@@ -229,4 +249,6 @@ mount -t tmpfs -o mode=0755,nosuid,nodev tmpfs /newroot/run
 # (/proc has been moved into the new root by now: QUIET comes from the command line parsed at the start)
 INIT_ARGS=
 [ "$QUIET" = 1 ] && [ "$INIT" = /usr/bin/dinit ] && [ "$DEBUG" = 0 ] && INIT_ARGS=--quiet
+[ "$SPLASH" = 1 ] && plymouth update-root-fs --new-root-dir=/newroot
+udevadm control --exit 2>/dev/null
 exec switch_root /newroot "$INIT" $INIT_ARGS

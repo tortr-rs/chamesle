@@ -4,7 +4,7 @@
 # core system
 base-files bash coreutils findutils diffutils grep sed gawk which file less
 gzip bzip2 xz zstd tar unzip
-util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox xbps
+util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox xbps plymouth
 iproute2 iputils NetworkManager openssh curl wget ca-certificates rsync
 sudo nano glibc-locales tzdata man-db
 
