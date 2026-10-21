@@ -30,7 +30,7 @@
   Flathub without hunting around. If you like poking at things there's a full package manager
   underneath, but you never have to touch it.</p>
   <p><a class="button" href="download.html">Get 0.1 "Margit"</a> <span class="small">Xfce edition, 64-bit, 1.8&nbsp;GB</span></p>
-  <p class="small"><span class="tag soon">0.2 in testing</span> an installer with dual boot, our own package repo, and .deb/.rpm support.
+  <p class="small"><span class="tag soon">0.2 in testing</span> an installer with dual boot, and pkgimport: .deb and .rpm files that install with a double-click.
   <a href="new.html">What's new</a></p>
 </section>
 
@@ -47,6 +47,14 @@
   There's no telemetry. There's no account to sign into.</p>
 </section>
 
+<section>
+  <h2>Any .deb, any .rpm</h2>
+  <p>Found an app that only offers a download for Ubuntu or Fedora? Double-click it anyway. <b>pkgimport</b>
+  turns <code>.deb</code> and <code>.rpm</code> files into Chamesle packages and installs them with everything
+  they need. Your app is in the menu a moment later. <span class="tag soon">0.2</span></p>
+  <pre><code>sudo pkgimport install ~/Downloads/app.deb</code></pre>
+</section>
+
 <section class="cols">
   <div>
     <h3>Looks familiar</h3>
@@ -56,7 +64,7 @@
   <div>
     <h3>Lots of software</h3>
     <p>Everything on Flathub, plus <a href="packages.html">almost 15,000 packages</a> in our own repo, from GIMP
-    and LibreOffice to compilers and server stuff. From 0.2, .deb and .rpm files install with a double-click.</p>
+    and LibreOffice to compilers and server stuff.</p>
   </div>
   <div>
     <h3>Runs on old stuff</h3>
@@ -67,7 +75,7 @@
 <section>
   <h2>Where it's at</h2>
   <p>0.1 is a live system you can boot from a USB stick and try. 0.2 is being tested now: it installs to your
-  disk (next to Windows if you like) and runs on our own package repo. After that comes the store. The
+  disk (next to Windows if you like) and runs on the Chamesle repo. After that comes the store. The
   <a href="about.html#roadmap">roadmap</a> has the details.</p>
 </section>
 
