@@ -103,6 +103,9 @@ for f in $old; do rm -f "$R/$f"; done
 echo "$(ls "$R"/*.apk | wc -l) packages"
 [ -s "$OUT/errors.log" ] && echo "some failed to convert, see $OUT/errors.log"
 
+echo "== the store's app list"
+python3 "$HERE/apps.py" "$R"
+
 echo "== website package list"
 "$APK" adbdump "$R/Packages.adb" | python3 "$TOP/tools/site/package-list.py" > "$TOP/docs/packages.json"
 if ! git -C "$TOP" diff --quiet -- docs/packages.json; then

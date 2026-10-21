@@ -3,7 +3,7 @@
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
     <property name="ThemeName" type="string" value="Fluent-Light"/>
-    <property name="IconThemeName" type="string" value="Papirus"/>
+    <property name="IconThemeName" type="string" value="Chamesle"/>
     <property name="SoundThemeName" type="string" value="freedesktop"/>
     <property name="EnableEventSounds" type="bool" value="false"/>
   </property>

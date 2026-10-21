@@ -1,0 +1,13 @@
+name=chamesle-store
+version=0.2.0
+rel=2
+desc="The Chamesle store: apps from Flathub and the Chamesle repo, updates, .deb and .rpm files"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="python3 python3-gobject gtk4 libadwaita flatpak polkit"
+
+build() {
+    cp -a . "$pkgdir/"
+}
