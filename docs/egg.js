@@ -30,8 +30,8 @@
 
 // up up down down left right left right b a
 (function () {
-  var code = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-  var at = 0, typed = '';
+  var code = 'arrowup arrowup arrowdown arrowdown arrowleft arrowright arrowleft arrowright b a';
+  var keys = [], typed = '';
   function banner(text, color, sub) {
     var d = document.createElement('div');
     d.style.cssText = 'position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;' +
@@ -47,9 +47,10 @@
   }
   document.addEventListener('keydown', function (e) {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    at = (e.key === code[at]) ? at + 1 : (e.key === code[0] ? 1 : 0);
-    if (at === code.length) {
-      at = 0;
+    // the last ten keys, any case, so an extra press at the start doesn't matter
+    keys = keys.concat(e.key.toLowerCase()).slice(-10);
+    if (keys.join(' ') === code) {
+      keys = [];
       banner('GREAT ENEMY FELLED', '#e8c872');
     }
     if (e.key.length === 1) {
