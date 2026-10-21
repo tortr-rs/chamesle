@@ -1,0 +1,40 @@
+# publishes docs/ to chamesle.org, with the board's posts fetched fresh
+name: site
+on:
+  push:
+    branches: [main]
+    paths: [docs/**, tools/site/**, .github/workflows/site.yml]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+  discussion:
+  discussion_comment:
+
+permissions:
+  contents: read
+  discussions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: board posts
+        run: python3 tools/site/board.py > docs/board.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deploy
+        uses: actions/deploy-pages@v4

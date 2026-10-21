@@ -183,3 +183,31 @@ input[type=search]:focus { outline: 2px solid var(--blue); outline-offset: -1px;
 td:first-child code { white-space: nowrap; }
 td:first-child:has(code) { width: auto; padding-right: 18px; }
 @media (max-width: 560px) { td:first-child code { white-space: normal; word-break: break-all; } }
+
+/* board */
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 16px; }
+.bar a, .bar button {
+  font: inherit; font-size: 14px; color: var(--muted); background: none; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 14px; padding: 3px 12px; text-decoration: none;
+}
+.bar a.on, .bar button.on { color: var(--text); border-color: var(--text); font-weight: 600; }
+.bar .button { margin-left: auto; color: #fff; background: var(--blue); border: 0; border-radius: 6px; font-size: 15px; padding: 6px 14px; }
+.posts { list-style: none; padding: 0; margin: 0; }
+.posts li { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.votes { min-width: 40px; text-align: center; color: var(--muted); font-weight: 600; font-size: 15px; line-height: 1.2; }
+.votes span { display: block; font-size: 18px; }
+.posts h3 { margin: 0; font-size: 17px; }
+.posts h3 a { color: var(--text); text-decoration: none; }
+.posts h3 a:hover { text-decoration: underline; }
+.posts p { margin: 2px 0 0; color: var(--muted); font-size: 15px; overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.meta img { width: 16px; height: 16px; border-radius: 50%; vertical-align: -3px; margin-right: 4px; }
+.cat { font-size: 12px; padding: 1px 8px; border-radius: 10px; background: var(--code); color: var(--muted); margin-right: 6px; }
+.post-body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.form label { display: block; font-weight: 600; margin: 14px 0 4px; }
+.form input, .form select {
+  width: 100%; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg); color: var(--text);
+}
+.giscus { margin-top: 24px; }

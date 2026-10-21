@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="new.html">What's new</a>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html">Packages</a>
+    <a href="docs.html">Docs</a>
+    <a href="board.html" class="here">Board</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<p class="small"><a href="board.html">&larr; Board</a></p>
+<h1 id="title">Loading&hellip;</h1>
+<div class="meta" id="meta"></div>
+<div class="post-body" id="body"></div>
+<div class="giscus" id="comments"></div>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
+</footer>
+
+<script>
+var CATS = {
+  'q-a': ['Help', 'DIC_kwDOShHmjc4DJQSa', 'Q&A'],
+  'show-and-tell': ['Show your desktop', 'DIC_kwDOShHmjc4DJQSc', 'Show and tell'],
+  'ideas': ['Ideas', 'DIC_kwDOShHmjc4DJQSb', 'Ideas'],
+  'general': ['General', 'DIC_kwDOShHmjc4DJQSZ', 'General'],
+  'announcements': ['Announcements', 'DIC_kwDOShHmjc4DJQSY', 'Announcements']
+};
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function ago(t) {
+  var s = (Date.now() - new Date(t)) / 1000;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
+  if (s < 86400) return Math.round(s / 3600) + ' h ago';
+  if (s < 86400 * 30) return Math.round(s / 86400) + ' d ago';
+  return new Date(t).toLocaleDateString();
+}
+function giscus(el, cat, mapping, term) {
+  var s = document.createElement('script'), c = CATS[cat] || CATS.general;
+  var a = {src: 'https://giscus.app/client.js', 'data-repo': 'tortr-rs/chamesle', 'data-repo-id': 'R_kgDOShHmjQ',
+    'data-category': c[2], 'data-category-id': c[1], 'data-mapping': mapping, 'data-term': term, 'data-strict': '1',
+    'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
+    'data-theme': 'preferred_color_scheme', 'data-lang': 'en', crossorigin: 'anonymous', async: ''};
+  for (var k in a) s.setAttribute(k, a[k]);
+  el.appendChild(s);
+}
+
+var n = new URLSearchParams(location.search).get('n');
+fetch('board.json').then(function (r) { return r.json(); }).then(function (d) {
+  var p = d.filter(function (x) { return String(x.n) === n; })[0];
+  if (!p) {
+    // brand new, the board catches up within a few minutes
+    document.getElementById('title').textContent = 'New post';
+    giscus(document.getElementById('comments'), 'general', 'number', n);
+    return;
+  }
+  var c = CATS[p.c] || [p.c];
+  document.title = p.t + ' - Chamesle Linux';
+  document.getElementById('title').textContent = p.t;
+  document.getElementById('meta').innerHTML = '<span class="cat">' + esc(c[0]) + '</span>' +
+    (p.av ? '<img src="' + esc(p.av) + '&s=32" alt="">' : '') + esc(p.a) + ' &middot; ' + ago(p.at);
+  // posts made on github keep their text in the discussion itself, giscus only shows the comments
+  if (!p.s) document.getElementById('body').textContent = p.b;
+  giscus(document.getElementById('comments'), p.c, 'number', n);
+});
+</script>
+
+</body>
+</html>
