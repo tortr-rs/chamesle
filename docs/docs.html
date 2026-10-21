@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html">Packages</a>
+    <a href="docs.html" class="here">Docs</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<h1>Docs</h1>
+<p class="toc">
+  <a href="#first">First steps</a> &middot;
+  <a href="#apps">Installing apps</a> &middot;
+  <a href="#updates">Updates</a> &middot;
+  <a href="#services">Services</a> &middot;
+  <a href="#hardware">Hardware</a> &middot;
+  <a href="#faq">FAQ</a>
+</p>
+
+<h2 id="first">First steps</h2>
+<p>When the live session starts you're logged in as <code>live</code>. Some things worth knowing:</p>
+<ul>
+  <li>The Windows key opens the start menu. Type to search.</li>
+  <li>Wi-Fi is the network icon in the bottom right.</li>
+  <li>The terminal is in the menu under System, or right-click the desktop.</li>
+  <li>The live user can use <code>sudo</code> without a password.</li>
+  <li>Nothing you do in the live session is saved when you restart, unless you save it to a disk or USB stick.</li>
+</ul>
+
+<h2 id="apps">Installing apps</h2>
+<p>For desktop apps, use Flathub. You can browse it at <a href="https://flathub.org/">flathub.org</a>,
+click Install there, and it opens on your computer. Or in a terminal:</p>
+<pre><code>flatpak search obs
+flatpak install flathub com.obsproject.Studio</code></pre>
+<p>For everything else there's the system package manager. See the <a href="packages.html">packages page</a>.</p>
+
+<h2 id="updates">Updates</h2>
+<p>Flathub apps:</p>
+<pre><code>flatpak update</code></pre>
+<p>The system, on 0.1:</p>
+<pre><code>sudo xbps-install -Su</code></pre>
+<p>From 0.2 that becomes <code>sudo apk upgrade</code>, and there'll be an update notifier so you don't have to remember.</p>
+
+<h2 id="services">Services</h2>
+<p>Chamesle uses dinit instead of systemd. Services are small text files in <code>/etc/dinit.d/</code>.
+You control them with <code>dinitctl</code>:</p>
+<table>
+  <tr><td><code>dinitctl list</code></td><td>what's running</td></tr>
+  <tr><td><code>sudo dinitctl start sshd</code></td><td>start a service now</td></tr>
+  <tr><td><code>sudo dinitctl stop sshd</code></td><td>stop it</td></tr>
+  <tr><td><code>sudo dinitctl enable sshd</code></td><td>start it on every boot</td></tr>
+  <tr><td><code>sudo dinitctl disable sshd</code></td><td>don't</td></tr>
+</table>
+<p>A service file looks like this:</p>
+<pre><code>type = process
+command = /usr/bin/sshd -D
+depends-on = network</code></pre>
+
+<h2 id="hardware">Hardware</h2>
+<p>Firmware for most Wi-Fi cards, graphics cards and Bluetooth adapters is already included, and Intel
+and AMD graphics work out of the box. Printers are handled by CUPS: open Printers from the menu or go to
+<code>http://localhost:631</code>.</p>
+<p>NVIDIA cards work with the open-source driver. The proprietary one is in the repo (<code>nvidia</code>), and
+the driver manager coming in 0.2 will set it up for you.</p>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Is it free?</summary>
+  <p>Yes. No cost, no ads, no account, no tracking.</p>
+</details>
+
+<details>
+  <summary>Can I install it next to Windows?</summary>
+  <p>That's the plan for the installer in 0.2, and it'll detect Windows so you can pick at boot. For now 0.1 is live-only.</p>
+</details>
+
+<details>
+  <summary>Will my games work?</summary>
+  <p>Most Steam games do, through Proton. Install Steam from Flathub, then turn on Steam Play in its settings.
+  Games with kernel-level anti-cheat (Valorant, some battle royales) won't.</p>
+</details>
+
+<details>
+  <summary>Can I run Windows programs?</summary>
+  <p>A lot of them, with Wine or Bottles (on Flathub). Check <a href="https://appdb.winehq.org/">WineHQ's app database</a>
+  for how well a specific program works.</p>
+</details>
+
+<details>
+  <summary>Why dinit and not systemd?</summary>
+  <p>It's small, fast, and easy to understand. A service is a five line text file. For a desktop you won't
+  notice the difference, except maybe that it boots quicker.</p>
+</details>
+
+<details>
+  <summary>What's it based on?</summary>
+  <p>The packages are built from Void Linux's glibc packages, repackaged for apk and signed by us. The init
+  setup, installer, look, defaults and tools are Chamesle's own.</p>
+</details>
+
+<details>
+  <summary>I found a bug.</summary>
+  <p>Great, sort of. Please <a href="https://github.com/tortr-rs/chamesle/issues">open an issue</a> with what you did,
+  what you expected, and what happened instead. A photo of the screen helps if it's a boot problem.</p>
+</details>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+</footer>
+
+</body>
+</html>

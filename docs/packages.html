@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packages - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html" class="here">Packages</a>
+    <a href="docs.html">Docs</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<h1>Packages</h1>
+<p>There are two ways to get software on Chamesle.</p>
+<p><b>Flathub</b> is the easy one: it's already set up, apps are sandboxed, and they update on their own.
+Use it for desktop apps like Spotify, Discord, Steam or OBS.</p>
+<pre><code>flatpak install flathub com.spotify.Client</code></pre>
+<p><b>apk</b> is the system package manager. It's what the system itself is made of, and it has everything
+from desktop apps to compilers and servers. From 0.2 on, Chamesle uses apk (0.1 still uses xbps underneath).</p>
+
+<h2 id="search">Search</h2>
+<input id="q" type="search" placeholder="Search 14,781 packages, e.g. gimp, python3, steam" autocomplete="off" aria-label="Search packages">
+<p id="count" class="small">Loading the package list&hellip;</p>
+<ol id="results" class="pkgs"></ol>
+
+<h2>Using apk</h2>
+<table>
+  <tr><td><code>sudo apk update</code></td><td>get the latest package list</td></tr>
+  <tr><td><code>sudo apk upgrade</code></td><td>update everything</td></tr>
+  <tr><td><code>sudo apk add gimp</code></td><td>install something</td></tr>
+  <tr><td><code>sudo apk del gimp</code></td><td>remove it</td></tr>
+  <tr><td><code>apk search -v paint</code></td><td>search by name</td></tr>
+  <tr><td><code>apk info -a gimp</code></td><td>details about a package</td></tr>
+  <tr><td><code>apk info --who-owns /usr/bin/gimp</code></td><td>which package a file came from</td></tr>
+</table>
+
+<h2>The repository</h2>
+<p>Packages are hosted on SourceForge and signed with the Chamesle key. On a Chamesle system,
+<code>/etc/apk/repositories</code> has this line:</p>
+<pre><code>https://downloads.sourceforge.net/project/chameslerepos</code></pre>
+<p>Everything is built from <a href="https://voidlinux.org/">Void Linux</a>'s glibc packages and repackaged for apk,
+so there's a lot of it and it stays recent. The public key is
+<a href="https://github.com/tortr-rs/chamesle/tree/main/keys/apk">on GitHub</a>.</p>
+<p>Missing something? <a href="https://github.com/tortr-rs/chamesle/issues">Open an issue</a> and say what.</p>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+</footer>
+
+<script>
+var all = [], q = document.getElementById('q'), out = document.getElementById('results'), count = document.getElementById('count');
+
+function size(b) {
+  if (!b) return '';
+  if (b > 1e9) return (b / 1e9).toFixed(1) + ' GB';
+  if (b > 1e6) return Math.round(b / 1e6) + ' MB';
+  return Math.max(1, Math.round(b / 1e3)) + ' KB';
+}
+
+function show() {
+  var s = q.value.trim().toLowerCase(), hits;
+  if (!s) {
+    out.innerHTML = '';
+    count.textContent = all.length.toLocaleString() + ' packages. Type to search.';
+    return;
+  }
+  hits = all.filter(function (p) {
+    return p.n.toLowerCase().indexOf(s) >= 0 || (p.d || '').toLowerCase().indexOf(s) >= 0;
+  });
+  // exact and prefix name matches first
+  hits.sort(function (a, b) {
+    var ra = a.n === s ? 0 : a.n.indexOf(s) === 0 ? 1 : a.n.indexOf(s) >= 0 ? 2 : 3;
+    var rb = b.n === s ? 0 : b.n.indexOf(s) === 0 ? 1 : b.n.indexOf(s) >= 0 ? 2 : 3;
+    return ra - rb || a.n.length - b.n.length || (a.n < b.n ? -1 : 1);
+  });
+  count.textContent = hits.length.toLocaleString() + (hits.length === 1 ? ' match' : ' matches') +
+    (hits.length > 200 ? ', showing the first 200' : '');
+  out.innerHTML = '';
+  hits.slice(0, 200).forEach(function (p) {
+    var li = document.createElement('li'), top = document.createElement('div'), d = document.createElement('div');
+    top.innerHTML = '<b></b> <span class="small"></span>';
+    top.querySelector('b').textContent = p.n;
+    top.querySelector('span').textContent = p.v + (p.s ? ' · ' + size(p.s) : '');
+    d.textContent = p.d || '';
+    li.appendChild(top); li.appendChild(d);
+    out.appendChild(li);
+  });
+}
+
+fetch('packages.json').then(function (r) { return r.json(); }).then(function (d) {
+  all = d;
+  var hash = decodeURIComponent(location.hash.slice(1));
+  if (hash && hash !== 'search') q.value = hash;
+  show();
+}).catch(function () {
+  count.textContent = "Couldn't load the package list. Try reloading the page.";
+});
+
+var t;
+q.addEventListener('input', function () {
+  clearTimeout(t);
+  t = setTimeout(function () {
+    history.replaceState(null, '', q.value ? '#' + encodeURIComponent(q.value) : location.pathname);
+    show();
+  }, 120);
+});
+</script>
+
+</body>
+</html>
