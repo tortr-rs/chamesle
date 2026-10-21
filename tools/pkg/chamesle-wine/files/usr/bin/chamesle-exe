@@ -4,9 +4,21 @@ f=$1
 title="Windows program"
 [ -n "$f" ] || { echo "usage: chamesle-exe FILE.exe" >&2; exit 1; }
 
+# free space in MB where it all goes; the live session keeps everything in memory and runs out fast
+room() { df -Pm "$1" | awk 'NR == 2 { print $4 }'; }
+no_room() {
+    if [ "$(id -un)" = live ]; then
+        zenity --error --title="$title" --text="Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\n\nInstall Chamesle first, then open the program again."
+    else
+        zenity --error --title="$title" --text="Windows programs need about $1 GB of free space. Make some room and try again."
+    fi
+    exit 1
+}
+
 if ! command -v wine >/dev/null; then
+    [ "$(room /usr)" -ge 3200 ] || no_room 3
     zenity --question --title="$title" --icon=application-x-ms-dos-executable --ok-label=Install --cancel-label=Cancel \
-        --text="To open <b>$(basename "$f" | sed 's/&/\&amp;/g; s/</\&lt;/g')</b>, Chamesle needs Windows support (Wine). It's about 400 MB.\n\nInstall it now?" || exit 0
+        --text="To open <b>$(basename "$f" | sed 's/&/\&amp;/g; s/</\&lt;/g')</b>, Chamesle needs Windows support (Wine).\n\nIt's a 650 MB download and takes about 3 GB on disk.\n\nInstall it now?" || exit 0
     # the subshell keeps the pipe open, so the progress window stays up until apk is done
     (pkexec /usr/libexec/chamesle-store-helper add wine wine-mono wine-gecko dxvk >/dev/null 2>&1; echo 100) |
         zenity --progress --pulsate --auto-close --no-cancel --title="$title" --text="Installing Windows support..."
@@ -41,6 +53,7 @@ setup() {
 }
 
 if [ ! -f "$WINEPREFIX/system.reg" ]; then
+    [ "$(room "$HOME")" -ge 1200 ] || no_room 1
     (setup >/dev/null 2>&1; echo 100) |
         zenity --progress --pulsate --auto-close --no-cancel --title="$title" \
             --text="Setting up Windows support. This only happens once..."

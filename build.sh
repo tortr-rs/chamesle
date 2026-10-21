@@ -92,6 +92,9 @@ echo "=== [3/5] THE LIVE USER"
 "$IN" "$ROOT" /usr/bin/passwd -d live
 "$IN" "$ROOT" /usr/bin/passwd -l root
 echo 'live ALL=(ALL:ALL) NOPASSWD: ALL' > "$ROOT/etc/sudoers.d/live"; chmod 440 "$ROOT/etc/sudoers.d/live"
+# same for the password prompts of the store, drivers and updates: live has no password to type
+mkdir -p "$ROOT/etc/polkit-1/rules.d"
+printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == "live") return polkit.Result.YES;\n});\n' > "$ROOT/etc/polkit-1/rules.d/49-live.rules"
 SESSION=$(sed -n 's/^session=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null || echo "$EDITION")
 printf '# the live session only (the installer removes this file)\n[Seat:*]\nautologin-user=live\nautologin-session=%s\n' "$SESSION" \
     > "$ROOT/etc/lightdm/lightdm.conf.d/90-live.conf"
