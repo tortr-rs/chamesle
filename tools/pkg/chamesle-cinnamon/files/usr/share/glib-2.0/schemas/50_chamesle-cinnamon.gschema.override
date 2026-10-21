@@ -1,0 +1,29 @@
+# the chamesle look for cinnamon, same as the other editions
+[org.cinnamon.desktop.background]
+picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
+picture-options='zoom'
+
+[org.cinnamon.desktop.interface]
+gtk-theme='Fluent-Light'
+icon-theme='Chamesle'
+cursor-theme='Adwaita'
+font-name='Inter 10'
+
+[org.cinnamon.desktop.wm.preferences]
+theme='Fluent-Light'
+titlebar-font='Inter Semi-Bold 10'
+
+[org.cinnamon.theme]
+name='Fluent-Light'
+
+[org.cinnamon.settings-daemon.plugins.xsettings]
+antialiasing='grayscale'
+hinting='slight'
+
+[org.cinnamon]
+panels-height=['1:44']
+
+[org.nemo.desktop]
+home-icon-visible=true
+trash-icon-visible=true
+computer-icon-visible=false

@@ -1,0 +1,5 @@
+# cinnamon edition, the desktop linux mint is known for, set up like windows
+cinnamon nemo-fileroller xreader eog celluloid gnome-terminal gnome-calculator gnome-screenshot gnome-system-monitor xed
+blueman pavucontrol gvfs file-roller
+lightdm xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme
+chamesle-cinnamon

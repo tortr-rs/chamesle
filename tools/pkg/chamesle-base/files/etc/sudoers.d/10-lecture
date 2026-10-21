@@ -1,0 +1,2 @@
+# the first time you use sudo, a word of warning
+Defaults lecture_file=/usr/share/chamesle/sudo-lecture.txt
