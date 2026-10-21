@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
+  <defs>
+    <radialGradient id="skin" cx="0.45" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#b7b9a8"/><stop offset="0.55" stop-color="#8f9283"/><stop offset="1" stop-color="#5d6158"/>
+    </radialGradient>
+    <linearGradient id="fin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c7f70"/><stop offset="1" stop-color="#55594f"/></linearGradient>
+    <radialGradient id="eye" cx="0.45" cy="0.4" r="0.7"><stop offset="0" stop-color="#f3efd8"/><stop offset="1" stop-color="#cfc8a6"/></radialGradient>
+    <radialGradient id="flesh" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#c79a8c"/><stop offset="1" stop-color="#8d5f57"/></radialGradient>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+    <filter id="grit" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="9"/>
+      <feColorMatrix values="0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 0 0.15  0 0 0 0.35 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <clipPath id="body"><path d="M150 210 C 170 120, 300 88, 400 106 C 500 124, 556 200, 560 300 C 566 402, 520 500, 420 540
+      C 330 574, 220 560, 168 500 C 130 456, 112 400, 118 340 C 122 290, 132 246, 150 210 Z"/></clipPath>
+  </defs>
+
+  <g filter="url(#rough)">
+    <!-- floppy fins, torn -->
+    <path d="M330 118 C 342 60, 372 22, 410 10 L 404 40 L 420 44 C 414 84, 404 112, 392 128 Z" fill="url(#fin)" stroke="#3b3f36" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M326 540 C 338 590, 366 622, 404 632 L 398 604 L 414 598 C 406 568, 396 546, 384 530 Z" fill="url(#fin)" stroke="#3b3f36" stroke-width="6" stroke-linejoin="round"/>
+    <!-- the stump where a tail should be -->
+    <path d="M548 236 C 586 240, 600 270, 584 284 C 610 292, 612 326, 588 334 C 614 346, 604 382, 576 382 C 590 404, 568 430, 536 420" fill="#7c7f70" stroke="#3b3f36" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- the body, saggy and lumpy -->
+    <path d="M150 210 C 170 120, 300 88, 400 106 C 500 124, 556 200, 560 300 C 566 402, 520 500, 420 540
+      C 330 574, 220 560, 168 500 C 130 456, 112 400, 118 340 C 122 290, 132 246, 150 210 Z" fill="url(#skin)" stroke="#3b3f36" stroke-width="7"/>
+  </g>
+
+  <g clip-path="url(#body)">
+    <rect width="640" height="640" fill="#000" filter="url(#grit)"/>
+    <!-- fat rolls -->
+    <path d="M150 430 C 250 470, 420 470, 540 420" fill="none" stroke="#5d6158" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+    <path d="M168 486 C 260 524, 400 520, 500 476" fill="none" stroke="#5d6158" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+    <!-- warts -->
+    <circle cx="420" cy="200" r="11" fill="#a3a28c" stroke="#5d6158" stroke-width="3"/>
+    <circle cx="470" cy="300" r="8" fill="#a3a28c" stroke="#5d6158" stroke-width="3"/>
+    <circle cx="350" cy="380" r="9" fill="#a3a28c" stroke="#5d6158" stroke-width="3"/>
+    <circle cx="300" cy="170" r="6" fill="#a3a28c" stroke="#5d6158" stroke-width="2"/>
+    <circle cx="510" cy="230" r="5" fill="#a3a28c" stroke="#5d6158" stroke-width="2"/>
+    <!-- scars -->
+    <path d="M380 260 L 440 240 M392 246 L 396 262 M412 240 L 416 256 M430 236 L 432 250" stroke="#6e4c48" stroke-width="4" stroke-linecap="round"/>
+    <path d="M300 440 C 320 430, 340 432, 356 444" fill="none" stroke="#6e4c48" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- stubby side fin -->
+  <path d="M272 330 C 252 312, 226 318, 224 336 C 236 350, 256 350, 272 342 Z" fill="#7c7f70" stroke="#3b3f36" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- the eye: milky, droopy, with bags -->
+  <path d="M168 248 C 180 290, 236 296, 252 268" fill="none" stroke="#6e5e55" stroke-width="5" stroke-linecap="round"/>
+  <path d="M164 262 C 180 304, 240 308, 258 278" fill="none" stroke="#6e5e55" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <ellipse cx="208" cy="236" rx="34" ry="30" fill="url(#eye)" stroke="#3b3f36" stroke-width="5"/>
+  <ellipse cx="214" cy="244" rx="16" ry="14" fill="#c4bf9f" opacity="0.9"/>
+  <path d="M200 236 l 6 4 l -3 7" fill="none" stroke="#b03a2e" stroke-width="2"/>
+  <path d="M226 228 l -5 6 l 4 5" fill="none" stroke="#b03a2e" stroke-width="2"/>
+  <!-- heavy lid, half shut -->
+  <path d="M172 232 C 180 196, 236 194, 244 230 C 230 226, 190 226, 172 232 Z" fill="#8f9283" stroke="#3b3f36" stroke-width="5" stroke-linejoin="round"/>
+  <!-- a few eyebrow hairs -->
+  <path d="M180 196 l -4 -12 M194 190 l -2 -13 M210 188 l 1 -13 M226 190 l 4 -12" stroke="#3b3f36" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- nose: a human one, bulbous, drawn by hand -->
+  <path d="M146 262 C 140 282, 130 296, 116 306 C 98 318, 96 338, 110 346 C 118 351, 128 348, 134 342
+           C 142 352, 158 352, 166 342 C 174 332, 170 318, 160 312 C 156 294, 154 278, 146 262 Z"
+        fill="url(#flesh)" stroke="#3b3f36" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M147 266 C 142 284, 133 297, 119 308" fill="none" stroke="#3b3f36" stroke-width="1.6" opacity="0.6"/>
+  <path d="M134 342 C 136 332, 144 326, 154 328" fill="none" stroke="#3b3f36" stroke-width="3" stroke-linecap="round"/>
+  <path d="M112 338 C 116 344, 124 344, 128 338" fill="#3a2422" stroke="#3b3f36" stroke-width="2"/>
+  <path d="M150 340 C 154 346, 160 346, 163 340" fill="#3a2422" stroke="#3b3f36" stroke-width="2"/>
+  <circle cx="122" cy="318" r="4" fill="#e7c2b4" opacity="0.7"/>
+  <circle cx="160" cy="300" r="1.5" fill="#5a3a36"/><circle cx="152" cy="312" r="1.5" fill="#5a3a36"/><circle cx="118" cy="326" r="1.5" fill="#5a3a36"/>
+
+  <!-- the groove under the nose -->
+  <path d="M132 354 C 130 360, 130 364, 132 368 M144 354 C 146 360, 146 364, 144 368" fill="none" stroke="#5d6158" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- lips: thick and human, cupid's bow, cracked, half open -->
+  <path d="M96 382 C 104 370, 118 366, 128 370 C 132 366, 140 366, 144 370 C 156 366, 172 372, 178 384
+           C 170 384, 160 382, 150 383 C 140 384, 120 384, 110 383 C 104 383, 100 383, 96 382 Z"
+        fill="#a85a56" stroke="#3b3f36" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M98 386 C 104 404, 124 414, 140 413 C 158 412, 174 402, 178 386 C 166 390, 150 391, 138 391 C 122 391, 108 390, 98 386 Z"
+        fill="#9b4e4b" stroke="#3b3f36" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M100 385 C 116 388, 160 389, 177 385" fill="none" stroke="#2c1a1b" stroke-width="5" stroke-linecap="round"/>
+  <path d="M118 372 l 2 7 M150 370 l -1 7 M112 400 l 3 6 M136 404 l 0 6 M160 400 l -2 6" stroke="#6b3432" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M106 377 C 118 372, 132 374, 140 375" fill="none" stroke="#d48b84" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <!-- one sad tooth -->
+  <path d="M131 386 l 9 0 l -1 8 l -7 0 Z" fill="#e6dcb3" stroke="#3b3f36" stroke-width="2" stroke-linejoin="round"/>
+  <!-- drool -->
+  <path d="M108 404 C 104 420, 110 434, 106 450" fill="none" stroke="#bfd6dc" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="106" cy="454" r="6" fill="#bfd6dc" opacity="0.85"/>
+
+  <!-- double chin with stubble -->
+  <path d="M120 404 C 140 446, 210 452, 240 418" fill="none" stroke="#5d6158" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#3b3f36">
+    <circle cx="140" cy="420" r="1.8"/><circle cx="152" cy="430" r="1.8"/><circle cx="166" cy="426" r="1.8"/>
+    <circle cx="180" cy="436" r="1.8"/><circle cx="196" cy="430" r="1.8"/><circle cx="210" cy="438" r="1.8"/>
+    <circle cx="148" cy="442" r="1.8"/><circle cx="172" cy="446" r="1.8"/><circle cx="190" cy="448" r="1.8"/>
+    <circle cx="222" cy="428" r="1.8"/><circle cx="160" cy="412" r="1.8"/>
+  </g>
+</svg>

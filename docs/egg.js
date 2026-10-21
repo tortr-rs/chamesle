@@ -58,3 +58,28 @@
     }
   });
 })();
+
+// type chum
+(function () {
+  var typed = '';
+  document.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-4);
+    if (typed !== 'chum') return;
+    typed = '';
+    var img = document.createElement('img');
+    img.src = (location.pathname.indexOf('/') === 0 ? '/' : '') + 'img/chum.png';
+    var y = 15 + Math.random() * 55;
+    img.style.cssText = 'position:fixed;width:160px;height:160px;left:100vw;top:' + y + 'vh;z-index:99;' +
+      'pointer-events:none;transform:scaleX(-1);transition:left 9s linear,top 9s ease-in-out';
+    document.body.appendChild(img);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        // he drifts, slowly, and not quite straight
+        img.style.left = '-200px';
+        img.style.top = (y + (Math.random() * 20 - 10)) + 'vh';
+      });
+    });
+    setTimeout(function () { img.remove(); }, 9500);
+  });
+})();
