@@ -48,5 +48,7 @@ printf '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1
 for s in 16 22 24 32 48 64 128 256; do
     mkdir -p $look/icons/Chamesle/${s}x$s/places
     $resvg --resources-dir $tmp -w $s -h $s $tmp/logo.svg $look/icons/Chamesle/${s}x$s/places/start-here.png
+    # cinnamon's menu button asks for this one
+    cp $look/icons/Chamesle/${s}x$s/places/start-here.png $look/icons/Chamesle/${s}x$s/places/cinnamon-symbolic.png
 done
 rm -rf $tmp
