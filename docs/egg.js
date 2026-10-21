@@ -71,7 +71,7 @@
     img.src = (location.pathname.indexOf('/') === 0 ? '/' : '') + 'img/chum.png';
     var y = 15 + Math.random() * 55;
     img.style.cssText = 'position:fixed;width:160px;height:160px;left:100vw;top:' + y + 'vh;z-index:99;' +
-      'pointer-events:none;transform:scaleX(-1);transition:left 9s linear,top 9s ease-in-out';
+      'pointer-events:none;transition:left 9s linear,top 9s ease-in-out';
     document.body.appendChild(img);
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
