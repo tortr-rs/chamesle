@@ -27,7 +27,8 @@ EOF
     rm -f "$list"
     ;;
 *)
-    rsync -av --partial --progress -e ssh "$R/" "$DEST/x86_64/"
+    # --delete-after: versions the weekly sync replaced go from sourceforge too
+    rsync -av --partial --progress --delete-after -e ssh "$R/" "$DEST/x86_64/"
     ;;
 esac
 rsync -av --partial --progress -e ssh out/*.iso out/*.iso.sha256 "$DEST/iso/"

@@ -252,7 +252,7 @@ if __name__ == '__main__':
             f = vs[-1][1]
             if apkname(f) not in have:
                 print(os.path.join(sys.argv[2], f))
-    elif sys.argv[1] == '--prune':
+    elif sys.argv[1] in ('--prune', '--prune-list'):
         byname = {}
         for f in os.listdir(sys.argv[2]):
             n, v = split(f)
@@ -260,6 +260,9 @@ if __name__ == '__main__':
                 byname.setdefault(n, []).append((v, f))
         for name, vs in newest(byname).items():
             for _, old in vs[:-1]:
-                os.remove(os.path.join(sys.argv[2], old))
+                if sys.argv[1] == '--prune-list':
+                    print(old)
+                else:
+                    os.remove(os.path.join(sys.argv[2], old))
     else:
         convert(sys.argv[1], sys.argv[2])
