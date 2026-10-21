@@ -49,7 +49,7 @@ echo "v3 $PUBLIC_REPO" > "$ROOT/etc/apk/repositories"
 
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
-cp -a "$HERE/editions/$EDITION/overlay/." "$ROOT/"
+[ -d "$HERE/editions/$EDITION/overlay" ] && cp -a "$HERE/editions/$EDITION/overlay/." "$ROOT/"
 "$HERE/tools/themes.sh" "$ROOT"
 # xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
 for f in xfce-x.svg xfce-shapes.svg xfce-stripes.png xfce-teal.png xfce-verticals.png; do
@@ -96,14 +96,14 @@ SESSION=$(sed -n 's/^session=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null 
 printf '# the live session only (the installer removes this file)\n[Seat:*]\nautologin-user=live\nautologin-session=%s\n' "$SESSION" \
     > "$ROOT/etc/lightdm/lightdm.conf.d/90-live.conf"
 "$IN" "$ROOT" /usr/bin/xdg-user-dirs-update 2>/dev/null || true
-# installer icon on the desktop, marked trusted at login or xfce asks first
+# installer icon on the desktop, marked trusted at login or xfce and caja ask first
 mkdir -p "$ROOT/home/live/Desktop" "$ROOT/home/live/.config/autostart"
 install -m755 "$ROOT/usr/share/applications/chamesle-install.desktop" "$ROOT/home/live/Desktop/"
 cat > "$ROOT/home/live/.config/autostart/trust-installer.desktop" <<'EOF'
 [Desktop Entry]
 Type=Application
 Name=Trust the installer icon
-Exec=sh -c 'f=$HOME/Desktop/chamesle-install.desktop; gio set "$f" metadata::xfce-exe-checksum "$(sha256sum "$f" | cut -d" " -f1)"'
+Exec=sh -c 'f=$HOME/Desktop/chamesle-install.desktop; gio set "$f" metadata::xfce-exe-checksum "$(sha256sum "$f" | cut -d" " -f1)"; gio set "$f" metadata::trusted true'
 NoDisplay=true
 EOF
 "$IN" "$ROOT" /usr/bin/chown -R live:live /home/live
