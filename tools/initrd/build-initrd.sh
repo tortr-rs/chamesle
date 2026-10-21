@@ -1,20 +1,16 @@
 #!/bin/bash
-# Build Chamesle's initramfs from the system image itself: busybox, cryptsetup (for LUKS installs) and the
-# storage/filesystem kernel modules all come from ROOT, so the build host's own C library and tools never matter.
-#   init (tools/initrd/init) finds the live medium or the installed root, then switch_roots to dinit.
+# makes the live initramfs, everything taken from the image ROOT
 # usage: build-initrd.sh ROOT KVER OUTPUT [BUILD_ID]
-#   INITRD_MODULES, INITRD_MODDIRS, INITRD_EXCLUDE   override the module selection (defaults below)
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(readlink -f "${1:?usage: build-initrd.sh ROOT KVER OUTPUT [BUILD_ID]}"); KVER=${2:?}; OUT=${3:?}; BUILD_ID=${4:-}
 W=$(mktemp -d); trap 'rm -rf "$W"' EXIT
 R=$W/root
-# the image's merged /usr layout: /bin, /sbin -> usr/bin, /lib, /lib64 -> usr/lib
 mkdir -p "$R"/usr/bin "$R"/usr/lib "$R"/{proc,sys,dev,mnt,newroot,overlay,etc}
 ln -s usr/bin "$R/bin"; ln -s usr/bin "$R/sbin"; ln -s usr/lib "$R/lib"; ln -s usr/lib "$R/lib64"
-ln -s lib "$R/usr/lib64"   # void's loader looks in /usr/lib64
+ln -s lib "$R/usr/lib64"   # the loader looks in /usr/lib64
 
-# resolve PATH (absolute, inside the image) through symlinks, inside the image
+# follow symlinks inside the image
 resolve() {
     local p=$1 t i
     for i in 1 2 3 4 5 6 7 8 9 10; do
@@ -23,8 +19,7 @@ resolve() {
     done
     [ -e "$ROOT$p" ] && printf '%s\n' "$p"
 }
-# copy an ELF program or library from the image (by its path in the image), its interpreter and every library it
-# needs, to /usr/lib in the initramfs (where the image keeps them, so the loader finds them as usual)
+# copy a binary and the libs it needs
 seen=" "
 copy_elf() {
     local p real lib interp
@@ -43,14 +38,13 @@ copy_elf() {
 echo "== busybox and cryptsetup from the image"
 copy_elf /usr/bin/busybox
 copy_elf /usr/bin/cryptsetup
-# every applet as a link (the image's busybox, run with the image's loader so this works on any build host)
 BB() { "$ROOT/usr/lib/ld-linux-x86-64.so.2" --library-path "$ROOT/usr/lib" "$ROOT/usr/bin/busybox" "$@" 2>/dev/null \
        || "$ROOT/usr/bin/busybox" "$@"; }
 applets=$(BB --list)
 [ -n "$applets" ] || { echo "initrd: cannot list busybox's applets" >&2; exit 1; }
 for a in $applets; do [ -e "$R/usr/bin/$a" ] || ln -s busybox "$R/usr/bin/$a"; done
 echo "$applets" | grep -x modprobe >/dev/null || { echo "initrd: busybox has no modprobe applet" >&2; exit 1; }
-# plymouth for the boot splash (init starts it when the kernel line says "splash")
+# plymouth
 if [ -x "$ROOT/usr/bin/plymouthd" ]; then
     echo "== plymouth"
     copy_elf /usr/bin/plymouthd
@@ -83,8 +77,7 @@ INITRD_MODULES=${INITRD_MODULES:-"isofs udf squashfs overlay loop sr_mod cdrom s
     virtio_blk virtio_scsi virtio_pci virtio virtio_ring scsi_mod scsi_common libata ata_piix ata_generic pata_acpi
     vmw_pvscsi mptspi mptsas BusLogic hv_storvsc hv_vmbus vfat fat exfat ext4 xfs btrfs f2fs nls_cp437 nls_ascii nls_utf8
     dm_mod dm_crypt"}
-# whole driver directories: the medium may sit behind any controller (QEMU's IDE CD-ROM needs ata_piix, VMware
-# pvscsi, Hyper-V storvsc, ...); init loads the ones the hardware asks for by modalias
+# whole driver dirs, the stick could be behind any controller
 INITRD_MODDIRS=${INITRD_MODDIRS:-"kernel/drivers/ata/ kernel/drivers/scsi/ kernel/drivers/nvme/host/ kernel/drivers/mmc/host/
     kernel/drivers/usb/storage/ kernel/drivers/usb/host/ kernel/drivers/block/virtio_blk kernel/drivers/cdrom/
     kernel/drivers/virtio/ kernel/drivers/hv/"}
@@ -117,6 +110,5 @@ depmod -b "$R/usr" "$KVER" 2>/dev/null || depmod -b "$R" "$KVER"
 [ "$count" -gt 0 ] || { echo "initrd: no kernel modules copied" >&2; exit 1; }
 echo "   $count kernel modules"
 
-# zstd-compressed (the kernel unpacks it); GRUB reads a small file much faster through BIOS disk calls
 ( cd "$R" && find . | sort | cpio -o -H newc -R 0:0 --quiet ) | zstd -q -19 -T0 > "$OUT"
 ls -lh "$OUT"

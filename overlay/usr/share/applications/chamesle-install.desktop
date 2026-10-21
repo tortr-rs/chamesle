@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Install Chamesle
+GenericName=Installer
+Comment=Put Chamesle Linux on this computer
+Exec=chamesle-install
+Icon=chamesle-start
+Terminal=false
+Categories=System;
+Keywords=install;installer;setup;

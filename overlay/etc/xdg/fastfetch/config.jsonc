@@ -1,0 +1,15 @@
+{
+    "logo": {
+        "source": "/usr/share/chamesle/logo.txt",
+        "color": { "1": "green", "2": "red", "3": "blue" },
+        "padding": { "top": 1 }
+    },
+    "display": { "color": { "keys": "blue" } },
+    "modules": [
+        "title", "separator",
+        "os", "host", "kernel", "uptime", "packages", "shell",
+        "display", "de", "wm", "theme", "icons", "font", "terminal",
+        "cpu", "gpu", "memory", "swap", "disk", "localip", "battery", "locale",
+        "break", "colors"
+    ]
+}

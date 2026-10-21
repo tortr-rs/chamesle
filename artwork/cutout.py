@@ -53,42 +53,43 @@ def write_png(path, w, h, px):
         f.write(chunk(b'IEND', b''))
 
 
-w, h, px = read_png(sys.argv[1])
-white = lambda p: min(p[:3]) >= 232
+if __name__ == '__main__':
+    w, h, px = read_png(sys.argv[1])
+    white = lambda p: min(p[:3]) >= 232
 
-# flood fill from the edges, the hole and the gaps are connected to it
-bg = bytearray(w * h)
-q = deque(i for i in range(w * h) if (i < w or i >= w * (h - 1) or i % w in (0, w - 1)) and white(px[i]))
-for i in q:
-    bg[i] = 1
-while q:
-    i = q.popleft()
-    x = i % w
-    for j in (i - 1 if x else -1, i + 1 if x < w - 1 else -1, i - w, i + w):
-        if 0 <= j < w * h and not bg[j] and white(px[j]):
-            bg[j] = 1
-            q.append(j)
+    # flood fill from the edges, the hole and the gaps are connected to it
+    bg = bytearray(w * h)
+    q = deque(i for i in range(w * h) if (i < w or i >= w * (h - 1) or i % w in (0, w - 1)) and white(px[i]))
+    for i in q:
+        bg[i] = 1
+    while q:
+        i = q.popleft()
+        x = i % w
+        for j in (i - 1 if x else -1, i + 1 if x < w - 1 else -1, i - w, i + w):
+            if 0 <= j < w * h and not bg[j] and white(px[j]):
+                bg[j] = 1
+                q.append(j)
 
-for i, p in enumerate(px):
-    if bg[i]:
-        p[3] = 0
-        continue
-    # soft edge: take the white back out of the blended pixels
-    if min(p[:3]) > 150 and any(0 <= j < w * h and bg[j] for j in (i - 1, i + 1, i - w, i + w)):
-        a = max(255 - c for c in p[:3]) / 255
-        if a < 0.02:
+    for i, p in enumerate(px):
+        if bg[i]:
             p[3] = 0
-        else:
-            p[:3] = [max(0, min(255, round((c - 255 * (1 - a)) / a))) for c in p[:3]]
-            p[3] = round(255 * a)
+            continue
+        # soft edge: take the white back out of the blended pixels
+        if min(p[:3]) > 150 and any(0 <= j < w * h and bg[j] for j in (i - 1, i + 1, i - w, i + w)):
+            a = max(255 - c for c in p[:3]) / 255
+            if a < 0.02:
+                p[3] = 0
+            else:
+                p[:3] = [max(0, min(255, round((c - 255 * (1 - a)) / a))) for c in p[:3]]
+                p[3] = round(255 * a)
 
-xs = [i % w for i, p in enumerate(px) if p[3]]
-ys = [i // w for i, p in enumerate(px) if p[3]]
-x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
-side = int(max(x1 - x0, y1 - y0) * 1.04) + 1
-ox, oy = (side - (x1 - x0 + 1)) // 2, (side - (y1 - y0 + 1)) // 2
-out = [[0, 0, 0, 0] for _ in range(side * side)]
-for y in range(y0, y1 + 1):
-    for x in range(x0, x1 + 1):
-        out[(y - y0 + oy) * side + (x - x0 + ox)] = px[y * w + x]
-write_png(sys.argv[2], side, side, out)
+    xs = [i % w for i, p in enumerate(px) if p[3]]
+    ys = [i // w for i, p in enumerate(px) if p[3]]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    side = int(max(x1 - x0, y1 - y0) * 1.04) + 1
+    ox, oy = (side - (x1 - x0 + 1)) // 2, (side - (y1 - y0 + 1)) // 2
+    out = [[0, 0, 0, 0] for _ in range(side * side)]
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            out[(y - y0 + oy) * side + (x - x0 + ox)] = px[y * w + x]
+    write_png(sys.argv[2], side, side, out)

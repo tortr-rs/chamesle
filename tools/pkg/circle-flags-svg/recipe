@@ -1,0 +1,18 @@
+name=circle-flags-svg
+version=2.8.0
+rel=1
+desc="Round flag icons"
+url=https://github.com/HatScripts/circle-flags
+license=MIT
+source=https://github.com/HatScripts/circle-flags/archive/refs/tags/v$version.tar.gz
+sha256=8e939cec80c1910ef27448072d0fa9822040f35f0566cb76c133326ff989e98f
+makedeps=""
+depends=""
+
+build() {
+    install -d "$pkgdir/usr/share/circle-flags-svg" "$pkgdir/usr/share/licenses/circle-flags-svg"
+    cp flags/*.svg "$pkgdir/usr/share/circle-flags-svg/"
+    # the installer's fallback flag
+    ln -s un.svg "$pkgdir/usr/share/circle-flags-svg/united_nations.svg"
+    install -m644 LICENSE.md "$pkgdir/usr/share/licenses/circle-flags-svg/"
+}

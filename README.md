@@ -6,7 +6,7 @@ apps come from Flathub, and there's a real package manager underneath if you wan
 - **pkgimport**: double-click any `.deb` or `.rpm` and it installs, with the libraries it needs
 - glibc, **dinit** for init, **apk** for packages
 - the Chamesle repo: almost 15,000 packages, all signed
-- Calamares installer: next to Windows, whole disk or manual, optional encryption
+- an installer based on Linux Mint's: whole disk (with encryption or LVM) or your own partitions, GParted built in
 - linux-firmware, Mesa, os-prober and Firefox out of the box
 
 Editions: **Xfce** (set up like Windows) now, MATE, Cinnamon, GNOME and KDE Plasma later.
@@ -34,7 +34,7 @@ public one.
 
 ```sh
 ALL=1 tools/repo/build-repo.sh     # the whole repo, takes a while and ~60G
-tools/pkg/build.sh calamares       # one of our own packages, built from source
+tools/pkg/build.sh python3-parted   # one of our own packages, built from source
 ```
 
 Signing needs a key in `~/.config/chamesle/` (made on the first run). Keep it to yourself, only the `.pub`
@@ -55,6 +55,11 @@ goes in `keys/apk/`.
 | `artwork/` | wallpaper and logo (`render.sh`) |
 | `docs/` | the website |
 | `keys/apk/` | public signing key |
+
+## Credits
+
+The installer is Linux Mint's [live-installer](https://github.com/linuxmint/live-installer) (GPL-2.0-or-later,
+Clement Lefebvre and the Mint team), changed to install Chamesle.
 
 ## Helping out
 

@@ -1,4 +1,4 @@
-# Printing (CUPS).
+# printing
 type = process
 command = /usr/bin/cupsd -f
 depends-on = dbus

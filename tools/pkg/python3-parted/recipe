@@ -1,0 +1,15 @@
+name=python3-parted
+version=3.13.0
+rel=1
+desc="Python bindings for libparted"
+url=https://github.com/dcantrell/pyparted
+license=GPL-2.0-or-later
+source=https://files.pythonhosted.org/packages/e7/53/b02306f89dc3eaf949659e8814545cde575867bc0175f60361809af7f71a/pyparted-$version.tar.gz
+sha256=443b59eb9ac63b8ca87094e02376646e172c7ea075f955f105889ca3485b06fd
+makedeps="gcc pkg-config python3-devel python3-setuptools libparted-devel"
+depends="python3 libparted"
+
+build() {
+    python3 setup.py build
+    python3 setup.py install --root="$pkgdir" --prefix=/usr --optimize=1
+}

@@ -1,0 +1,12 @@
+#!/bin/sh
+if [ "$(id -u)" -ne 0 ]; then
+	echo 'live-installer must be run with sudo.' >&2
+	exit 1
+fi
+
+optimize='OO'; case "$*" in *--debug*) unset optimize; esac
+
+# the slideshow is broken in virtualbox without this
+export WEBKIT_DISABLE_COMPOSITING_MODE=1
+
+exec python3 -tt${optimize} /usr/lib/live-installer/main.py "$@"

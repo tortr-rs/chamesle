@@ -1,5 +1,4 @@
-# The boot target dinit starts at PID 1 start-up. `dinitctl stop boot` (or `shutdown`) runs the shutdown.
-# Services you turn on with `dinitctl enable NAME` are links in boot.d.
+# what dinit starts at boot. dinitctl enable NAME adds a link in boot.d
 type = internal
 depends-on = early-filesystems
 depends-on = udev-trigger

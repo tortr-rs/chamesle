@@ -1,4 +1,4 @@
-# Console keymap and font from /etc/vconsole.conf (KEYMAP=..., FONT=...).
+# keymap and font from /etc/vconsole.conf
 type = scripted
 command = /usr/lib/dinit/console-setup
 depends-on = early-filesystems

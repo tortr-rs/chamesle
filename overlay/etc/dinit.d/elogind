@@ -1,5 +1,4 @@
-# Login and seat management (the logind API without systemd): user sessions, /run/user/UID, suspend and
-# shutdown from the desktop, device access for the logged-in user.
+# sessions, /run/user, suspend and shutdown from the desktop
 type = process
 command = /usr/libexec/elogind/elogind
 depends-on = dbus

@@ -1,6 +1,8 @@
 #!/bin/sh
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
-# Mount what the initramfs leaves out. Safe to run twice (already mounted places are skipped).
+# the initramfs mounts / read-only (grub says "ro"): it's ours now
+mount -o remount,rw /
+# mount what the initramfs didn't
 m() { mountpoint -q "$4" || { mkdir -p "$4"; mount -t "$1" -o "$2" "$3" "$4"; }; }
 m proc    nosuid,nodev,noexec proc   /proc
 m sysfs   nosuid,nodev,noexec sysfs  /sys
@@ -9,9 +11,9 @@ m tmpfs   mode=0755,nosuid,nodev tmpfs /run
 m devpts  gid=5,mode=0620,nosuid,noexec devpts /dev/pts
 m tmpfs   mode=1777,nosuid,nodev tmpfs /dev/shm
 m tmpfs   mode=1777,nosuid,nodev tmpfs /tmp
-# the cgroup v2 hierarchy: elogind tracks user sessions in it
+# cgroup2, elogind needs it
 m cgroup2 nsdelegate,nosuid,nodev,noexec cgroup2 /sys/fs/cgroup
-# services write their output to /var/log/NAME.log (dinit cannot start them if the directory is missing)
+# dinit won't start services if /var/log is missing
 mkdir -p /var/log
 [ -d /sys/firmware/efi/efivars ] && m efivarfs nosuid,nodev,noexec efivarfs /sys/firmware/efi/efivars
 exit 0

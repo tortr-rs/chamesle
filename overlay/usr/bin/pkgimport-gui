@@ -1,0 +1,20 @@
+#!/bin/sh
+# what opens when you double-click a .deb or .rpm
+f=$1
+[ -f "$f" ] || exit 1
+name=$(basename "$f")
+zenity --question --title="Install package" --icon=system-software-install --ok-label=Install \
+    --text="Install <b>$name</b>?\n\nOnly install packages from sites you trust." || exit 0
+log=$(mktemp)
+pkexec /usr/bin/pkgimport install "$f" > "$log" 2>&1 &
+pid=$!
+while kill -0 $pid 2>/dev/null; do echo "#Installing $name..."; sleep 1; done | \
+    zenity --progress --pulsate --auto-close --no-cancel --title="Install package" --text="Installing $name..."
+wait $pid
+if [ $? = 0 ]; then
+    pkg=$(sed -n 's/.* -> \([^ ]*\) (.*/\1/p' "$log" | head -n1)
+    zenity --info --title="Install package" --text="<b>$name</b> is installed.\nRemove it with: sudo apk del $pkg"
+else
+    zenity --text-info --title="Couldn't install $name" --width=640 --height=420 --filename="$log"
+fi
+rm -f "$log"
