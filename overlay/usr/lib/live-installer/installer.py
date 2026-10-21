@@ -218,7 +218,7 @@ class InstallerEngine:
         # remove what only the live session has
         print(" --> Removing live configuration")
         self.update_progress(20, False, False, _("Removing live configuration (packages)"))
-        for path in ("/etc/sudoers.d/live", "/etc/lightdm/lightdm.conf.d/90-live.conf",
+        for path in ("/etc/sudoers.d/live", "/etc/polkit-1/rules.d/49-live.rules", "/etc/lightdm/lightdm.conf.d/90-live.conf",
                      "/usr/share/applications/chamesle-install.desktop", "/usr/bin/chamesle-install",
                      "/usr/bin/live-installer", "/usr/lib/live-installer", "/usr/share/live-installer",
                      "/usr/share/icons/live-installer-progress-dot-on.png",
