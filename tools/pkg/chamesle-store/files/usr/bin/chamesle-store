@@ -222,7 +222,21 @@ class Store(Adw.Application):
         self.win = Adw.ApplicationWindow(application=self, title="Store", default_width=1000, default_height=720)
         self.toasts = Adw.ToastOverlay()
         self.nav = Adw.NavigationView()
-        self.toasts.set_child(self.nav)
+        self.prog = Gtk.ProgressBar(hexpand=True, valign=Gtk.Align.CENTER)
+        self.prog_label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, width_chars=30)
+        bar = Gtk.Box(spacing=12, margin_top=8, margin_bottom=8, margin_start=12, margin_end=12)
+        bar.append(Gtk.Spinner(spinning=True))
+        bar.append(self.prog_label)
+        bar.append(self.prog)
+        inner = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        inner.append(Gtk.Separator())
+        inner.append(bar)
+        self.prog_bar = Gtk.Revealer(child=inner, transition_type=Gtk.RevealerTransitionType.SLIDE_UP)
+        outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.nav.set_vexpand(True)
+        outer.append(self.nav)
+        outer.append(self.prog_bar)
+        self.toasts.set_child(outer)
         self.win.set_content(self.toasts)
 
         self.stack = Adw.ViewStack()
@@ -460,30 +474,48 @@ class Store(Adw.Application):
 
     # ---- doing things
 
-    def job(self, cmd, done_text, then=None):
+    def show_progress(self, text, frac):
+        # frac None: no numbers yet, just keep the bar moving
+        self.prog_label.set_label(text)
+        if frac is None:
+            self.prog.pulse()
+        else:
+            self.prog.set_fraction(max(0.0, min(1.0, frac)))
+        self.prog_bar.set_reveal_child(True)
+
+    def job(self, title, work, done_text, then=None):
+        """run work(report) in a thread; report(text, fraction) moves the bar; work returns an error or None"""
         if self.busy:
             self.toast("One thing at a time, the last one is still going")
             return
         self.busy = True
-        self.toast("Working…")
+        self.show_progress(title, 0.0)
+        pulse = GLib.timeout_add(250, lambda: (self.prog.get_fraction() == 0 and self.prog.pulse(), True)[1])
+
+        def report(text, frac):
+            GLib.idle_add(self.show_progress, text, frac)
 
         def go():
-            r = subprocess.run(cmd, capture_output=True, text=True)
-            GLib.idle_add(finish, r)
+            try:
+                err = work(report)
+            except Exception as e:
+                err = str(e)
+            GLib.idle_add(finish, err)
 
-        def finish(r):
+        def finish(err):
             self.busy = False
-            if r.returncode == 0:
+            GLib.source_remove(pulse)
+            self.prog_bar.set_reveal_child(False)
+            if not err:
                 self.toast(done_text)
-            elif r.returncode in (126, 127):
+            elif err == "cancelled":
                 self.toast("Cancelled")
             else:
                 # the whole error, scrollable and copyable, and kept in a file to send to someone
-                err = (r.stderr or r.stdout).strip()
                 log = os.path.join(CACHE, "last-error.txt")
                 os.makedirs(CACHE, exist_ok=True)
                 with open(log, "w") as f:
-                    f.write(" ".join(cmd) + "\n\n" + err + "\n")
+                    f.write(title + "\n\n" + err + "\n")
                 text = Gtk.TextView(editable=False, monospace=True, wrap_mode=Gtk.WrapMode.WORD_CHAR,
                                     top_margin=8, bottom_margin=8, left_margin=8, right_margin=8)
                 text.get_buffer().set_text(err)
@@ -499,16 +531,89 @@ class Store(Adw.Application):
             threading.Thread(target=self.check_updates, daemon=True).start()
         threading.Thread(target=go, daemon=True).start()
 
+    def apk_job(self, args, title):
+        # the helper runs apk with --progress-fd 1: lines like "1234/56789" (bytes done/total) on stdout
+        def work(report):
+            p = subprocess.Popen(["pkexec", HELPER] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            err = []
+            t = threading.Thread(target=lambda: err.extend(p.stderr.readlines()), daemon=True)
+            t.start()
+            out, label = [], title
+            for line in p.stdout:
+                # "85973/14385942 install" is progress, "(2/9) Installing glibc (2.41-r1)" says what it's on
+                m = re.match(r"(\d+)/(\d+)\b", line)
+                step = re.match(r"\((\d+)/(\d+)\) \w+ (\S+)", line)
+                if m and int(m.group(2)):
+                    report(label, int(m.group(1)) / int(m.group(2)))
+                elif step:
+                    label = "%s · %s (%s of %s)" % (title, step.group(3), step.group(1), step.group(2))
+                    out.append(line)
+                else:
+                    out.append(line)
+            p.wait()
+            t.join()
+            if p.returncode in (126, 127):
+                return "cancelled"
+            return None if p.returncode == 0 else ("".join(err) or "".join(out)).strip()
+        return work
+
+    def flatpak_job(self, refs, title, remove=False, update=False):
+        # through libflatpak, so there are real numbers to show
+        def work(report):
+            gi.require_version("Flatpak", "1.0")
+            from gi.repository import Flatpak
+            inst = Flatpak.Installation.new_system(None)
+            t = Flatpak.Transaction.new_for_installation(inst, None)
+            arch = Flatpak.get_default_arch()
+            for ref in refs:
+                full = ref if ref.startswith("app/") else "app/%s/%s/stable" % (ref, arch)
+                if remove:
+                    t.add_uninstall(full)
+                elif update:
+                    t.add_update(full, None, None)
+                else:
+                    t.add_install("flathub", full, None)
+            state = {"n": 0}
+
+            def new_op(t, op, progress):
+                state["n"] += 1
+                total = max(len(t.get_operations()), 1)
+                name = op.get_ref().split("/")[1]
+                progress.set_update_frequency(300)
+
+                def changed(progress):
+                    frac = (state["n"] - 1 + progress.get_progress() / 100) / total
+                    report("%s (%d of %d: %s)" % (title, state["n"], total, name), frac)
+                progress.connect("changed", changed)
+                changed(progress)
+            t.connect("new-operation", new_op)
+            try:
+                t.run(None)
+            except GLib.Error as e:
+                return "cancelled" if "cancel" in e.message.lower() else e.message
+            return None
+        return work
+
     def install_or_remove(self, app, src, then):
         inst = src in self.catalog.installed(app)
+        title = "%s %s" % ("Removing" if inst else "Installing", app.name)
         if src.kind == "flathub":
-            cmd = ["flatpak", "uninstall" if inst else "install", "-y", "--noninteractive"] + ([] if inst else ["flathub"]) + [src.ref]
+            work = self.flatpak_job([src.ref], title, remove=inst)
         else:
-            cmd = ["pkexec", HELPER, "del" if inst else "add", src.ref]
-        self.job(cmd, "%s %s" % (app.name, "removed" if inst else "installed"), then)
+            work = self.apk_job(["del" if inst else "add", src.ref], title)
+        self.job(title, work, "%s %s" % (app.name, "removed" if inst else "installed"), then)
 
     def update_all(self):
-        self.job(["sh", "-c", "pkexec %s upgrade && flatpak update -y --noninteractive" % HELPER], "Everything is up to date")
+        def work(report):
+            err = self.apk_job(["upgrade"], "Updating the system")(report)
+            if err:
+                return err
+            from gi.repository import Flatpak
+            refs = [r.format_ref() for r in Flatpak.Installation.new_system(None).list_installed_refs_for_update(None)
+                    if r.get_kind() == Flatpak.RefKind.APP]
+            return self.flatpak_job(refs, "Updating apps", update=True)(report) if refs else None
+        gi.require_version("Flatpak", "1.0")
+        self.job("Updating everything", work, "Everything is up to date")
 
     def pick_file(self):
         f = Gtk.FileFilter(name=".deb and .rpm packages")
@@ -526,7 +631,8 @@ class Store(Adw.Application):
             pass
 
     def import_file(self, path):
-        self.job(["pkexec", HELPER, "import", path], "%s is installed" % os.path.basename(path))
+        title = "Installing " + os.path.basename(path)
+        self.job(title, self.apk_job(["import", path], title), "%s is installed" % os.path.basename(path))
 
 
 if __name__ == "__main__":
