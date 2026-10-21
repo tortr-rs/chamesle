@@ -49,7 +49,9 @@ todo=$OUT/todo.list
 FIRST=
 if ls "$OUT"/index-*.plist >/dev/null 2>&1; then
     FIRST=$OUT/first.list
-    sed 's/#.*//' "$HERE"/../../editions/*.packages "$HERE"/../../editions/*/packages | tr ' \t' '\n\n' | grep -v '^$' |
+    # the editions' packages and what our own packages (tools/pkg) depend on
+    { sed 's/#.*//' "$HERE"/../../editions/*.packages "$HERE"/../../editions/*/packages
+      sed -n 's/^depends="\(.*\)"/\1/p' "$HERE"/../pkg/*/recipe; } | tr ' \t' '\n\n' | grep -v '^$' |
         python3 "$HERE/xbps2apk.py" --closure "$OUT"/index-*.plist > "$FIRST"
 fi
 python3 "$HERE/xbps2apk.py" --todo "$CACHE" "$OUT/$ARCH" $FIRST > "$todo"
