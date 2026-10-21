@@ -27,6 +27,23 @@
 <h1>What's new in 0.2</h1>
 <p>0.2 is out. Get it from the <a href="download.html">download page</a>.</p>
 
+<h2>Since the release</h2>
+<p>Being rolling means 0.2 keeps getting better without a new ISO. Since it came out:</p>
+<ul>
+  <li><b>A Cinnamon edition.</b> Linux Mint's own desktop, next to Xfce and MATE. <a href="editions.html">Have a look</a>.</li>
+  <li><b>An update notifier.</b> A small icon shows up next to the clock when there are updates. Click it, type your
+  password, done. It covers system packages and Flathub apps.</li>
+  <li><b>Driver Manager.</b> It looks at your hardware and tells you if something works better with another
+  driver: NVIDIA cards (it picks the right driver for how old the card is), some Broadcom Wi-Fi chips, HP printers,
+  VirtualBox and VMware. One click, then a restart.</li>
+  <li><b>The store shows a progress bar</b> while it downloads, so big apps don't look stuck.</li>
+  <li><b>Fixed:</b> some Flathub apps wouldn't install and showed a long error about a kernel module.</li>
+</ul>
+<p>Already running 0.2? <code>sudo apk upgrade</code> gets the fixes. The two new apps are separate packages, so
+add them once:</p>
+<pre><code>sudo apk add chamesle-updater chamesle-drivers chamesle-base</code></pre>
+<p>New downloads of 0.2 have all of it.</p>
+
 <h2>pkgimport: .deb and .rpm, just double-click</h2>
 <p>Most Linux apps on the web come as a <code>.deb</code> (Ubuntu, Debian) or an <code>.rpm</code> (Fedora, openSUSE).
 On Chamesle you don't have to care which. Double-click either one and <b>pkgimport</b> installs it: it converts
@@ -78,8 +95,7 @@ pinned to the long-term support line (6.18 now). New ISOs come every 6 months.</
 </ul>
 
 <h2>Still to come</h2>
-<p>The update notifier and the driver manager moved to 0.3, together with the store. Better done right
-than rushed. See the <a href="about.html#roadmap">roadmap</a>.</p>
+<p>0.3 brings a GNOME edition and a better store. See the <a href="about.html#roadmap">roadmap</a>.</p>
 
 </main>
 
