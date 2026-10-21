@@ -106,7 +106,7 @@ function pick(bar, attr, set) {
 }
 pick(document.getElementById('sort'), 's', function (v) { sort = v; });
 pick(cats, 'c', function (v) { cat = v; });
-fetch('board.json').then(function (r) { return r.json(); }).then(function (d) { all = d; show(); })
+fetch('board.json?' + Date.now()).then(function (r) { return r.json(); }).then(function (d) { all = d; show(); })
   .catch(function () { document.getElementById('empty').textContent = "Couldn't load the board. Try reloading."; });
 </script>
 

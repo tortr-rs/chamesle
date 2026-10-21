@@ -65,7 +65,7 @@ function giscus(el, cat, mapping, term) {
 }
 
 var n = new URLSearchParams(location.search).get('n');
-fetch('board.json').then(function (r) { return r.json(); }).then(function (d) {
+fetch('board.json?' + Date.now()).then(function (r) { return r.json(); }).then(function (d) {
   var p = d.filter(function (x) { return String(x.n) === n; })[0];
   if (!p) {
     // brand new, the board catches up within a few minutes
