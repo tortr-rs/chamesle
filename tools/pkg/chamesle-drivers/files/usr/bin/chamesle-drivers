@@ -1,0 +1,183 @@
+#!/usr/bin/python3
+# Driver Manager: finds hardware that works better with an extra driver and installs it
+import os, re, subprocess, threading
+
+import gi
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Adw, GLib, Gtk
+
+HELPER = "/usr/libexec/chamesle-store-helper"
+
+# nvidia chips by codename prefix (as named in the pci id database) -> the driver series that supports them
+NVIDIA = [
+    (r"^GF", "nvidia390", "GeForce 400 and 500 series"),
+    (r"^GK", "nvidia470", "GeForce 600 and 700 series"),
+    (r"^(GM|GP|GV)", "nvidia580", "GeForce 900 and 1000 series"),
+    (r"^(TU|GA|AD|GB|GH)", "nvidia", "GeForce 16, RTX and newer"),
+]
+# broadcom wifi chips the in-kernel drivers don't handle, the wl driver does
+BROADCOM_WL = {"4311", "4312", "4313", "4315", "4328", "4329", "432a", "432b", "432c", "432d",
+               "4353", "4357", "4358", "4359", "4365", "43a0", "43b1"}
+
+
+def run(cmd):
+    return subprocess.run(cmd, capture_output=True, text=True).stdout
+
+
+def installed():
+    return set(run(["apk", "info", "--quiet"]).split())
+
+
+def pci_devices():
+    # lspci -mm -nn: slot "class [code]" "vendor [id]" "device [id]" ...
+    out = []
+    for line in run(["lspci", "-mm", "-nn"]).splitlines():
+        f = re.findall(r'"([^"]*)"', line)
+        if len(f) < 3:
+            continue
+        slot = line.split()[0]
+        cls = re.search(r"\[(\w+)\]$", f[0])
+        ven = re.search(r"\[(\w+)\]$", f[1])
+        dev = re.search(r"\[(\w+)\]$", f[2])
+        bound = os.path.exists("/sys/bus/pci/devices/0000:%s/driver" % slot)
+        out.append({"class": cls.group(1) if cls else "", "vendor": ven.group(1) if ven else "",
+                    "device": dev.group(1) if dev else "", "name": re.sub(r"\s*\[\w+\]$", "", f[2]),
+                    "bound": bound})
+    return out
+
+
+def dmi(key):
+    try:
+        return open("/sys/class/dmi/id/" + key).read().strip()
+    except OSError:
+        return ""
+
+
+def find():
+    """what this computer could use: [(title, description, [(label, package or None, recommended)])]"""
+    found = []
+    for d in pci_devices():
+        if d["vendor"] == "10de" and d["class"].startswith("03"):
+            chip = re.match(r"(\w+?\d+)", d["name"])
+            pkg = desc = None
+            for pat, p, what in NVIDIA:
+                if chip and re.match(pat, chip.group(1)):
+                    pkg, desc = p, what
+            title = "NVIDIA " + re.sub(r"^\w+\s*", "", d["name"]).strip("[] ")
+            if pkg:
+                found.append((title, "The NVIDIA driver is faster and needed for most games (%s)." % desc,
+                              [("NVIDIA driver (%s)" % pkg, pkg, True), ("Open source driver (nouveau)", None, False)]))
+            else:
+                found.append((title, "This card is too old for the NVIDIA driver, the open source one is used.",
+                              [("Open source driver (nouveau)", None, True)]))
+        elif d["vendor"] == "14e4" and d["class"] == "0280" and d["device"] in BROADCOM_WL:
+            found.append(("Broadcom " + d["name"], "This Wi-Fi chip needs Broadcom's driver to work.",
+                          [("Broadcom STA driver (wl)", "broadcom-wl-dkms", True),
+                           ("Don't install it", None, False)]))
+    vendor, product = dmi("sys_vendor"), dmi("product_name")
+    if "VirtualBox" in product or "innotek" in vendor:
+        found.append(("VirtualBox", "Shared clipboard, window resizing and shared folders with your PC.",
+                      [("VirtualBox guest additions", "virtualbox-ose-guest", True), ("None", None, False)]))
+    elif "VMware" in vendor or "VMware" in product:
+        found.append(("VMware", "Shared clipboard, window resizing and better graphics.",
+                      [("VMware tools", "open-vm-tools", True), ("None", None, False)]))
+    if re.search(r"ID 03f0:", run(["lsusb"])):
+        found.append(("HP printer or scanner", "HP's own drivers support more printers and scanners.",
+                      [("HP drivers (hplip)", "hplip", True), ("None", None, False)]))
+    return found
+
+
+class Drivers(Adw.Application):
+    def __init__(self):
+        super().__init__(application_id="org.chamesle.Drivers")
+
+    def do_activate(self):
+        if self.get_active_window():
+            self.get_active_window().present()
+            return
+        self.win = Adw.ApplicationWindow(application=self, title="Driver Manager", default_width=720, default_height=560)
+        self.toasts = Adw.ToastOverlay()
+        view = Adw.ToolbarView()
+        view.add_top_bar(Adw.HeaderBar())
+        self.apply = Gtk.Button(label="Apply changes", css_classes=["suggested-action", "pill"], sensitive=False,
+                                halign=Gtk.Align.CENTER, margin_top=6, margin_bottom=12)
+        self.apply.connect("clicked", lambda *a: self.do_apply())
+        self.body = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=18)
+        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        page.append(Gtk.ScrolledWindow(vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                       child=Adw.Clamp(child=self.body, maximum_size=640, margin_top=18,
+                                                       margin_start=12, margin_end=12, margin_bottom=12)))
+        page.append(self.apply)
+        view.set_content(page)
+        self.toasts.set_child(view)
+        self.win.set_content(self.toasts)
+        spin = Adw.StatusPage(title="Looking at your hardware")
+        spin.set_child(Gtk.Spinner(spinning=True, width_request=32, height_request=32))
+        self.body.append(spin)
+        self.win.present()
+        threading.Thread(target=lambda: GLib.idle_add(self.show, find(), installed()), daemon=True).start()
+
+    def show(self, found, have):
+        while self.body.get_first_child():
+            self.body.remove(self.body.get_first_child())
+        self.choices = []
+        if not found:
+            self.body.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title="Nothing to do",
+                                            description="Your hardware works with the drivers that are already installed."))
+            return
+        for title, desc, options in found:
+            group = Adw.PreferencesGroup(title=GLib.markup_escape_text(title), description=desc)
+            first = None
+            current = next((i for i, (_, p, _) in enumerate(options) if p and p in have), None)
+            if current is None:
+                current = next(i for i, (_, p, _) in enumerate(options) if p is None) if any(p is None for _, p, _ in options) else 0
+            for i, (label, pkg, rec) in enumerate(options):
+                check = Gtk.CheckButton(group=first, active=(i == current))
+                first = first or check
+                row = Adw.ActionRow(title=label, activatable_widget=check,
+                                    subtitle=("Recommended" if rec else "") + (" · installed" if pkg and pkg in have else ""))
+                row.add_prefix(check)
+                check.connect("toggled", lambda *a: self.changed())
+                group.add(row)
+                self.choices.append((check, pkg, i == current))
+            self.body.append(group)
+        self.body.append(Gtk.Label(label="Installing a driver needs your password, and usually a restart after.",
+                                   css_classes=["dim-label", "caption"], wrap=True))
+
+    def changed(self):
+        self.apply.set_sensitive(any(c.get_active() != was for c, _, was in self.choices))
+
+    def do_apply(self):
+        add = [p for c, p, was in self.choices if c.get_active() and not was and p]
+        remove = [p for c, p, was in self.choices if was and not c.get_active() and p]
+        self.apply.set_sensitive(False)
+        self.toasts.add_toast(Adw.Toast(title="Working on it, this can take a few minutes", timeout=0))
+
+        def go():
+            ok, err = True, ""
+            for cmd, pkgs in (("del", remove), ("driver", add)):
+                if pkgs:
+                    r = subprocess.run(["pkexec", HELPER, cmd] + pkgs, capture_output=True, text=True)
+                    if r.returncode:
+                        ok, err = False, (r.stderr or r.stdout).strip()[-1500:]
+                        break
+            GLib.idle_add(done, ok, err)
+
+        def done(ok, err):
+            if ok:
+                d = Adw.AlertDialog(heading="Done", body="Restart the computer to start using the new driver.")
+                d.add_response("later", "Later")
+                d.add_response("restart", "Restart now")
+                d.set_response_appearance("restart", Adw.ResponseAppearance.SUGGESTED)
+                d.connect("response", lambda d, r: r == "restart" and subprocess.Popen(["loginctl", "reboot"]))
+            else:
+                d = Adw.AlertDialog(heading="That didn't work", body=err)
+                d.add_response("ok", "OK")
+            d.present(self.win)
+            threading.Thread(target=lambda: GLib.idle_add(self.show, find(), installed()), daemon=True).start()
+        threading.Thread(target=go, daemon=True).start()
+
+
+if __name__ == "__main__":
+    Drivers().run(None)

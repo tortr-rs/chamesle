@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Update Notifier
+Comment=Shows an icon when there are updates
+Exec=chamesle-updater
+Icon=software-update-available
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

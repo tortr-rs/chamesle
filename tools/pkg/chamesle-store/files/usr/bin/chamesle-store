@@ -206,10 +206,11 @@ def icon_widget(app, size):
 
 
 class Store(Adw.Application):
-    def __init__(self):
+    def __init__(self, updates=False):
         super().__init__(application_id="org.chamesle.Store", flags=Gio.ApplicationFlags.HANDLES_OPEN)
         self.catalog = Catalog()
         self.busy = False
+        self.start_on_updates = updates
 
     # ---- window
 
@@ -293,6 +294,8 @@ class Store(Adw.Application):
 
     def loaded(self):
         self.main_stack.set_visible_child_name("tabs")
+        if self.start_on_updates:
+            self.stack.set_visible_child_name("updates")
         self.fill_explore()
         self.refresh_tab()
         threading.Thread(target=self.check_updates, daemon=True).start()
@@ -475,7 +478,18 @@ class Store(Adw.Application):
             elif r.returncode in (126, 127):
                 self.toast("Cancelled")
             else:
-                d = Adw.AlertDialog(heading="That didn't work", body=(r.stderr or r.stdout).strip()[-1500:])
+                # the whole error, scrollable and copyable, and kept in a file to send to someone
+                err = (r.stderr or r.stdout).strip()
+                log = os.path.join(CACHE, "last-error.txt")
+                os.makedirs(CACHE, exist_ok=True)
+                with open(log, "w") as f:
+                    f.write(" ".join(cmd) + "\n\n" + err + "\n")
+                text = Gtk.TextView(editable=False, monospace=True, wrap_mode=Gtk.WrapMode.WORD_CHAR,
+                                    top_margin=8, bottom_margin=8, left_margin=8, right_margin=8)
+                text.get_buffer().set_text(err)
+                box = Gtk.ScrolledWindow(child=text, min_content_height=220, min_content_width=480)
+                d = Adw.AlertDialog(heading="That didn't work", body="The full error is also saved in " + log)
+                d.set_extra_child(box)
                 d.add_response("ok", "OK")
                 d.present(self.win)
             self.catalog.load_installed()
@@ -516,4 +530,6 @@ class Store(Adw.Application):
 
 
 if __name__ == "__main__":
-    sys.exit(Store().run(sys.argv))
+    # --updates: open on the updates tab (the update notifier does that)
+    updates = "--updates" in sys.argv
+    sys.exit(Store(updates).run([a for a in sys.argv if a != "--updates"]))

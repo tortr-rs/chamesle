@@ -1,0 +1,5 @@
+# kernel modules from modules-load.d (fuse for flatpak and appimages, ...)
+type = scripted
+command = /usr/lib/dinit/modules
+depends-on = early-filesystems
+restart = false

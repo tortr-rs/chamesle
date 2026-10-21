@@ -1,0 +1,10 @@
+#!/bin/sh
+# load the kernel modules listed in modules-load.d, like every other distro does at boot
+export PATH=/usr/bin:/usr/sbin
+for f in /usr/lib/modules-load.d/*.conf /etc/modules-load.d/*.conf; do
+    [ -f "$f" ] || continue
+    sed 's/#.*//' "$f" | while read -r m; do
+        [ -n "$m" ] && modprobe -b "$m" 2>/dev/null
+    done
+done
+exit 0

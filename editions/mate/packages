@@ -1,5 +1,8 @@
 # mate edition, set up like windows, light enough for old machines
-mate mate-menu mate-media mate-power-manager mate-screensaver mate-system-monitor mate-terminal mate-utils mate-calc
+# mate's own parts without the "mate" bundle: it adds 200M+ of themes, wallpapers and manuals we don't use
+mate-desktop mate-session-manager mate-settings-daemon mate-panel mate-menus mate-control-center
+mate-notification-daemon mate-polkit mate-icon-theme marco caja
+mate-menu mate-media mate-power-manager mate-screensaver mate-system-monitor mate-terminal mate-utils mate-calc
 caja-open-terminal pluma eom atril engrampa
 network-manager-applet blueman pavucontrol gvfs
 lightdm xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme gnome-themes-extra
