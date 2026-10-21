@@ -1,0 +1,519 @@
+#!/usr/bin/python3
+# Chamesle Store: apps from Flathub and from the Chamesle repo in one place, plus .deb/.rpm files through pkgimport
+import gzip, json, os, re, subprocess, sys, threading, urllib.request
+import xml.etree.ElementTree as ET
+
+import gi
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Adw, Gio, GLib, GObject, Gtk, Pango
+
+APPSTREAM = "/var/lib/flatpak/appstream/flathub/x86_64/active"
+CACHE = os.path.join(GLib.get_user_cache_dir(), "chamesle-store")
+HELPER = "/usr/libexec/chamesle-store-helper"
+
+FEATURED = ["com.spotify.Client", "com.discordapp.Discord", "com.valvesoftware.Steam", "com.obsproject.Studio",
+            "org.gimp.GIMP", "org.libreoffice.LibreOffice", "org.videolan.VLC", "org.telegram.desktop",
+            "org.kde.krita", "org.blender.Blender", "com.visualstudio.code", "org.inkscape.Inkscape"]
+
+# freedesktop categories -> what the store shows
+CATEGORIES = [
+    ("Games", "Game", "applications-games-symbolic"),
+    ("Internet", "Network", "applications-internet-symbolic"),
+    ("Music & Video", "AudioVideo", "applications-multimedia-symbolic"),
+    ("Graphics & Photos", "Graphics", "applications-graphics-symbolic"),
+    ("Office", "Office", "x-office-document-symbolic"),
+    ("Development", "Development", "applications-engineering-symbolic"),
+    ("Education & Science", "Education", "applications-science-symbolic"),
+    ("Utilities", "Utility", "applications-utilities-symbolic"),
+    ("System", "System", "applications-system-symbolic"),
+]
+
+
+class Source:
+    def __init__(self, kind, ref, summary="", description="", icon=None):
+        self.kind, self.ref, self.summary, self.description, self.icon = kind, ref, summary, description, icon
+
+    @property
+    def label(self):
+        return "Flathub" if self.kind == "flathub" else "Chamesle"
+
+
+class App:
+    def __init__(self, name):
+        self.name, self.sources, self.categories = name, [], set()
+
+    def source(self, kind):
+        return next((s for s in self.sources if s.kind == kind), None)
+
+    @property
+    def summary(self):
+        return next((s.summary for s in self.sources if s.summary), "")
+
+    @property
+    def icon(self):
+        return next((s.icon for s in self.sources if s.icon), None)
+
+
+def run(cmd):
+    return subprocess.run(cmd, capture_output=True, text=True)
+
+
+def repo_url():
+    try:
+        for line in open("/etc/apk/repositories"):
+            parts = line.split()
+            if parts and not line.startswith("#"):
+                url = parts[-1]
+                if url.startswith("http"):
+                    return url.rstrip("/") + "/x86_64"
+    except OSError:
+        pass
+    return None
+
+
+def text_of(el):
+    # appstream descriptions: <p> and <li>, as plain paragraphs
+    out = []
+    for c in el:
+        if c.tag == "p":
+            out.append("".join(c.itertext()).strip())
+        elif c.tag in ("ul", "ol"):
+            out += ["• " + "".join(li.itertext()).strip() for li in c]
+    return "\n\n".join(x for x in out if x)
+
+
+class Catalog:
+    def __init__(self):
+        self.apps = {}
+        self.by_flathub, self.by_pkg = {}, {}
+        self.installed_apk, self.installed_flatpak = set(), set()
+
+    def add(self, name, source, categories):
+        key = name.lower()
+        app = self.apps.setdefault(key, App(name))
+        if not app.source(source.kind):
+            app.sources.append(source)
+        app.categories |= set(categories)
+        (self.by_flathub if source.kind == "flathub" else self.by_pkg)[source.ref] = app
+
+    def load_flathub(self):
+        path = None
+        for p in ("appstream.xml.gz", "appstream.xml"):
+            if os.path.exists(os.path.join(APPSTREAM, p)):
+                path = os.path.join(APPSTREAM, p)
+                break
+        if not path:
+            run(["flatpak", "update", "--appstream", "flathub"])
+            return self.load_flathub() if os.path.exists(os.path.join(APPSTREAM, "appstream.xml.gz")) else None
+        # parsing flathub's list takes a while: keep the result until flatpak downloads a new one
+        cached = os.path.join(CACHE, "flathub.json")
+        stamp = os.path.getmtime(path)
+        try:
+            c = json.load(open(cached))
+            if c["stamp"] == stamp:
+                for a in c["apps"]:
+                    self.add(a[0], Source("flathub", a[1], a[2], a[3], a[4]), a[5])
+                return
+        except (OSError, ValueError, KeyError):
+            pass
+        keep = []
+        data = gzip.open(path).read() if path.endswith(".gz") else open(path, "rb").read()
+        for comp in ET.fromstring(data).iter("component"):
+            if comp.get("type") not in ("desktop-application", "desktop"):
+                continue
+            cid = comp.findtext("id")
+            name = next((n.text for n in comp.findall("name") if not n.get("{http://www.w3.org/XML/1998/namespace}lang")), None)
+            if not cid or not name:
+                continue
+            summary = next((n.text for n in comp.findall("summary")
+                            if not n.get("{http://www.w3.org/XML/1998/namespace}lang")), "") or ""
+            desc = comp.find("description")
+            icon = None
+            for ic in comp.findall("icon"):
+                if ic.get("type") == "cached":
+                    for size in ("128x128", "64x64"):
+                        p = os.path.join(APPSTREAM, "icons", size, ic.text)
+                        if os.path.exists(p):
+                            icon = p
+                            break
+                if icon:
+                    break
+            cats = [c.text for c in comp.iter("category") if c.text]
+            desc = text_of(desc) if desc is not None else ""
+            self.add(name, Source("flathub", cid, summary, desc, icon), cats)
+            keep.append([name, cid, summary, desc, icon, cats])
+        os.makedirs(CACHE, exist_ok=True)
+        json.dump({"stamp": stamp, "apps": keep}, open(cached, "w"))
+
+    def load_repo(self):
+        url = repo_url()
+        os.makedirs(os.path.join(CACHE, "icons"), exist_ok=True)
+        local = os.path.join(CACHE, "apps.json")
+        try:
+            urllib.request.urlretrieve(url + "/apps.json", local)
+        except Exception:
+            pass
+        if not os.path.exists(local):
+            return
+        for a in json.load(open(local)):
+            icon = ("repo", a["icon"]) if a.get("icon") else None
+            self.add(a["name"], Source("apk", a["pkg"], a.get("summary", ""), "", icon), a.get("categories", []))
+
+    def load_installed(self):
+        self.installed_apk = set(run(["apk", "info", "--quiet"]).stdout.split())
+        self.installed_flatpak = set(run(["flatpak", "list", "--app", "--columns=application"]).stdout.split())
+
+    def installed(self, app):
+        return [s for s in app.sources if (s.kind == "apk" and s.ref in self.installed_apk) or
+                (s.kind == "flathub" and s.ref in self.installed_flatpak)]
+
+    def updates(self):
+        # "bash-5.3-r2   < 5.3-r3": installed, newer one in the repo (works without root)
+        apk = []
+        for line in run(["apk", "version", "-l", "<"]).stdout.splitlines():
+            m = re.match(r"(\S+)-([^-\s]+-r\d+)\s+<\s+(\S+)", line)
+            if m:
+                apk.append(m.groups())
+        flat = run(["flatpak", "remote-ls", "--updates", "--app", "--columns=application"]).stdout.split()
+        return apk, flat
+
+
+def icon_widget(app, size):
+    img = Gtk.Image(pixel_size=size)
+    icon = app.icon
+    if icon is None:
+        img.set_from_icon_name("application-x-executable")
+    elif isinstance(icon, tuple):
+        # our repo's icons are fetched the first time they're shown
+        name = icon[1]
+        path = os.path.join(CACHE, "icons", name)
+        if os.path.exists(path):
+            img.set_from_file(path)
+        else:
+            img.set_from_icon_name("application-x-executable")
+
+            def fetch():
+                try:
+                    urllib.request.urlretrieve(repo_url() + "/icons/" + name, path)
+                    GLib.idle_add(img.set_from_file, path)
+                except Exception:
+                    pass
+            threading.Thread(target=fetch, daemon=True).start()
+    else:
+        img.set_from_file(icon)
+    return img
+
+
+class Store(Adw.Application):
+    def __init__(self):
+        super().__init__(application_id="org.chamesle.Store", flags=Gio.ApplicationFlags.HANDLES_OPEN)
+        self.catalog = Catalog()
+        self.busy = False
+
+    # ---- window
+
+    def do_activate(self):
+        win = self.get_active_window()
+        if win:
+            win.present()
+            return
+        self.win = Adw.ApplicationWindow(application=self, title="Store", default_width=1000, default_height=720)
+        self.toasts = Adw.ToastOverlay()
+        self.nav = Adw.NavigationView()
+        self.toasts.set_child(self.nav)
+        self.win.set_content(self.toasts)
+
+        self.stack = Adw.ViewStack()
+        self.explore = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.installed_page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.updates_page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.stack.add_titled_with_icon(self.scrolled(self.explore), "explore", "Explore", "system-search-symbolic")
+        self.stack.add_titled_with_icon(self.scrolled(self.installed_page), "installed", "Installed", "emblem-ok-symbolic")
+        self.updates_title = self.stack.add_titled_with_icon(self.scrolled(self.updates_page), "updates", "Updates",
+                                                             "software-update-available-symbolic")
+        self.stack.connect("notify::visible-child-name", lambda *a: self.refresh_tab())
+
+        header = Adw.HeaderBar()
+        header.set_title_widget(Adw.ViewSwitcher(stack=self.stack, policy=Adw.ViewSwitcherPolicy.WIDE))
+        self.search_button = Gtk.ToggleButton(icon_name="system-search-symbolic", tooltip_text="Search")
+        header.pack_start(self.search_button)
+        menu = Gio.Menu()
+        menu.append("Install a .deb or .rpm file…", "app.import")
+        header.pack_end(Gtk.MenuButton(icon_name="open-menu-symbolic", menu_model=menu))
+        act = Gio.SimpleAction.new("import", None)
+        act.connect("activate", lambda *a: self.pick_file())
+        self.add_action(act)
+
+        self.search = Gtk.SearchEntry(placeholder_text="Search apps", hexpand=True)
+        bar = Gtk.SearchBar(child=Adw.Clamp(child=self.search, maximum_size=600))
+        bar.connect_entry(self.search)
+        bar.set_key_capture_widget(self.win)
+        self.search_button.bind_property("active", bar, "search-mode-enabled",
+                                         GObject.BindingFlags.BIDIRECTIONAL)
+        self.search.connect("search-changed", lambda e: self.do_search(e.get_text()))
+
+        self.results = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.main_stack = Gtk.Stack()
+        self.main_stack.add_named(self.stack, "tabs")
+        self.main_stack.add_named(self.scrolled(self.results), "search")
+        self.loading = Adw.StatusPage(title="Getting the app lists ready", description="This takes a moment the first time.")
+        self.loading.set_child(Gtk.Spinner(spinning=True, width_request=32, height_request=32))
+        self.main_stack.add_named(self.loading, "loading")
+        self.main_stack.set_visible_child_name("loading")
+
+        view = Adw.ToolbarView()
+        view.add_top_bar(header)
+        view.add_top_bar(bar)
+        view.set_content(self.main_stack)
+        self.nav.add(Adw.NavigationPage(child=view, title="Store", tag="main"))
+        self.win.present()
+        threading.Thread(target=self.load, daemon=True).start()
+
+    def do_open(self, files, n, hint):
+        # double-clicked .deb/.rpm files can be opened with the store too
+        self.activate()
+        for f in files:
+            self.import_file(f.get_path())
+
+    def scrolled(self, child):
+        clamp = Adw.Clamp(child=child, maximum_size=1000, margin_top=18, margin_bottom=24, margin_start=12, margin_end=12)
+        return Gtk.ScrolledWindow(child=clamp, vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
+
+    def toast(self, text):
+        self.toasts.add_toast(Adw.Toast(title=text, timeout=4))
+
+    # ---- data
+
+    def load(self):
+        self.catalog.load_flathub()
+        self.catalog.load_repo()
+        self.catalog.load_installed()
+        GLib.idle_add(self.loaded)
+
+    def loaded(self):
+        self.main_stack.set_visible_child_name("tabs")
+        self.fill_explore()
+        self.refresh_tab()
+        threading.Thread(target=self.check_updates, daemon=True).start()
+
+    def check_updates(self):
+        apk, flat = self.catalog.updates()
+        GLib.idle_add(self.show_updates, apk, flat)
+
+    # ---- pages
+
+    def clear(self, box):
+        while box.get_first_child():
+            box.remove(box.get_first_child())
+
+    def heading(self, text):
+        return Gtk.Label(label=text, xalign=0, css_classes=["title-2"], margin_top=18, margin_bottom=10)
+
+    def tile(self, app):
+        b = Gtk.Button(css_classes=["card"], width_request=220)
+        box = Gtk.Box(spacing=12, margin_top=12, margin_bottom=12, margin_start=12, margin_end=12)
+        box.append(icon_widget(app, 48))
+        text = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, valign=Gtk.Align.CENTER)
+        text.append(Gtk.Label(label=app.name, xalign=0, css_classes=["heading"], ellipsize=Pango.EllipsizeMode.END))
+        text.append(Gtk.Label(label=app.summary, xalign=0, css_classes=["dim-label", "caption"],
+                              ellipsize=Pango.EllipsizeMode.END, max_width_chars=28))
+        box.append(text)
+        b.set_child(box)
+        b.connect("clicked", lambda *a: self.show_app(app))
+        return b
+
+    def grid(self, apps):
+        flow = Gtk.FlowBox(selection_mode=Gtk.SelectionMode.NONE, homogeneous=True, max_children_per_line=4,
+                           column_spacing=12, row_spacing=12)
+        for a in apps:
+            flow.append(self.tile(a))
+        return flow
+
+    def fill_explore(self):
+        self.clear(self.explore)
+        featured = [self.catalog.by_flathub[i] for i in FEATURED if i in self.catalog.by_flathub]
+        if featured:
+            self.explore.append(self.heading("Popular"))
+            self.explore.append(self.grid(featured))
+        self.explore.append(self.heading("Categories"))
+        flow = Gtk.FlowBox(selection_mode=Gtk.SelectionMode.NONE, homogeneous=True, max_children_per_line=3,
+                           column_spacing=12, row_spacing=12)
+        for title, cat, icon in CATEGORIES:
+            b = Gtk.Button(css_classes=["card"])
+            box = Gtk.Box(spacing=10, margin_top=16, margin_bottom=16, margin_start=16, margin_end=16)
+            box.append(Gtk.Image(icon_name=icon, pixel_size=24))
+            box.append(Gtk.Label(label=title, css_classes=["heading"]))
+            b.set_child(box)
+            b.connect("clicked", lambda w, t=title, c=cat: self.show_category(t, c))
+            flow.append(b)
+        self.explore.append(flow)
+        n = len(self.catalog.apps)
+        self.explore.append(Gtk.Label(label="%d apps from Flathub and the Chamesle repo" % n,
+                                      css_classes=["dim-label", "caption"], margin_top=24))
+
+    def show_category(self, title, cat):
+        apps = sorted((a for a in self.catalog.apps.values() if cat in a.categories), key=lambda a: a.name.lower())
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        box.append(self.grid(apps[:300]))
+        view = Adw.ToolbarView()
+        view.add_top_bar(Adw.HeaderBar())
+        view.set_content(self.scrolled(box))
+        self.nav.push(Adw.NavigationPage(child=view, title=title))
+
+    def do_search(self, text):
+        text = text.strip().lower()
+        if not text:
+            self.main_stack.set_visible_child_name("tabs")
+            return
+        self.main_stack.set_visible_child_name("search")
+        self.clear(self.results)
+        hits = [a for a in self.catalog.apps.values() if text in a.name.lower() or text in a.summary.lower()]
+        hits.sort(key=lambda a: (not a.name.lower().startswith(text), text not in a.name.lower(), a.name.lower()))
+        if not hits:
+            self.results.append(Adw.StatusPage(icon_name="system-search-symbolic", title="Nothing found",
+                                               description="Try another word, or install a .deb or .rpm file from the menu."))
+            return
+        self.results.append(self.grid(hits[:120]))
+
+    def refresh_tab(self):
+        name = self.stack.get_visible_child_name()
+        if name == "installed":
+            self.clear(self.installed_page)
+            apps = sorted((a for a in self.catalog.apps.values() if self.catalog.installed(a)), key=lambda a: a.name.lower())
+            self.installed_page.append(self.heading("Installed apps"))
+            group = Adw.PreferencesGroup()
+            for a in apps:
+                row = Adw.ActionRow(title=GLib.markup_escape_text(a.name),
+                                    subtitle=", ".join(s.label for s in self.catalog.installed(a)), activatable=True)
+                row.add_prefix(icon_widget(a, 32))
+                row.connect("activated", lambda r, a=a: self.show_app(a))
+                group.add(row)
+            self.installed_page.append(group)
+
+    def show_updates(self, apk, flat):
+        self.clear(self.updates_page)
+        total = len(apk) + len(flat)
+        self.updates_title.set_needs_attention(total > 0)
+        self.updates_title.set_badge_number(total)
+        if not total:
+            self.updates_page.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title="Everything is up to date"))
+            return
+        top = Gtk.Box(spacing=12, margin_top=6, margin_bottom=12)
+        top.append(Gtk.Label(label="%d updates" % total, xalign=0, hexpand=True, css_classes=["title-2"]))
+        go = Gtk.Button(label="Update all", css_classes=["suggested-action", "pill"])
+        go.connect("clicked", lambda *a: self.update_all())
+        top.append(go)
+        self.updates_page.append(top)
+        group = Adw.PreferencesGroup()
+        for name, old, new in apk:
+            group.add(Adw.ActionRow(title=name, subtitle="%s → %s" % (old, new)))
+        for ref in flat:
+            app = self.catalog.by_flathub.get(ref)
+            group.add(Adw.ActionRow(title=GLib.markup_escape_text(app.name if app else ref), subtitle="Flathub"))
+        self.updates_page.append(group)
+
+    def show_app(self, app):
+        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        top = Gtk.Box(spacing=18)
+        top.append(icon_widget(app, 96))
+        info = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, valign=Gtk.Align.CENTER, hexpand=True, spacing=4)
+        info.append(Gtk.Label(label=app.name, xalign=0, css_classes=["title-1"], wrap=True))
+        info.append(Gtk.Label(label=app.summary, xalign=0, wrap=True, css_classes=["dim-label"]))
+        top.append(info)
+        page.append(top)
+
+        # where to get it from, flathub first when both have it
+        sources = sorted(app.sources, key=lambda s: s.kind != "flathub")
+        choice = Gtk.DropDown.new_from_strings([s.label for s in sources])
+        row = Gtk.Box(spacing=12)
+        if len(sources) > 1:
+            row.append(Gtk.Label(label="From"))
+            row.append(choice)
+        else:
+            row.append(Gtk.Label(label="From " + sources[0].label, css_classes=["dim-label"]))
+        spacer = Gtk.Box(hexpand=True)
+        row.append(spacer)
+        button = Gtk.Button(css_classes=["pill"])
+        row.append(button)
+        page.append(row)
+        desc = Gtk.Label(xalign=0, wrap=True, selectable=True, margin_top=12)
+        page.append(desc)
+
+        def update(*a):
+            s = sources[choice.get_selected()]
+            inst = s in self.catalog.installed(app)
+            button.set_label("Remove" if inst else "Install")
+            button.set_css_classes(["pill", "destructive-action" if inst else "suggested-action"])
+            desc.set_label(s.description or s.summary or "")
+        choice.connect("notify::selected", update)
+        button.connect("clicked", lambda *a: self.install_or_remove(app, sources[choice.get_selected()], update))
+        update()
+
+        view = Adw.ToolbarView()
+        view.add_top_bar(Adw.HeaderBar())
+        view.set_content(self.scrolled(page))
+        self.nav.push(Adw.NavigationPage(child=view, title=app.name))
+
+    # ---- doing things
+
+    def job(self, cmd, done_text, then=None):
+        if self.busy:
+            self.toast("One thing at a time, the last one is still going")
+            return
+        self.busy = True
+        self.toast("Working…")
+
+        def go():
+            r = subprocess.run(cmd, capture_output=True, text=True)
+            GLib.idle_add(finish, r)
+
+        def finish(r):
+            self.busy = False
+            if r.returncode == 0:
+                self.toast(done_text)
+            elif r.returncode in (126, 127):
+                self.toast("Cancelled")
+            else:
+                d = Adw.AlertDialog(heading="That didn't work", body=(r.stderr or r.stdout).strip()[-1500:])
+                d.add_response("ok", "OK")
+                d.present(self.win)
+            self.catalog.load_installed()
+            self.refresh_tab()
+            if then:
+                then()
+            threading.Thread(target=self.check_updates, daemon=True).start()
+        threading.Thread(target=go, daemon=True).start()
+
+    def install_or_remove(self, app, src, then):
+        inst = src in self.catalog.installed(app)
+        if src.kind == "flathub":
+            cmd = ["flatpak", "uninstall" if inst else "install", "-y", "--noninteractive"] + ([] if inst else ["flathub"]) + [src.ref]
+        else:
+            cmd = ["pkexec", HELPER, "del" if inst else "add", src.ref]
+        self.job(cmd, "%s %s" % (app.name, "removed" if inst else "installed"), then)
+
+    def update_all(self):
+        self.job(["sh", "-c", "pkexec %s upgrade && flatpak update -y --noninteractive" % HELPER], "Everything is up to date")
+
+    def pick_file(self):
+        f = Gtk.FileFilter(name=".deb and .rpm packages")
+        for p in ("*.deb", "*.rpm"):
+            f.add_pattern(p)
+        filters = Gio.ListStore.new(Gtk.FileFilter)
+        filters.append(f)
+        d = Gtk.FileDialog(title="Install a .deb or .rpm file", filters=filters)
+        d.open(self.win, None, lambda d, res: self.picked(d, res))
+
+    def picked(self, d, res):
+        try:
+            self.import_file(d.open_finish(res).get_path())
+        except GLib.Error:
+            pass
+
+    def import_file(self, path):
+        self.job(["pkexec", HELPER, "import", path], "%s is installed" % os.path.basename(path))
+
+
+if __name__ == "__main__":
+    sys.exit(Store().run(sys.argv))

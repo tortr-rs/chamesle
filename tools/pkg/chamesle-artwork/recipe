@@ -1,0 +1,15 @@
+name=chamesle-artwork
+version=0.2.0
+rel=1
+desc="Chamesle wallpapers, icon theme and login screen"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="font-inter papirus-icon-theme lightdm-slick-greeter"
+# the login screen settings used to be in chamesle-xfce
+replaces="lightdm-slick-greeter chamesle-xfce"
+
+build() {
+    cp -a . "$pkgdir/"
+}

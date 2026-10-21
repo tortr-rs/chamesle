@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Store
+GenericName=App Store
+Comment=Find, install and update apps
+Exec=chamesle-store %U
+Icon=system-software-install
+Terminal=false
+Categories=System;PackageManager;GTK;
+Keywords=apps;install;software;flathub;flatpak;deb;rpm;update;
+StartupNotify=true

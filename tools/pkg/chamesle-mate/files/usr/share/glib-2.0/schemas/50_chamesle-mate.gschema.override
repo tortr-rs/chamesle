@@ -1,0 +1,45 @@
+# the chamesle look for mate, same as the xfce edition
+[org.mate.background]
+picture-filename='/usr/share/backgrounds/chamesle/default.png'
+picture-options='zoom'
+color-shading-type='solid'
+primary-color='#0b2552'
+
+[org.mate.interface]
+gtk-theme='Fluent-Light'
+icon-theme='Chamesle'
+font-name='Inter 10'
+document-font-name='Inter 10'
+monospace-font-name='Noto Sans Mono 10'
+gtk-decoration-layout='menu:minimize,maximize,close'
+
+[org.mate.Marco.general]
+theme='Fluent-Light'
+titlebar-font='Inter Semi-Bold 10'
+button-layout='menu:minimize,maximize,close'
+compositing-manager=true
+
+[org.mate.font-rendering]
+antialiasing='grayscale'
+hinting='slight'
+
+[org.mate.peripherals-mouse]
+cursor-theme='Adwaita'
+
+[org.mate.caja.desktop]
+home-icon-visible=true
+trash-icon-visible=true
+computer-icon-visible=false
+volumes-visible=true
+font='Inter 10'
+
+[org.mate.panel]
+default-layout='chamesle'
+
+[org.mate.mate-menu]
+hot-key='Super_L'
+applet-text=''
+hide-applet-icon=false
+
+[org.mate.sound]
+event-sounds=false

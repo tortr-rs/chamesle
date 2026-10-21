@@ -35,3 +35,6 @@ setxkbmap ckbcomp xkeyboard-config lvm2 dosfstools dracut xrandr
 
 # .deb and .rpm packages (pkgimport)
 bsdtar rpm zenity
+
+# the store
+chamesle-store

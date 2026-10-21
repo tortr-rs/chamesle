@@ -1,0 +1,27 @@
+#!/bin/sh
+# what the store runs as root, through pkexec: nothing else gets through
+#   add|del PKG...   upgrade   import FILE.deb|FILE.rpm
+set -eu
+cmd=${1:-}
+[ $# -gt 0 ] && shift
+case $cmd in
+add|del)
+    [ $# -gt 0 ] || exit 2
+    for p; do
+        case $p in -*|*[!a-zA-Z0-9._+-]*) echo "not a package name: $p" >&2; exit 2;; esac
+    done
+    exec apk "$cmd" --no-interactive "$@"
+    ;;
+upgrade)
+    exec apk upgrade --update-cache --no-interactive
+    ;;
+import)
+    [ $# = 1 ] && [ -f "$1" ] || { echo "no such file: ${1:-}" >&2; exit 2; }
+    case $1 in *.deb|*.rpm) ;; *) echo "only .deb and .rpm files" >&2; exit 2;; esac
+    exec pkgimport install "$1"
+    ;;
+*)
+    echo "usage: chamesle-store-helper add|del PKG... | upgrade | import FILE" >&2
+    exit 2
+    ;;
+esac

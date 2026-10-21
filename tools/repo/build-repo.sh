@@ -73,6 +73,7 @@ python3 "$HERE/xbps2apk.py" --prune "$OUT/$ARCH"
 "$APK" mkndx --keys-dir "$HERE/../../keys/apk" --sign-key "$KEY" --description "chamesle $(date +%Y-%m-%d)" \
     --output "$OUT/$ARCH/Packages.adb" "$OUT/$ARCH"/*.apk
 echo "$(ls "$OUT/$ARCH"/*.apk | wc -l) packages in $OUT/$ARCH"
+python3 "$HERE/apps.py" "$OUT/$ARCH"
 unshare --map-root-user --map-auto rm -rf "$TMPDIR"
 python3 "$HERE/xbps2apk.py" --todo "$CACHE" "$OUT/$ARCH" > "$OUT/failed.list"
 n=$(wc -l < "$OUT/failed.list")

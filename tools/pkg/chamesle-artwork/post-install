@@ -1,0 +1,6 @@
+#!/bin/sh
+for f in $(find /etc/lightdm -name '*.apk-new' 2>/dev/null); do
+    mv -f "$f" "${f%.apk-new}"
+done
+gtk-update-icon-cache -q -t -f /usr/share/icons/Chamesle 2>/dev/null
+exit 0
