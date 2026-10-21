@@ -61,7 +61,9 @@
 &ldquo;always&rdquo;. If Windows uses BitLocker, turn it off (or have the recovery key) before you start.</p>
 
 <h2 id="apps">Installing apps</h2>
-<p>For desktop apps, use Flathub. You can browse it at <a href="https://flathub.org/">flathub.org</a>,
+<p>The easiest way is the <b>Store</b> in the menu: search, click Install. It has Flathub apps and the
+Chamesle repo in one place.</p>
+<p>From a terminal, desktop apps come from Flathub. You can browse it at <a href="https://flathub.org/">flathub.org</a>,
 click Install there, and it opens on your computer. Or in a terminal:</p>
 <pre><code>flatpak search obs
 flatpak install flathub com.obsproject.Studio</code></pre>
@@ -73,8 +75,8 @@ Got a <code>.deb</code> or <code>.rpm</code>? From 0.2 you can double-click it.<
 <pre><code>flatpak update</code></pre>
 <p>The system, from 0.2:</p>
 <pre><code>sudo apk upgrade</code></pre>
-<p>Updates come out every week. On 0.1 it's <code>sudo xbps-install -Su</code>. An update notifier is coming in 0.3
-so you don't have to remember.</p>
+<p>Updates come out every week. You don't have to remember: when there are some, an icon shows up next to the
+clock. Click it to update everything, system and Flathub apps. On 0.1 it's <code>sudo xbps-install -Su</code>.</p>
 
 <h2 id="services">Services</h2>
 <p>Chamesle uses dinit instead of systemd. Services are small text files in <code>/etc/dinit.d/</code>.
@@ -95,8 +97,9 @@ depends-on = network</code></pre>
 <p>Firmware for most Wi-Fi cards, graphics cards and Bluetooth adapters is already included, and Intel
 and AMD graphics work out of the box. Printers are handled by CUPS: open Printers from the menu or go to
 <code>http://localhost:631</code>.</p>
-<p>NVIDIA cards work with the open-source driver. The proprietary one is in the repo (<code>nvidia</code>), and
-the driver manager coming in 0.3 will set it up for you.</p>
+<p>NVIDIA cards work with the open-source driver out of the box. For games you want NVIDIA's own driver: open
+<b>Driver Manager</b> from the menu, it finds the right one for your card. It also handles some Broadcom Wi-Fi
+chips, HP printers and scanners, and the extras for VirtualBox and VMware.</p>
 
 <h2 id="faq">FAQ</h2>
 
