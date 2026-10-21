@@ -1,0 +1,6 @@
+# Console keymap and font from /etc/vconsole.conf (KEYMAP=..., FONT=...).
+type = scripted
+command = /usr/lib/dinit/console-setup
+depends-on = early-filesystems
+waits-for = udev-trigger
+restart = false

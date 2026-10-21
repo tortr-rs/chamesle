@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <!-- Chamesle default wallpaper (placeholder art): soft layered ribbons in blue and teal -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1f3a"/>
+      <stop offset="0.55" stop-color="#103a6b"/>
+      <stop offset="1" stop-color="#0a5c6e"/>
+    </linearGradient>
+    <linearGradient id="r1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2f8cff" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#4aa3ff" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#22d3c5" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="r2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7cc4ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#9ad8ff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#5eead4" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="r3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1d4ed8" stop-opacity="0"/>
+      <stop offset="0.6" stop-color="#2563eb" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#14b8a6" stop-opacity="0.65"/>
+    </linearGradient>
+    <filter id="blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <path d="M-100 820 C 380 560, 760 980, 1180 700 S 1840 360, 2040 520 L 2040 1180 L -100 1180 Z" fill="url(#r3)" filter="url(#blur)"/>
+  <path d="M-100 760 C 420 470, 820 900, 1240 610 S 1860 300, 2040 430 L 2040 520 C 1840 390, 1500 700, 1220 760 S 400 640, -100 900 Z" fill="url(#r1)" filter="url(#soft)"/>
+  <path d="M-100 700 C 460 420, 860 820, 1280 540 S 1880 250, 2040 360 L 2040 400 C 1860 300, 1520 600, 1260 660 S 460 540, -100 780 Z" fill="url(#r2)" filter="url(#soft)"/>
+  <circle cx="1460" cy="300" r="260" fill="#38bdf8" opacity="0.10" filter="url(#blur)"/>
+</svg>

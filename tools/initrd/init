@@ -1,0 +1,232 @@
+#!/bin/busybox sh
+# Chamesle Linux initramfs init:
+#   live:      find the live medium -> mount /live/rootfs.squashfs -> overlay a tmpfs on it -> switch_root to dinit
+#   installed: mount root= (unlocking LUKS first) -> switch_root to dinit
+# Kernel command line options:
+#   root=UUID=...|LABEL=...|/dev/...   an installed system. A LUKS partition is unlocked first (asks for the
+#                          passphrase) and /dev/mapper/root becomes the root. Always mounted read-write.
+#   rootfstype=TYPE rootflags=OPTS     filesystem type and mount options for root= (default: detected, no options)
+#   chamesle.iso=PATH      prefer this ISO file on the medium's partition (e.g. an ISO on a Ventoy stick)
+#   chamesle.toram=1       copy the squashfs into RAM first (the stick can then be removed)
+#   chamesle.label=NAME    volume label of the medium (default CHAMESLE; tried via findfs before scanning)
+#   chamesle.wait=N        seconds to wait for the medium to appear (default 60)
+#   chamesle.debug=1       open a shell just before switching to the real root
+#   chamesle.shell=1       open a shell before looking for the medium
+#   init=PATH              program to run as PID 1 (default /usr/bin/dinit)
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+/bin/busybox mkdir -p /proc /sys /dev /mnt /newroot /overlay
+/bin/busybox mount -t proc proc /proc
+/bin/busybox mount -t sysfs sysfs /sys
+/bin/busybox mount -t devtmpfs devtmpfs /dev
+/bin/busybox --install -s /bin 2>/dev/null   # build-initrd.sh already linked the applets; this covers older initramfs trees
+exec </dev/console >/dev/console 2>&1
+
+log() { echo "[live] $*"; }
+emergency() {
+    echo "[live] $*"
+    echo "[live] starting a shell; leave it with 'exit' to try again"
+    setsid cttyhack sh
+}
+# A LUKS header always starts with the 6-byte magic "LUKS" 0xba 0xbe (true for both LUKS1 and
+# LUKS2), so this needs no more than dd/od -- no blkid dependency for a check this simple.
+# od output format varies: busybox uses spaces, GNU may use newlines. Normalize by removing all whitespace.
+is_luks() {
+    [ "$(dd if="$1" bs=6 count=1 2>/dev/null | od -An -tx1 | tr -d ' \t\n\r')" = "4c554b53babe" ]
+}
+
+LABEL=CHAMESLE ISO_HINT= DEBUG=0 SHELL_FIRST=0 TORAM=0 WAIT=60 INIT=/usr/bin/dinit
+ROOT= ROOTFSTYPE= ROOTFLAGS= QUIET=0
+for a in $(cat /proc/cmdline); do
+    case "$a" in
+        chamesle.iso=*)   ISO_HINT=${a#chamesle.iso=} ;;
+        chamesle.debug=1) DEBUG=1 ;;
+        chamesle.shell=1) SHELL_FIRST=1 ;;
+        chamesle.toram=1) TORAM=1 ;;
+        chamesle.label=*) LABEL=${a#chamesle.label=} ;;
+        chamesle.wait=*)  WAIT=${a#chamesle.wait=} ;;
+        init=/*)             INIT=${a#init=} ;;
+        root=*)              ROOT=${a#root=} ;;
+        rootfstype=*)        ROOTFSTYPE=${a#rootfstype=} ;;
+        rootflags=*)         ROOTFLAGS=${a#rootflags=} ;;
+        quiet)               QUIET=1 ;;
+    esac
+done
+
+# Distro kernels ship storage and filesystem drivers as modules (copied into the initramfs by build-initrd.sh):
+# load them before scanning for the medium. Missing ones (built in, or not shipped) are skipped silently.
+if [ -d "/lib/modules/$(uname -r)" ]; then
+    for m in usb_storage uas xhci_pci ehci_pci ohci_pci uhci_hcd ahci nvme virtio_pci virtio_blk virtio_scsi \
+             libata ata_piix ata_generic pata_acpi scsi_mod mmc_block sd_mod sr_mod isofs udf vfat exfat ext4 xfs btrfs f2fs \
+             squashfs loop overlay dm_mod dm_crypt; do
+        modprobe "$m" 2>/dev/null || FAILED_MODS="${FAILED_MODS:-} $m"
+    done
+    [ -n "${FAILED_MODS:-}" ] && log "modules not loaded (built in or not shipped):$FAILED_MODS"
+    mdev -s 2>/dev/null
+else
+    log "no kernel modules in the initramfs; relying on built-in drivers"
+fi
+
+# Load whatever driver the hardware asks for: every device in sysfs has a modalias, and modprobe resolves it through
+# modules.alias. Run again while waiting for the medium: loading a controller driver (xhci, ata_piix, ...) makes new
+# devices (and so new modaliases) appear.
+load_hw_modules() {
+    [ -d "/lib/modules/$(uname -r)" ] || return 0
+    for f in $(find /sys/devices -name modalias 2>/dev/null); do
+        read -r alias < "$f" 2>/dev/null || continue
+        [ -n "$alias" ] && modprobe -q "$alias" 2>/dev/null
+    done
+    mdev -s 2>/dev/null
+    return 0
+}
+load_hw_modules
+
+[ "$SHELL_FIRST" = 1 ] && emergency "chamesle.shell=1"
+
+# The initramfs carries a build id and so does the ISO's /live directory: with several Chamesle ISOs on one
+# Ventoy stick, only the one this kernel came from is accepted (STRICT is dropped after a while, so a renamed
+# or hand-assembled medium without a build-id file still boots).
+STRICT=1
+[ -s /build-id ] || STRICT=0
+has_root() {
+    [ -f "$1/live/rootfs.squashfs" ] || return 1
+    [ "$STRICT" = 0 ] || [ "$(cat "$1/live/build-id" 2>/dev/null)" = "$(cat /build-id)" ]
+}
+
+# Look for the squashfs on every block device: directly (an ISO written to a stick or a CD) and
+# inside ISO files on the device (Ventoy and similar). Sets MEDIUM to the mount point that holds it.
+scan_once() {
+    n=0
+    # fast path: the medium by its volume label
+    ldev=$(findfs "LABEL=$LABEL" 2>/dev/null) && [ -b "$ldev" ] && mkdir -p /mnt/label &&
+        mount -o ro "$ldev" /mnt/label 2>/dev/null && {
+        if has_root /mnt/label; then MEDIUM=/mnt/label; return 0; fi
+        umount /mnt/label 2>/dev/null
+    }
+    for dev in /dev/sr[0-9]* /dev/sd[a-z] /dev/sd[a-z][0-9]* /dev/vd[a-z] /dev/vd[a-z][0-9]* \
+               /dev/nvme[0-9]n[0-9] /dev/nvme[0-9]n[0-9]p[0-9]* /dev/mmcblk[0-9] /dev/mmcblk[0-9]p[0-9]* \
+               /dev/mapper/*; do
+        [ -b "$dev" ] || continue
+        n=$((n + 1)); mp=/mnt/d$n
+        mkdir -p "$mp"
+        mount -o ro "$dev" "$mp" 2>/dev/null || continue
+        if has_root "$mp"; then MEDIUM=$mp; return 0; fi
+        k=0
+        # Use a function to avoid glob expansion issues when no matches
+        check_isos() {
+            for iso in "$@"; do
+                [ -f "$iso" ] || continue
+                k=$((k + 1)); imp=/mnt/i$n-$k
+                mkdir -p "$imp"
+                if mount -o loop,ro "$iso" "$imp" 2>/dev/null; then
+                    if has_root "$imp"; then MEDIUM=$imp; return 0; fi
+                    umount "$imp" 2>/dev/null
+                fi
+            done
+            return 1
+        }
+        # Build array of ISO paths, skipping non-existent globs
+        set --
+        [ -n "${ISO_HINT:-}" ] && [ -f "$mp$ISO_HINT" ] && set -- "$@" "$mp$ISO_HINT"
+        for f in "$mp"/[Cc]hamesle*.iso "$mp"/*/[Cc]hamesle*.iso "$mp"/*.iso "$mp"/*/*.iso; do
+            [ -f "$f" ] && set -- "$@" "$f"
+        done
+        check_isos "$@"
+        [ -n "${MEDIUM:-}" ] && return 0
+        umount "$mp" 2>/dev/null
+    done
+    return 1
+}
+
+# findfs knows UUID= and LABEL=; a /dev path is used as it is
+find_dev() {
+    case "$1" in
+        /dev/*) [ -b "$1" ] && echo "$1" ;;
+        *)      findfs "$1" 2>/dev/null ;;
+    esac
+}
+
+if [ -n "$ROOT" ]; then
+    # ---- installed system
+    i=0
+    until DEV=$(find_dev "$ROOT") && [ -n "$DEV" ]; do
+        i=$((i + 1))
+        if [ "$i" -ge "$WAIT" ]; then
+            emergency "could not find the root partition ($ROOT)"
+            i=0
+        fi
+        [ "$i" = 1 ] && log "waiting for the root partition ($ROOT)..."
+        sleep 1
+        load_hw_modules
+    done
+    if is_luks "$DEV"; then
+        log "encrypted root partition: enter the passphrase to unlock it"
+        until [ -e /dev/mapper/root ]; do
+            cryptsetup open "$DEV" root || log "wrong passphrase, try again"
+        done
+        DEV=/dev/mapper/root
+    fi
+    until mount ${ROOTFSTYPE:+-t "$ROOTFSTYPE"} -o "rw${ROOTFLAGS:+,$ROOTFLAGS}" "$DEV" /newroot; do
+        emergency "could not mount $DEV on / (rootfstype=${ROOTFSTYPE:-auto} rootflags=${ROOTFLAGS:-none})"
+    done
+else
+    while :; do
+        i=0
+        until scan_once; do
+            i=$((i + 1))
+            [ "$i" -ge 15 ] && STRICT=0
+            if [ "$i" -ge "$WAIT" ]; then break; fi
+            [ "$i" = 1 ] && log "waiting for the live medium..."
+            sleep 1
+            load_hw_modules
+        done
+        [ -n "${MEDIUM:-}" ] && break
+        log "filesystems: $(tr -d '\t' </proc/filesystems | grep -E 'iso9660|squashfs|overlay|vfat|ext4' | tr '\n' ' ')"
+        log "kernel modules loaded: $(cut -d' ' -f1 /proc/modules 2>/dev/null | tr '\n' ' ')"
+        log "block devices: $(cat /proc/partitions 2>/dev/null | awk 'NR>2 {print $4}' | tr '\n' ' ')"
+        emergency "could not find the live medium (a device with /live/rootfs.squashfs)"
+    done
+    log "medium found: $MEDIUM"
+
+    SQ=$MEDIUM/live/rootfs.squashfs
+    if [ "$TORAM" = 1 ]; then
+        log "copying the system into RAM (this takes a moment)..."
+        # The initramfs root is a ramfs/tmpfs whose df numbers are meaningless (0 on ramfs): use MemAvailable
+        avail=$(awk '/^MemAvailable:/ {print $2}' /proc/meminfo)
+        need=$(du -k "$SQ" | awk '{print $1}')
+        if [ "${avail:-0}" -lt "$((need * 2 + 50000))" ]; then
+            emergency "not enough RAM for toram (need ${need}KB plus the running system, have ${avail:-0}KB)"
+        fi
+        cp "$SQ" /rootfs.squashfs && SQ=/rootfs.squashfs
+    fi
+
+    mkdir -p /mnt/squash
+    until mount -t squashfs -o loop,ro "$SQ" /mnt/squash; do
+        emergency "could not mount $SQ"
+    done
+    mount -t tmpfs -o size=75% tmpfs /overlay
+    mkdir -p /overlay/upper /overlay/work
+    until mount -t overlay overlay -o lowerdir=/mnt/squash,upperdir=/overlay/upper,workdir=/overlay/work /newroot; do
+        emergency "could not create the overlay root"
+    done
+    # keep the live medium reachable for the installer (it copies the system from here)
+    mkdir -p /newroot/live-medium
+    mount --move "$MEDIUM" /newroot/live-medium
+fi
+
+# the image may not carry these mount points (dinit's early-filesystems service mounts /run, /dev/pts, ... itself, but move ours)
+mkdir -p /newroot/proc /newroot/sys /newroot/dev /newroot/run
+mount --move /proc /newroot/proc
+mount --move /sys /newroot/sys
+mount --move /dev /newroot/dev
+# dinit creates its control socket (/run/dinitctl) as soon as it starts, before any service could mount /run
+mount -t tmpfs -o mode=0755,nosuid,nodev tmpfs /newroot/run
+# tell the system it is the live session (the live services and the display manager's autologin look for it)
+[ -n "${MEDIUM:-}" ] && : > /newroot/run/chamesle-live
+[ "$DEBUG" = 1 ] && emergency "chamesle.debug=1: about to switch root"
+[ -x "/newroot$INIT" ] || emergency "$INIT not found in the system image"
+# with "quiet" on the command line dinit prints only errors (no [ OK ] line per service); without it, everything
+# (/proc has been moved into the new root by now: QUIET comes from the command line parsed at the start)
+INIT_ARGS=
+[ "$QUIET" = 1 ] && [ "$INIT" = /usr/bin/dinit ] && [ "$DEBUG" = 0 ] && INIT_ARGS=--quiet
+exec switch_root /newroot "$INIT" $INIT_ARGS

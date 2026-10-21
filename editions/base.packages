@@ -1,0 +1,30 @@
+# Every Chamesle edition: Void Linux glibc packages, installed with xbps (runit is blocked: dinit is the init).
+# One package per line; blank lines and # comments are ignored.
+
+# core system
+base-files bash coreutils findutils diffutils grep sed gawk which file less
+gzip bzip2 xz zstd tar unzip
+util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox xbps
+iproute2 iputils NetworkManager openssh curl wget ca-certificates rsync
+sudo nano glibc-locales tzdata man-db
+
+# kernel, firmware and microcode: drivers for as much hardware as possible out of the box
+linux linux-headers linux-firmware intel-ucode
+
+# disks, filesystems and boot (the installer and dual boot need them)
+grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
+e2fsprogs dosfstools ntfs-3g exfatprogs btrfs-progs xfsprogs cryptsetup lvm2 gptfdisk parted
+
+# graphics: X, Mesa with LLVM (hardware OpenGL and Vulkan on Intel, AMD and NVIDIA's open driver), video decoding
+xorg-minimal xorg-input-drivers xorg-video-drivers xorg-fonts
+mesa-dri mesa-vulkan-intel mesa-vulkan-radeon vulkan-loader mesa-vaapi intel-video-accel
+
+# sound, Bluetooth, printing
+pipewire wireplumber alsa-pipewire alsa-utils bluez cups cups-filters
+
+# apps for everyone: Flatpak (Flathub is set up), Firefox, fonts
+flatpak xdg-desktop-portal xdg-user-dirs firefox
+noto-fonts-ttf noto-fonts-emoji dejavu-fonts-ttf
+
+# `get` builds from source: the toolchain it needs
+gcc make pkg-config cmake meson ninja perl python3 autoconf automake libtool patch bison flex git

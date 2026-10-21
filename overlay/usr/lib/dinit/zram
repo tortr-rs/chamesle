@@ -1,0 +1,10 @@
+#!/bin/sh
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+case "${1:-start}" in
+    start)
+        { [ -e /sys/block/zram0 ] || modprobe zram; } || exit 0
+        echo zstd > /sys/block/zram0/comp_algorithm &&
+        echo 4G > /sys/block/zram0/disksize &&
+        mkswap /dev/zram0 && swapon /dev/zram0 -p 32767 ;;
+    stop) swapoff /dev/zram0 2>/dev/null; echo 1 > /sys/block/zram0/reset 2>/dev/null; exit 0 ;;
+esac

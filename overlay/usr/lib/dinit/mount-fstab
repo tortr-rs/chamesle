@@ -1,0 +1,7 @@
+#!/bin/sh
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+# The live image has no /etc/fstab; an installed system has its partitions and swap there.
+[ -s /etc/fstab ] || exit 0
+mount -a; rc=$?
+swapon -a
+exit $rc

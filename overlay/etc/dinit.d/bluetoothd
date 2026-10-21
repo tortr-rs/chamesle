@@ -1,0 +1,8 @@
+# Bluetooth.
+type = process
+command = /usr/libexec/bluetooth/bluetoothd -n
+depends-on = dbus
+waits-for = udev-trigger
+restart = true
+smooth-recovery = true
+logfile = /var/log/bluetoothd.log

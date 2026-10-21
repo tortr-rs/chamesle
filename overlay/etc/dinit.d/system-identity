@@ -1,0 +1,5 @@
+# Hostname (from /etc/hostname), loopback interface and /etc/machine-id.
+type = scripted
+command = /usr/lib/dinit/system-identity
+depends-on = early-filesystems
+restart = false

@@ -1,0 +1,7 @@
+# Console login on tty1 (Ctrl+Alt+F1); the desktop runs on its own VT.
+type = process
+command = /usr/bin/agetty tty1 38400 linux
+depends-on = system-identity
+waits-for = console-setup
+restart = true
+smooth-recovery = true

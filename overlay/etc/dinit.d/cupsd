@@ -1,0 +1,7 @@
+# Printing (CUPS).
+type = process
+command = /usr/bin/cupsd -f
+depends-on = dbus
+waits-for = network
+smooth-recovery = true
+logfile = /var/log/cupsd.log

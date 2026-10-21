@@ -1,0 +1,8 @@
+# PolicyKit: lets desktop programs ask for administrator rights (mounting disks, network settings, the store).
+type = process
+command = /usr/lib/polkit-1/polkitd --no-debug
+depends-on = dbus
+waits-for = elogind
+restart = true
+smooth-recovery = true
+logfile = /var/log/polkitd.log

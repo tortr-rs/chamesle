@@ -1,0 +1,5 @@
+# /run/dbus and the machine id that dbus-daemon needs.
+type = scripted
+command = /usr/lib/dinit/dbus-prepare
+depends-on = system-identity
+restart = false

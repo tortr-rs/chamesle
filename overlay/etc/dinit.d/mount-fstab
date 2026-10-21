@@ -1,0 +1,6 @@
+# Mount /etc/fstab's filesystems and turn on its swap. The live image has no fstab.
+type = scripted
+command = /usr/lib/dinit/mount-fstab
+depends-on = early-filesystems
+waits-for = udev-trigger
+restart = false

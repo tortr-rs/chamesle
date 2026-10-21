@@ -1,0 +1,4 @@
+# Pseudo and runtime filesystems that the initramfs does not hand over (/run, /dev/pts, /dev/shm, /tmp).
+type = scripted
+command = /usr/lib/dinit/early-filesystems
+restart = false

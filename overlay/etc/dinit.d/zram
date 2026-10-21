@@ -1,0 +1,6 @@
+# Compressed swap in RAM (4G zstd zram device). stop-command turns it off again at shutdown.
+type = scripted
+command = /usr/lib/dinit/zram start
+stop-command = /usr/lib/dinit/zram stop
+depends-on = early-filesystems
+restart = false

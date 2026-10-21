@@ -1,0 +1,3 @@
+# Everything needed for networking.
+type = internal
+depends-on = NetworkManager

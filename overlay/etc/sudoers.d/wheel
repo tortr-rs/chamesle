@@ -1,0 +1,2 @@
+# members of wheel (the first user the installer creates) may administer the system
+%wheel ALL=(ALL:ALL) ALL

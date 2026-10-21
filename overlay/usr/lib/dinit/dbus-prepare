@@ -1,0 +1,5 @@
+#!/bin/sh
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+mkdir -p /run/dbus /var/lib/dbus
+dbus-uuidgen --ensure
+exit 0

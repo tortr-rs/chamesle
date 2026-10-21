@@ -1,0 +1,11 @@
+#!/bin/sh
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+# Console keymap and font from /etc/vconsole.conf (KEYMAP=fr, FONT=ter-v22n, ...), on every virtual console.
+[ -r /etc/vconsole.conf ] || exit 0
+KEYMAP= FONT=
+. /etc/vconsole.conf
+[ -n "$KEYMAP" ] && loadkeys -q "$KEYMAP"
+if [ -n "$FONT" ]; then
+    for tty in /dev/tty[1-6]; do setfont -C "$tty" "$FONT" 2>/dev/null; done
+fi
+exit 0
