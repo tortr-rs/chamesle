@@ -3,9 +3,9 @@
 A Linux desktop for people who just want their computer to work. Boot it, it looks like what you're used to,
 apps come from Flathub, and there's a real package manager underneath if you want it.
 
+- **pkgimport**: double-click any `.deb` or `.rpm` and it installs, with the libraries it needs
 - glibc, **dinit** for init, **apk** for packages
-- our own repo, almost 15,000 packages, all signed
-- `.deb` and `.rpm` files install with a double-click (`pkgimport`)
+- the Chamesle repo: almost 15,000 packages, all signed
 - Calamares installer: next to Windows, whole disk or manual, optional encryption
 - linux-firmware, Mesa, os-prober and Firefox out of the box
 

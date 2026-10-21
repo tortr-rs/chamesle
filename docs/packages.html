@@ -24,12 +24,14 @@
 <main>
 
 <h1>Packages</h1>
-<p>There are two ways to get software on Chamesle.</p>
+<p>There are three ways to get software on Chamesle.</p>
 <p><b>Flathub</b> is the easy one: it's already set up, apps are sandboxed, and they update on their own.
 Use it for desktop apps like Spotify, Discord, Steam or OBS.</p>
 <pre><code>flatpak install flathub com.spotify.Client</code></pre>
 <p><b>apk</b> is the system package manager. It's what the system itself is made of, and it has everything
 from desktop apps to compilers and servers. From 0.2 on, Chamesle uses apk (0.1 still uses xbps underneath).</p>
+<p><b>pkgimport</b> is for everything else: if an app only comes as a <code>.deb</code> or <code>.rpm</code>,
+double-click it. <a href="#pkgimport">More below</a>.</p>
 
 <h2 id="search">Search</h2>
 <input id="q" type="search" placeholder="Search 14,781 packages, e.g. gimp, python3, steam" autocomplete="off" aria-label="Search packages">
@@ -47,7 +49,7 @@ from desktop apps to compilers and servers. From 0.2 on, Chamesle uses apk (0.1 
   <tr><td><code>apk info --who-owns /usr/bin/gimp</code></td><td>which package a file came from</td></tr>
 </table>
 
-<h2>.deb and .rpm files</h2>
+<h2 id="pkgimport">pkgimport: .deb and .rpm files</h2>
 <p><span class="tag soon">0.2</span> Downloaded a <code>.deb</code> or <code>.rpm</code> from a website? Double-click it. Chamesle converts it to a
 normal package and installs it, and the libraries it needs come from our repo. Or in a terminal:</p>
 <pre><code>sudo pkgimport install ~/Downloads/something.deb</code></pre>

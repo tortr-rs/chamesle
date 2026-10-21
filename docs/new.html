@@ -27,6 +27,14 @@
 <p><span class="tag soon">in testing</span> 0.2 isn't out yet. This is what's in it. When it's ready it'll be on the
 <a href="download.html">download page</a>.</p>
 
+<h2>pkgimport: .deb and .rpm, just double-click</h2>
+<p>Most Linux apps on the web come as a <code>.deb</code> (Ubuntu, Debian) or an <code>.rpm</code> (Fedora, openSUSE).
+On Chamesle you don't have to care which. Double-click either one and <b>pkgimport</b> installs it: it converts
+the package, pulls in the libraries it needs from the Chamesle repo, and adds it to your menu. Updating and
+removing works like any other package.</p>
+<pre><code>sudo pkgimport install ~/Downloads/app.deb
+sudo pkgimport install ~/Downloads/app.rpm</code></pre>
+
 <h2>An installer</h2>
 <p>0.1 was live-only. 0.2 puts Chamesle on your disk. Double-click <b>Install Chamesle</b> on the desktop and
 answer a few questions: language, keyboard, where it goes, your name and password. Then it does the rest.</p>
@@ -39,15 +47,11 @@ answer a few questions: language, keyboard, where it goes, your name and passwor
   <li>Works on both old BIOS machines and UEFI.</li>
 </ul>
 
-<h2>Our own package manager and repo</h2>
-<p>The system now runs on <b>apk</b> and the Chamesle repo: almost 15,000 packages, each one signed with the
+<h2>The Chamesle repo</h2>
+<p>The system now uses <b>apk</b> and the Chamesle repo: almost 15,000 packages, each one signed with the
 Chamesle key. Updating everything is one command:</p>
 <pre><code>sudo apk upgrade</code></pre>
 <p> <a href="packages.html">Search the packages</a>.</p>
-
-<h2>.deb and .rpm files</h2>
-<p>Found an app that only comes as a <code>.deb</code> or <code>.rpm</code>? Double-click it. Chamesle turns it into a
-normal package and installs it along with the libraries it needs. More on the <a href="packages.html">packages page</a>.</p>
 
 <h2>Smaller things</h2>
 <ul>
