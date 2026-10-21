@@ -27,16 +27,15 @@
 <h1>Download</h1>
 
 <div class="release">
-  <p><b>Chamesle 0.1 "Margit"</b>, Xfce edition<br>
-  <span class="small">64-bit PC (x86_64) &middot; 1.8&nbsp;GB &middot; October 2026</span></p>
-  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/">Download the ISO</a>
-  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/">SHA-256 checksum</a></p>
+  <p><b>Chamesle 0.2 "Margit"</b>, Xfce edition<br>
+  <span class="small">64-bit PC (x86_64) &middot; 1.9&nbsp;GB &middot; October 2026</span></p>
+  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.0-xfce-x86_64.iso/download">Download the ISO</a>
+  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.0-xfce-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
 </div>
 
-<p>This is an early release. It runs as a live system from a USB stick, so you can try it without touching
-your disk. There's no installer in it.</p>
-<p><span class="tag soon">0.2 in testing</span> 0.2 has the installer and will be here when it's ready.
-<a href="new.html">See what's in it</a>.</p>
+<p>Boot it from a USB stick and try it without touching your disk. When you like it, double-click
+<b>Install Chamesle</b> on the desktop. It's still an early release, so back up anything important first.
+<a href="new.html">What's new in 0.2</a>.</p>
 
 <h2>What you need</h2>
 <ul>
@@ -55,7 +54,7 @@ your disk. There's no installer in it.</p>
 <h3>On Linux</h3>
 <p>Etcher works here too. Or from a terminal (check the device name with <code>lsblk</code> first,
 getting it wrong will wipe the wrong disk):</p>
-<pre><code>sudo dd if=chamesle-0.1.0-xfce-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync</code></pre>
+<pre><code>sudo dd if=chamesle-0.2.0-xfce-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync</code></pre>
 
 <h3>Ventoy</h3>
 <p>If you already use <a href="https://www.ventoy.net/">Ventoy</a>, just copy the ISO onto the stick.</p>
@@ -73,12 +72,12 @@ depending on the computer. Pick the USB stick. You'll get a menu with a few choi
 
 <h2>Checking the download</h2>
 <p>If you want to be sure the file isn't broken, compare its checksum with the one next to the download:</p>
-<pre><code>sha256sum -c chamesle-0.1.0-xfce-x86_64.iso.sha256</code></pre>
-<p>On Windows, <code>certutil -hashfile chamesle-0.1.0-xfce-x86_64.iso SHA256</code> in a command prompt does the same.</p>
+<pre><code>sha256sum -c chamesle-0.2.0-xfce-x86_64.iso.sha256</code></pre>
+<p>On Windows, <code>certutil -hashfile chamesle-0.2.0-xfce-x86_64.iso SHA256</code> in a command prompt does the same.</p>
 
 <h2>In a virtual machine</h2>
 <p>VirtualBox, VMware, GNOME Boxes and QEMU all work. Give it 2 CPUs and 3&nbsp;GB of RAM. With QEMU:</p>
-<pre><code>qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -cdrom chamesle-0.1.0-xfce-x86_64.iso</code></pre>
+<pre><code>qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -cdrom chamesle-0.2.0-xfce-x86_64.iso</code></pre>
 
 </main>
 
