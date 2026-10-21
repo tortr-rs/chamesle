@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New post - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="new.html">What's new</a>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html">Packages</a>
+    <a href="docs.html">Docs</a>
+    <a href="board.html" class="here">Board</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<p class="small"><a href="board.html">&larr; Board</a></p>
+<h1>New post</h1>
+<form class="form" id="form">
+  <label for="cat">Where does it go?</label>
+  <select id="cat">
+    <option value="q-a">Help</option>
+    <option value="show-and-tell">Show your desktop</option>
+    <option value="ideas">Ideas</option>
+    <option value="general" selected>General</option>
+  </select>
+  <label for="title">Title</label>
+  <input id="title" maxlength="120" required placeholder="What's it about?">
+  <p><button class="button" type="submit">Next</button></p>
+</form>
+<div id="write" hidden>
+  <p><b id="shown"></b></p>
+  <p class="small">Write your post in the box below and send it. Log in with GitHub first if you haven't.</p>
+  <div class="giscus" id="box"></div>
+</div>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
+</footer>
+
+<script>
+var CATS = {
+  'q-a': ['Help', 'DIC_kwDOShHmjc4DJQSa', 'Q&A'],
+  'show-and-tell': ['Show your desktop', 'DIC_kwDOShHmjc4DJQSc', 'Show and tell'],
+  'ideas': ['Ideas', 'DIC_kwDOShHmjc4DJQSb', 'Ideas'],
+  'general': ['General', 'DIC_kwDOShHmjc4DJQSZ', 'General'],
+  'announcements': ['Announcements', 'DIC_kwDOShHmjc4DJQSY', 'Announcements']
+};
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function ago(t) {
+  var s = (Date.now() - new Date(t)) / 1000;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
+  if (s < 86400) return Math.round(s / 3600) + ' h ago';
+  if (s < 86400 * 30) return Math.round(s / 86400) + ' d ago';
+  return new Date(t).toLocaleDateString();
+}
+function giscus(el, cat, mapping, term) {
+  var s = document.createElement('script'), c = CATS[cat] || CATS.general;
+  var a = {src: 'https://giscus.app/client.js', 'data-repo': 'tortr-rs/chamesle', 'data-repo-id': 'R_kgDOShHmjQ',
+    'data-category': c[2], 'data-category-id': c[1], 'data-mapping': mapping, 'data-term': term, 'data-strict': '1',
+    'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
+    'data-theme': 'preferred_color_scheme', 'data-lang': 'en', crossorigin: 'anonymous', async: ''};
+  for (var k in a) s.setAttribute(k, a[k]);
+  el.appendChild(s);
+}
+
+document.getElementById('form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var title = document.getElementById('title').value.trim(), cat = document.getElementById('cat').value;
+  if (!title) return;
+  document.getElementById('form').hidden = true;
+  document.getElementById('write').hidden = false;
+  document.getElementById('shown').textContent = title;
+  // giscus makes the discussion, titled like this, with the first message as the post
+  giscus(document.getElementById('box'), cat, 'specific', title);
+});
+</script>
+
+</body>
+</html>

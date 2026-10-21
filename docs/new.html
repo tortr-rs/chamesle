@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>New post - Chamesle Linux</title>
+<title>What's new in 0.2 - Chamesle Linux</title>
 <link rel="icon" href="img/logo.png">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,37 +12,59 @@
 <header>
   <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
   <nav>
-    <a href="new.html">What's new</a>
+    <a href="new.html" class="here">What's new</a>
     <a href="download.html">Download</a>
     <a href="editions.html">Editions</a>
     <a href="packages.html">Packages</a>
     <a href="docs.html">Docs</a>
-    <a href="board.html" class="here">Board</a>
+    <a href="board.html">Board</a>
     <a href="about.html">About</a>
   </nav>
 </header>
 
 <main>
 
-<p class="small"><a href="board.html">&larr; Board</a></p>
-<h1>New post</h1>
-<form class="form" id="form">
-  <label for="cat">Where does it go?</label>
-  <select id="cat">
-    <option value="q-a">Help</option>
-    <option value="show-and-tell">Show your desktop</option>
-    <option value="ideas">Ideas</option>
-    <option value="general" selected>General</option>
-  </select>
-  <label for="title">Title</label>
-  <input id="title" maxlength="120" required placeholder="What's it about?">
-  <p><button class="button" type="submit">Next</button></p>
-</form>
-<div id="write" hidden>
-  <p><b id="shown"></b></p>
-  <p class="small">Write your post in the box below and send it. Log in with GitHub first if you haven't.</p>
-  <div class="giscus" id="box"></div>
-</div>
+<h1>What's new in 0.2</h1>
+<p><span class="tag soon">in testing</span> 0.2 isn't out yet. This is what's in it. When it's ready it'll be on the
+<a href="download.html">download page</a>.</p>
+
+<h2>pkgimport: .deb and .rpm, just double-click</h2>
+<p>Most Linux apps on the web come as a <code>.deb</code> (Ubuntu, Debian) or an <code>.rpm</code> (Fedora, openSUSE).
+On Chamesle you don't have to care which. Double-click either one and <b>pkgimport</b> installs it: it converts
+the package, pulls in the libraries it needs from the Chamesle repo, and adds it to your menu. Updating and
+removing works like any other package.</p>
+<pre><code>sudo pkgimport install ~/Downloads/app.deb
+sudo pkgimport install ~/Downloads/app.rpm</code></pre>
+
+<h2>An installer</h2>
+<p>0.1 was live-only. 0.2 puts Chamesle on your disk. Double-click <b>Install Chamesle</b> on the desktop and
+answer a few questions: language, keyboard, where it goes, your name and password. Then it does the rest.</p>
+<ul>
+  <li><b>Next to Windows.</b> The installer can shrink a Windows partition to make room, and you choose Windows or
+  Chamesle every time the computer starts.</li>
+  <li><b>Or the whole disk</b>, if you're done with what's on it.</li>
+  <li><b>Encryption</b> with one tick box. Your files stay locked if the laptop gets stolen.</li>
+  <li>Manual partitioning for people who want it, with ext4, btrfs or xfs.</li>
+  <li>Works on both old BIOS machines and UEFI.</li>
+</ul>
+
+<h2>The Chamesle repo</h2>
+<p>The system now uses <b>apk</b> and the Chamesle repo: almost 15,000 packages, each one signed with the
+Chamesle key. Updating everything is one command:</p>
+<pre><code>sudo apk upgrade</code></pre>
+<p> <a href="packages.html">Search the packages</a>.</p>
+
+<h2>Smaller things</h2>
+<ul>
+  <li>A sharper wallpaper, 4K now.</li>
+  <li>Qt apps use the same theme as everything else.</li>
+  <li>fastfetch shows the Chamesle logo.</li>
+  <li>The boot menu of an installed system finds Windows and other systems on its own.</li>
+</ul>
+
+<h2>Still to come</h2>
+<p>The update notifier and the driver manager moved to 0.3, together with the store. Better done right
+than rushed. See the <a href="about.html#roadmap">roadmap</a>.</p>
 
 </main>
 
@@ -51,44 +73,6 @@
   <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
   <p>Chamesle Linux. Source code for every package is available on request.</p>
 </footer>
-
-<script>
-var CATS = {
-  'q-a': ['Help', 'DIC_kwDOShHmjc4DJQSa', 'Q&A'],
-  'show-and-tell': ['Show your desktop', 'DIC_kwDOShHmjc4DJQSc', 'Show and tell'],
-  'ideas': ['Ideas', 'DIC_kwDOShHmjc4DJQSb', 'Ideas'],
-  'general': ['General', 'DIC_kwDOShHmjc4DJQSZ', 'General'],
-  'announcements': ['Announcements', 'DIC_kwDOShHmjc4DJQSY', 'Announcements']
-};
-function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-function ago(t) {
-  var s = (Date.now() - new Date(t)) / 1000;
-  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
-  if (s < 86400) return Math.round(s / 3600) + ' h ago';
-  if (s < 86400 * 30) return Math.round(s / 86400) + ' d ago';
-  return new Date(t).toLocaleDateString();
-}
-function giscus(el, cat, mapping, term) {
-  var s = document.createElement('script'), c = CATS[cat] || CATS.general;
-  var a = {src: 'https://giscus.app/client.js', 'data-repo': 'tortr-rs/chamesle', 'data-repo-id': 'R_kgDOShHmjQ',
-    'data-category': c[2], 'data-category-id': c[1], 'data-mapping': mapping, 'data-term': term, 'data-strict': '1',
-    'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
-    'data-theme': 'preferred_color_scheme', 'data-lang': 'en', crossorigin: 'anonymous', async: ''};
-  for (var k in a) s.setAttribute(k, a[k]);
-  el.appendChild(s);
-}
-
-document.getElementById('form').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var title = document.getElementById('title').value.trim(), cat = document.getElementById('cat').value;
-  if (!title) return;
-  document.getElementById('form').hidden = true;
-  document.getElementById('write').hidden = false;
-  document.getElementById('shown').textContent = title;
-  // giscus makes the discussion, titled like this, with the first message as the post
-  giscus(document.getElementById('box'), cat, 'specific', title);
-});
-</script>
 
 </body>
 </html>
