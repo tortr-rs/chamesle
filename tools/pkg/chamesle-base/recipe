@@ -1,0 +1,13 @@
+name=chamesle-base
+version=0.2.0
+rel=1
+desc="Chamesle system setup: kernel modules at boot"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="kmod"
+
+build() {
+    cp -a . "$pkgdir/"
+}

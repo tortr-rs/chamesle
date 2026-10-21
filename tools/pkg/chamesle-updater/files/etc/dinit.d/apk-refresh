@@ -1,0 +1,5 @@
+# refresh the package list every 6 hours, for the update notifier
+type = process
+command = /usr/libexec/chamesle-refresh
+depends-on = network
+restart = true

@@ -20,6 +20,8 @@ mesa-dri mesa-vulkan-intel mesa-vulkan-radeon vulkan-loader mesa-vaapi intel-vid
 
 # sound, bluetooth, printing
 pipewire wireplumber alsa-pipewire alsa-utils bluez cups cups-filters
+# sound on most newer intel laptops needs these
+sof-firmware alsa-ucm-conf
 
 # flatpak, firefox, fonts
 flatpak xdg-desktop-portal xdg-user-dirs firefox
@@ -36,5 +38,5 @@ setxkbmap ckbcomp xkeyboard-config lvm2 dosfstools dracut xrandr
 # .deb and .rpm packages (pkgimport)
 bsdtar rpm zenity
 
-# the store
-chamesle-store
+# the store, update notifier and driver manager
+chamesle-store chamesle-updater chamesle-drivers chamesle-base

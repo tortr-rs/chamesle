@@ -1,0 +1,4 @@
+#!/bin/sh
+# load them now too, no reboot needed
+/usr/lib/dinit/modules
+exit 0

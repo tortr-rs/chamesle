@@ -1,15 +1,20 @@
 #!/bin/sh
 # what the store runs as root, through pkexec: nothing else gets through
-#   add|del PKG...   upgrade   import FILE.deb|FILE.rpm
+#   add|del PKG...   driver PKG...   upgrade   import FILE.deb|FILE.rpm
 set -eu
 cmd=${1:-}
 [ $# -gt 0 ] && shift
 case $cmd in
-add|del)
+add|del|driver)
     [ $# -gt 0 ] || exit 2
     for p; do
         case $p in -*|*[!a-zA-Z0-9._+-]*) echo "not a package name: $p" >&2; exit 2;; esac
     done
+    if [ "$cmd" = driver ]; then
+        # drivers: install, then a new initramfs so the right one (not nouveau) loads at boot
+        apk add --no-interactive "$@"
+        exec dracut --force --regenerate-all
+    fi
     exec apk "$cmd" --no-interactive "$@"
     ;;
 upgrade)
@@ -21,7 +26,7 @@ import)
     exec pkgimport install "$1"
     ;;
 *)
-    echo "usage: chamesle-store-helper add|del PKG... | upgrade | import FILE" >&2
+    echo "usage: chamesle-store-helper add|del|driver PKG... | upgrade | import FILE" >&2
     exit 2
     ;;
 esac

@@ -1,0 +1,9 @@
+#!/bin/sh
+# keeps apk's package list fresh so the update notifier (running as you) can see what's new
+# nothing to do in the live session, but stay up so dinit doesn't keep restarting us
+[ -e /run/chamesle-live ] && exec sleep infinity
+sleep 120
+while :; do
+    apk update --quiet >/dev/null 2>&1
+    sleep 21600
+done

@@ -1,0 +1,64 @@
+#!/usr/bin/python3
+# tray icon that shows up when there are updates (system and flathub), click to open the store's updates tab
+import os, re, subprocess, threading
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Notify", "0.7")
+from gi.repository import GLib, Gtk, Notify
+
+FIRST, EVERY = 3 * 60, 6 * 60 * 60
+
+
+def count():
+    apk = sum(1 for line in subprocess.run(["apk", "version", "-l", "<"], capture_output=True, text=True).stdout.splitlines()
+              if re.search(r"\s<\s", line))
+    flat = len(subprocess.run(["flatpak", "remote-ls", "--updates", "--app", "--columns=application"],
+                              capture_output=True, text=True).stdout.split())
+    return apk + flat
+
+
+class Notifier:
+    def __init__(self):
+        Notify.init("Updates")
+        self.icon = Gtk.StatusIcon(icon_name="software-update-available", visible=False)
+        self.icon.connect("activate", lambda *a: self.open())
+        self.icon.connect("popup-menu", self.menu)
+        self.told = 0
+        GLib.timeout_add_seconds(FIRST, self.check)
+
+    def check(self):
+        threading.Thread(target=lambda: GLib.idle_add(self.show, count()), daemon=True).start()
+        GLib.timeout_add_seconds(EVERY, self.check)
+        return False
+
+    def show(self, n):
+        self.icon.set_visible(n > 0)
+        self.icon.set_tooltip_text("%d update%s available" % (n, "" if n == 1 else "s"))
+        # one notification per new batch, not every 6 hours
+        if n > self.told:
+            note = Notify.Notification.new("Updates available",
+                                           "%d update%s ready to install." % (n, "" if n == 1 else "s"),
+                                           "software-update-available")
+            note.add_action("open", "Update", lambda *a: self.open())
+            note.show()
+        self.told = n
+
+    def open(self):
+        subprocess.Popen(["chamesle-store", "--updates"])
+
+    def menu(self, icon, button, time):
+        m = Gtk.Menu()
+        for label, cb in (("Show updates", lambda *a: self.open()), ("Check now", lambda *a: self.check())):
+            item = Gtk.MenuItem(label=label)
+            item.connect("activate", cb)
+            m.append(item)
+        m.show_all()
+        m.popup(None, None, None, None, button, time)
+
+
+if __name__ == "__main__":
+    if os.path.exists("/run/chamesle-live"):
+        raise SystemExit(0)
+    Notifier()
+    Gtk.main()

@@ -1,0 +1,13 @@
+name=chamesle-updater
+version=0.2.0
+rel=1
+desc="Tells you when there are updates and opens the store to install them"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="chamesle-store python3-gobject gtk+3 libnotify"
+
+build() {
+    cp -a . "$pkgdir/"
+}

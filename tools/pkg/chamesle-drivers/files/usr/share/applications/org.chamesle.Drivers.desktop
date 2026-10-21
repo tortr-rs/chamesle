@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Driver Manager
+Comment=Install drivers for your graphics card, Wi-Fi and printer
+Exec=chamesle-drivers
+Icon=jockey
+Terminal=false
+Categories=System;Settings;HardwareSettings;GTK;
+Keywords=driver;nvidia;graphics;wifi;broadcom;printer;
