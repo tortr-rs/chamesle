@@ -1,6 +1,6 @@
 # Chamesle Linux
 
-A user-friendly Linux distribution built on Void Linux's packages, with **dinit** as the init system.
+A user-friendly Linux distribution with **dinit** as the init system and **apk** as the package manager.
 
 - **For everyone:** a ready desktop, Flatpak with Flathub set up, and (coming) the Chamesle Store for apps,
   drivers and updates.
@@ -30,4 +30,4 @@ The ISO lands in `out/`. Packages are cached in `~/.cache/chamesle-xbps`, so lat
 | `tools/initrd/` | the initramfs (live medium and installed systems) |
 | `tools/themes.sh` | installs the Fluent theme and icons |
 | `artwork/` | wallpaper and logo sources (`render.sh` renders them) |
-| `keys/` | Void Linux's repository signing keys |
+| `keys/apk/` | the public key the packages are signed with |
