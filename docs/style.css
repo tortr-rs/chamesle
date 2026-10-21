@@ -123,3 +123,63 @@ footer {
   color: var(--muted);
   font-size: 14px;
 }
+
+nav a.here { color: var(--text); font-weight: 600; }
+@media (max-width: 560px) { nav a { margin: 0 14px 0 0; } }
+
+h3 { font-size: 18px; margin: 28px 0 4px; }
+ul { padding-left: 22px; }
+li { margin: 4px 0; }
+code { font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace; font-size: .92em; }
+p code, li code, td code { background: var(--code); padding: 1px 5px; border-radius: 4px; }
+
+.cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+.cols p { margin-top: 4px; }
+@media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 0; } }
+
+.release {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px 20px;
+  margin: 20px 0;
+}
+.plain { margin-left: 14px; font-size: 14px; }
+
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  vertical-align: middle;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #d9f2df;
+  color: #1b6b34;
+}
+.tag.soon { background: var(--code); color: var(--muted); }
+@media (prefers-color-scheme: dark) { .tag { background: #1d3a26; color: #8fe0a6; } }
+
+.edition { border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+.edition img { width: 100%; height: auto; border-radius: 6px; margin-top: 6px; }
+
+.toc { color: var(--muted); }
+
+details { border-bottom: 1px solid var(--line); padding: 10px 0; }
+summary { cursor: pointer; font-weight: 600; }
+details p { margin-bottom: 4px; }
+
+input[type=search] {
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+input[type=search]:focus { outline: 2px solid var(--blue); outline-offset: -1px; }
+
+.pkgs { list-style: none; padding: 0; margin: 0; }
+.pkgs li { padding: 8px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.pkgs li div:last-child { color: var(--muted); font-size: 15px; }
+td:first-child code { white-space: nowrap; }
+td:first-child:has(code) { width: auto; padding-right: 18px; }
+@media (max-width: 560px) { td:first-child code { white-space: normal; word-break: break-all; } }
