@@ -4,8 +4,8 @@
 set -eu
 cd "$(dirname "$0")"
 out=../overlay/usr/share
-# wallpapers go in the xfce look package
-look=../tools/pkg/chamesle-xfce/files/usr/share
+# wallpapers, login screen logo and the start button go in the artwork package
+look=../tools/pkg/chamesle-artwork/files/usr/share
 resvg=${RESVG:-resvg}
 
 mkdir -p $look/backgrounds/chamesle $out/plymouth/themes/chamesle
@@ -39,4 +39,14 @@ cat > $tmp/greeter.svg <<'SVG'
 </svg>
 SVG
 $resvg --resources-dir $tmp ${FONTS:+--use-fonts-dir $FONTS} $tmp/greeter.svg $look/chamesle/greeter-logo.png
+rm -rf $tmp
+
+# the Chamesle icon theme: Papirus, with the logo as the start button (start-here)
+tmp=$(mktemp -d)
+cp logo.png $tmp/
+printf '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512"><image width="512" height="512" xlink:href="logo.png"/></svg>\n' > $tmp/logo.svg
+for s in 16 22 24 32 48 64 128 256; do
+    mkdir -p $look/icons/Chamesle/${s}x$s/places
+    $resvg --resources-dir $tmp -w $s -h $s $tmp/logo.svg $look/icons/Chamesle/${s}x$s/places/start-here.png
+done
 rm -rf $tmp
