@@ -12,6 +12,7 @@
 <header>
   <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
   <nav>
+    <a href="new.html">What's new</a>
     <a href="download.html">Download</a>
     <a href="editions.html">Editions</a>
     <a href="packages.html" class="here">Packages</a>
@@ -46,12 +47,18 @@ from desktop apps to compilers and servers. From 0.2 on, Chamesle uses apk (0.1 
   <tr><td><code>apk info --who-owns /usr/bin/gimp</code></td><td>which package a file came from</td></tr>
 </table>
 
+<h2>.deb and .rpm files</h2>
+<p><span class="tag soon">0.2</span> Downloaded a <code>.deb</code> or <code>.rpm</code> from a website? Double-click it. Chamesle converts it to a
+normal package and installs it, and the libraries it needs come from our repo. Or in a terminal:</p>
+<pre><code>sudo pkgimport install ~/Downloads/something.deb</code></pre>
+<p>Remove it like anything else, with <code>sudo apk del NAME</code>. Most apps work this way. If one was built for
+a library version we don't have, pkgimport says which one, and the Flathub version is the way to go.</p>
+
 <h2>The repository</h2>
 <p>Packages are hosted on SourceForge and signed with the Chamesle key. On a Chamesle system,
 <code>/etc/apk/repositories</code> has this line:</p>
-<pre><code>https://downloads.sourceforge.net/project/chameslerepos</code></pre>
-<p>Everything is built from <a href="https://voidlinux.org/">Void Linux</a>'s glibc packages and repackaged for apk,
-so there's a lot of it and it stays recent. The public key is
+<pre><code>v3 https://downloads.sourceforge.net/project/chameslerepos</code></pre>
+<p>There are almost 15,000 packages and they're kept up to date. The public key is
 <a href="https://github.com/tortr-rs/chamesle/tree/main/keys/apk">on GitHub</a>.</p>
 <p>Missing something? <a href="https://github.com/tortr-rs/chamesle/issues">Open an issue</a> and say what.</p>
 
@@ -60,7 +67,7 @@ so there's a lot of it and it stays recent. The public key is
 <footer>
   <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
   <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
-  <p>Chamesle Linux. Packages are built from <a href="https://voidlinux.org/">Void Linux</a>; source for every package is available on request.</p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
 </footer>
 
 <script>

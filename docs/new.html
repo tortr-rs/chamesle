@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What's new in 0.2 - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="new.html" class="here">What's new</a>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html">Packages</a>
+    <a href="docs.html">Docs</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<h1>What's new in 0.2</h1>
+<p><span class="tag soon">in testing</span> 0.2 isn't out yet. This is what's in it. When it's ready it'll be on the
+<a href="download.html">download page</a>.</p>
+
+<h2>An installer</h2>
+<p>0.1 was live-only. 0.2 puts Chamesle on your disk. Double-click <b>Install Chamesle</b> on the desktop and
+answer a few questions: language, keyboard, where it goes, your name and password. Then it does the rest.</p>
+<ul>
+  <li><b>Next to Windows.</b> The installer can shrink a Windows partition to make room, and you choose Windows or
+  Chamesle every time the computer starts.</li>
+  <li><b>Or the whole disk</b>, if you're done with what's on it.</li>
+  <li><b>Encryption</b> with one tick box. Your files stay locked if the laptop gets stolen.</li>
+  <li>Manual partitioning for people who want it, with ext4, btrfs or xfs.</li>
+  <li>Works on both old BIOS machines and UEFI.</li>
+</ul>
+
+<h2>Our own package manager and repo</h2>
+<p>The system now runs on <b>apk</b> and the Chamesle repo: almost 15,000 packages, each one signed with the
+Chamesle key. Updating everything is one command:</p>
+<pre><code>sudo apk upgrade</code></pre>
+<p> <a href="packages.html">Search the packages</a>.</p>
+
+<h2>.deb and .rpm files</h2>
+<p>Found an app that only comes as a <code>.deb</code> or <code>.rpm</code>? Double-click it. Chamesle turns it into a
+normal package and installs it along with the libraries it needs. More on the <a href="packages.html">packages page</a>.</p>
+
+<h2>Smaller things</h2>
+<ul>
+  <li>A sharper wallpaper, 4K now.</li>
+  <li>Qt apps use the same theme as everything else.</li>
+  <li>fastfetch shows the Chamesle logo.</li>
+  <li>The boot menu of an installed system finds Windows and other systems on its own.</li>
+</ul>
+
+<h2>Still to come</h2>
+<p>The update notifier and the driver manager moved to 0.3, together with the store. Better done right
+than rushed. See the <a href="about.html#roadmap">roadmap</a>.</p>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
+</footer>
+
+</body>
+</html>
