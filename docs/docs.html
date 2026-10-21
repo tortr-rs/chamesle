@@ -17,6 +17,7 @@
     <a href="editions.html">Editions</a>
     <a href="packages.html">Packages</a>
     <a href="docs.html" class="here">Docs</a>
+    <a href="board.html">Board</a>
     <a href="about.html">About</a>
   </nav>
 </header>
@@ -47,11 +48,13 @@
 <h2 id="install">Installing Chamesle <span class="tag soon">0.2</span></h2>
 <p>Boot the USB stick, then double-click <b>Install Chamesle</b> on the desktop.</p>
 <ol>
-  <li><b>Welcome:</b> pick your language. It checks you have enough space and are plugged in.</li>
-  <li><b>Location</b> and <b>keyboard:</b> click your city on the map, try the keyboard in the box.</li>
-  <li><b>Partitions:</b> &ldquo;Install alongside&rdquo; keeps Windows (drag the slider to share the space),
-  &ldquo;Erase disk&rdquo; uses the whole thing. Tick <b>Encrypt system</b> if you want it.</li>
-  <li><b>Users:</b> your name, a login name, a password and a name for the computer.</li>
+  <li><b>Language:</b> pick yours from the list.</li>
+  <li><b>Timezone:</b> click where you are on the map.</li>
+  <li><b>Keyboard:</b> pick your layout, there's a picture of it and a box to try it.</li>
+  <li><b>User account:</b> your name, a username, a password and a name for the computer.</li>
+  <li><b>Installation type:</b> &ldquo;Automated&rdquo; erases a disk and sets everything up, with encryption
+  if you tick it. &ldquo;Manual&rdquo; lets you choose partitions yourself. To keep Windows, pick Manual, open
+  GParted from there, shrink the Windows partition, and install into the free space.</li>
   <li><b>Summary:</b> check it and click Install. Restart when it's done and take the stick out.</li>
 </ol>
 <p>Back up anything important first. Shrinking Windows works fine almost always, but &ldquo;almost&rdquo; isn't

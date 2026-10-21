@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Board - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
+  <nav>
+    <a href="new.html">What's new</a>
+    <a href="download.html">Download</a>
+    <a href="editions.html">Editions</a>
+    <a href="packages.html">Packages</a>
+    <a href="docs.html">Docs</a>
+    <a href="board.html" class="here">Board</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+
+<h1>Board</h1>
+<p>Ask for help, show off your desktop, share ideas. You log in with your GitHub account, right here.</p>
+
+<div class="bar" id="sort">
+  <button data-s="hot" class="on">Hot</button>
+  <button data-s="new">New</button>
+  <button data-s="top">Top</button>
+  <a class="button" href="new.html">New post</a>
+</div>
+<div class="bar" id="cats"><button data-c="" class="on">Everything</button></div>
+<ul class="posts" id="posts"></ul>
+<p id="empty" class="small"></p>
+
+</main>
+
+<footer>
+  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
+  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
+  <p>Chamesle Linux. Source code for every package is available on request.</p>
+</footer>
+
+<script>
+var CATS = {
+  'q-a': ['Help', 'DIC_kwDOShHmjc4DJQSa', 'Q&A'],
+  'show-and-tell': ['Show your desktop', 'DIC_kwDOShHmjc4DJQSc', 'Show and tell'],
+  'ideas': ['Ideas', 'DIC_kwDOShHmjc4DJQSb', 'Ideas'],
+  'general': ['General', 'DIC_kwDOShHmjc4DJQSZ', 'General'],
+  'announcements': ['Announcements', 'DIC_kwDOShHmjc4DJQSY', 'Announcements']
+};
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function ago(t) {
+  var s = (Date.now() - new Date(t)) / 1000;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
+  if (s < 86400) return Math.round(s / 3600) + ' h ago';
+  if (s < 86400 * 30) return Math.round(s / 86400) + ' d ago';
+  return new Date(t).toLocaleDateString();
+}
+function giscus(el, cat, mapping, term) {
+  var s = document.createElement('script'), c = CATS[cat] || CATS.general;
+  var a = {src: 'https://giscus.app/client.js', 'data-repo': 'tortr-rs/chamesle', 'data-repo-id': 'R_kgDOShHmjQ',
+    'data-category': c[2], 'data-category-id': c[1], 'data-mapping': mapping, 'data-term': term, 'data-strict': '1',
+    'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
+    'data-theme': 'preferred_color_scheme', 'data-lang': 'en', crossorigin: 'anonymous', async: ''};
+  for (var k in a) s.setAttribute(k, a[k]);
+  el.appendChild(s);
+}
+
+var all = [], sort = 'hot', cat = '';
+function score(p) {
+  if (sort === 'new') return +new Date(p.at);
+  if (sort === 'top') return p.v * 1000 + p.k;
+  var hours = (Date.now() - new Date(p.at)) / 3600000;
+  return (p.v + p.k / 2 + 1) / Math.pow(hours + 2, 1.5);
+}
+function show() {
+  var list = all.filter(function (p) { return !cat || p.c === cat; });
+  list.sort(function (a, b) { return score(b) - score(a); });
+  var out = document.getElementById('posts');
+  out.innerHTML = '';
+  list.forEach(function (p) {
+    var li = document.createElement('li'), c = CATS[p.c] || [p.c];
+    li.innerHTML = '<div class="votes"><span>&#9650;</span>' + p.v + '</div><div><h3><a href="post.html?n=' + p.n + '">' +
+      esc(p.t) + '</a></h3><p>' + esc(p.b) + '</p><div class="meta"><span class="cat">' + esc(c[0]) + '</span>' +
+      (p.av ? '<img src="' + esc(p.av) + '&s=32" alt="">' : '') + esc(p.a) + ' &middot; ' + ago(p.at) + ' &middot; ' +
+      p.k + (p.k === 1 ? ' comment' : ' comments') + '</div></div>';
+    out.appendChild(li);
+  });
+  document.getElementById('empty').textContent = list.length ? '' : 'Nothing here yet. Be the first to post!';
+}
+var cats = document.getElementById('cats');
+Object.keys(CATS).forEach(function (k) {
+  var b = document.createElement('button'); b.dataset.c = k; b.textContent = CATS[k][0]; cats.appendChild(b);
+});
+function pick(bar, attr, set) {
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    bar.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    set(b.dataset[attr]); show();
+  });
+}
+pick(document.getElementById('sort'), 's', function (v) { sort = v; });
+pick(cats, 'c', function (v) { cat = v; });
+fetch('board.json').then(function (r) { return r.json(); }).then(function (d) { all = d; show(); })
+  .catch(function () { document.getElementById('empty').textContent = "Couldn't load the board. Try reloading."; });
+</script>
+
+</body>
+</html>
