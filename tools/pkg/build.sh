@@ -68,9 +68,11 @@ d=$(echo $depends $sodeps)
 [ -z "$d" ] || info+=(--info "depends:$d")
 [ -z "${provides// }" ] || info+=(--info "provides:$(echo $provides)")
 [ -z "${replaces:-}" ] || info+=(--info "replaces:$replaces")
-# install scripts, if the package has any (NAME/post-install and so on)
+# install scripts, if the package has any (NAME/post-install and so on); @VERSION@ becomes the package's version
 for k in pre-install post-install pre-upgrade post-upgrade pre-deinstall post-deinstall; do
-    [ -f "$HERE/$1/$k" ] && info+=(--script "$k:$HERE/$1/$k")
+    [ -f "$HERE/$1/$k" ] || continue
+    sed "s/@VERSION@/$version/g" "$HERE/$1/$k" > "$W/$k"
+    info+=(--script "$k:$W/$k")
 done
 # packed as namespace root so the files are root's
 unshare --map-root-user --map-auto "$APK" mkpkg --files "$PKG" --output "$out" --sign-key "$KEY" "${info[@]}"
