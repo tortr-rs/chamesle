@@ -1,4 +1,10 @@
 #!/bin/sh
 # load them now too, no reboot needed
 /usr/lib/dinit/modules
+# chamesle is rolling: the version the system says it runs is this package's, not the iso it came from
+v=@VERSION@
+if grep -q '^ID=chamesle$' /etc/os-release 2>/dev/null; then
+    sed -i -E "s/^(PRETTY_NAME=\"Chamesle Linux )[0-9][0-9.]*/\1$v/; s/^VERSION=\"[0-9][0-9.]*/VERSION=\"$v/; s/^VERSION_ID=.*/VERSION_ID=\"$v\"/" /etc/os-release
+    [ -f /etc/issue ] && sed -i -E "s/^(Chamesle Linux )[0-9][0-9.]*/\1$v/" /etc/issue
+fi
 exit 0
