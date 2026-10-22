@@ -27,6 +27,21 @@
 <h1>What's new in 0.2</h1>
 <p>0.2 is out. Get it from the <a href="download.html">download page</a>.</p>
 
+<h2>0.2.1: Windows programs</h2>
+<p>Double-click a <code>.exe</code> and it runs. The first time, Chamesle offers to install Windows support
+(Wine, a 650&nbsp;MB download) and sets it up, with DXVK switched on when your graphics card can use it, so
+games run fast too. After that it's just a double-click. <code>.msi</code> installers work the same way, and
+whatever they install shows up in your menu.</p>
+<p>Also in 0.2.1:</p>
+<ul>
+  <li>The Store, Driver Manager and updates work in the live session. Before, they asked for a password the live
+  session doesn't have.</li>
+  <li>The installer fits on small laptop screens. Its pages scroll instead of pushing the buttons off the bottom.</li>
+  <li>MATE: no more little grab handles on the panel.</li>
+  <li>Cinnamon: the terminal uses a proper monospace font.</li>
+</ul>
+<p>Already running 0.2? <code>sudo apk upgrade</code> gets you all of it.</p>
+
 <h2>Since the release</h2>
 <p>Being rolling means 0.2 keeps getting better without a new ISO. Since it came out:</p>
 <ul>
@@ -39,10 +54,7 @@
   <li><b>The store shows a progress bar</b> while it downloads, so big apps don't look stuck.</li>
   <li><b>Fixed:</b> some Flathub apps wouldn't install and showed a long error about a kernel module.</li>
 </ul>
-<p>Already running 0.2? <code>sudo apk upgrade</code> gets the fixes. The two new apps are separate packages, so
-add them once:</p>
-<pre><code>sudo apk add chamesle-updater chamesle-drivers chamesle-base</code></pre>
-<p>The Cinnamon ISO already has all of it. New Xfce and MATE ISOs with it are coming soon (0.2.1).</p>
+<p>All of this is in the 0.2.1 ISOs, and <code>sudo apk upgrade</code> brings it to an existing 0.2 install.</p>
 
 <h2>pkgimport: .deb and .rpm, just double-click</h2>
 <p>Most Linux apps on the web come as a <code>.deb</code> (Ubuntu, Debian) or an <code>.rpm</code> (Fedora, openSUSE).
