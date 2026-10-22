@@ -31,6 +31,7 @@
   <a href="#apps">Installing apps</a> &middot;
   <a href="#updates">Updates</a> &middot;
   <a href="#services">Services</a> &middot;
+  <a href="#windows">Windows programs</a> &middot;
   <a href="#hardware">Hardware</a> &middot;
   <a href="#faq">FAQ</a>
 </p>
@@ -92,6 +93,13 @@ You control them with <code>dinitctl</code>:</p>
 <pre><code>type = process
 command = /usr/bin/sshd -D
 depends-on = network</code></pre>
+
+<h2 id="windows">Windows programs</h2>
+<p>Double-click a <code>.exe</code> or <code>.msi</code>. The first time, Chamesle offers to install Windows
+support (Wine). It needs about 3&nbsp;GB, so it won't fit in the live session: install Chamesle first. Programs
+you install this way show up in your menu like any other app. Not every Windows program works; the
+<a href="https://appdb.winehq.org/">Wine app database</a> says how well a given one does.</p>
+<p>For Steam games, use Steam (it's on Flathub) and turn on Proton in its settings.</p>
 
 <h2 id="hardware">Hardware</h2>
 <p>Firmware for most Wi-Fi cards, graphics cards and Bluetooth adapters is already included, and Intel
