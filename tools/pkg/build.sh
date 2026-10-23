@@ -9,8 +9,10 @@ APK=${APK:-apk}
 REPO=${REPO:-$TOP/work/repo}
 SRC=${SRC_CACHE:-$HOME/.cache/chamesle-src}
 KEYDIR=${KEYDIR:-$HOME/.config/chamesle}
-KEY=$(ls "$KEYDIR"/chamesle-*.rsa | head -n1)
+KEY=$(ls "$KEYDIR"/chamesle-*.rsa | sort | tail -n1)
 ARCH=x86_64
+# what it builds with comes from the repo here, or the public one when there's no full copy here
+PULL=${PULL:-$( [ -f "$REPO/$ARCH/Packages.adb" ] && echo "$REPO" || echo https://downloads.sourceforge.net/project/chameslerepos)}
 
 [ $# = 1 ] && [ -f "$HERE/$1/recipe" ] || { echo "usage: $0 NAME   (one of: $(cd "$HERE" && ls */recipe | sed 's|/recipe||' | tr '\n' ' '))" >&2; exit 1; }
 . "$HERE/$1/recipe"
@@ -28,7 +30,7 @@ unshare --map-root-user --map-auto rm -rf "$W"
 ROOT=$W/root
 mkdir -p "$ROOT/etc/apk/keys" "$ROOT/build/src" "$ROOT/build/pkg"
 cp "$TOP"/keys/apk/*.pub "$ROOT/etc/apk/keys/"
-echo "v3 $REPO" > "$ROOT/etc/apk/repositories"
+echo "v3 $PULL" > "$ROOT/etc/apk/repositories"
 if [ -n "${source:-}" ]; then
     tar -xf "$file" -C "$ROOT/build/src"
 else
@@ -61,6 +63,7 @@ sodeps=$(find "$PKG" -type f \( -perm -u+x -o -name '*.so*' \) -exec readelf -d 
     sed -n 's/.*(NEEDED).*\[\(.*\)\]/\1/p' | sort -u | grep -vxF "$own" | sed 's/^/so:/' | tr '\n' ' ' || true)
 provides=$(for f in $own; do case $f in *.so.[0-9]*) echo "so:$f=${f#*.so.}" | sed 's/=\([0-9]*\).*/=\1/';; esac; done | tr '\n' ' ')
 
+mkdir -p "$REPO/$ARCH"
 out=$REPO/$ARCH/$name-$version-r$rel.apk
 info=(--info "name:$name" --info "version:$version-r$rel" --info "arch:$ARCH" --info "description:$desc"
       --info "url:$url" --info "license:$license" --info "maintainer:Chamesle Linux <packages@chamesle.org>")
@@ -76,6 +79,10 @@ for k in pre-install post-install pre-upgrade post-upgrade pre-deinstall post-de
 done
 # packed as namespace root so the files are root's
 unshare --map-root-user --map-auto "$APK" mkpkg --files "$PKG" --output "$out" --sign-key "$KEY" "${info[@]}"
+if [ "$PULL" != "$REPO" ]; then
+    # an index of just what's here would hide the rest of the repo
+    echo "built $out (put it in the public index with tools/repo/merge-index.sh)"; exit 0
+fi
 "$APK" mkndx --keys-dir "$TOP/keys/apk" --sign-key "$KEY" --description "chamesle $(date +%Y-%m-%d)" \
     --index "$REPO/$ARCH/Packages.adb" --output "$REPO/$ARCH/Packages.adb.new" "$REPO/$ARCH"/*.apk
 mv "$REPO/$ARCH/Packages.adb.new" "$REPO/$ARCH/Packages.adb"
