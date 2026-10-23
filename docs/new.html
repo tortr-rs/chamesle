@@ -27,6 +27,19 @@
 <h1>What's new in 0.2</h1>
 <p>0.2 is out. Get it from the <a href="download.html">download page</a>.</p>
 
+<h2>Already running Chamesle? Run this once</h2>
+<p>The key that signs the Chamesle repo has changed. If <code>sudo apk update</code> says
+<b>UNTRUSTED signature</b>, your system doesn't know the new key yet. This adds it:</p>
+<pre><code>sudo curl -o /etc/apk/keys/chamesle-20261023.rsa.pub https://raw.githubusercontent.com/tortr-rs/chamesle/main/keys/apk/chamesle-20261023.rsa.pub</code></pre>
+<p>Then <code>sudo apk upgrade</code> works again. You only need to do this once, and new ISOs know the key
+already.</p>
+<p>The upgrade fixes two things worth having:</p>
+<ul>
+  <li><b>Sound.</b> Nothing started the sound server, so there was no sound and apps that wait for it (like
+  PulseEffects) never opened. Log out and back in after upgrading.</li>
+  <li><b>htop, nano and other terminal programs</b> stopped with "Error opening terminal". They work now.</li>
+</ul>
+
 <h2>0.2.1: Windows programs</h2>
 <p>Double-click a <code>.exe</code> and it runs. The first time, Chamesle offers to install Windows support
 (Wine, a 650&nbsp;MB download) and sets it up, with DXVK switched on when your graphics card can use it, so
