@@ -9,7 +9,7 @@ apps come from Flathub, and there's a real package manager underneath if you wan
 - an installer based on Linux Mint's: whole disk (with encryption or LVM) or your own partitions, GParted built in
 - linux-firmware, Mesa, os-prober and Firefox out of the box
 
-Editions: **Xfce**, **MATE** and **Cinnamon**, set up like Windows. **GNOME** is coming in 0.3, KDE Plasma later.
+Editions: **Xfce**, **MATE** and **Cinnamon**, set up like Windows, and **GNOME**. KDE Plasma later.
 
 Website: [chamesle.org](https://chamesle.org) · downloads and the package repo:
 [SourceForge](https://sourceforge.net/projects/chameslerepos/)
@@ -32,6 +32,10 @@ public one.
 ALL=1 tools/repo/build-repo.sh     # the whole repo, takes a while and ~60G
 tools/pkg/build.sh python3-parted   # one of our own packages, built from source
 ```
+
+Without the whole repo here, `tools/pkg/build.sh` builds against the public one, and
+`tools/repo/merge-index.sh work/repo/x86_64/NAME-*.apk` puts the result in the published index;
+`tools/repo/upload.sh publish` uploads just that. The packages already on SourceForge stay as they are.
 
 Signing needs a key in `~/.config/chamesle/` (made on the first run). Keep it to yourself, only the `.pub`
 goes in `keys/apk/`.
