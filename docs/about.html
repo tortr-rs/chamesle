@@ -24,34 +24,39 @@
   </div>
 </header>
 
-<main>
-
-<h1>About</h1>
-<p>People usually don't leave Linux because of anything big. It's something small: a driver, an app they can't
+<section class="pagehead">
+  <div class="wrap">
+    <h1>About</h1>
+    <p class="lead">People usually don't leave Linux because of anything big. It's something small: a driver, an app they can't
 find, a menu that isn't where they expected. So the idea is simple. Make a system that looks like what people
 know, has the drivers and apps already sorted, and stays out of the way.</p>
+  </div>
+</section>
+
+<main>
+
 <p>It's a small project, so things move at that speed.</p>
 
 <h2 id="roadmap">Roadmap</h2>
-<table>
-  <tr><td><b>0.1</b></td><td>Xfce live ISO, Windows-like layout, Flathub, firmware and drivers. <span class="tag">done</span></td></tr>
-  <tr><td><b>0.2</b></td><td>Installer (dual boot, encryption), the system on apk and the Chamesle repo, .deb and .rpm support. <span class="tag">done</span></td></tr>
-  <tr><td><b>0.3</b></td><td>A GNOME edition. (The update notifier and driver manager came early, in 0.2.) <span class="tag">out</span></td></tr>
-  <tr><td><b>0.4</b></td><td><b>Updates can't break your computer.</b> Before every update Chamesle takes a snapshot of the system,
+<ol class="timeline">
+  <li class="done"><span class="ver">0.1</span><div>Xfce live ISO, Windows-like layout, Flathub, firmware and drivers.</div></li>
+  <li class="done"><span class="ver">0.2</span><div>Installer (dual boot, encryption), the system on apk and the Chamesle repo, .deb and .rpm support.</div></li>
+  <li class="done"><span class="ver">0.3</span><div>A GNOME edition. (The update notifier and driver manager came early, in 0.2.)</div></li>
+  <li class="next"><span class="ver">0.4</span><div><b>Updates can't break your computer.</b> Before every update Chamesle takes a snapshot of the system,
   and if something goes wrong you pick "before the update" in the boot menu and you're back. Only the system is
   snapshotted, never your files, and only the last 3 are kept, so they don't eat your disk. Plus the first
-  Flavor: Chamesle Astro, for astronomy.</td></tr>
-  <tr><td><b>0.5</b></td><td>A KDE Plasma edition, and help moving from Windows: it copies your documents, pictures and
-  bookmarks over, and suggests the Linux apps for the Windows ones you used.</td></tr>
-  <tr><td><b>0.6</b></td><td>A server edition with a text installer, and a gaming Flavor: Steam, Proton and
-  controllers ready to go.</td></tr>
-  <tr><td><b>0.7</b></td><td>A better store: screenshots, ratings, updates in the background, and firmware updates for
-  your BIOS and SSD.</td></tr>
-  <tr><td><b>0.8</b></td><td>Chamesle's own apps in every language, and a pass on accessibility: screen reader, high
-  contrast and large text from the first boot.</td></tr>
-  <tr><td><b>0.9</b></td><td>Release candidate: no new features, just fixes. Try it on your computer and tell us on the <a href="board.html">board</a> what breaks, so 1.0 works on as many machines as possible.</td></tr>
-  <tr><td><b>1.0</b></td><td>Godrick.</td></tr>
-</table>
+  Flavor: Chamesle Astro, for astronomy.</div></li>
+  <li class="next"><span class="ver">0.5</span><div>A KDE Plasma edition, and help moving from Windows: it copies your documents, pictures and
+  bookmarks over, and suggests the Linux apps for the Windows ones you used.</div></li>
+  <li class="next"><span class="ver">0.6</span><div>A server edition with a text installer, and a gaming Flavor: Steam, Proton and
+  controllers ready to go.</div></li>
+  <li class="next"><span class="ver">0.7</span><div>A better store: screenshots, ratings, updates in the background, and firmware updates for
+  your BIOS and SSD.</div></li>
+  <li class="next"><span class="ver">0.8</span><div>Chamesle's own apps in every language, and a pass on accessibility: screen reader, high
+  contrast and large text from the first boot.</div></li>
+  <li class="next"><span class="ver">0.9</span><div>Release candidate: no new features, just fixes. Try it on your computer and tell us on the <a href="board.html">board</a> what breaks, so 1.0 works on as many machines as possible.</div></li>
+  <li class="next"><span class="ver">1.0</span><div>Godrick.</div></li>
+</ol>
 <p class="small">No dates for these. Once 1.0 is out, there's a new ISO every 6 months, and the version
 names follow Elden Ring's bosses: Margit until 1.0, then Godrick, Rennala and Radahn.</p>
 
