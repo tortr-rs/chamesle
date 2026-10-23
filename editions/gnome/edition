@@ -1,0 +1,4 @@
+name=GNOME
+# the live session is on X11, where the installer is at home. installed systems start on wayland, gnome's default
+session=gnome-xorg
+login=gdm

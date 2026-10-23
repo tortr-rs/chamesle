@@ -47,7 +47,10 @@ class InstallerEngine:
         self.do_run_in_chroot("cat /dev/shm/.passwd | chpasswd -c SHA512")
         os.system("rm -f /target/dev/shm/.passwd")
 
-        if self.setup.autologin:
+        if self.setup.autologin and os.path.exists("/target/etc/gdm/custom.conf"):
+            os.system("sed -i 's/^\\[daemon\\]$/&\\nAutomaticLoginEnable=True\\nAutomaticLogin=%s/' /target/etc/gdm/custom.conf"
+                      % self.setup.username)
+        elif self.setup.autologin:
             os.makedirs("/target/etc/lightdm/lightdm.conf.d", exist_ok=True)
             with open("/target/etc/lightdm/lightdm.conf.d/80-autologin.conf", "w") as f:
                 f.write("[Seat:*]\nautologin-user=%s\n" % self.setup.username)
@@ -222,8 +225,11 @@ class InstallerEngine:
                      "/usr/share/applications/chamesle-install.desktop", "/usr/bin/chamesle-install",
                      "/usr/bin/live-installer", "/usr/lib/live-installer", "/usr/share/live-installer",
                      "/usr/share/icons/live-installer-progress-dot-on.png",
-                     "/usr/share/icons/live-installer-progress-dot-off.png"):
+                     "/usr/share/icons/live-installer-progress-dot-off.png", "/var/lib/AccountsService/users/live"):
             os.system("rm -rf /target%s" % path)
+        # gdm keeps the live autologin in its one config file
+        if os.path.exists("/target/etc/gdm/custom.conf"):
+            os.system("sed -i '/^# the live session only$/d; /^AutomaticLogin/d' /target/etc/gdm/custom.conf")
         self.do_run_in_chroot("userdel -r live")
 
         # add new user

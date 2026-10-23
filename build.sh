@@ -96,8 +96,16 @@ echo 'live ALL=(ALL:ALL) NOPASSWD: ALL' > "$ROOT/etc/sudoers.d/live"; chmod 440 
 mkdir -p "$ROOT/etc/polkit-1/rules.d"
 printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == "live") return polkit.Result.YES;\n});\n' > "$ROOT/etc/polkit-1/rules.d/49-live.rules"
 SESSION=$(sed -n 's/^session=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null || echo "$EDITION")
-printf '# the live session only (the installer removes this file)\n[Seat:*]\nautologin-user=live\nautologin-session=%s\n' "$SESSION" \
-    > "$ROOT/etc/lightdm/lightdm.conf.d/90-live.conf"
+LOGIN=$(sed -n 's/^login=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null); LOGIN=${LOGIN:-lightdm}
+if [ "$LOGIN" = gdm ]; then
+    # gdm has a single config file, the installer takes these lines out again. the session comes from accountsservice
+    sed -i 's/^\[daemon\]$/&\n# the live session only\nAutomaticLoginEnable=True\nAutomaticLogin=live/' "$ROOT/etc/gdm/custom.conf"
+    mkdir -p "$ROOT/var/lib/AccountsService/users"
+    printf '[User]\nSession=%s\nSystemAccount=false\n' "$SESSION" > "$ROOT/var/lib/AccountsService/users/live"
+else
+    printf '# the live session only (the installer removes this file)\n[Seat:*]\nautologin-user=live\nautologin-session=%s\n' "$SESSION" \
+        > "$ROOT/etc/lightdm/lightdm.conf.d/90-live.conf"
+fi
 "$IN" "$ROOT" /usr/bin/xdg-user-dirs-update 2>/dev/null || true
 # installer icon on the desktop, marked trusted at login or xfce and caja ask first
 mkdir -p "$ROOT/home/live/Desktop" "$ROOT/home/live/.config/autostart"
@@ -109,6 +117,14 @@ Name=Trust the installer icon
 Exec=sh -c 'f=$HOME/Desktop/chamesle-install.desktop; gio set "$f" metadata::xfce-exe-checksum "$(sha256sum "$f" | cut -d" " -f1)"; gio set "$f" metadata::trusted true'
 NoDisplay=true
 EOF
+# gnome has no desktop icons: the installer goes first in the dock instead
+GNOME_LOOK=$ROOT/usr/share/glib-2.0/schemas/50_chamesle-gnome.gschema.override
+if [ -f "$GNOME_LOOK" ]; then
+    mkdir -p "$ROOT/home/live/.config/dconf" "$ROOT/tmp/live-dconf"
+    { echo '[org/gnome/shell]'; sed -n "s/^favorite-apps=\[/&'chamesle-install.desktop', /p" "$GNOME_LOOK"; } > "$ROOT/tmp/live-dconf/live"
+    "$IN" "$ROOT" /usr/bin/dconf compile /home/live/.config/dconf/user /tmp/live-dconf
+    rm -rf "$ROOT/tmp/live-dconf"
+fi
 "$IN" "$ROOT" /usr/bin/chown -R live:live /home/live
 rm -f "$ROOT/etc/machine-id" "$ROOT/var/lib/dbus/machine-id"
 rm -rf "$ROOT/var/cache/apk"/*

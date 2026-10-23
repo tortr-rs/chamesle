@@ -1,0 +1,18 @@
+name=gnome-shell-extension-appindicator
+version=66
+rel=1
+desc="Tray icons for GNOME, for apps that put one there (and the update notifier)"
+url=https://github.com/ubuntu/gnome-shell-extension-appindicator
+license=GPL-2.0-or-later
+source=https://github.com/ubuntu/gnome-shell-extension-appindicator/archive/refs/tags/v$version.tar.gz
+sha256=3f692824e54c2192d984a24e1685722d1c88787e24dba662aecabe0b7f9e2bbc
+# gettext-stub claims to be a newer gettext: without the ! apk picks it and no translations get built
+makedeps="meson ninja jq !gettext-stub gettext glib"
+depends="gnome-shell"
+
+build() {
+    meson setup build --prefix=/usr -Dlocal_install=disabled
+    meson install -C build --destdir "$pkgdir"
+    # compiled for this package alone, it would replace the system's: post-install does it for real
+    rm -f "$pkgdir/usr/share/glib-2.0/schemas/gschemas.compiled"
+}
