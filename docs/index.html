@@ -4,97 +4,160 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chamesle Linux</title>
-<meta name="description" content="A Linux desktop that gets out of your way. Xfce edition out now.">
+<meta name="description" content="Chamesle is an independent Linux distribution for everyday computers. Familiar desktops, Flathub, .deb, .rpm and .exe apps, and an installer that works next to Windows.">
 <link rel="icon" href="img/logo.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
-  <nav>
-    <a href="new.html">What's new</a>
-    <a href="download.html">Download</a>
-    <a href="editions.html">Editions</a>
-    <a href="packages.html">Packages</a>
-    <a href="docs.html">Docs</a>
-    <a href="board.html">Board</a>
-    <a href="about.html">About</a>
-  </nav>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
+    <nav>
+      <a href="new.html">What's new</a>
+      <a href="editions.html">Editions</a>
+      <a href="packages.html">Packages</a>
+      <a href="docs.html">Docs</a>
+      <a href="board.html">Board</a>
+      <a href="about.html">About</a>
+    </nav>
+    <a class="button" href="download.html">Download</a>
+  </div>
 </header>
 
-<main>
+<main class="home">
 
-<section class="intro">
-  <h1>Linux for people who just want their computer to work.</h1>
-  <p>Chamesle is an independent desktop Linux distro. You boot it, it looks like what you're used to, and you get apps from
-  Flathub without hunting around. If you like poking at things there's a full package manager
-  underneath, but you never have to touch it.</p>
-  <p><a class="button" href="download.html">Get Chamesle "Margit"</a> <span class="small">Xfce, MATE, Cinnamon and GNOME editions, 64-bit, about 2&nbsp;GB</span></p>
-  <p class="small"><span class="tag">new in 0.2</span> an installer with dual boot, the Chamesle Store, MATE and Cinnamon editions, and .deb/.rpm files that install with a double-click.
-  <a href="new.html">What's new</a></p>
-</section>
-
-<figure class="shot">
-  <img src="img/xfce.png" alt="The Chamesle Xfce desktop: a blue wave wallpaper and a taskbar along the bottom" width="1280" height="800">
-  <figcaption>The Xfce edition, right after it boots.</figcaption>
-</figure>
-
-<section>
-  <h2>What you get</h2>
-  <p>Out of the box: Firefox, a file manager, Flathub already set up, printing, Bluetooth,
-  Wi-Fi, and the firmware and drivers most laptops need. There's an installer that sets it up next to Windows if you like, an app store, and a driver manager for NVIDIA cards and the like.</p>
-  <p>Under the hood it uses <b>dinit</b> to start things, so it boots fast and doesn't get in your way.
-  There's no telemetry. There's no account to sign into.</p>
-  <p><b>Stable rolling.</b> Updates come every week, so your apps are always recent, but nothing new goes out
-  until it has been around for a while and a test install still boots. The kernel stays on the long-term
-  support line. Learned Linux on Mint? Chamesle is where you learn what rolling feels like, without the
-  surprises.</p>
-</section>
-
-<section>
-  <h2>Any .deb, any .rpm</h2>
-  <p>Found an app that only offers a download for Ubuntu or Fedora? Double-click it anyway. <b>pkgimport</b>
-  turns <code>.deb</code> and <code>.rpm</code> files into Chamesle packages and installs them with everything
-  they need. Your app is in the menu a moment later.</p>
-  <pre><code>sudo pkgimport install ~/Downloads/app.deb</code></pre>
-</section>
-
-<section class="cols">
-  <div>
-    <h3>Looks familiar</h3>
-    <p>Start menu in the corner, taskbar along the bottom, clock on the right. The Windows key opens the menu.
-    You don't have to learn anything to get going.</p>
-  </div>
-  <div>
-    <h3>One store for everything</h3>
-    <p>The Chamesle Store puts Flathub and the Chamesle repo in one window. Search, click Install, done.
-    Updates for both are one button.</p>
-  </div>
-  <div>
-    <h3>Lots of software</h3>
-    <p>Everything on Flathub, plus <a href="packages.html">almost 15,000 packages</a> in our own repo, from GIMP
-    and LibreOffice to compilers and server stuff.</p>
-  </div>
-  <div>
-    <h3>Runs on old stuff</h3>
-    <p>The Xfce edition is happy with 2&nbsp;GB of RAM, and MATE is lighter still, for really old machines.</p>
+<section class="hero">
+  <div class="wrap">
+    <h1>A Linux desktop that just works.</h1>
+    <p class="lead">Chamesle is an independent Linux distribution for everyday computers. It looks familiar,
+    installs next to Windows, and runs the apps you already have.</p>
+    <div class="actions">
+      <a class="button" href="download.html">Download Chamesle 0.3</a>
+      <a class="button ghost" href="editions.html">Choose an edition</a>
+    </div>
+    <p class="facts">Free &middot; 64-bit PC &middot; about 2&nbsp;GB &middot; Xfce, MATE, Cinnamon and GNOME</p>
+    <div class="shot">
+      <img src="img/xfce.png" alt="The Chamesle Xfce desktop: a blue wave wallpaper and a taskbar along the bottom" width="1280" height="800">
+    </div>
   </div>
 </section>
 
-<section>
-  <h2>Where it's at</h2>
-  <p>0.3.0 is out: Xfce, MATE and Cinnamon set up like Windows, and now GNOME, with a store, an update notifier
-  and a driver manager. Already running Chamesle? <code>sudo apk upgrade</code> brings you to 0.3.0. The
-  <a href="about.html#roadmap">roadmap</a> has what's next, and <a href="new.html">what's new</a> has the latest.</p>
+<section class="band">
+  <div class="wrap">
+    <h2>Everything you need, already there</h2>
+    <p class="sub">Firefox, a file manager, printing, Bluetooth, Wi-Fi and the firmware most laptops need come
+    installed. No account, no telemetry.</p>
+    <div class="features">
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+        <h3>A familiar desktop</h3>
+        <p>Start menu in the corner, taskbar along the bottom, clock on the right. The Windows key opens the
+        menu. Or pick GNOME for something more modern.</p>
+      </div>
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M17 14v6M14 17h6"/></svg></div>
+        <h3>Every kind of app</h3>
+        <p>Flathub is set up out of the box. <code>.deb</code> and <code>.rpm</code> files install with a
+        double-click, and so do Windows <code>.exe</code> and <code>.msi</code> programs.</p>
+      </div>
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16l-1.5 11a1 1 0 0 1-1 .9H6.5a1 1 0 0 1-1-.9z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+        <h3>One store</h3>
+        <p>The Chamesle Store puts Flathub and our own repo in one window: search, install, and update
+        everything with one button.</p>
+      </div>
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></div>
+        <h3>Drivers handled</h3>
+        <p>The Driver Manager finds hardware that works better with another driver, like NVIDIA cards and
+        some Wi-Fi chips, and sets it up in one click.</p>
+      </div>
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14M6.5 9h3M14.5 9h3"/></svg></div>
+        <h3>Installs next to Windows</h3>
+        <p>The installer can make room next to Windows so you choose at every start, or take the whole disk,
+        with encryption if you want it.</p>
+      </div>
+      <div><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-4.4L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.6 4.4L20 16"/><path d="M20 20v-4h-4"/></svg></div>
+        <h3>Always up to date, carefully</h3>
+        <p>Updates every week, held back until they've proven themselves, on a long-term support kernel.
+        A small icon tells you when there's something new.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <h2>Pick your desktop</h2>
+    <p class="sub">Same system underneath, different desktop on top. You can always install another one later.</p>
+    <div class="cards">
+      <a class="card" href="editions.html"><img src="img/xfce.png" alt="" loading="lazy"><div><h3>Xfce</h3><p>Light and quick, set up like Windows. The one to start with.</p></div></a>
+      <a class="card" href="editions.html"><img src="img/mate.png" alt="" loading="lazy"><div><h3>MATE</h3><p>Very light and rock solid, for older machines.</p></div></a>
+      <a class="card" href="editions.html"><img src="img/cinnamon.png" alt="" loading="lazy"><div><h3>Cinnamon</h3><p>Linux Mint's desktop, the most polished Windows-style one.</p></div></a>
+      <a class="card" href="editions.html"><img src="img/gnome.png" alt="" loading="lazy"><div><h3>GNOME</h3><p>Modern and clean, with an overview of your windows and a dock.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split">
+    <div>
+      <h2>Under the hood</h2>
+      <p class="sub">Chamesle is its own distribution, with its own repo and tools. If you like poking at
+      things there's a full package manager underneath, but you never have to touch it.</p>
+      <p><a href="packages.html">Browse the packages</a> &middot; <a href="docs.html">Read the docs</a></p>
+    </div>
+    <ul class="specs">
+      <li><span>Latest release</span><span>0.3.0 "Margit"</span></li>
+      <li><span>Packages</span><span>almost 15,000, all signed</span></li>
+      <li><span>Package manager</span><span>apk</span></li>
+      <li><span>Init system</span><span>dinit</span></li>
+      <li><span>Kernel</span><span>Linux 6.18 LTS</span></li>
+      <li><span>Updates</span><span>weekly, stable rolling</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="band alt cta">
+  <div class="wrap">
+    <h2>Try it before you install it</h2>
+    <p class="sub">Put Chamesle on a USB stick and start your computer from it. Nothing changes on your disk
+    until you click Install.</p>
+    <div class="actions">
+      <a class="button" href="download.html">Download</a>
+      <a class="button ghost" href="download.html#usb">How to make the USB stick</a>
+    </div>
+  </div>
 </section>
 
 </main>
 
-<footer>
-  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
-  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
-  <p>Chamesle Linux. Source code for every package is available on request.</p>
+<footer class="site">
+  <div class="wrap">
+    <div class="cols4">
+      <div>
+        <a class="brand" href="./">Chamesle Linux</a>
+        <p>An independent Linux distribution for everyday computers.</p>
+      </div>
+      <div>
+        <h4>Get it</h4>
+        <a href="download.html">Download</a>
+        <a href="editions.html">Editions</a>
+        <a href="packages.html">Packages</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="docs.html">Docs</a>
+        <a href="board.html">Board</a>
+        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="new.html">What's new</a>
+        <a href="about.html">About and roadmap</a>
+        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
+      </div>
+    </div>
+    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
+  </div>
 </footer>
 
 <script src="egg.js?2"></script>
