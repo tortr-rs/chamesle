@@ -7,7 +7,7 @@
     "display": { "color": { "keys": "blue" } },
     "modules": [
         "title", "separator",
-        "os", "host", "kernel", "uptime", "packages", "shell",
+        { "type": "os", "format": "{name}" }, "host", "kernel", "uptime", "packages", "shell",
         "display", "de", "wm", "theme", "icons", "font", "terminal",
         "cpu", "gpu", "memory", "swap", "disk", "localip", "battery", "locale",
         "break", "colors"

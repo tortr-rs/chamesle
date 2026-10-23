@@ -1,4 +1,6 @@
 #!/bin/sh
+# the iso put fastfetch's config there before this package had it: apk left ours next to it as .apk-new
+[ -f /etc/xdg/fastfetch/config.jsonc.apk-new ] && mv -f /etc/xdg/fastfetch/config.jsonc.apk-new /etc/xdg/fastfetch/config.jsonc
 # load them now too, no reboot needed
 /usr/lib/dinit/modules
 # chamesle is rolling: the version the system says it runs is this package's, not the iso it came from
