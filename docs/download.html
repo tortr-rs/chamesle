@@ -85,7 +85,7 @@
 <p class="small">Not sure which? <a href="editions.html">Compare the editions</a>. They're all the same system underneath.</p>
 
 <p>Boot it from a USB stick and try it without touching your disk. When you like it, double-click
-<b>Install Chamesle</b> on the desktop. It's still an early release, so back up anything important first.
+<b>Install Chamesle</b> on the desktop. Read <a href="#before">Before you start</a> first.
 <a href="new.html">What's new</a>.</p>
 
 <h2>What you need</h2>
@@ -96,11 +96,23 @@
 </ul>
 <p>Secure Boot has to be turned off for now.</p>
 
+<h2 id="before">Before you start</h2>
+<p>Trying Chamesle from the USB stick doesn't change anything on your computer. Installing it does, so before you
+click <b>Install Chamesle</b>:</p>
+<ul>
+  <li><b>Back up your files</b> to an external drive or a cloud service. Chamesle is still an early release.</li>
+  <li><b>Keeping Windows?</b> If it uses BitLocker (most new laptops do), get your recovery key first, from
+  <a href="https://aka.ms/myrecoverykey">aka.ms/myrecoverykey</a> or a printout, or turn BitLocker off.</li>
+  <li>If you're not sure about any of this, stay in the live session and ask on the <a href="board.html">board</a>
+  first.</li>
+</ul>
+
 <h2 id="usb">Making the USB stick</h2>
 <p>This wipes the stick, so copy anything you need off it first.</p>
 
 <h3>On Windows or macOS</h3>
 <p>Get <a href="https://etcher.balena.io/">balenaEtcher</a>, pick the ISO, pick the stick, click Flash.</p>
+<p class="small">We haven't been able to test this on Windows ourselves yet. If something looks different or doesn't work, tell us on the <a href="board.html">board</a>.</p>
 
 <h3>On Linux</h3>
 <p>Etcher works here too. Or from a terminal (check the device name with <code>lsblk</code> first,
@@ -125,6 +137,7 @@ depending on the computer. Pick the USB stick. You'll get a menu with a few choi
 <p>If you want to be sure the file isn't broken, compare its checksum with the one next to the download:</p>
 <pre><code>sha256sum -c chamesle-0.3.0-xfce-x86_64.iso.sha256</code></pre>
 <p>On Windows, <code>certutil -hashfile chamesle-0.3.0-xfce-x86_64.iso SHA256</code> in a command prompt does the same.</p>
+<p class="small">We haven't been able to test this on Windows ourselves yet. If something looks different or doesn't work, tell us on the <a href="board.html">board</a>.</p>
 
 <h2>In a virtual machine</h2>
 <p>VirtualBox, VMware, GNOME Boxes and QEMU all work. Give it 2 CPUs and 3&nbsp;GB of RAM. With QEMU:</p>
