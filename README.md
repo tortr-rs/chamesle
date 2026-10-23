@@ -14,10 +14,6 @@ Editions: **Xfce**, **MATE** and **Cinnamon**, set up like Windows. **GNOME** is
 Website: [chamesle.org](https://chamesle.org) · downloads and the package repo:
 [SourceForge](https://sourceforge.net/projects/chameslerepos/)
 
-## Status
-
-0.1 is out (live only). 0.2 is being tested: the installer, the switch to apk, and deb/rpm support.
-The store, update notifier and driver manager are for 0.3.
 
 ## Building an ISO
 
