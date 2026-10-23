@@ -3,6 +3,7 @@
 #   tools/repo/upload.sh            everything
 #   tools/repo/upload.sh core       the index and what the editions use (~2G), the rest can follow later
 #   tools/repo/upload.sh iso        just the isos
+#   tools/repo/upload.sh publish    what tools/repo/merge-index.sh made: the new index and packages, nothing else
 # run it again if it stops, it carries on where it was
 set -eu
 cd "$(dirname "$0")/../.."
@@ -11,6 +12,10 @@ R=work/repo/x86_64
 
 case "${1:-}" in
 iso)
+    ;;
+publish)
+    rsync -av --partial --progress -e ssh work/publish/x86_64/ "$DEST/x86_64/"
+    exit 0
     ;;
 core)
     # names from the editions' package lists plus everything they pull in, then their files
@@ -27,6 +32,8 @@ EOF
     rm -f "$list"
     ;;
 *)
+    # with only a few packages here this would empty the repo on sourceforge
+    [ "$(ls "$R" | grep -c '\.apk$')" -gt 10000 ] || { echo "upload: $R isn't a full copy of the repo, use publish" >&2; exit 1; }
     # --delete-after: versions the weekly sync replaced go from sourceforge too
     rsync -av --partial --progress --delete-after -e ssh "$R/" "$DEST/x86_64/"
     ;;
