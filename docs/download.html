@@ -27,29 +27,29 @@
 <h1>Download</h1>
 
 <div class="release">
-  <p><b>Chamesle 0.2.1 "Margit"</b>, Xfce edition<br>
+  <p><b>Chamesle 0.3.0 "Margit"</b>, Xfce edition<br>
   <span class="small">64-bit PC (x86_64) &middot; 1.9&nbsp;GB &middot; October 2026</span></p>
-  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-xfce-x86_64.iso/download">Download Xfce</a>
-  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-xfce-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
+  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-xfce-x86_64.iso/download">Download Xfce</a>
+  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-xfce-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
 </div>
 
 <div class="release">
-  <p><b>Chamesle 0.2.1 "Margit"</b>, MATE edition<br>
+  <p><b>Chamesle 0.3.0 "Margit"</b>, MATE edition<br>
   <span class="small">64-bit PC (x86_64) &middot; 2.0&nbsp;GB &middot; October 2026</span></p>
-  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-mate-x86_64.iso/download">Download MATE</a>
-  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-mate-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
+  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-mate-x86_64.iso/download">Download MATE</a>
+  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-mate-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
 </div>
 
 <div class="release">
-  <p><b>Chamesle 0.2.1 "Margit"</b>, Cinnamon edition<br>
+  <p><b>Chamesle 0.3.0 "Margit"</b>, Cinnamon edition<br>
   <span class="small">64-bit PC (x86_64) &middot; 2.0&nbsp;GB &middot; October 2026</span></p>
-  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-cinnamon-x86_64.iso/download">Download Cinnamon</a>
-  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.2.1-cinnamon-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
+  <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-cinnamon-x86_64.iso/download">Download Cinnamon</a>
+  <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-cinnamon-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
 </div>
 
 <div class="release">
   <p><b>Chamesle 0.3.0 "Margit"</b>, GNOME edition <span class="tag">new</span><br>
-  <span class="small">64-bit PC (x86_64) &middot; 1.9&nbsp;GB &middot; October 2026</span></p>
+  <span class="small">64-bit PC (x86_64) &middot; 2.0&nbsp;GB &middot; October 2026</span></p>
   <p><a class="button" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-gnome-x86_64.iso/download">Download GNOME</a>
   <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-0.3.0-gnome-x86_64.iso.sha256/download">SHA-256 checksum</a></p>
 </div>
@@ -77,7 +77,7 @@
 <h3>On Linux</h3>
 <p>Etcher works here too. Or from a terminal (check the device name with <code>lsblk</code> first,
 getting it wrong will wipe the wrong disk):</p>
-<pre><code>sudo dd if=chamesle-0.2.1-xfce-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync</code></pre>
+<pre><code>sudo dd if=chamesle-0.3.0-xfce-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync</code></pre>
 
 <h3>Ventoy</h3>
 <p>If you already use <a href="https://www.ventoy.net/">Ventoy</a>, just copy the ISO onto the stick.</p>
@@ -95,12 +95,12 @@ depending on the computer. Pick the USB stick. You'll get a menu with a few choi
 
 <h2>Checking the download</h2>
 <p>If you want to be sure the file isn't broken, compare its checksum with the one next to the download:</p>
-<pre><code>sha256sum -c chamesle-0.2.1-xfce-x86_64.iso.sha256</code></pre>
-<p>On Windows, <code>certutil -hashfile chamesle-0.2.1-xfce-x86_64.iso SHA256</code> in a command prompt does the same.</p>
+<pre><code>sha256sum -c chamesle-0.3.0-xfce-x86_64.iso.sha256</code></pre>
+<p>On Windows, <code>certutil -hashfile chamesle-0.3.0-xfce-x86_64.iso SHA256</code> in a command prompt does the same.</p>
 
 <h2>In a virtual machine</h2>
 <p>VirtualBox, VMware, GNOME Boxes and QEMU all work. Give it 2 CPUs and 3&nbsp;GB of RAM. With QEMU:</p>
-<pre><code>qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -cdrom chamesle-0.2.1-xfce-x86_64.iso</code></pre>
+<pre><code>qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -cdrom chamesle-0.3.0-xfce-x86_64.iso</code></pre>
 
 </main>
 
