@@ -6,7 +6,7 @@ A Linux desktop for people who just want their computer to work. Boot it, it loo
 apps come from Flathub, and there's a real package manager underneath if you want it.
 
 - **pkgimport**: double-click any `.deb` or `.rpm` and it installs, with the libraries it needs
-- glibc, **dinit** for init, **apk** for packages
+- based on **Void Linux**: glibc, **dinit** for init, **apk** for packages
 - the Chamesle repo: almost 15,000 packages, all signed
 - an installer based on Linux Mint's: whole disk (with encryption or LVM) or your own partitions, GParted built in
 - linux-firmware, Mesa, os-prober and Firefox out of the box
