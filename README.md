@@ -1,5 +1,7 @@
 # Chamesle Linux
 
+*Pronounced /tʃa.mes.le/.*
+
 A Linux desktop for people who just want their computer to work. Boot it, it looks like what you're used to,
 apps come from Flathub, and there's a real package manager underneath if you want it.
 
