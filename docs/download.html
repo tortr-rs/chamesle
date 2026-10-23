@@ -9,17 +9,19 @@
 </head>
 <body>
 
-<header>
-  <a class="brand" href="./"><img src="img/logo.png" alt="" width="36" height="36"> Chamesle</a>
-  <nav>
-    <a href="new.html">What's new</a>
-    <a href="download.html" class="here">Download</a>
-    <a href="editions.html">Editions</a>
-    <a href="packages.html">Packages</a>
-    <a href="docs.html">Docs</a>
-    <a href="board.html">Board</a>
-    <a href="about.html">About</a>
-  </nav>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
+    <nav>
+      <a href="new.html">What's new</a>
+      <a href="editions.html">Editions</a>
+      <a href="packages.html">Packages</a>
+      <a href="docs.html">Docs</a>
+      <a href="board.html">Board</a>
+      <a href="about.html">About</a>
+    </nav>
+    <a class="button" href="download.html">Download</a>
+  </div>
 </header>
 
 <main>
@@ -58,7 +60,7 @@
 
 <p>Boot it from a USB stick and try it without touching your disk. When you like it, double-click
 <b>Install Chamesle</b> on the desktop. It's still an early release, so back up anything important first.
-<a href="new.html">What's new in 0.2</a>.</p>
+<a href="new.html">What's new</a>.</p>
 
 <h2>What you need</h2>
 <ul>
@@ -68,7 +70,7 @@
 </ul>
 <p>Secure Boot has to be turned off for now.</p>
 
-<h2>Making the USB stick</h2>
+<h2 id="usb">Making the USB stick</h2>
 <p>This wipes the stick, so copy anything you need off it first.</p>
 
 <h3>On Windows or macOS</h3>
@@ -104,10 +106,35 @@ depending on the computer. Pick the USB stick. You'll get a menu with a few choi
 
 </main>
 
-<footer>
-  <p><a href="about.html">About</a> &middot; <a href="https://github.com/tortr-rs/chamesle">GitHub</a> &middot;
-  <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></p>
-  <p>Chamesle Linux. Source code for every package is available on request.</p>
+<footer class="site">
+  <div class="wrap">
+    <div class="cols4">
+      <div>
+        <a class="brand" href="./">Chamesle Linux</a>
+        <p>An independent Linux distribution for everyday computers.</p>
+      </div>
+      <div>
+        <h4>Get it</h4>
+        <a href="download.html">Download</a>
+        <a href="editions.html">Editions</a>
+        <a href="packages.html">Packages</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="docs.html">Docs</a>
+        <a href="board.html">Board</a>
+        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="new.html">What's new</a>
+        <a href="about.html">About and roadmap</a>
+        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
+      </div>
+    </div>
+    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
+  </div>
 </footer>
 
 <script src="egg.js?2"></script>
