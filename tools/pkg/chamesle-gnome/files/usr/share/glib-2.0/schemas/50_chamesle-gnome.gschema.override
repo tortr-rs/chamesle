@@ -1,0 +1,26 @@
+# the chamesle look for gnome: gnome as it is, with our wallpaper and icons, a dock, tray icons,
+# and minimise and maximise buttons
+[org.gnome.desktop.background]
+picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
+picture-uri-dark='file:///usr/share/backgrounds/chamesle/default.png'
+picture-options='zoom'
+
+[org.gnome.desktop.screensaver]
+picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
+picture-options='zoom'
+
+[org.gnome.desktop.interface]
+icon-theme='Chamesle'
+
+[org.gnome.desktop.wm.preferences]
+button-layout='appmenu:minimize,maximize,close'
+
+[org.gnome.desktop.peripherals.touchpad]
+tap-to-click=true
+
+[org.gnome.shell]
+enabled-extensions=['dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com']
+favorite-apps=['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.chamesle.Store.desktop', 'org.gnome.Console.desktop', 'org.gnome.TextEditor.desktop']
+
+[org.gnome.login-screen]
+logo='/usr/share/chamesle/greeter-logo.png'

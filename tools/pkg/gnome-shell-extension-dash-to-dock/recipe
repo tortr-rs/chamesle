@@ -1,0 +1,16 @@
+name=gnome-shell-extension-dash-to-dock
+version=110
+rel=1
+desc="A dock for GNOME: the dash out of the overview, always at hand"
+url=https://github.com/micheleg/dash-to-dock
+license=GPL-2.0-or-later
+source=https://github.com/micheleg/dash-to-dock/archive/refs/tags/extensions.gnome.org-v$version.tar.gz
+sha256=0aa29bfea9dd9c3622e63b8eeabb9d30afa96b64337132eeb1b7add4c90f5473
+# gettext-stub claims to be a newer gettext: without the ! apk picks it and no translations get built
+makedeps="make sassc !gettext-stub gettext glib"
+depends="gnome-shell"
+
+build() {
+    # DESTDIR makes it a system-wide install, schemas in /usr/share/glib-2.0/schemas
+    make VERSION=$version DESTDIR="$pkgdir" install
+}
