@@ -27,12 +27,29 @@
 <section class="pagehead">
   <div class="wrap">
     <h1>What's new</h1>
-    <p class="lead">0.3.0 is out. Get it from the <a href="download.html">download page</a>, or run <code>sudo apk upgrade</code>.</p>
+    <p class="lead">0.4.0 is out. Get it from the <a href="download.html">download page</a>, or run <code>sudo apk upgrade</code>.</p>
   </div>
 </section>
 
 <main class="news">
 
+
+<h2>0.4.0: updates you can undo, and Chamesle Astro</h2>
+<p><b>Updates can't break your computer.</b> Before every update, Chamesle takes a snapshot of the system. If
+an update breaks something, restart and pick <b>Chamesle Linux, from before an update</b> in the boot menu:
+you're back to how things were, and one click keeps it that way. Only the system goes back in time, never your
+files, and only the last 3 snapshots are kept, so they don't eat your disk. This needs a fresh 0.4 install
+(it uses btrfs, which the installer sets up now); older installs keep working as before.</p>
+<p><b>Chamesle Astro</b>, the first Flavor: the GNOME edition with Stellarium, KStars, Siril and Gpredict
+ready to go, a dark desktop that turns warm at night to keep your night vision, and the Webb telescope's
+&ldquo;Cosmic Cliffs&rdquo; as the wallpaper. <a href="editions.html#astro">Have a look</a>.</p>
+<p>Also in 0.4:</p>
+<ul>
+  <li><b>Cinnamon: Wi-Fi passwords.</b> Clicking a network didn't ask for the password and then said it was
+  wrong. It asks now. <code>sudo apk upgrade</code> fixes existing installs.</li>
+  <li><b>Safer installs.</b> The installer kept your password and disk encryption passphrase where other
+  programs on the live USB could read them while it ran. They stay private now.</li>
+</ul>
 
 <h2>Already running Chamesle? Run this once</h2>
 <p>The key that signs the Chamesle repo has changed. If <code>sudo apk update</code> says
@@ -133,7 +150,7 @@ pinned to the long-term support line (6.18 now). New ISOs come every 6 months.</
 </ul>
 
 <h2>Still to come</h2>
-<p>The rest of 0.3: a better store. See the <a href="about.html#roadmap">roadmap</a>.</p>
+<p>0.5: a KDE Plasma edition and help moving from Windows. See the <a href="about.html#roadmap">roadmap</a>.</p>
 
 </main>
 

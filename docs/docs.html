@@ -89,6 +89,18 @@ Got a <code>.deb</code> or <code>.rpm</code>? From 0.2 you can double-click it.<
 <pre><code>sudo apk upgrade</code></pre>
 <p>Updates come out every week. You don't have to remember: when there are some, an icon shows up next to the
 clock. Click it to update everything, system and Flathub apps. On 0.1 it's <code>sudo xbps-install -Su</code>.</p>
+<h3 id="undo">Undoing an update</h3>
+<p>From 0.4, Chamesle takes a snapshot of the system before every update and keeps the last 3. If an update
+breaks something:</p>
+<ol>
+  <li>Restart, and in the boot menu pick <b>Chamesle Linux, from before an update</b>, then the update you
+  want to go back before.</li>
+  <li>Chamesle starts as it was then, and asks if you want to keep it. Click <b>Keep this one</b>, and it's
+  your system from the next restart.</li>
+</ol>
+<p>Your files aren't in the snapshots, so they never go back in time. To see the snapshots:
+<code>chamesle-snapshot list</code>. This works on systems installed from 0.4 on, which use btrfs; older
+installs don't have snapshots.</p>
 
 <h2 id="services">Services</h2>
 <p>Chamesle uses dinit instead of systemd. Services are small text files in <code>/etc/dinit.d/</code>.
@@ -157,6 +169,15 @@ chips, HP printers and scanners, and the extras for VirtualBox and VMware.</p>
   apk and signed with our own key. On top of that it's Chamesle's own: dinit instead of runit, its own repo and
   update schedule, the installer setup, look and defaults, and tools like pkgimport, the Store and the Driver
   Manager. The installer is based on Linux Mint's.</p>
+</details>
+
+<details>
+  <summary>Cinnamon: downloading themes or applets says "int() argument must be ... not 'NoneType'".</summary>
+  <p>The Cinnamon version Chamesle ships expects the download server to say how big each file is, and it doesn't
+  always. Newer Cinnamon already handles this. Until the fix is in an update, open a terminal and run:</p>
+  <pre><code>sudo sed -i "s/int(response.headers.get('content-length'))/int(response.headers.get('content-length') or 0)/" /usr/share/cinnamon/cinnamon-settings/bin/Spices.py</code></pre>
+  <p>Then close System Settings and open it again. Downloads work; the progress bar may fill up early, that's all.
+  Thanks to BeepBeep2026 for reporting it.</p>
 </details>
 
 <details>
