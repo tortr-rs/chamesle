@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discord - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
+    <nav>
+      <a href="new.html">What's new</a>
+      <a href="editions.html">Editions</a>
+      <a href="packages.html">Packages</a>
+      <a href="docs.html">Docs</a>
+      <a href="board.html">Board</a>
+      <a href="about.html">About</a>
+      <a href="discord.html" class="here">Discord</a>
+    </nav>
+    <a class="button" href="download.html">Download</a>
+  </div>
+</header>
+
+<section class="pagehead">
+  <div class="wrap">
+    <h1>Discord</h1>
+    <p class="lead">Chat with the people who make Chamesle and the people who use it.</p>
+  </div>
+</section>
+
+<main>
+
+<p><a class="button" href="https://discord.gg/gExvnDDrXD">Join the Discord</a></p>
+
+<h2>What it's for</h2>
+<p>Quick questions, help getting something working, showing off your desktop, and talking about what Chamesle
+should do next. It's also where new releases get announced first.</p>
+
+<h2>Where to go for what</h2>
+<ul>
+  <li><b>A quick question or a chat:</b> Discord.</li>
+  <li><b>A question others might have too:</b> the <a href="board.html">Board</a>. Answers there stay findable,
+  and you don't need a Discord account.</li>
+  <li><b>Something is broken:</b> <a href="https://github.com/tortr-rs/chamesle/issues">open an issue on GitHub</a>,
+  with what you did and what happened. That's where bugs get tracked and fixed.</li>
+  <li><b>How do I...:</b> the <a href="docs.html">Docs</a> might already have it.</li>
+</ul>
+
+<h2>Be decent</h2>
+<p>Everyone started somewhere. No question is too basic, and nobody gets told to "just read the wiki". Keep it
+friendly, keep it on topic, no spam.</p>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols4">
+      <div>
+        <a class="brand" href="./">Chamesle Linux</a>
+        <p>A Void-based Linux distribution for everyday computers.</p>
+      </div>
+      <div>
+        <h4>Get it</h4>
+        <a href="download.html">Download</a>
+        <a href="editions.html">Editions</a>
+        <a href="packages.html">Packages</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="docs.html">Docs</a>
+        <a href="board.html">Board</a>
+        <a href="discord.html">Discord</a>
+        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="new.html">What's new</a>
+        <a href="about.html">About and roadmap</a>
+        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
+      </div>
+    </div>
+    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
+  </div>
+</footer>
+
+<script>
+var CATS = {
+  'q-a': ['Help', 'DIC_kwDOShHmjc4DJQSa', 'Q&A'],
+  'show-and-tell': ['Show your desktop', 'DIC_kwDOShHmjc4DJQSc', 'Show and tell'],
+  'ideas': ['Ideas', 'DIC_kwDOShHmjc4DJQSb', 'Ideas'],
+  'general': ['General', 'DIC_kwDOShHmjc4DJQSZ', 'General'],
+  'announcements': ['Announcements', 'DIC_kwDOShHmjc4DJQSY', 'Announcements']
+};
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function ago(t) {
+  var s = (Date.now() - new Date(t)) / 1000;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' min ago';
+  if (s < 86400) return Math.round(s / 3600) + ' h ago';
+  if (s < 86400 * 30) return Math.round(s / 86400) + ' d ago';
+  return new Date(t).toLocaleDateString();
+}
+function giscus(el, cat, mapping, term) {
+  var s = document.createElement('script'), c = CATS[cat] || CATS.general;
+  var a = {src: 'https://giscus.app/client.js', 'data-repo': 'tortr-rs/chamesle', 'data-repo-id': 'R_kgDOShHmjQ',
+    'data-category': c[2], 'data-category-id': c[1], 'data-mapping': mapping, 'data-term': term, 'data-strict': '1',
+    'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
+    'data-theme': 'preferred_color_scheme', 'data-lang': 'en', crossorigin: 'anonymous', async: ''};
+  for (var k in a) s.setAttribute(k, a[k]);
+  el.appendChild(s);
+}
+
+var all = [], sort = 'hot', cat = '';
+function score(p) {
+  if (sort === 'new') return +new Date(p.at);
+  if (sort === 'top') return p.v * 1000 + p.k;
+  var hours = (Date.now() - new Date(p.at)) / 3600000;
+  return (p.v + p.k / 2 + 1) / Math.pow(hours + 2, 1.5);
+}
+function show() {
+  var list = all.filter(function (p) { return !cat || p.c === cat; });
+  list.sort(function (a, b) { return score(b) - score(a); });
+  var out = document.getElementById('posts');
+  out.innerHTML = '';
+  list.forEach(function (p) {
+    var li = document.createElement('li'), c = CATS[p.c] || [p.c];
+    li.innerHTML = '<div class="votes"><span>&#9650;</span>' + p.v + '</div><div><h3><a href="post.html?n=' + p.n + '">' +
+      esc(p.t) + '</a></h3><p>' + esc(p.b) + '</p><div class="meta"><span class="cat">' + esc(c[0]) + '</span>' +
+      (p.av ? '<img src="' + esc(p.av) + '&s=32" alt="">' : '') + esc(p.a) + ' &middot; ' + ago(p.at) + ' &middot; ' +
+      p.k + (p.k === 1 ? ' comment' : ' comments') + '</div></div>';
+    out.appendChild(li);
+  });
+  document.getElementById('empty').textContent = list.length ? '' : 'Nothing here yet. Be the first to post!';
+}
+var cats = document.getElementById('cats');
+Object.keys(CATS).forEach(function (k) {
+  var b = document.createElement('button'); b.dataset.c = k; b.textContent = CATS[k][0]; cats.appendChild(b);
+});
+function pick(bar, attr, set) {
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    bar.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    set(b.dataset[attr]); show();
+  });
+}
+pick(document.getElementById('sort'), 's', function (v) { sort = v; });
+pick(cats, 'c', function (v) { cat = v; });
+fetch('board.json?' + Date.now()).then(function (r) { return r.json(); }).then(function (d) { all = d; show(); })
+  .catch(function () { document.getElementById('empty').textContent = "Couldn't load the board. Try reloading."; });
+</script>
+
+<script src="egg.js?2"></script>
+</body>
+</html>
