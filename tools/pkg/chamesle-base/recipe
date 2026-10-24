@@ -1,5 +1,5 @@
 name=chamesle-base
-version=0.3.0
+version=0.4.0
 rel=1
 desc="Chamesle system setup: sound, kernel modules at boot, a few small touches"
 url=https://chamesle.org
@@ -8,7 +8,8 @@ source=
 makedeps=""
 # ncurses-term: the terminal descriptions htop, nano and friends need (xterm-256color, tmux, kitty...)
 # pipewire: started at login by the links in files/, with wireplumber and the pulseaudio server
-depends="kmod sudo fastfetch ncurses-term pipewire wireplumber"
+# chamesle-snapshots: a snapshot before every update, on btrfs installs (nothing happens on older ext4 ones)
+depends="kmod sudo fastfetch ncurses-term pipewire wireplumber chamesle-snapshots"
 
 build() {
     cp -a . "$pkgdir/"

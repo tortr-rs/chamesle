@@ -1,0 +1,23 @@
+# chamesle astro, on top of 50_chamesle-gnome: dark, warm at night, and the sky apps in the dock.
+# wallpaper: "Cosmic Cliffs" in the Carina Nebula, NASA, ESA, CSA, STScI (public domain)
+[org.gnome.desktop.background]
+picture-uri='file:///usr/share/backgrounds/chamesle/astro.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/chamesle/astro.jpg'
+picture-options='zoom'
+
+[org.gnome.desktop.screensaver]
+picture-uri='file:///usr/share/backgrounds/chamesle/astro.jpg'
+picture-options='zoom'
+
+[org.gnome.desktop.interface]
+color-scheme='prefer-dark'
+icon-theme='Chamesle'
+
+# warm screen from sunset to sunrise, easier on night vision
+[org.gnome.settings-daemon.plugins.color]
+night-light-enabled=true
+night-light-temperature=uint32 2700
+
+[org.gnome.shell]
+enabled-extensions=['dash-to-dock@micxgx.gmail.com', 'appindicatorsupport@rgcjonas.gmail.com']
+favorite-apps=['firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.stellarium.Stellarium.desktop', 'org.kde.kstars.desktop', 'org.siril.Siril.desktop', 'gpredict.desktop', 'org.chamesle.Store.desktop', 'org.gnome.Console.desktop']

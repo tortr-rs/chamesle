@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Snapshot check
+Comment=Offers to keep the system you started from a snapshot
+Exec=chamesle-snapshot notice
+NoDisplay=true

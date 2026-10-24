@@ -1,0 +1,8 @@
+#!/bin/sh
+# cinnamon 6.6 crashes downloading themes and applets when the server sends no size ("int() argument must be
+# ... not 'NoneType'"). newer cinnamon counts a missing size as 0; so do we, again after every cinnamon update
+[ "$1" = post-commit ] || exit 0
+f=/usr/share/cinnamon/cinnamon-settings/bin/Spices.py
+grep -qF "int(response.headers.get('content-length'))" $f 2>/dev/null &&
+    sed -i "s/int(response.headers.get('content-length'))/int(response.headers.get('content-length') or 0)/" $f
+exit 0

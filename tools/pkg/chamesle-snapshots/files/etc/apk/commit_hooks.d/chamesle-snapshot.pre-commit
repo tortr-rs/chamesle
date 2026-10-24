@@ -1,0 +1,9 @@
+#!/bin/sh
+# a snapshot before every update (apk upgrade, the updater and the store), so a bad one can be undone from the
+# boot menu. installing or removing an app doesn't take one, and neither does an upgrade with nothing to do.
+# a pre-commit hook that fails stops the update, so this one never does
+[ "$1" = pre-commit ] || exit 0
+tr '\0' ' ' < /proc/$PPID/cmdline 2>/dev/null | grep -qw upgrade || exit 0
+[ -n "$(apk list --upgradable 2>/dev/null)" ] || exit 0
+/usr/bin/chamesle-snapshot take || echo "chamesle-snapshot: no snapshot this time, updating anyway" >&2
+exit 0

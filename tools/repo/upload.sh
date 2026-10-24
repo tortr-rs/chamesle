@@ -14,7 +14,9 @@ case "${1:-}" in
 iso)
     ;;
 publish)
-    rsync -av --partial --progress -e ssh work/publish/x86_64/ "$DEST/x86_64/"
+    # the packages first, then the index that names them: never an index pointing at files that aren't there yet
+    rsync -av --partial --progress -e ssh --exclude Packages.adb work/publish/x86_64/ "$DEST/x86_64/"
+    rsync -av --partial --progress -e ssh work/publish/x86_64/Packages.adb "$DEST/x86_64/"
     exit 0
     ;;
 core)

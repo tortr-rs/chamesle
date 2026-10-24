@@ -1,0 +1,13 @@
+name=chamesle-astro
+version=0.4.0
+rel=1
+desc="Chamesle Astro: GNOME for looking at the sky, with a Webb wallpaper and a dark desktop"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="chamesle-gnome"
+
+build() {
+    cp -a . "$pkgdir/"
+}

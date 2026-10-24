@@ -1,0 +1,85 @@
+# the chamesle boot screen: the logo in the middle, a spinner under it, and the disk password box when the
+# disk is encrypted
+
+Window.SetBackgroundTopColor(0.965, 0.969, 0.976);
+Window.SetBackgroundBottomColor(0.965, 0.969, 0.976);
+
+cx = Window.GetX() + Window.GetWidth() / 2;
+cy = Window.GetY() + Window.GetHeight() / 2;
+
+logo = Image("logo.png");
+logo_sprite = Sprite(logo);
+logo_sprite.SetPosition(cx - logo.GetWidth() / 2, cy - logo.GetHeight() / 2 - 40, 1);
+
+spinner = Image("spinner.png");
+track = Image("track.png");
+spin_y = cy + logo.GetHeight() / 2 + 40;
+track_sprite = Sprite(track);
+track_sprite.SetPosition(cx - track.GetWidth() / 2, spin_y, 1);
+spin_sprite = Sprite();
+spin_sprite.SetPosition(cx - spinner.GetWidth() / 2, spin_y, 2);
+angle = 0;
+
+fun refresh() {
+    angle += 0.12;
+    spin_sprite.SetImage(spinner.Rotate(angle));
+}
+Plymouth.SetRefreshFunction(refresh);
+
+# the disk password: the spinner makes room for a box with a bullet per letter
+entry = Image("entry.png");
+bullet = Image("bullet.png");
+entry_sprite = Sprite();
+prompt_sprite = Sprite();
+bullets = [];
+
+fun hide_password() {
+    entry_sprite.SetOpacity(0);
+    prompt_sprite.SetOpacity(0);
+    for (i = 0; bullets[i]; i++) bullets[i].SetOpacity(0);
+    spin_sprite.SetOpacity(1);
+    track_sprite.SetOpacity(1);
+}
+
+fun display_password(prompt, count) {
+    spin_sprite.SetOpacity(0);
+    track_sprite.SetOpacity(0);
+    if (!prompt) prompt = "Password for the disk";
+    p = Image.Text(prompt, 0.235, 0.259, 0.314, 1, "Inter 12");
+    prompt_sprite.SetImage(p);
+    prompt_sprite.SetPosition(cx - p.GetWidth() / 2, spin_y - 4, 3);
+    prompt_sprite.SetOpacity(1);
+    ex = cx - entry.GetWidth() / 2;
+    ey = spin_y + p.GetHeight() + 8;
+    entry_sprite.SetImage(entry);
+    entry_sprite.SetPosition(ex, ey, 3);
+    entry_sprite.SetOpacity(1);
+    for (i = 0; bullets[i]; i++) bullets[i].SetOpacity(0);
+    # as many bullets as fit in the box
+    shown = Math.Min(count, 20);
+    for (i = 0; i < shown; i++) {
+        bullets[i] = Sprite(bullet);
+        bullets[i].SetPosition(ex + 18 + i * 14, ey + entry.GetHeight() / 2 - bullet.GetHeight() / 2, 4);
+        bullets[i].SetOpacity(1);
+    }
+}
+
+fun display_normal() { hide_password(); }
+
+Plymouth.SetDisplayPasswordFunction(display_password);
+Plymouth.SetDisplayNormalFunction(display_normal);
+
+# one line of text at the bottom for messages ("checking the disk" and the like)
+message_sprite = Sprite();
+fun show_message(text) {
+    m = Image.Text(text, 0.45, 0.48, 0.53, 1, "Inter 10");
+    message_sprite.SetImage(m);
+    message_sprite.SetPosition(cx - m.GetWidth() / 2, Window.GetY() + Window.GetHeight() - 60, 5);
+}
+Plymouth.SetMessageFunction(show_message);
+
+fun quit() {
+    spin_sprite.SetOpacity(0);
+    track_sprite.SetOpacity(0);
+}
+Plymouth.SetQuitFunction(quit);

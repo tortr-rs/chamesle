@@ -1,3 +1,11 @@
 #!/bin/sh
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null
+/etc/apk/commit_hooks.d/chamesle-cinnamon-spices.post-commit post-commit
+# unlock the keyring with the login password, so saving a wi-fi password doesn't ask for a keyring password too
+p=/etc/pam.d/lightdm
+if [ -f $p ] && ! grep -q pam_gnome_keyring $p; then
+    sed -i -e '/^auth .*pam_unix.so/a -auth      optional pam_gnome_keyring.so' \
+        -e '/^password .*pam_unix.so/a -password  optional pam_gnome_keyring.so use_authtok' $p
+    echo '-session   optional pam_gnome_keyring.so auto_start' >> $p
+fi
 exit 0

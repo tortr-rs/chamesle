@@ -1,0 +1,13 @@
+name=chamesle-plymouth
+version=0.7.0
+rel=1
+desc="The Chamesle boot screen: the logo with a spinner under it"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="plymouth"
+
+build() {
+    cp -a . "$pkgdir/"
+}

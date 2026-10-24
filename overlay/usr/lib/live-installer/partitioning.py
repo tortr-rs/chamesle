@@ -265,7 +265,7 @@ def partitions_popup_menu(widget, event):
         menuItem = Gtk.SeparatorMenuItem()
         menu.append(menuItem)
         menuItem = Gtk.MenuItem(_("Assign to /"))
-        menuItem.connect("activate", lambda w: assign_mount_point(partition, '/', 'ext4'))
+        menuItem.connect("activate", lambda w: assign_mount_point(partition, '/', 'btrfs'))
         menu.append(menuItem)
         menuItem = Gtk.MenuItem(_("Assign to /home"))
         menuItem.connect("activate", lambda w: assign_mount_point(partition, '/home', ''))
@@ -460,7 +460,8 @@ def full_disk_format(device, create_boot=False, create_swap=True):
         # swap - equal to RAM for hibernate to work well (but capped at ~8GB)
         (create_swap, SWAP_MOUNT_POINT, 'swap', 'mkswap {}', min(8800, int(round(1.1/1024 * int(getoutput("awk '/^MemTotal/{ print $2 }' /proc/meminfo")), -2)))),
         # root
-        (True, '/', 'ext4', 'mkfs.ext4 -F {}', 0),
+        # root: btrfs, made with its subvolumes by the installer (make_root_btrfs)
+        (True, '/', 'btrfs', 'mkfs.btrfs -f {}', 0),
     )
     run_parted = lambda cmd: os.system('parted --script --align optimal {} {} ; sync'.format(device.path, cmd))
     start_mb = 2

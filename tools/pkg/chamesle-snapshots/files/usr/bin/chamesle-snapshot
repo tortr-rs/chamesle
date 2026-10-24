@@ -1,0 +1,156 @@
+#!/bin/bash
+# system snapshots: one before every update, the last 3 kept, each one bootable from the boot menu
+#   chamesle-snapshot list
+#   chamesle-snapshot take              (root; the apk hook runs it before upgrades)
+#   chamesle-snapshot restore [ID]      (root; ID defaults to the snapshot you started from)
+#   chamesle-snapshot notice            (at login: offers to keep the snapshot you started from)
+# only on btrfs with the system in the @ subvolume, what the installer makes from 0.4 on. the snapshots are of @
+# only: your files are in @home and never go back in time
+set -euo pipefail
+KEEP=3
+TOP=/run/chamesle-snapshots          # the whole btrfs, mounted while we work on it
+BOOT=/boot/chamesle-snapshots        # kernel and initramfs of each snapshot, where grub can read them
+CFG=/boot/grub/chamesle-snapshots.cfg
+
+die() { echo "chamesle-snapshot: $*" >&2; exit 1; }
+# where / comes from: /@ normally, /@snapshots/ID when started from a snapshot
+fsroot() { findmnt -no FSROOT /; }
+supported() {
+    [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ] || return 1
+    case $(fsroot) in /@|/@snapshots/*) return 0;; esac
+    return 1
+}
+started_from() { case $(fsroot) in /@snapshots/*) basename "$(fsroot)";; esac; }
+device() { findmnt -no SOURCE / | sed 's/\[.*//'; }
+val() { sed -n "s/^$2=//p" "$BOOT/$1/info" 2>/dev/null; }
+ids() { ls -1 "$BOOT" 2>/dev/null | grep -E '^[0-9]{8}-[0-9]{6}$' | sort || true; }
+
+mount_top() {
+    mkdir -p $TOP
+    mountpoint -q $TOP || mount -o subvolid=5 "$(device)" $TOP
+    trap 'umount -R $TOP 2>/dev/null; rmdir $TOP 2>/dev/null; true' EXIT
+}
+
+# the "before an update" submenu, newest first
+menu() {
+    if [ -z "$(ids)" ]; then rm -f $CFG; return; fi
+    local uuid args access rel id
+    # grub's own helpers, which use variables that aren't set
+    set +u
+    . /usr/share/grub/grub-mkconfig_lib
+    uuid=$(findmnt -no UUID /)
+    # the same options the system started with, pointed at the snapshot
+    args=$(tr ' ' '\n' < /proc/cmdline | grep -vE '^(BOOT_IMAGE|root|rootflags|initrd)=' | grep -v '^$' | tr '\n' ' ')
+    access=$(prepare_grub_to_access_device $(grub-probe --target=device $BOOT) | sed 's/^/\t/')
+    rel=$(grub-mkrelpath $BOOT)
+    set -u
+    # without these lines grub would look on the wrong disk: better no new entries than broken ones
+    grep -q search <<< "$access" || { echo "chamesle-snapshot: grub can't find /boot, boot menu not updated" >&2; return 0; }
+    {
+        echo "submenu 'Chamesle Linux, from before an update' {"
+        for id in $(ids | sort -r); do
+            echo "  menuentry 'Before the update of $(val $id date)' {"
+            echo "$access"
+            echo "	linux $rel/$id/vmlinuz root=UUID=$uuid rootflags=subvol=@snapshots/$id $args"
+            echo "	initrd $rel/$id/initramfs.img"
+            echo "  }"
+        done
+        echo "}"
+    } > $CFG.new
+    mv $CFG.new $CFG
+}
+
+take() {
+    supported || exit 0
+    [ -z "$(started_from)" ] || { echo "chamesle-snapshot: started from a snapshot, not taking another one" >&2; exit 0; }
+    local k id
+    # the kernel the system boots now, which the snapshot has the modules for
+    k=$(ls /boot/vmlinuz-* 2>/dev/null | sed 's#.*/vmlinuz-##' | sort -V | tail -n1)
+    [ -n "$k" ] && [ -f /boot/initramfs-$k.img ] || die "no kernel and initramfs in /boot"
+    mount_top
+    id=$(date +%Y%m%d-%H%M%S)
+    mkdir -p $TOP/@snapshots $BOOT/$id
+    btrfs -q subvolume snapshot $TOP/@ $TOP/@snapshots/$id
+    cp --reflink=auto /boot/vmlinuz-$k $BOOT/$id/vmlinuz
+    cp --reflink=auto /boot/initramfs-$k.img $BOOT/$id/initramfs.img
+    printf 'date=%s\nkernel=%s\n' "$(LC_ALL=C date '+%-d %b %Y, %H:%M')" "$k" > $BOOT/$id/info
+    # a system replaced by restore, and snapshots without their boot files, can't be started: they go first
+    for d in $TOP/@snapshots/*; do
+        [ -d "$d" ] && [ ! -f "$BOOT/${d##*/}/info" ] && btrfs -q subvolume delete "$d" || true
+    done
+    for id in $(ids | head -n -$KEEP); do
+        btrfs -q subvolume delete $TOP/@snapshots/$id 2>/dev/null || true
+        rm -rf "${BOOT:?}/$id"
+    done
+    for id in $(ids); do [ -d $TOP/@snapshots/$id ] || rm -rf "${BOOT:?}/$id"; done
+    menu
+}
+
+list() {
+    supported || { echo "no snapshots: they need a system installed on btrfs (from Chamesle 0.4 on)"; return; }
+    local id now
+    now=$(started_from)
+    for id in $(ids | sort -r); do
+        echo "$id  before the update of $(val $id date)$([ "$id" = "$now" ] && echo '  (running now)')"
+    done
+}
+
+restore() {
+    supported || die "snapshots need a system installed on btrfs"
+    local id=${1:-$(started_from)} k new
+    [ -n "$id" ] || die "which one? see chamesle-snapshot list"
+    [[ $id =~ ^[0-9]{8}-[0-9]{6}$ ]] && [ -f $BOOT/$id/info ] || die "no snapshot $id"
+    mount_top
+    [ -d $TOP/@snapshots/$id ] || die "no snapshot $id"
+    # the system being replaced stays until the next update, in case
+    mv $TOP/@ $TOP/@snapshots/replaced-$(date +%Y%m%d-%H%M%S)
+    btrfs -q subvolume snapshot $TOP/@snapshots/$id $TOP/@
+    # finish from inside the restored system, so the boot menu is made the way it sees itself
+    new=$TOP/new
+    mkdir -p $new
+    mount -o subvol=@ "$(device)" $new
+    # rslave: unmounting these again can't take the real /dev and /sys with it
+    for d in dev proc sys; do mount --rbind /$d $new/$d; mount --make-rslave $new/$d; done
+    mountpoint -q /boot && mount --bind /boot $new/boot
+    chroot $new /usr/bin/chamesle-snapshot settle $id
+    echo "done: restart and Chamesle starts as it was before the update of $(val $id date)"
+}
+
+# inside the restored system: its kernel back in /boot, kernels it has no modules for out, then the boot menu
+settle() {
+    local id=$1 k f v
+    if mountpoint -q /boot; then
+        k=$(val $id kernel)
+        cp $BOOT/$id/vmlinuz /boot/vmlinuz-$k
+        cp $BOOT/$id/initramfs.img /boot/initramfs-$k.img
+        for f in /boot/vmlinuz-*; do
+            v=${f#/boot/vmlinuz-}
+            [ -d /usr/lib/modules/$v ] || rm -f /boot/vmlinuz-$v /boot/initramfs-$v.img /boot/config-$v /boot/System.map-$v
+        done
+    fi
+    grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
+    menu
+}
+
+# at login, when started from a snapshot from the boot menu
+notice() {
+    local id
+    id=$(started_from)
+    [ -n "$id" ] || exit 0
+    zenity --question --width 420 --title "Started from before an update" \
+        --text "This is Chamesle as it was before the update of $(val $id date).\n\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way." \
+        --ok-label "Keep this one" --cancel-label "Not now" || exit 0
+    if pkexec /usr/bin/chamesle-snapshot restore $id; then
+        zenity --info --width 380 --title "Done" --text "Restart, and Chamesle starts as it is now."
+    else
+        zenity --error --width 380 --title "That didn't work" --text "Nothing was changed. Try again, or ask on the board."
+    fi
+}
+
+case ${1:-} in
+take|list|menu) "$1";;
+restore) restore "${2:-}";;
+settle) settle "$2";;
+notice) notice;;
+*) sed -n '2,8s/^# \?//p' "$0" >&2; exit 2;;
+esac
