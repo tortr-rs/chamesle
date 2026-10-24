@@ -1,0 +1,5 @@
+# astro flavor: the gnome edition plus apps for the night sky
+# stellarium: the planetarium. kstars: sky charts and telescope control. siril: stacking and processing astrophotos.
+# gpredict: where satellites and the iss are right now
+stellarium kstars siril gpredict
+chamesle-astro

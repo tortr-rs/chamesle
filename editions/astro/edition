@@ -1,0 +1,3 @@
+name=Astro
+# a flavor: the gnome edition with astronomy on top
+base=gnome

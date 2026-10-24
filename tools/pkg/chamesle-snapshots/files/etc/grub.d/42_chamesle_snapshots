@@ -1,0 +1,8 @@
+#!/bin/sh
+# the snapshots from before updates (chamesle-snapshot). their menu is a file of its own, rewritten after each
+# update, so updates don't have to rerun grub-mkconfig
+cat <<EOT
+if [ -f \${config_directory}/chamesle-snapshots.cfg ]; then
+  source \${config_directory}/chamesle-snapshots.cfg
+fi
+EOT

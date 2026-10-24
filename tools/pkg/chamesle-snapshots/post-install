@@ -1,0 +1,6 @@
+#!/bin/sh
+# puts the "before an update" submenu in the boot menu. systems on ext4 (installed before 0.4) don't get snapshots
+if [ -f /boot/grub/grub.cfg ] && [ "$(findmnt -no FSTYPE / 2>/dev/null)" = btrfs ]; then
+    grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
+fi
+exit 0

@@ -40,12 +40,10 @@ class InstallerEngine:
         subprocess.run(["chroot", "/target", "useradd", "-m", "-s", "/bin/bash", "-c", self.setup.real_name,
                         "-G", ",".join(groups), self.setup.username])
 
-        fp = open("/target/dev/shm/.passwd", "w")
-        fp.write(self.setup.username +  ":" + self.setup.password1 + "\n")
-        fp.close()
-        # -c: hash it here, the pam setup for chpasswd doesn't store anything
-        self.do_run_in_chroot("cat /dev/shm/.passwd | chpasswd -c SHA512")
-        os.system("rm -f /target/dev/shm/.passwd")
+        # through stdin: never in a file or on a command line. -c: hash it here, the pam setup for chpasswd
+        # doesn't store anything
+        subprocess.run(["chroot", "/target", "chpasswd", "-c", "SHA512"],
+                       input="%s:%s\n" % (self.setup.username, self.setup.password1), text=True)
 
         if self.setup.autologin and os.path.exists("/target/etc/gdm/custom.conf"):
             os.system("sed -i 's/^\\[daemon\\]$/&\\nAutomaticLoginEnable=True\\nAutomaticLogin=%s/' /target/etc/gdm/custom.conf"
@@ -316,9 +314,12 @@ class InstallerEngine:
         # Encrypt root partition
         if self.setup.luks:
             print(" --> Encrypting root partition %s" % self.auto_root_partition)
-            os.system("echo -n %s | cryptsetup luksFormat -c aes-xts-plain64 -h sha256 -s 512 %s" % (shlex.quote(self.setup.passphrase1), self.auto_root_partition))
+            # the passphrase goes in on stdin, where ps can't see it and echo can't eat a leading -n or -e
+            subprocess.run(["cryptsetup", "luksFormat", "--batch-mode", "-c", "aes-xts-plain64", "-h", "sha256", "-s", "512",
+                            "--key-file=-", self.auto_root_partition], input=self.setup.passphrase1, text=True)
             print(" --> Opening root partition %s" % self.auto_root_partition)
-            os.system("echo -n %s | cryptsetup luksOpen %s chamesle" % (shlex.quote(self.setup.passphrase1), self.auto_root_partition))
+            subprocess.run(["cryptsetup", "luksOpen", "--key-file=-", self.auto_root_partition, "chamesle"],
+                           input=self.setup.passphrase1, text=True)
             self.auto_root_partition = "/dev/mapper/chamesle"
 
         # Setup LVM
@@ -333,8 +334,6 @@ class InstallerEngine:
             os.system("lvcreate -y -n swap -L 2GB chamesle")
             print(" --> LVM: Extending LV root")
             os.system(r"lvextend -l 100%FREE /dev/chamesle/root")
-            print(" --> LVM: Formatting LV root")
-            os.system("mkfs.ext4 /dev/mapper/chamesle-root -FF")
             print(" --> LVM: Formatting LV swap")
             os.system("mkswap -f /dev/mapper/chamesle-swap")
             print(" --> LVM: Enabling LV swap")
@@ -342,13 +341,25 @@ class InstallerEngine:
             self.auto_root_partition = "/dev/mapper/chamesle-root"
             self.auto_swap_partition = "/dev/mapper/chamesle-swap"
 
-        self.do_mount(self.auto_root_partition, "/target", "ext4", None)
+        self.make_root_btrfs(self.auto_root_partition)
         if (self.auto_boot_partition is not None):
             os.system("mkdir -p /target/boot")
             self.do_mount(self.auto_boot_partition, "/target/boot", "ext4", None)
         if (self.auto_efi_partition is not None):
             os.system("mkdir -p /target/boot/efi")
             self.do_mount(self.auto_efi_partition, "/target/boot/efi", "vfat", None)
+
+    def make_root_btrfs(self, device):
+        # btrfs, with the system in @ and your files in @home: the system gets snapshotted before updates
+        # (chamesle-snapshot), your files never
+        print(" --> Formatting %s as btrfs (@ and @home)" % device)
+        self.exec_cmd("mkfs.btrfs -f %s" % device)
+        self.do_mount(device, "/target", "btrfs", None)
+        os.system("btrfs subvolume create /target/@ /target/@home")
+        os.system("umount /target")
+        self.do_mount(device, "/target", "btrfs", "subvol=@")
+        os.makedirs("/target/home", exist_ok=True)
+        self.do_mount(device, "/target/home", "btrfs", "subvol=@home")
 
     def create_alongside(self):
         win = self.setup.windows
@@ -359,8 +370,7 @@ class InstallerEngine:
         self.auto_boot_partition = self.auto_swap_partition = None
         self.auto_efi_partition = alongside.find_esp(win["disk"]) if self.setup.gptonefi else None
         self.update_progress(25, False, False, _("Formatting partitions..."))
-        self.exec_cmd("mkfs.ext4 -F %s" % root)
-        self.do_mount(root, "/target", "ext4", None)
+        self.make_root_btrfs(root)
         if self.auto_efi_partition is not None:
             # windows' own EFI partition, shared, not formatted
             os.system("mkdir -p /target/boot/efi")
@@ -470,7 +480,9 @@ class InstallerEngine:
         if(not self.setup.skip_mount):
             if self.setup.automated:
                 fstab.write("# %s\n" % self.auto_root_partition)
-                fstab.write("%s /  ext4 defaults 0 1\n" % self.get_blkid(self.auto_root_partition))
+                root_uuid = self.get_blkid(self.auto_root_partition)
+                fstab.write("%s /  btrfs defaults,subvol=@ 0 0\n" % root_uuid)
+                fstab.write("%s /home  btrfs defaults,subvol=@home 0 0\n" % root_uuid)
                 if self.auto_swap_partition is not None:
                     fstab.write("# %s\n" % self.auto_swap_partition)
                     fstab.write("%s none   swap sw 0 0\n" % self.get_blkid(self.auto_swap_partition))
@@ -736,7 +748,7 @@ class Setup(object):
             print("autologin: ", self.autologin)
             print("ecryptfs: ", self.ecryptfs)
             print("hostname: %s " % self.hostname)
-            print("passwords: %s - %s" % (self.password1, self.password2))
+            print("password: %s" % ("set" if self.password1 else "none"))
             print("grub_device: %s " % self.grub_device)
             print("skip_mount: %s" % self.skip_mount)
             print("automated: %s" % self.automated)
@@ -745,7 +757,7 @@ class Setup(object):
                 print("luks: %s" % self.luks)
                 print("badblocks: %s" % self.badblocks)
                 print("lvm: %s" % self.lvm)
-                print("passphrase: %s - %s" % (self.passphrase1, self.passphrase2))
+                print("passphrase: %s" % ("set" if self.passphrase1 else "none"))
             if (not self.skip_mount):
                 print("target_disk: %s " % self.target_disk)
                 if self.gptonefi:

@@ -8,10 +8,17 @@ GTK_SHA256=bedc51e07ca4edaeb3bdd50e9e2a27c10f1b049f460b10e3b5668d11ff2b03cd
 ICONS_TAG=2026-07-27
 ICONS_SHA256=24a8aca29a5b652a0e60ff8e5f12b86fe4b9c4c969565fad7c3fa7c1742b3631
 W=$(mktemp -d); trap 'rm -rf "$W"' EXIT
+# downloads are kept here, so every edition's build doesn't fetch them from github again
+SRC=${SRC_CACHE:-$HOME/.cache/chamesle-src}
 fetch() { # REPO TAG SHA256
-    curl -fsSL --retry 5 --retry-all-errors -o "$W/$1.tar.gz" "https://github.com/vinceliuice/$1/archive/refs/tags/$2.tar.gz"
-    [ "$(sha256sum "$W/$1.tar.gz" | cut -d' ' -f1)" = "$3" ] || { echo "themes: checksum mismatch for $1" >&2; exit 1; }
-    tar -xzf "$W/$1.tar.gz" -C "$W"
+    f=$SRC/$1-$2.tar.gz
+    if [ ! -f "$f" ]; then
+        mkdir -p "$SRC"
+        curl -fsSL --retry 5 --retry-all-errors -C - -o "$f.part" "https://github.com/vinceliuice/$1/archive/refs/tags/$2.tar.gz"
+        mv "$f.part" "$f"
+    fi
+    [ "$(sha256sum "$f" | cut -d' ' -f1)" = "$3" ] || { echo "themes: checksum mismatch for $1" >&2; rm -f "$f"; exit 1; }
+    tar -xzf "$f" -C "$W"
 }
 fetch Fluent-gtk-theme "$GTK_TAG" "$GTK_SHA256"
 fetch Fluent-icon-theme "$ICONS_TAG" "$ICONS_SHA256"

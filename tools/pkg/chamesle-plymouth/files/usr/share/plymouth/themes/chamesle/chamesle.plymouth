@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Chamesle
+Description=The Chamesle logo with a spinner under it
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/chamesle
+ScriptFile=/usr/share/plymouth/themes/chamesle/chamesle.script

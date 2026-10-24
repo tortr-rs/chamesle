@@ -8,7 +8,13 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 EDITION=${EDITION:-xfce}
 [ -f "$HERE/editions/$EDITION/packages" ] || { echo "build: no edition '$EDITION' (editions/*/packages)" >&2; exit 1; }
 VERSION=$(cat "$HERE/VERSION"); CODENAME=$(cat "$HERE/CODENAME" 2>/dev/null || true)
-EDITION_NAME=$(sed -n 's/^name=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null || echo "$EDITION")
+# a flavor (astro) is an edition on top of another one: base=gnome brings that edition's packages, overlay, session and
+# login, the flavor adds its own
+BASE=$(sed -n 's/^base=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null)
+EDS="$BASE $EDITION"
+# edval KEY: from the edition file, else from its base's
+edval() { local e v; for e in $EDITION $BASE; do v=$(sed -n "s/^$1=//p" "$HERE/editions/$e/edition" 2>/dev/null); [ -n "$v" ] && { echo "$v"; return; }; done; return 0; }
+EDITION_NAME=$(sed -n 's/^name=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null); EDITION_NAME=${EDITION_NAME:-$EDITION}
 WORK=${WORK:-$HERE/work/$EDITION}; ROOT=$WORK/root; ISO_DIR=$WORK/iso
 OUT=${OUT:-$HERE/out}; ISO=$OUT/chamesle-$VERSION-$EDITION-x86_64.iso
 PUBLIC_REPO=https://downloads.sourceforge.net/project/chameslerepos
@@ -21,7 +27,7 @@ for t in "$APK" mksquashfs xorriso readelf zstd cpio depmod curl; do command -v 
 command -v grub-mkrescue >/dev/null || command -v grub2-mkrescue >/dev/null || missing="$missing grub-mkrescue"
 [ -z "$missing" ] || { echo "build: missing tools:$missing" >&2; exit 1; }
 GRUB_MKRESCUE=$(command -v grub-mkrescue || command -v grub2-mkrescue)
-packages() { sed 's/#.*//' "$HERE/editions/base.packages" "$HERE/editions/$EDITION/packages" | tr ' \t' '\n\n' | grep -v '^$' | sort -u; }
+packages() { sed 's/#.*//' "$HERE/editions/base.packages" $(for e in $EDS; do echo "$HERE/editions/$e/packages"; done) | tr ' \t' '\n\n' | grep -v '^$' | sort -u; }
 
 echo "=== [1/5] INSTALLING THE SYSTEM ($EDITION_NAME, from $REPO)"
 rm -rf "$WORK"; mkdir -p "$ROOT/etc/apk/keys" "$ISO_DIR/live" "$OUT"
@@ -49,7 +55,7 @@ echo "v3 $PUBLIC_REPO" > "$ROOT/etc/apk/repositories"
 
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
-[ -d "$HERE/editions/$EDITION/overlay" ] && cp -a "$HERE/editions/$EDITION/overlay/." "$ROOT/"
+for e in $EDS; do [ -d "$HERE/editions/$e/overlay" ] && cp -a "$HERE/editions/$e/overlay/." "$ROOT/"; done
 "$HERE/tools/themes.sh" "$ROOT"
 # xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
 for f in xfce-x.svg xfce-shapes.svg xfce-stripes.png xfce-teal.png xfce-verticals.png; do
@@ -95,8 +101,8 @@ echo 'live ALL=(ALL:ALL) NOPASSWD: ALL' > "$ROOT/etc/sudoers.d/live"; chmod 440 
 # same for the password prompts of the store, drivers and updates: live has no password to type
 mkdir -p "$ROOT/etc/polkit-1/rules.d"
 printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == "live") return polkit.Result.YES;\n});\n' > "$ROOT/etc/polkit-1/rules.d/49-live.rules"
-SESSION=$(sed -n 's/^session=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null || echo "$EDITION")
-LOGIN=$(sed -n 's/^login=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null); LOGIN=${LOGIN:-lightdm}
+SESSION=$(edval session); SESSION=${SESSION:-${BASE:-$EDITION}}
+LOGIN=$(edval login); LOGIN=${LOGIN:-lightdm}
 if [ "$LOGIN" = gdm ]; then
     # gdm has a single config file, the installer takes these lines out again. the session comes from accountsservice
     sed -i 's/^\[daemon\]$/&\n# the live session only\nAutomaticLoginEnable=True\nAutomaticLogin=live/' "$ROOT/etc/gdm/custom.conf"
@@ -118,8 +124,9 @@ Exec=sh -c 'f=$HOME/Desktop/chamesle-install.desktop; gio set "$f" metadata::xfc
 NoDisplay=true
 EOF
 # gnome has no desktop icons: the installer goes first in the dock instead
-GNOME_LOOK=$ROOT/usr/share/glib-2.0/schemas/50_chamesle-gnome.gschema.override
-if [ -f "$GNOME_LOOK" ]; then
+# the dock of a flavor wins over gnome's: its override sorts last
+GNOME_LOOK=$(grep -l '^favorite-apps=' "$ROOT"/usr/share/glib-2.0/schemas/*_chamesle-*.gschema.override 2>/dev/null | sort | tail -n1 || true)
+if [ -n "$GNOME_LOOK" ]; then
     mkdir -p "$ROOT/home/live/.config/dconf" "$ROOT/tmp/live-dconf"
     { echo '[org/gnome/shell]'; sed -n "s/^favorite-apps=\[/&'chamesle-install.desktop', /p" "$GNOME_LOOK"; } > "$ROOT/tmp/live-dconf/live"
     "$IN" "$ROOT" /usr/bin/dconf compile /home/live/.config/dconf/user /tmp/live-dconf
