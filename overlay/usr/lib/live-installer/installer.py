@@ -45,7 +45,16 @@ class InstallerEngine:
         subprocess.run(["chroot", "/target", "chpasswd", "-c", "SHA512"],
                        input="%s:%s\n" % (self.setup.username, self.setup.password1), text=True)
 
-        if self.setup.autologin and os.path.exists("/target/usr/bin/sddm"):
+        # the sign-in screen the edition uses (the build left it in /etc/chamesle/login): sddm is installed everywhere,
+        # but gnome signs in with gdm
+        try:
+            login = open("/target/etc/chamesle/login").read().strip()
+        except OSError:
+            login = ""
+        if self.setup.autologin and login == "gdm" and os.path.exists("/target/etc/gdm/custom.conf"):
+            os.system("sed -i 's/^\\[daemon\\]$/&\\nAutomaticLoginEnable=True\\nAutomaticLogin=%s/' /target/etc/gdm/custom.conf"
+                      % self.setup.username)
+        elif self.setup.autologin and os.path.exists("/target/usr/bin/sddm"):
             # sddm needs the session too: the edition's default, which the build left in /etc/chamesle/session
             try:
                 session = open("/target/etc/chamesle/session").read().strip()
@@ -56,9 +65,6 @@ class InstallerEngine:
             os.makedirs("/target/etc/sddm.conf.d", exist_ok=True)
             with open("/target/etc/sddm.conf.d/80-autologin.conf", "w") as f:
                 f.write("[Autologin]\nUser=%s\nSession=%s\n" % (self.setup.username, session))
-        elif self.setup.autologin and os.path.exists("/target/etc/gdm/custom.conf"):
-            os.system("sed -i 's/^\\[daemon\\]$/&\\nAutomaticLoginEnable=True\\nAutomaticLogin=%s/' /target/etc/gdm/custom.conf"
-                      % self.setup.username)
         elif self.setup.autologin:
             os.makedirs("/target/etc/lightdm/lightdm.conf.d", exist_ok=True)
             with open("/target/etc/lightdm/lightdm.conf.d/80-autologin.conf", "w") as f:

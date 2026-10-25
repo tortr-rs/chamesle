@@ -1,0 +1,12 @@
+# gdm (the gnome edition's, the others use sddm): gnome locks the screen only under gdm
+type = process
+command = /usr/lib/dinit/gdm
+depends-on = dbus
+depends-on = elogind
+waits-for = polkitd
+waits-for = plymouth-quit
+waits-for = udev-trigger
+waits-for = network
+restart = true
+smooth-recovery = true
+logfile = /var/log/gdm-dinit.log

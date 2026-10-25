@@ -5,6 +5,5 @@ nautilus sushi file-roller gnome-console gnome-text-editor gnome-calculator gnom
 gnome-disk-utility gnome-tweaks loupe evince celluloid
 gvfs xdg-desktop-portal-gnome xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme adwaita-fonts
 gnome-themes-extra
-# not to sign in (sddm does that), but gnome-shell needs its Gdm typelib, which void ships only in gdm
 gdm
 chamesle-gnome

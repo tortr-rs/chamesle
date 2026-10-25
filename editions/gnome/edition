@@ -1,5 +1,7 @@
 name=GNOME
 # the live session is on X11, where the installer is at home. installed systems start on wayland, gnome's default
 session=gnome-xorg
+# gdm, not sddm: gnome locks the screen only under its own sign-in screen
+login=gdm
 installed-session=gnome
 tour=Press the Windows key, or click Activities top left, to see your windows and search for apps. The dock at the bottom holds your favourites.
