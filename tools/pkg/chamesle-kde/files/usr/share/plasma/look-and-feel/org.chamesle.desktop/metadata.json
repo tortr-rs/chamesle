@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "Chamesle Linux" }],
+        "Description": "Breeze with a dark Windows-style taskbar, the Matterhorn and Inter",
+        "Id": "org.chamesle.desktop",
+        "License": "GPL-3.0-or-later",
+        "Name": "Chamesle",
+        "Version": "0.5.0",
+        "Website": "https://chamesle.org"
+    },
+    "X-Plasma-MainScript": "defaults",
+    "X-Plasma-Inherit": "org.kde.breezetwilight.desktop"
+}

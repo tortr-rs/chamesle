@@ -1,8 +1,0 @@
-[Plymouth Theme]
-Name=Chamesle
-Description=The Chamesle logo turning slowly on black
-ModuleName=script
-
-[script]
-ImageDir=/usr/share/plymouth/themes/chamesle
-ScriptFile=/usr/share/plymouth/themes/chamesle/chamesle.script

@@ -1,0 +1,10 @@
+#!/bin/sh
+# plymouth quit returns before plymouthd is gone, and plymouthd going puts the screen back on tty1: with sddm's X
+# already up on tty2 that left a black screen. so wait until it has really gone, 5 seconds at most
+plymouth quit --retain-splash
+i=0
+while plymouth --ping 2>/dev/null && [ $i -lt 50 ]; do
+    sleep 0.1
+    i=$((i + 1))
+done
+exit 0

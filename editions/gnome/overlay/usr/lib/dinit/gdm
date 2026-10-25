@@ -1,4 +1,0 @@
-#!/bin/sh
-# gdm wants its run directory made for it
-mkdir -m0711 -p /run/gdm && chown root:gdm /run/gdm
-exec /usr/bin/gdm

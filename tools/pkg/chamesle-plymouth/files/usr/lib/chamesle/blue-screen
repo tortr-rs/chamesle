@@ -1,0 +1,30 @@
+#!/bin/sh
+# blue-screen [REASON]: the blue screen, for when the system can't finish starting. dinit runs it as its recovery
+# service; without a reason it names the services that failed. any key gives a command line (sulogin asks for
+# root's password, or lets you straight in when root is locked, as it is with sudo)
+reason=$1
+if [ -z "$reason" ] && command -v dinitctl >/dev/null; then
+    failed=$(dinitctl list 2>/dev/null | sed -n 's/^[[][^]]*X[^]]*[]] *\([^ ]*\).*/\1/p' | tr '\n' ' ')
+    [ -n "$failed" ] && reason="What failed: ${failed% }"
+fi
+# the boot screen may be gone already, it goes when the desktop starts
+if ! plymouth --ping 2>/dev/null; then
+    mkdir -p /run/plymouth
+    plymouthd --mode=boot --tty=/dev/tty1 2>/dev/null && plymouth show-splash
+fi
+if plymouth --ping 2>/dev/null; then
+    plymouth display-message --text=chamesle-error
+    [ -n "$reason" ] && plymouth display-message --text="$reason"
+    plymouth watch-keystroke >/dev/null 2>&1
+    plymouth quit
+fi
+# the same in text, for the command line, or if there's no screen to draw on
+clear 2>/dev/null
+echo
+echo ":( Chamesle couldn't finish starting."
+[ -n "$reason" ] && echo "   $reason"
+echo
+echo "   'dinitctl list' shows what's running and what failed, logs are in /var/log."
+echo "   Typing 'reboot' restarts. In the boot menu you can pick a snapshot from before the last update."
+echo
+exec sulogin --force

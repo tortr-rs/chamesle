@@ -1,0 +1,11 @@
+# kde plasma edition: plasma with a windows-style panel, the most to set up and change of all the editions
+# plasma's parts without the "kde" bundle, which brings games, education apps, pim and more
+# breeze without its qt5 part: nothing here is qt5, and the qt5 kde libraries hit a version mixup in the repo
+plasma-desktop plasma-workspace plasma-workspace-x11 kwin kwin-x11 plasma-nm plasma-pa bluedevil powerdevil kscreen kinfocenter
+systemsettings kmenuedit kde-cli-tools kactivitymanagerd milou plasma-disks plasma-thunderbolt print-manager
+plasma-systemmonitor kdeplasma-addons plasma-integration polkit-kde-agent kwallet-pam kwalletmanager sddm-kcm
+breeze-qt6 breeze-icons qqc2-breeze-style breeze-gtk kde-gtk-config ocean-sound-theme xdg-desktop-portal-kde flatpak-kcm kgamma kwrited
+# the apps
+dolphin konsole kate ark spectacle gwenview okular kcalc filelight partitionmanager kdialog
+kio-extras kio-admin kdegraphics-thumbnailers ffmpegthumbs qt6-imageformats qt6-wayland
+chamesle-kde

@@ -1,0 +1,9 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "Sam Ferrara" }],
+        "Description": "The Matterhorn at sunset",
+        "Id": "Chamesle",
+        "License": "CC0-1.0",
+        "Name": "Matterhorn"
+    }
+}

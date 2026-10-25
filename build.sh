@@ -57,6 +57,14 @@ echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
 for e in $EDS; do [ -d "$HERE/editions/$e/overlay" ] && cp -a "$HERE/editions/$e/overlay/." "$ROOT/"; done
 "$HERE/tools/themes.sh" "$ROOT"
+# the installer's slideshow starts with this edition's desktop (the website's picture of it) and how to get around
+SLIDES=$ROOT/usr/share/live-installer/slideshow
+SHOT=; for e in $EDITION $BASE; do [ -z "$SHOT" ] && [ -f "$HERE/docs/img/$e.png" ] && SHOT=$HERE/docs/img/$e.png; done
+if [ -n "$SHOT" ]; then cp "$SHOT" "$SLIDES/desktop.png"; else rm -f "$SLIDES/desktop.png"; fi
+TOUR=$(edval tour)
+if [ -n "$TOUR" ]; then
+    sed -i "s|<p id=\"tour\">[^<]*</p>|<p id=\"tour\">${TOUR//&/\\&}</p>|" "$SLIDES/index.html"
+fi
 # xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
 for f in xfce-x.svg xfce-shapes.svg xfce-stripes.png xfce-teal.png xfce-verticals.png; do
     [ -d "$ROOT/usr/share/backgrounds/xfce" ] && ln -sf ../chamesle/default.png "$ROOT/usr/share/backgrounds/xfce/$f"
@@ -102,8 +110,16 @@ echo 'live ALL=(ALL:ALL) NOPASSWD: ALL' > "$ROOT/etc/sudoers.d/live"; chmod 440 
 mkdir -p "$ROOT/etc/polkit-1/rules.d"
 printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == "live") return polkit.Result.YES;\n});\n' > "$ROOT/etc/polkit-1/rules.d/49-live.rules"
 SESSION=$(edval session); SESSION=${SESSION:-${BASE:-$EDITION}}
-LOGIN=$(edval login); LOGIN=${LOGIN:-lightdm}
-if [ "$LOGIN" = gdm ]; then
+LOGIN=$(edval login); LOGIN=${LOGIN:-sddm}
+# what an installed system starts: the live one, unless the edition says otherwise (gnome and kde: x11 live, where
+# the installer is at home, wayland once installed). the installer reads it for autologin
+INSTALLED=$(edval installed-session); INSTALLED=${INSTALLED:-$SESSION}
+mkdir -p "$ROOT/etc/chamesle"; echo "$INSTALLED" > "$ROOT/etc/chamesle/session"
+if [ "$LOGIN" = sddm ]; then
+    mkdir -p "$ROOT/etc/sddm.conf.d"
+    printf '# the live session only (the installer removes this file)\n[Autologin]\nUser=live\nSession=%s.desktop\n' "$SESSION" \
+        > "$ROOT/etc/sddm.conf.d/90-live.conf"
+elif [ "$LOGIN" = gdm ]; then
     # gdm has a single config file, the installer takes these lines out again. the session comes from accountsservice
     sed -i 's/^\[daemon\]$/&\n# the live session only\nAutomaticLoginEnable=True\nAutomaticLogin=live/' "$ROOT/etc/gdm/custom.conf"
     mkdir -p "$ROOT/var/lib/AccountsService/users"
@@ -148,6 +164,9 @@ echo "=== [5/5] SQUASHFS AND ISO"
 mksquashfs "$ROOT" "$ISO_DIR/live/rootfs.squashfs" -comp zstd -Xcompression-level 15 -b 1M -noappend -no-xattrs -quiet
 mkdir -p "$ISO_DIR/boot/grub"
 TITLE="Chamesle Linux $VERSION$SUFFIX ($EDITION_NAME)"
+# the same boot menu theme an installed system gets
+THEME=$ROOT/usr/share/grub/themes/chamesle
+[ -d "$THEME" ] && mkdir -p "$ISO_DIR/boot/grub/themes" && cp -r "$THEME" "$ISO_DIR/boot/grub/themes/"
 cat > "$ISO_DIR/boot/grub/grub.cfg" <<EOF
 set default=0
 set timeout=5
@@ -156,22 +175,30 @@ insmod gfxterm
 set gfxmode=1280x800,1024x768,auto
 set gfxpayload=keep
 terminal_output gfxterm
+if [ -f \$prefix/themes/chamesle/theme.txt ]; then
+    insmod png
+    loadfont \$prefix/fonts/unicode.pf2
+    loadfont \$prefix/themes/chamesle/inter-16.pf2
+    loadfont \$prefix/themes/chamesle/inter-20.pf2
+    loadfont \$prefix/themes/chamesle/inter-bold-32.pf2
+    set theme=\$prefix/themes/chamesle/theme.txt
+fi
 if [ ! -f /live/vmlinuz ]; then search --no-floppy --set=root --file /live/vmlinuz; fi
 
 menuentry "Try or install $TITLE" {
-    linux /live/vmlinuz quiet splash loglevel=3
+    linux /live/vmlinuz quiet splash loglevel=3 drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
 menuentry "$TITLE (safe graphics)" {
-    linux /live/vmlinuz quiet loglevel=3 nomodeset
+    linux /live/vmlinuz quiet loglevel=3 nomodeset drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
 menuentry "$TITLE (copy to RAM)" {
-    linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3
+    linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3 drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
 menuentry "$TITLE (show boot messages)" {
-    linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200
+    linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200 drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
 EOF

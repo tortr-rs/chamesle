@@ -1,12 +1,12 @@
 name=chamesle-plymouth
-version=0.7.0
-rel=1
-desc="The Chamesle boot screen: the logo with a spinner under it"
+version=0.8.0
+rel=0
+desc="The Chamesle boot screen: the logo with a spinner under it, and a blue screen when the system can't start"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="plymouth"
+depends="plymouth util-linux dinit"
 
 build() {
     cp -a . "$pkgdir/"

@@ -1,0 +1,14 @@
+name=chamesle-sddm
+version=0.5.0
+rel=0
+desc="The Chamesle sign-in screen: a lock screen with the clock, then your picture and password, like Windows"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+# the background is "Top of Atmosphere", NASA Earth Observatory (ISS Expedition 13, 2006), public domain
+depends="sddm font-inter qt6-svg"
+
+build() {
+    cp -a . "$pkgdir/"
+}

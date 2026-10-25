@@ -14,6 +14,12 @@ exec </dev/console >/dev/console 2>&1
 log() { echo "[live] $*"; }
 SPLASH=0
 emergency() {
+    # something's wrong: the blue screen says what, any key goes on to the shell. not for the debug shells
+    if [ "$SPLASH" = 1 ] && [ "$DEBUG" = 0 ] && [ "$SHELL_FIRST" = 0 ]; then
+        plymouth display-message --text=chamesle-error
+        plymouth display-message --text="$*"
+        plymouth watch-keystroke >/dev/null 2>&1
+    fi
     [ "$SPLASH" = 1 ] && { plymouth quit; SPLASH=0; }
     echo "[live] $*"
     echo "[live] starting a shell; leave it with 'exit' to try again"
@@ -224,7 +230,9 @@ fi
 [ "$DEBUG" = 1 ] && emergency "chamesle.debug=1: about to switch root"
 [ -x "/newroot$INIT" ] || emergency "$INIT not found in the system image"
 INIT_ARGS=
-[ "$QUIET" = 1 ] && [ "$INIT" = /usr/bin/dinit ] && [ "$DEBUG" = 0 ] && INIT_ARGS=--quiet
+# dinit starts the blue screen (its recovery service) on its own if the system can't finish starting
+[ "$INIT" = /usr/bin/dinit ] && [ -x /newroot/usr/lib/chamesle/blue-screen ] && INIT_ARGS=--auto-recovery
+[ "$QUIET" = 1 ] && [ "$INIT" = /usr/bin/dinit ] && [ "$DEBUG" = 0 ] && INIT_ARGS="$INIT_ARGS --quiet"
 [ "$SPLASH" = 1 ] && plymouth update-root-fs --new-root-dir=/newroot
 udevadm control --exit 2>/dev/null
 exec switch_root /newroot "$INIT" $INIT_ARGS

@@ -1,0 +1,11 @@
+[SddmGreeterTheme]
+Name=Chamesle
+Description=The Chamesle sign-in screen
+Author=Chamesle Linux
+License=GPL-3.0-or-later
+Type=sddm-theme
+Version=0.5.0
+Website=https://chamesle.org
+MainScript=Main.qml
+ConfigFile=theme.conf
+QtVersion=6

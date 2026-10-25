@@ -1,0 +1,14 @@
+name=chamesle-grub
+version=0.5.0
+rel=1
+desc="The Chamesle boot menu: the wallpaper, Inter and a list that's easy to read"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+# files/ comes from make-theme.py, run it again after changing the pictures or fonts
+depends="grub"
+
+build() {
+    cp -a . "$pkgdir/"
+}

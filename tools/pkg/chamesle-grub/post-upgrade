@@ -1,0 +1,8 @@
+#!/bin/sh
+# the boot menu uses the theme, unless someone picked another one. the menu is made again on installed systems
+g=/etc/default/grub
+if [ -f $g ] && ! grep -q '^GRUB_THEME=' $g; then
+    echo 'GRUB_THEME="/usr/share/grub/themes/chamesle/theme.txt"' >> $g
+    [ -f /boot/grub/grub.cfg ] && grub-mkconfig -o /boot/grub/grub.cfg >/dev/null 2>&1
+fi
+exit 0
