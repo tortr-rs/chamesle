@@ -1,6 +1,6 @@
 # the chamesle look for cinnamon, same as the other editions
 [org.cinnamon.desktop.background]
-picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
+picture-uri='file:///usr/share/backgrounds/chamesle/matterhorn.jpg'
 picture-options='zoom'
 
 [org.cinnamon.desktop.interface]

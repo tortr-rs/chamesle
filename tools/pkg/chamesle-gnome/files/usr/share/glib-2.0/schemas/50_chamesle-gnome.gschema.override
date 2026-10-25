@@ -1,12 +1,12 @@
 # the chamesle look for gnome: gnome as it is, with our wallpaper and icons, a dock, tray icons,
 # and minimise and maximise buttons
 [org.gnome.desktop.background]
-picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
-picture-uri-dark='file:///usr/share/backgrounds/chamesle/default.png'
+picture-uri='file:///usr/share/backgrounds/chamesle/matterhorn.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/chamesle/matterhorn.jpg'
 picture-options='zoom'
 
 [org.gnome.desktop.screensaver]
-picture-uri='file:///usr/share/backgrounds/chamesle/default.png'
+picture-uri='file:///usr/share/backgrounds/chamesle/matterhorn.jpg'
 picture-options='zoom'
 
 [org.gnome.desktop.interface]

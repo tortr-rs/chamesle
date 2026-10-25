@@ -1,6 +1,6 @@
 # the chamesle look for mate, same as the xfce edition
 [org.mate.background]
-picture-filename='/usr/share/backgrounds/chamesle/default.png'
+picture-filename='/usr/share/backgrounds/chamesle/matterhorn.jpg'
 picture-options='zoom'
 color-shading-type='solid'
 primary-color='#0b2552'
