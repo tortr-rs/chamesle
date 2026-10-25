@@ -1,7 +1,8 @@
 #!/bin/sh
-# plymouth quit returns before plymouthd is gone, and plymouthd going puts the screen back on tty1: with sddm's X
-# already up on tty2 that left a black screen. so wait until it has really gone, 5 seconds at most
-plymouth quit --retain-splash
+# the splash goes before the sign-in screen starts, and all the way: plymouth leaves the console in graphics mode
+# with --retain-splash, and the kernel then ignores every switch away from it, so X waited forever for its own VT and
+# the screen stayed black. plymouth quit returns before plymouthd has gone, so wait for that too, 5 seconds at most
+plymouth quit
 i=0
 while plymouth --ping 2>/dev/null && [ $i -lt 50 ]; do
     sleep 0.1
