@@ -1,6 +1,6 @@
 name=chamesle-sddm
 version=0.5.0
-rel=0
+rel=1
 desc="The Chamesle sign-in screen: a lock screen with the clock, then your picture and password, like Windows"
 url=https://chamesle.org
 license=GPL-3.0-or-later

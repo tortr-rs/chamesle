@@ -1,6 +1,6 @@
 name=chamesle-gnome
 version=0.3.0
-rel=1
+rel=2
 desc="The Chamesle look for GNOME: wallpaper, icons, a dock and tray icons"
 url=https://chamesle.org
 license=GPL-3.0-or-later

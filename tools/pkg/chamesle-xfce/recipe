@@ -1,6 +1,6 @@
 name=chamesle-xfce
 version=0.2.0
-rel=2
+rel=3
 desc="The Chamesle look for Xfce: wallpaper, panel, theme settings, login screen"
 url=https://chamesle.org
 license=GPL-3.0-or-later
