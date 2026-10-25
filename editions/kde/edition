@@ -1,0 +1,4 @@
+name=KDE Plasma
+# the live session is on X11, where the installer is at home. installed systems start on wayland, plasma's default
+session=plasmax11
+installed-session=plasma

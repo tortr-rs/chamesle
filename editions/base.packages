@@ -3,15 +3,19 @@
 # core system
 base-files bash coreutils findutils diffutils grep sed gawk which file less
 gzip bzip2 xz zstd tar unzip
-util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox apk-tools plymouth
+util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox apk-tools plymouth chamesle-plymouth
 iproute2 iputils NetworkManager openssh curl wget ca-certificates rsync
-sudo nano glibc-locales tzdata man-db
+sudo nano glibc-locales tzdata man-db ncurses
 
-# kernel (the LTS series, pinned), firmware, microcode
-linux6.18 linux6.18-headers linux-firmware intel-ucode
+# kernel: arch's linux-lts repacked (tools/kernel/arch-kernel.sh), for the blue screen with the log on a crash.
+# the same LTS series void ships. firmware, microcode
+chamesle-kernel linux-firmware intel-ucode
+
+# sign-in screen, the same on every edition
+sddm chamesle-sddm
 
 # disks, filesystems, boot
-grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
+chamesle-grub grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
 e2fsprogs dosfstools ntfs-3g exfatprogs btrfs-progs xfsprogs cryptsetup lvm2 gptfdisk parted
 
 # graphics

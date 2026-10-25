@@ -1,0 +1,75 @@
+# the chamesle boot menu: the wallpaper, a calm list in the middle and what the keys do at the bottom
+desktop-image: "background.png"
+desktop-image-scale-method: "stretch"
+title-text: ""
+# the editor and command line: grub's own font, which is monospaced and has the frame's box characters
+terminal-font: "Unifont Regular 16"
+terminal-left: "10%"
+terminal-top: "10%"
+terminal-width: "80%"
+terminal-height: "80%"
+terminal-box: "menu_*.png"
+
++ label {
+    top = 13%
+    left = 0
+    width = 100%
+    height = 48
+    align = "center"
+    text = "Chamesle"
+    font = "Inter Bold 32"
+    color = "#ffffff"
+}
++ label {
+    top = 13%+52
+    left = 0
+    width = 100%
+    height = 24
+    align = "center"
+    text = "Choose what to start"
+    font = "Inter Regular 16"
+    color = "#b9c9e6"
+}
+
++ boot_menu {
+    left = 50%-330
+    top = 30%
+    width = 660
+    height = 46%
+    menu_pixmap_style = "menu_*.png"
+    selected_item_pixmap_style = "select_*.png"
+    item_pixmap_style = "item_*.png"
+    item_font = "Inter Regular 20"
+    item_color = "#e8eefa"
+    selected_item_font = "Inter Regular 20"
+    selected_item_color = "#0c1830"
+    item_height = 34
+    item_padding = 14
+    item_spacing = 20
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    scrollbar = false
+}
+
++ label {
+    id = "__timeout__"
+    top = 100%-104
+    left = 0
+    width = 100%
+    height = 24
+    align = "center"
+    text = "Starting in %d seconds"
+    font = "Inter Regular 16"
+    color = "#e8eefa"
+}
++ label {
+    top = 100%-68
+    left = 0
+    width = 100%
+    height = 24
+    align = "center"
+    text = "↑ ↓ to choose  •  Enter to start  •  E to change the boot line  •  C for a command line"
+    font = "Inter Regular 16"
+    color = "#8fa3c7"
+}

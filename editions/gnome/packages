@@ -1,6 +1,6 @@
 # gnome edition: gnome the way gnome does it, plus a dock and tray icons
 # gnome's own parts without the "gnome" bundle, which brings games, maps, contacts, docs and more
-gnome-shell gnome-session gnome-settings-daemon gnome-control-center gnome-keyring gnome-bluetooth gdm
+gnome-shell gnome-session gnome-settings-daemon gnome-control-center gnome-keyring gnome-bluetooth
 nautilus sushi file-roller gnome-console gnome-text-editor gnome-calculator gnome-system-monitor
 gnome-disk-utility gnome-tweaks loupe evince celluloid
 gvfs xdg-desktop-portal-gnome xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme adwaita-fonts

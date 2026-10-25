@@ -159,6 +159,10 @@ def get_disks():
             if re.match("/dev/mmcblk[0-9]+rpmb$", device):
                 print("Excluding %s (eMMC hardware device)" % device)
                 continue
+            # compressed swap in RAM (chamesle has it on), not a disk
+            if re.match("/dev/zram[0-9]+$", device):
+                print("Excluding %s (swap in RAM)" % device)
+                continue
 
             # Convert size to manufacturer's size (i.e. GB, not GiB)
             unit_index = 'BKMGTPEZY'.index(size.upper()[-1])
@@ -333,6 +337,10 @@ class PartitionSetup(Gtk.TreeStore):
                 print("      - Found the disk...")
             except Exception as detail:
                 print("      - Found an issue while looking for the disk: %s" % detail)
+                # erasing a disk or installing next to windows: the user said yes to that already, and the
+                # installer partitions the disk itself. the question is only for doing it by hand
+                if installer.setup.automated or installer.setup.alongside:
+                    continue
                 dialog = QuestionDialog(_("Installation Tool"),
                                         _("No partition table was found on the hard drive: %s. Do you want the installer to create a set of partitions for you? Note: This will ERASE ALL DATA present on this disk.") % disk_description,
                                         None, installer.window)

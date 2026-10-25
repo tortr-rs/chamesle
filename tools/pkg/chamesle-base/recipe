@@ -1,6 +1,6 @@
 name=chamesle-base
-version=0.4.0
-rel=1
+version=0.5.0
+rel=0
 desc="Chamesle system setup: sound, kernel modules at boot, a few small touches"
 url=https://chamesle.org
 license=GPL-3.0-or-later
@@ -9,7 +9,10 @@ makedeps=""
 # ncurses-term: the terminal descriptions htop, nano and friends need (xterm-256color, tmux, kitty...)
 # pipewire: started at login by the links in files/, with wireplumber and the pulseaudio server
 # chamesle-snapshots: a snapshot before every update, on btrfs installs (nothing happens on older ext4 ones)
-depends="kmod sudo fastfetch ncurses-term pipewire wireplumber chamesle-snapshots"
+# chamesle-kernel: the blue crash screen with the log. void's kernel stays next to it, in the boot menu's advanced options
+# chamesle-plymouth: the boot screen, and the blue screen when the system can't finish starting
+# chamesle-grub: the boot menu. ncurses: clear, reset and tput
+depends="kmod sudo fastfetch ncurses ncurses-term pipewire wireplumber chamesle-snapshots chamesle-kernel chamesle-plymouth chamesle-grub"
 
 build() {
     cp -a . "$pkgdir/"

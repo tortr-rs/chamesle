@@ -5,5 +5,5 @@ mate-notification-daemon mate-polkit mate-icon-theme marco caja
 mate-menu mate-media mate-power-manager mate-screensaver mate-system-monitor mate-terminal mate-utils mate-calc
 caja-open-terminal pluma eom atril engrampa
 network-manager-applet blueman pavucontrol gvfs
-lightdm xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme gnome-themes-extra
+xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme gnome-themes-extra
 chamesle-mate

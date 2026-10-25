@@ -1,0 +1,5 @@
+# what dinit starts when the system can't finish starting: the blue screen, then a command line
+type = process
+command = /usr/lib/chamesle/blue-screen
+options = runs-on-console
+restart = false

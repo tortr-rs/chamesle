@@ -1,4 +1,4 @@
-# get rid of the splash
+# get rid of the splash, before the sign-in screen starts
 type = scripted
-command = /bin/sh -c "plymouth quit --retain-splash || true"
+command = /usr/lib/dinit/plymouth-quit
 depends-on = early-filesystems

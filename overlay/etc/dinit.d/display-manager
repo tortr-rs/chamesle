@@ -1,6 +1,6 @@
-# lightdm
+# sddm, with the chamesle sign-in screen
 type = process
-command = /usr/bin/lightdm
+command = /usr/bin/sddm
 depends-on = dbus
 depends-on = elogind
 waits-for = polkitd
@@ -9,4 +9,4 @@ waits-for = udev-trigger
 waits-for = network
 restart = true
 smooth-recovery = true
-logfile = /var/log/lightdm-dinit.log
+logfile = /var/log/sddm-dinit.log

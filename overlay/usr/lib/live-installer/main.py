@@ -1250,9 +1250,13 @@ class InstallerWindow:
         top = model.append(None, (_("Localization"),))
         model.append(top, (_("Language: ") + bold(self.setup.language),))
         model.append(top, (_("Timezone: ") + bold(self.setup.timezone),))
-        model.append(top, (_("Keyboard layout: ") +
-                           "<b>%s - %s %s</b>" % (self.setup.keyboard_model_description, self.setup.keyboard_layout_description,
-                                                  '(%s)' % self.setup.keyboard_variant_description if self.setup.keyboard_variant_description else ''),))
+        # the layout, its variant if there is one, the model only when it's known (often it isn't: "None - ...")
+        keyboard = self.setup.keyboard_layout_description or ""
+        if self.setup.keyboard_variant_description and self.setup.keyboard_variant_description != keyboard:
+            keyboard += " (%s)" % self.setup.keyboard_variant_description
+        if self.setup.keyboard_model_description:
+            keyboard = "%s - %s" % (self.setup.keyboard_model_description, keyboard)
+        model.append(top, (_("Keyboard layout: ") + "<b>%s</b>" % GLib.markup_escape_text(keyboard),))
         top = model.append(None, (_("User settings"),))
         model.append(top, (_("Real name: ") + bold(self.setup.real_name),))
         model.append(top, (_("Username: ") + bold(self.setup.username),))

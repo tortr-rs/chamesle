@@ -45,7 +45,18 @@ class InstallerEngine:
         subprocess.run(["chroot", "/target", "chpasswd", "-c", "SHA512"],
                        input="%s:%s\n" % (self.setup.username, self.setup.password1), text=True)
 
-        if self.setup.autologin and os.path.exists("/target/etc/gdm/custom.conf"):
+        if self.setup.autologin and os.path.exists("/target/usr/bin/sddm"):
+            # sddm needs the session too: the edition's default, which the build left in /etc/chamesle/session
+            try:
+                session = open("/target/etc/chamesle/session").read().strip()
+            except OSError:
+                session = ""
+            if session and not session.endswith(".desktop"):
+                session += ".desktop"
+            os.makedirs("/target/etc/sddm.conf.d", exist_ok=True)
+            with open("/target/etc/sddm.conf.d/80-autologin.conf", "w") as f:
+                f.write("[Autologin]\nUser=%s\nSession=%s\n" % (self.setup.username, session))
+        elif self.setup.autologin and os.path.exists("/target/etc/gdm/custom.conf"):
             os.system("sed -i 's/^\\[daemon\\]$/&\\nAutomaticLoginEnable=True\\nAutomaticLogin=%s/' /target/etc/gdm/custom.conf"
                       % self.setup.username)
         elif self.setup.autologin:
@@ -220,6 +231,7 @@ class InstallerEngine:
         print(" --> Removing live configuration")
         self.update_progress(20, False, False, _("Removing live configuration (packages)"))
         for path in ("/etc/sudoers.d/live", "/etc/polkit-1/rules.d/49-live.rules", "/etc/lightdm/lightdm.conf.d/90-live.conf",
+                     "/etc/sddm.conf.d/90-live.conf",
                      "/usr/share/applications/chamesle-install.desktop", "/usr/bin/chamesle-install",
                      "/usr/bin/live-installer", "/usr/lib/live-installer", "/usr/share/live-installer",
                      "/usr/share/icons/live-installer-progress-dot-on.png",
@@ -238,7 +250,8 @@ class InstallerEngine:
         self.do_run_in_chroot("passwd -dl root")
 
         # Set LightDM to show user list by default
-        self.do_run_in_chroot(r"sed -i -r 's/^#?(greeter-hide-users)\s*=.*/\1=false/' /etc/lightdm/lightdm.conf")
+        if os.path.exists("/target/etc/lightdm/lightdm.conf"):
+            self.do_run_in_chroot(r"sed -i -r 's/^#?(greeter-hide-users)\s*=.*/\1=false/' /etc/lightdm/lightdm.conf")
 
         # /etc/fstab, mtab and crypttab
         self.update_progress(40, False, False, _("Writing filesystem mount information to /etc/fstab"))
@@ -564,11 +577,17 @@ class InstallerEngine:
         if(self.setup.grub_device is not None):
             self.update_progress(80, False, False, _("Installing bootloader"))
             self.set_grub_option("GRUB_DISTRIBUTOR", "Chamesle")
-            self.set_grub_option("GRUB_CMDLINE_LINUX_DEFAULT", "quiet splash loglevel=3")
+            cmdline = "quiet splash loglevel=3 drm.panic_screen=kmsg"
+            # dinit with the blue screen when the system can't finish starting
+            if os.path.exists("/target/usr/lib/chamesle/init"):
+                cmdline += " init=/usr/lib/chamesle/init"
+            self.set_grub_option("GRUB_CMDLINE_LINUX_DEFAULT", cmdline)
             self.set_grub_option("GRUB_DISABLE_OS_PROBER", "false")
             self.set_grub_option("GRUB_GFXMODE", "auto")
             self.set_grub_option("GRUB_GFXPAYLOAD_LINUX", "keep")
-            if os.path.exists("/target/usr/share/backgrounds/chamesle/grub.png"):
+            if os.path.exists("/target/usr/share/grub/themes/chamesle/theme.txt"):
+                self.set_grub_option("GRUB_THEME", "/usr/share/grub/themes/chamesle/theme.txt")
+            elif os.path.exists("/target/usr/share/backgrounds/chamesle/grub.png"):
                 self.set_grub_option("GRUB_BACKGROUND", "/usr/share/backgrounds/chamesle/grub.png")
             print(" --> Running grub-install")
             if os.path.exists("/sys/firmware/efi"):
