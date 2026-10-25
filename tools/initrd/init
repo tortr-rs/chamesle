@@ -230,8 +230,10 @@ fi
 [ "$DEBUG" = 1 ] && emergency "chamesle.debug=1: about to switch root"
 [ -x "/newroot$INIT" ] || emergency "$INIT not found in the system image"
 INIT_ARGS=
-# dinit starts the blue screen (its recovery service) on its own if the system can't finish starting
-[ "$INIT" = /usr/bin/dinit ] && [ -x /newroot/usr/lib/chamesle/blue-screen ] && INIT_ARGS=--auto-recovery
+# dinit starts the blue screen (its recovery service) on its own if the system can't finish starting. its log is
+# how the blue screen knows what failed
+[ "$INIT" = /usr/bin/dinit ] && [ -x /newroot/usr/lib/chamesle/blue-screen ] &&
+    INIT_ARGS="--auto-recovery --log-file /run/dinit.log"
 [ "$QUIET" = 1 ] && [ "$INIT" = /usr/bin/dinit ] && [ "$DEBUG" = 0 ] && INIT_ARGS="$INIT_ARGS --quiet"
 [ "$SPLASH" = 1 ] && plymouth update-root-fs --new-root-dir=/newroot
 udevadm control --exit 2>/dev/null
