@@ -1,4 +1,5 @@
 #!/bin/sh
 # dinit, which starts the recovery service (the blue screen) on its own when the system can't finish starting,
-# instead of asking on a console that's hidden behind the boot screen. the boot line has init=/usr/lib/chamesle/init
-exec /usr/bin/dinit --auto-recovery "$@"
+# instead of asking on a console that's hidden behind the boot screen. the boot line has init=/usr/lib/chamesle/init.
+# its log is how the blue screen knows what failed
+exec /usr/bin/dinit --auto-recovery --log-file /run/dinit.log "$@"

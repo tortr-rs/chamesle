@@ -3,20 +3,36 @@
 # service; without a reason it names the services that failed. any key gives a command line (sulogin asks for
 # root's password, or lets you straight in when root is locked, as it is with sudo)
 reason=$1
+# what failed, from dinit's log (/usr/lib/chamesle/init keeps one): by now dinit has stopped everything and closed
+# its socket, so dinitctl can't say. the services whose own command failed, else the ones that couldn't start
+if [ -z "$reason" ] && [ -f /run/dinit.log ]; then
+    failed=$(sed -n 's/.*[Ss]ervice \([^ ]*\) command failed.*/\1/p' /run/dinit.log | sort -u | tr '\n' ' ')
+    [ -n "$failed" ] || failed=$(sed -n 's/.*service \([^ ]*\) failed to start.*/\1/p' /run/dinit.log |
+        grep -vx boot | sort -u | tr '\n' ' ')
+    [ -n "$failed" ] && reason="What failed: ${failed% }"
+fi
 if [ -z "$reason" ] && command -v dinitctl >/dev/null; then
     failed=$(dinitctl list 2>/dev/null | sed -n 's/^[[][^]]*X[^]]*[]] *\([^ ]*\).*/\1/p' | tr '\n' ' ')
     [ -n "$failed" ] && reason="What failed: ${failed% }"
 fi
-# the boot screen may be gone already, it goes when the desktop starts
+# the boot screen may be gone already, it goes when the desktop starts. udev has been stopped too, so plymouth
+# looks for the screen itself (or it falls back to text), and it needs a moment before it takes messages
 if ! plymouth --ping 2>/dev/null; then
     mkdir -p /run/plymouth
-    plymouthd --mode=boot --tty=/dev/tty1 2>/dev/null && plymouth show-splash
+    plymouthd --mode=boot --tty=/dev/tty1 --kernel-command-line="$(cat /proc/cmdline) splash plymouth.ignore-udev" \
+        2>/dev/null && plymouth show-splash && sleep 2
 fi
 if plymouth --ping 2>/dev/null; then
     plymouth display-message --text=chamesle-error
     [ -n "$reason" ] && plymouth display-message --text="$reason"
     plymouth watch-keystroke >/dev/null 2>&1
+    # all the way gone, or it takes the console with it as sulogin starts
     plymouth quit
+    i=0
+    while plymouth --ping 2>/dev/null && [ $i -lt 50 ]; do
+        sleep 0.1
+        i=$((i + 1))
+    done
 fi
 # the same in text, for the command line, or if there's no screen to draw on
 clear 2>/dev/null
@@ -24,7 +40,7 @@ echo
 echo ":( Chamesle couldn't finish starting."
 [ -n "$reason" ] && echo "   $reason"
 echo
-echo "   'dinitctl list' shows what's running and what failed, logs are in /var/log."
+echo "   'dinitctl list' shows what's running and what failed, logs are in /var/log and /run/dinit.log."
 echo "   Typing 'reboot' restarts. In the boot menu you can pick a snapshot from before the last update."
 echo
 exec sulogin --force
