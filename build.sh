@@ -114,7 +114,7 @@ LOGIN=$(edval login); LOGIN=${LOGIN:-sddm}
 # what an installed system starts: the live one, unless the edition says otherwise (gnome and kde: x11 live, where
 # the installer is at home, wayland once installed). the installer reads it for autologin
 INSTALLED=$(edval installed-session); INSTALLED=${INSTALLED:-$SESSION}
-mkdir -p "$ROOT/etc/chamesle"; echo "$INSTALLED" > "$ROOT/etc/chamesle/session"
+mkdir -p "$ROOT/etc/chamesle"; echo "$INSTALLED" > "$ROOT/etc/chamesle/session"; echo "$LOGIN" > "$ROOT/etc/chamesle/login"
 if [ "$LOGIN" = sddm ]; then
     mkdir -p "$ROOT/etc/sddm.conf.d"
     printf '# the live session only (the installer removes this file)\n[Autologin]\nUser=live\nSession=%s.desktop\n' "$SESSION" \
