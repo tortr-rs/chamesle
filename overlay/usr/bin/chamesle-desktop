@@ -30,6 +30,8 @@ if [ -s /etc/chamesle/trimmed ]; then
     apk fix --no-interactive $prog --reinstall $(cat /etc/chamesle/trimmed)
     rm /etc/chamesle/trimmed
 fi
+# what came from an older iso: as new as the repo, kernel and all
+apk upgrade --no-interactive $prog
 apk add --no-interactive $prog '!runit' '!runit-void' $pkgs
 
 fp=$(val flatpaks)

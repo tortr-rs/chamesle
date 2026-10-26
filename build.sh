@@ -1,7 +1,7 @@
 #!/bin/bash
 # builds the iso for one edition
 #   sudo EDITION=xfce ./build.sh   -> out/chamesle-VERSION-EDITION-x86_64.iso
-#   sudo EDITION=netinst ./build.sh -> out/chamesle-VERSION-x86_64.iso, the one that installs any of them
+#   sudo EDITION=netinst ./build.sh -> out/chamesle-x86_64.iso, the one that installs any of them
 # REPO= a dir or url with x86_64/Packages.adb (default work/repo, else the public one), WORK= OUT=
 # needs apk-tools 3, mksquashfs, xorriso, grub-mkrescue (bios + efi), readelf, zstd, cpio, depmod, curl
 set -euo pipefail
@@ -19,7 +19,8 @@ EDITION_NAME=$(sed -n 's/^name=//p' "$HERE/editions/$EDITION/edition" 2>/dev/nul
 WORK=${WORK:-$HERE/work/$EDITION}; ROOT=$WORK/root; ISO_DIR=$WORK/iso
 OUT=${OUT:-$HERE/out}; ISO=$OUT/chamesle-$VERSION-$EDITION-x86_64.iso
 NETINST=$(edval netinst)
-[ "$NETINST" = yes ] && ISO=$OUT/chamesle-$VERSION-x86_64.iso
+# no version: it installs whatever the repo has, the same link always gets the current one
+[ "$NETINST" = yes ] && ISO=$OUT/chamesle-x86_64.iso
 PUBLIC_REPO=https://downloads.sourceforge.net/project/chameslerepos
 # where the netinst installs from: the public repo. NETREPO="v3 URL;v3 URL" to test against others
 NETREPO=${NETREPO:-v3 $PUBLIC_REPO}
