@@ -1,0 +1,3 @@
+name=TTY
+# a flavor: the console with floating windows on top (ttywm), no desktop
+session=ttywm
