@@ -1788,9 +1788,12 @@ mousedrag(Client *c, int resizing)
 	XQueryPointer(dpy, root, &dummy, &dummy, &px, &py, &di, &di, &dui);
 	do {
 		XMaskEvent(dpy, ButtonReleaseMask|PointerMotionMask|ExposureMask|SubstructureRedirectMask, &ev);
-		/* what it uncovers gets drawn again while it moves, not when it's let go */
-		if (ev.type == Expose || ev.type == ConfigureRequest || ev.type == MapRequest) {
-			handler[ev.type](&ev);
+		/* what it uncovers gets drawn again while it moves, not when it's let go.
+		 * anything that isn't the mouse has no place to move to: NoExpose from our own drawing would
+		 * otherwise send the window off to wherever its garbage x and y point */
+		if (ev.type != MotionNotify && ev.type != ButtonRelease) {
+			if (ev.type == Expose || ev.type == ConfigureRequest || ev.type == MapRequest)
+				handler[ev.type](&ev);
 			continue;
 		}
 		/* only the newest position, no more than 60 times a second, and always where it was let go */
@@ -2391,6 +2394,8 @@ setup(void)
 	XMapWindow(dpy, bar);
 
 	setbackground();
+	/* copying frames onto the screen needn't tell us when there was nothing to copy */
+	XSetGraphicsExposures(dpy, DefaultGC(dpy, screen), False);
 	XDefineCursor(dpy, root, XCreateFontCursor(dpy, XC_left_ptr));
 	XSelectInput(dpy, root, SubstructureRedirectMask|SubstructureNotifyMask);
 	grabkeys();

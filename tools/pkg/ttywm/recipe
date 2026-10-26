@@ -1,6 +1,6 @@
 name=ttywm
 version=0.6
-rel=5
+rel=6
 desc="Floating window manager that looks like a tty"
 url=https://chamesle.org
 license="MIT AND GPL-2.0-only"
