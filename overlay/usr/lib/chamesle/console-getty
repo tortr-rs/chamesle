@@ -1,0 +1,13 @@
+#!/bin/sh
+# tty1 on editions without a sign-in screen. agetty sets up the terminal, then: jiggity in text from the usb's
+# Install entry, the first start setup once installed, or the login (the live user's, without a password)
+if grep -qw chamesle.install=1 /proc/cmdline; then
+    exec /usr/bin/agetty --noclear --autologin root --login-program /usr/lib/chamesle/console-setup --login-options install tty1 38400 linux
+fi
+if [ -f /etc/chamesle/firstboot ]; then
+    exec /usr/bin/agetty --noclear --autologin root --login-program /usr/lib/chamesle/console-setup --login-options firstboot tty1 38400 linux
+fi
+if [ -f /etc/chamesle/autologin ]; then
+    exec /usr/bin/agetty --autologin "$(cat /etc/chamesle/autologin)" tty1 38400 linux
+fi
+exec /usr/bin/agetty tty1 38400 linux

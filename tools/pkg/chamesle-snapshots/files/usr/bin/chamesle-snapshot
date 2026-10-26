@@ -65,7 +65,8 @@ take() {
     [ -z "$(started_from)" ] || { echo "chamesle-snapshot: started from a snapshot, not taking another one" >&2; exit 0; }
     local k id
     # the kernel the system boots now, which the snapshot has the modules for
-    k=$(ls /boot/vmlinuz-* 2>/dev/null | sed 's#.*/vmlinuz-##' | sort -V | tail -n1)
+    k=$(ls /boot/vmlinuz-*-cachyos-lts 2>/dev/null | sed 's#.*/vmlinuz-##' | sort -V | tail -n1)
+    [ -n "$k" ] || k=$(ls /boot/vmlinuz-* 2>/dev/null | sed 's#.*/vmlinuz-##' | sort -V | tail -n1)
     [ -n "$k" ] && [ -f /boot/initramfs-$k.img ] || die "no kernel and initramfs in /boot"
     mount_top
     id=$(date +%Y%m%d-%H%M%S)

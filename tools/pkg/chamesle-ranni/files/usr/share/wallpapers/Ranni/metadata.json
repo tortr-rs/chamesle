@@ -1,0 +1,9 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "Bernard Gagnon" }],
+        "Description": "Khongoryn Els, the singing dunes of the Gobi",
+        "Id": "Ranni",
+        "License": "CC0-1.0",
+        "Name": "Mongolian dunes"
+    }
+}

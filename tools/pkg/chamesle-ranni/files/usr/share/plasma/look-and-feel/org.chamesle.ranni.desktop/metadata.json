@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "Chamesle Linux" }],
+        "Description": "A menu bar on top, a dock at the bottom and the Mongolian dunes",
+        "Id": "org.chamesle.ranni.desktop",
+        "License": "GPL-3.0-or-later",
+        "Name": "Ranni",
+        "Version": "0.6.0",
+        "Website": "https://chamesle.org"
+    },
+    "X-Plasma-MainScript": "defaults",
+    "X-Plasma-Inherit": "org.chamesle.desktop"
+}

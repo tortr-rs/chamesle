@@ -7,9 +7,9 @@ util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox 
 iproute2 iputils NetworkManager openssh curl wget ca-certificates rsync
 sudo nano glibc-locales tzdata man-db ncurses
 
-# kernel: arch's linux-lts repacked (tools/kernel/arch-kernel.sh), for the blue screen with the log on a crash.
+# kernel: cachyos's linux-cachyos-lts repacked (tools/kernel/kernel.sh), with the blue screen and qr code on a crash.
 # the same LTS series void ships. firmware, microcode
-chamesle-kernel linux-firmware intel-ucode
+chamesle-kernel-cachyos linux-firmware intel-ucode
 
 # sign-in screen, the same on every edition
 sddm chamesle-sddm

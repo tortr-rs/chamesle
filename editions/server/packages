@@ -1,0 +1,23 @@
+# server edition: everything is listed here, base.packages' desktop parts aren't in it
+
+# core system
+base-files bash coreutils findutils diffutils grep sed gawk which file less
+gzip bzip2 xz zstd tar unzip
+util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox apk-tools plymouth chamesle-plymouth
+iproute2 iputils NetworkManager openssh curl wget ca-certificates rsync
+sudo nano vim tmux htop glibc-locales tzdata man-db ncurses kbd
+
+# kernel, firmware, microcode
+chamesle-kernel-cachyos linux-firmware intel-ucode
+
+# disks, filesystems, boot
+chamesle-grub grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
+e2fsprogs dosfstools ntfs-3g exfatprogs btrfs-progs xfsprogs cryptsetup lvm2 gptfdisk parted mdadm smartmontools
+
+# jiggity in text, and dracut for installed systems
+python3 python3-parted xkeyboard-config dracut
+
+# windows when you want them: startx brings up ttywm
+xorg-minimal xinit xorg-input-drivers xorg-video-drivers mesa-dri ttywm
+
+chamesle-base

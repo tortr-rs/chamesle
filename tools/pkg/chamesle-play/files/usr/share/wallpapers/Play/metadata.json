@@ -1,0 +1,9 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "Johannes Groll" }],
+        "Description": "The northern lights over Lofoten, Norway",
+        "Id": "Play",
+        "License": "CC0-1.0",
+        "Name": "Lofoten aurora"
+    }
+}

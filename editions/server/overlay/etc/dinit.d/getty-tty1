@@ -1,0 +1,8 @@
+# text login on tty1, with jiggity's text screens first when they're needed
+type = process
+command = /usr/lib/chamesle/console-getty
+depends-on = system-identity
+waits-for = console-setup
+waits-for = plymouth-quit
+restart = true
+smooth-recovery = true
