@@ -1,6 +1,6 @@
 # gdm (the gnome edition's, the others use sddm): gnome locks the screen only under gdm
 type = process
-command = /usr/lib/dinit/gdm
+command = /usr/lib/chamesle/display-manager /usr/lib/dinit/gdm
 depends-on = dbus
 depends-on = elogind
 waits-for = polkitd

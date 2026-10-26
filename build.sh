@@ -163,7 +163,6 @@ cp "$ISO_DIR/live/initrd.img" "$ROOT/boot/initramfs-$KVER.img"
 echo "=== [5/5] SQUASHFS AND ISO"
 mksquashfs "$ROOT" "$ISO_DIR/live/rootfs.squashfs" -comp zstd -Xcompression-level 15 -b 1M -noappend -no-xattrs -quiet
 mkdir -p "$ISO_DIR/boot/grub"
-TITLE="Chamesle Linux $VERSION$SUFFIX ($EDITION_NAME)"
 # the same boot menu theme an installed system gets
 THEME=$ROOT/usr/share/grub/themes/chamesle
 [ -d "$THEME" ] && mkdir -p "$ISO_DIR/boot/grub/themes" && cp -r "$THEME" "$ISO_DIR/boot/grub/themes/"
@@ -185,21 +184,32 @@ if [ -f \$prefix/themes/chamesle/theme.txt ]; then
 fi
 if [ ! -f /live/vmlinuz ]; then search --no-floppy --set=root --file /live/vmlinuz; fi
 
-menuentry "Try or install $TITLE" {
+# two choices, like a Windows USB: try it, or install it. Install starts Jiggity alone on the screen, with no desktop
+menuentry "Try Chamesle" {
     linux /live/vmlinuz quiet splash loglevel=3 drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
-menuentry "$TITLE (safe graphics)" {
-    linux /live/vmlinuz quiet loglevel=3 nomodeset drm.panic_screen=kmsg
+menuentry "Install Chamesle" {
+    linux /live/vmlinuz chamesle.install=1 quiet splash loglevel=3 drm.panic_screen=kmsg
     initrd /live/initrd.img
 }
-menuentry "$TITLE (copy to RAM)" {
-    linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3 drm.panic_screen=kmsg
-    initrd /live/initrd.img
-}
-menuentry "$TITLE (show boot messages)" {
-    linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200 drm.panic_screen=kmsg
-    initrd /live/initrd.img
+submenu "More options" {
+    menuentry "Try Chamesle (safe graphics)" {
+        linux /live/vmlinuz quiet loglevel=3 nomodeset drm.panic_screen=kmsg
+        initrd /live/initrd.img
+    }
+    menuentry "Install Chamesle (safe graphics)" {
+        linux /live/vmlinuz chamesle.install=1 quiet loglevel=3 nomodeset drm.panic_screen=kmsg
+        initrd /live/initrd.img
+    }
+    menuentry "Try Chamesle (copy to RAM)" {
+        linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3 drm.panic_screen=kmsg
+        initrd /live/initrd.img
+    }
+    menuentry "Try Chamesle (show boot messages)" {
+        linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200 drm.panic_screen=kmsg
+        initrd /live/initrd.img
+    }
 }
 EOF
 "$GRUB_MKRESCUE" -o "$ISO" "$ISO_DIR" -volid CHAMESLE
