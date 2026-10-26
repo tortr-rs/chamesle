@@ -1,0 +1,14 @@
+name=interber
+version=0.1
+rel=0
+desc="Web browser that looks like a tty"
+url=https://chamesle.org
+license="MIT AND GPL-2.0-only"
+source=
+makedeps="gcc make pkg-config gtk+3-devel libwebkit2gtk41-devel"
+depends="libwebkit2gtk41"
+
+build() {
+    make
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}
