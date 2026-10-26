@@ -41,6 +41,7 @@
   <a href="#updates">Updates</a>
   <a href="#services">Services</a>
   <a href="#windows">Windows programs</a>
+  <a href="#ttywm">ttywm</a>
   <a href="#hardware">Hardware</a>
   <a href="#faq">FAQ</a>
 </nav>
@@ -124,6 +125,77 @@ support (Wine). It needs about 3&nbsp;GB, so it won't fit in the live session: i
 you install this way show up in your menu like any other app. Not every Windows program works; the
 <a href="https://appdb.winehq.org/">Wine app database</a> says how well a given one does.</p>
 <p>For Steam games, use Steam (it's on Flathub) and turn on Proton in its settings.</p>
+
+<h2 id="ttywm">ttywm</h2>
+<p>ttywm is our window manager that looks like the console: a full screen shell on every screen, and windows
+floating on top in frames drawn with box characters. Install it on any Chamesle:</p>
+<pre><code>sudo apk add ttywm</code></pre>
+<p>Then log out and pick <b>ttywm</b> on the sign-in screen.</p>
+
+<h3 id="ttywm-keys">Keys and clicks</h3>
+<p>Super is the Windows key.</p>
+<table>
+  <tr><td>Super+Enter</td><td>a new terminal window</td></tr>
+  <tr><td>Super+D</td><td>the apps menu</td></tr>
+  <tr><td>Super+Q</td><td>close the window</td></tr>
+  <tr><td>Super+Tab</td><td>the next window, then back to the shell</td></tr>
+  <tr><td>Super+F</td><td>full screen</td></tr>
+  <tr><td>Super+1 to 9</td><td>go to tty1 to tty9, each has its own shell</td></tr>
+  <tr><td>Super+Shift+1 to 9</td><td>send the window to that tty</td></tr>
+  <tr><td>Super+Shift+E</td><td>log out</td></tr>
+  <tr><td>volume keys</td><td>volume</td></tr>
+</table>
+<p>With the mouse: click <code>[x]</code> to close a window, drag its title to move it, drag its bottom right
+corner to resize it. Super+drag moves a window from anywhere, Super+right drag resizes it. Click the shell to
+type in it again. On the bottom line, click the volume to mute, scroll on it to change it, and click the network
+to connect to Wi-Fi.</p>
+
+<h3 id="ttywm-settings">Settings</h3>
+<p>All the settings are in one file, <code>~/.config/ttywm/config</code>. ttywm makes it the first time it
+starts. Open it in any text editor:</p>
+<pre><code>nano ~/.config/ttywm/config</code></pre>
+<p>Each line is a setting, then <code>=</code>, then what you want. Change what's after the <code>=</code> and
+save: ttywm sees it within a second, no restart. Lines that start with <code>#</code> are notes, ttywm skips
+them.</p>
+<table>
+  <tr><td><code>window colour = white</code></td><td>the frame of the window you're in</td></tr>
+  <tr><td><code>other windows colour = grey</code></td><td>the frames of the other windows</td></tr>
+  <tr><td><code>title colour = white</code></td><td>the window titles</td></tr>
+  <tr><td><code>bottom line colour = grey</code></td><td>the bottom line</td></tr>
+  <tr><td><code>text size = normal</code></td><td><code>normal</code>, or <code>big</code> for small sharp screens. Changes when you log in again</td></tr>
+  <tr><td><code>network = on</code></td><td>show the network on the bottom line, <code>on</code> or <code>off</code></td></tr>
+  <tr><td><code>volume = on</code></td><td>the same for the volume</td></tr>
+  <tr><td><code>battery = on</code></td><td>the battery. A <code>+</code> after it means it's charging</td></tr>
+  <tr><td><code>date = on</code></td><td>the date</td></tr>
+  <tr><td><code>clock = 24 hour</code></td><td><code>24 hour</code>, <code>12 hour</code> or <code>off</code></td></tr>
+  <tr><td><code>terminal = ttywm-term</code></td><td>the terminal Super+Enter opens</td></tr>
+  <tr><td><code>apps menu = rofi -show drun</code></td><td>what Super+D opens</td></tr>
+</table>
+<p>The colours are the console's sixteen: black, blue, green, cyan, red, magenta, brown, grey, dark grey,
+light blue, light green, light cyan, light red, pink, yellow and white.</p>
+
+<h3 id="ttywm-keys-settings">Your own keys</h3>
+<p>A key is the keys joined with <code>+</code>, then <code>=</code>, then what it does. It can open any
+program:</p>
+<pre><code>super+w = firefox
+super+e = thunar
+ctrl+alt+t = ttywm-term</code></pre>
+<p>Or do one of these: <code>terminal</code>, <code>apps menu</code>, <code>close window</code>,
+<code>next window</code>, <code>full screen</code>, <code>log out</code>.</p>
+<pre><code>super+x = close window</code></pre>
+<p>You can use <code>super</code>, <code>shift</code>, <code>ctrl</code> and <code>alt</code>, with a letter,
+a number, <code>f1</code> to <code>f12</code>, <code>enter</code>, <code>tab</code>, <code>space</code>,
+<code>esc</code>, <code>backspace</code>, <code>delete</code>, the arrows (<code>up</code>, <code>down</code>,
+<code>left</code>, <code>right</code>), <code>home</code>, <code>end</code> or <code>print</code>. Super+1 to 9 and the volume keys are always there.
+Delete a key's line and the key does nothing.</p>
+
+<h3 id="ttywm-start">Starting programs when you log in</h3>
+<p>One <code>start</code> line per program:</p>
+<pre><code>start = firefox
+start = nm-applet</code></pre>
+<p>These run when you log in, not when you save the file.</p>
+<p>Made a mess of the file? Delete it and log in again: ttywm writes a fresh one.</p>
+<pre><code>rm ~/.config/ttywm/config</code></pre>
 
 <h2 id="hardware">Hardware</h2>
 <p>Firmware for most Wi-Fi cards, graphics cards and Bluetooth adapters is already included, and Intel
