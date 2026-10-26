@@ -1,6 +1,6 @@
 # sddm, with the chamesle sign-in screen
 type = process
-command = /usr/bin/sddm
+command = /usr/lib/chamesle/display-manager /usr/bin/sddm
 depends-on = dbus
 depends-on = elogind
 waits-for = polkitd

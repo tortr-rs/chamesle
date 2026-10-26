@@ -1,0 +1,14 @@
+#!/bin/sh
+# runs jiggity (chamesle.install=1) or first boot setup instead of the display manager
+export HOME=/root XDG_RUNTIME_DIR=/run/jiggity XCURSOR_THEME=Adwaita XCURSOR_SIZE=24
+mkdir -p -m 700 /run/jiggity
+alone() { xinit "$@" -- /usr/bin/Xorg :0 vt7 -nolisten tcp -keeptty >> /var/log/jiggity.log 2>&1; }
+if grep -qw chamesle.install=1 /proc/cmdline; then
+    alone /usr/bin/jiggity
+    exit 1
+fi
+if [ -f /etc/chamesle/firstboot ]; then
+    alone /usr/bin/python3 /usr/lib/jiggity/firstboot.py
+    [ -f /etc/chamesle/firstboot ] && exit 1
+fi
+exec "$@"
