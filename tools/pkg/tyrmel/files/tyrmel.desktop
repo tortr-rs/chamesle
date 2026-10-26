@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=tyrmel
+GenericName=Terminal
+Comment=A terminal that looks like the console and shows pictures
+Exec=@PREFIX@/bin/tyrmel
+Terminal=false
+Categories=System;TerminalEmulator;

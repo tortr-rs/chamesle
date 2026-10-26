@@ -1,0 +1,14 @@
+name=tyrmel
+version=0.1
+rel=1
+desc="Terminal that looks like the console and shows pictures"
+url=https://chamesle.org
+license="MIT AND GPL-2.0-only"
+source=
+makedeps="gcc make pkg-config libX11-devel libXft-devel libXrender-devel fontconfig-devel libvterm-devel libpng-devel zlib-devel"
+depends="libvterm"
+
+build() {
+    make
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}

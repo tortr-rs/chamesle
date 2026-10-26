@@ -1,0 +1,44 @@
+tyrmel - a terminal that looks like the console and shows pictures
+==================================================================
+The console's font and colours, and pictures right in the terminal the way
+kitty does them, so yazi's previews and anything else that speaks
+kitty's graphics protocol just work.
+
+One C file on libvterm, Xft and libpng. Icons come from a Nerd Font if you
+have one, letters it hasn't got from whatever font has them.
+
+Install
+-------
+	make
+	sudo make install
+
+Settings
+--------
+~/.config/tyrmel/config, made the first time it starts:
+
+	font = VGA
+	font size = 16
+	scrollback = 10000
+	cursor = block
+	shell =
+	background colour = black
+	text colour = grey
+	cursor colour = grey
+	colour 1 = #aa0000
+
+Change a line and save, it works straight away.
+
+Keys
+----
+	Ctrl+Shift+c        copy
+	Ctrl+Shift+v        paste
+	Shift+Insert        paste what's selected
+	Shift+PageUp/Down   scroll back, or the mouse wheel
+	Ctrl+Shift+plus     bigger font, minus smaller, 0 back
+
+Select with the mouse, two clicks for a word, three for the line.
+Ctrl+click an address to open it. Hold shift to select in programs that
+use the mouse.
+
+It takes xterm's -T, -class, -geometry, -hold and -e, so it can stand in
+for xterm. -fs SIZE sets the font size for that one window.
