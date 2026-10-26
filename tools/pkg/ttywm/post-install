@@ -1,0 +1,3 @@
+#!/bin/sh
+fc-cache -f /usr/share/fonts/ttywm 2>/dev/null
+exit 0
