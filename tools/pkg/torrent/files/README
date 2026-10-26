@@ -1,0 +1,54 @@
+torrent - ttywm on wayland
+==========================
+The same windows as ttywm, in frames drawn with the console's font:
+
+	┌─[ firefox ]──────────────[x]┐
+	│                             │
+	└─────────────────────────────┘
+
+but without the tty behind them: a wallpaper or a plain colour instead.
+New windows type their border in, closed ones type it away.
+
+The bottom line shows the network, volume, battery, date, time and which tty
+you're on. Click the volume to mute, scroll on it to change it, click the
+network to set up wifi. Notifications come up in the top right corner.
+
+One C file on wlroots 0.19. X11 programs work through xwayland.
+Needs foot for the terminal and fuzzel for the apps menu, or whatever you set.
+
+Install
+-------
+	make
+	sudo make install
+
+then pick Torrent on your login screen, or run torrent-session from a console.
+
+Settings
+--------
+Everything is in ~/.config/torrent/config, made the first time torrent starts.
+It's the same plain words as ttywm's, and a few more:
+
+	wallpaper = ~/pictures/sea.png
+	keyboard layout = de
+	tap to click = on
+	window firefox = tty 2
+
+Change a line and save: torrent picks it up straight away.
+
+Keys
+----
+	Super+Return        terminal
+	Super+d             apps menu
+	Super+q             close window
+	Super+Tab           next window
+	Super+f             full screen
+	Super+1..9          go to tty 1..9
+	Super+Shift+1..9    send the window to tty 1..9
+	Super+arrows        left half, right half, fill screen, put back
+	Super+l             lock
+	Super+Shift+e       log out
+	Ctrl+Alt+F1..F12    the consoles
+
+Click [x] to close, drag the title to move, drag the bottom right corner to
+resize, or hold Super and drag with the left button to move, the right one to
+resize.

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Torrent
+Comment=ttywm on wayland: windows in frames drawn with the console's font
+Exec=@PREFIX@/bin/torrent-session
+DesktopNames=torrent
+Type=Application
