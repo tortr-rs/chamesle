@@ -1,0 +1,14 @@
+name=fbttywm
+version=0.1
+rel=0
+desc="ttywm on the framebuffer: the console with floating windows, without X"
+url=https://github.com/tortr-rs/ttywm
+license="MIT"
+source=
+makedeps="gcc"
+depends=
+
+build() {
+    cc -O2 -Wall -o fbttywm fbttywm.c
+    install -Dm755 fbttywm "$pkgdir/usr/bin/fbttywm"
+}
