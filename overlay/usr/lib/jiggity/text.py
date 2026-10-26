@@ -15,6 +15,10 @@ import install
 from choices import LANGUAGES, STEPS, keyboards
 
 scr = None
+# the console font has latin letters only: these languages by their english names
+ENGLISH = {"ru_RU": "Russian", "uk_UA": "Ukrainian", "el_GR": "Greek", "ar_MA": "Arabic", "ar_EG": "Arabic (Egypt)",
+           "hi_IN": "Hindi", "ja_JP": "Japanese", "ko_KR": "Korean", "zh_CN": "Chinese (Simplified)",
+           "zh_TW": "Chinese (Traditional)"}
 
 
 def frame(title, keys):
@@ -126,7 +130,7 @@ def yes(title, note):
 
 
 def run_install():
-    lang = choose("Language to install", "", [n for n, c in LANGUAGES])
+    lang = choose("Language to install", "", [ENGLISH.get(c, n) for n, c in LANGUAGES])
     if lang is None:
         lang = 0
     kbds = keyboards()

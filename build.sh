@@ -71,6 +71,11 @@ fi
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
 for e in $EDS; do [ -d "$HERE/editions/$e/overlay" ] && cp -a "$HERE/editions/$e/overlay/." "$ROOT/"; done
+# services turned on for programs this edition doesn't have (the server has no bluetooth or printing) go off again
+for l in "$ROOT"/etc/dinit.d/boot.d/*; do
+    c=$(sed -n 's/^command *= *\([^ ]*\).*/\1/p' "$ROOT/etc/dinit.d/${l##*/}" 2>/dev/null)
+    [ -n "$c" ] && [ ! -e "$ROOT$c" ] && rm -f "$l"
+done
 "$HERE/tools/themes.sh" "$ROOT"
 # the installer's slideshow starts with this edition's desktop (the website's picture of it) and how to get around
 SLIDES=$ROOT/usr/share/live-installer/slideshow
