@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <locale.h>
 #include <signal.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +13,7 @@
 #include <unistd.h>
 #include <sys/select.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <dbus/dbus.h>
 #include <security/pam_appl.h>
 #include <X11/Xatom.h>
@@ -31,8 +33,10 @@
 
 enum { ColBg, ColWindow, ColOther, ColTitle, ColBar, ColLast };
 enum { ActRun, ActTerminal, ActMenu, ActClose, ActNext, ActFull, ActQuit, ActView, ActSend, ActVolUp, ActVolDown, ActMute,
-       ActLightUp, ActLightDown, ActLeft, ActRight, ActMax, ActRestore, ActLock };
-enum { SegNone, SegNet, SegVol, SegLight };
+       ActLightUp, ActLightDown, ActLeft, ActRight, ActMax, ActRestore, ActLock, ActRestart };
+enum { SegNone, SegNet, SegVol, SegLight, SegTty, SegWin };
+/* what the bottom line can show, in the order it's given */
+enum { BarCommands, BarNet, BarVol, BarLight, BarBattery, BarDate, BarClock, BarTty, BarLast };
 
 typedef struct {
 	unsigned int mod;
@@ -58,17 +62,35 @@ struct Client {
 	int x, y, w, h, oldx, oldy, oldw, oldh;
 	int scr, isfull, ignoreunmap;
 	int snapped, sx, sy, sw, sh;	/* where it was before super+arrows */
+	int typed, total;		/* the border typing itself in: cells so far, of all */
+	long long born;			/* when it started, ms */
 	Window win, frame;
+	Pixmap pix;			/* the frame is drawn here, then copied: no flashing */
+	int pw, ph;
 	XftDraw *draw;
 	Client *next;
 };
 
+/* window firefox = tty 2, full screen */
+typedef struct {
+	char name[64];
+	int scr, full;
+} Rule;
+
 /* settings, from ~/.config/ttywm/config */
-static char terminal[256] = "ttywm-term", menu[256] = "rofi -show drun";
+static char terminal[256] = "ttywm-term", menu[256] = "launchel";
 static char colname[ColLast][32] = { "black", "white", "grey", "white", "grey" };
 static int clock24 = 1, showclock = 1, showdate = 1, showbattery = 1, shownetwork = 1, showvolume = 1, showlight = 1, big;
+static int typing = 1, typespeed = 600;	/* cells a second */
+static int winlist = 1, shells;	/* shells: the old look, a full screen shell behind the windows */
+static char wallpaper[1024], wallfit[16] = "fill";
+static int barorder[BarLast + 1] = { BarCommands, BarNet, BarVol, BarLight, BarBattery, BarDate, BarClock, BarTty, -1 };
+static char barcmd[4][256], barout[4][64];
+static int nbarcmds;
 static Key *keys;
 static int nkeys;
+static Rule *rules;
+static int nrules;
 
 static const char defaultconfig[] =
 "# ttywm settings\n"
@@ -76,29 +98,45 @@ static const char defaultconfig[] =
 "\n"
 "# colours: black blue green cyan red magenta brown grey\n"
 "#          dark grey, light blue, light green, light cyan, light red, pink, yellow, white\n"
+"#          or #rrggbb\n"
 "window colour = white\n"
 "other windows colour = grey\n"
 "title colour = white\n"
 "bottom line colour = grey\n"
+"background colour = black\n"
+"\n"
+"# a picture behind the windows, png or jpeg. nothing means the background colour\n"
+"wallpaper =\n"
+"# fill the screen, fit in it, centre or tile\n"
+"wallpaper fit = fill\n"
+"# the old look: a shell on every tty, behind the windows\n"
+"shell behind windows = off\n"
 "\n"
 "# normal or big. big is for small, sharp screens. changes when you log in again\n"
 "text size = normal\n"
 "\n"
-"# what's on the bottom line. on or off\n"
-"network = on\n"
-"volume = on\n"
-"brightness = on\n"
-"battery = on\n"
-"date = on\n"
-"# 24 hour, 12 hour or off\n"
+"# new windows type their border in, closed ones type it away. on or off, and fast, normal or slow\n"
+"border typing = on\n"
+"typing speed = normal\n"
+"\n"
+"# what's on the bottom line, in this order. leave out what you don't want:\n"
+"#   commands network volume brightness battery date clock tty\n"
+"bottom line = commands network volume brightness battery date clock tty\n"
+"# the windows on this tty, on the left of the bottom line. click one to go to it, middle click to close it\n"
+"window list = on\n"
+"# 24 hour or 12 hour\n"
 "clock = 24 hour\n"
+"# your own things on the bottom line: a command, its first line shows. up to 4, every 5 seconds\n"
+"# bottom line command = cat /sys/class/thermal/thermal_zone0/temp\n"
 "\n"
 "# the terminal for new windows, and the apps menu\n"
 "terminal = ttywm-term\n"
-"apps menu = rofi -show drun\n"
+"apps menu = launchel\n"
 "\n"
-"# keys. super is the windows key. after the = goes one of:\n"
-"#   terminal, apps menu, close window, next window, full screen, log out\n"
+"# keys. super is the windows key, then shift, ctrl, alt. after the = goes one of:\n"
+"#   terminal, apps menu, close window, next window, full screen, log out, lock,\n"
+"#   left half, right half, fill screen, put back, tty 1 to tty 9, send to tty 1 to 9,\n"
+"#   volume up, volume down, mute, brightness up, brightness down, restart\n"
 "# or any program, like firefox\n"
 "super+enter = terminal\n"
 "super+d = apps menu\n"
@@ -106,19 +144,28 @@ static const char defaultconfig[] =
 "super+tab = next window\n"
 "super+f = full screen\n"
 "super+shift+e = log out\n"
-"# super+1 to super+9 go to tty1 to tty9, super+shift+1 to 9 send a window there\n"
-"# super+left and super+right put a window on half the screen, super+up fills it,\n"
-"# super+down puts it back. super+l locks the screen\n"
+"# these are there unless you put something else on the key:\n"
+"# super+1 to 9 = tty 1 to 9, super+shift+1 to 9 = send to tty 1 to 9, super+l = lock,\n"
+"# super+left = left half, super+right = right half, super+up = fill screen, super+down = put back\n"
+"\n"
+"# where windows go, by their name (the class xprop shows): tty 1 to 9, full screen, or both\n"
+"# window firefox = tty 2\n"
+"# window mpv = full screen\n"
 "\n"
 "# programs to start when you log in, one per line, like:\n"
-"# start = firefox\n";
+"# start = firefox\n"
+"\n"
+"# more settings from another file, read as if they were here\n"
+"# include = ~/.config/ttywm/keys\n";
 
 static Display *dpy;
 static Window root, bar, wmcheck;
 static int sw, sh, wh, cw, ch;
-static int cur, newshell = -1, running = 1;
+static int cur, newshell = -1, running = 1, restarting;
+static char exepath[4096];
+static struct stat exest;	/* the binary when we started: a new one means an update */
 static Window shell[NSCR];
-static Client *clients, *sel;
+static Client *clients, *sel, *ghosts;	/* ghosts: closed windows' borders, typing themselves away */
 static XftFont *xfont;
 static XftDraw *bardraw;
 static XftColor col[ColLast];
@@ -131,8 +178,15 @@ static char backlight[256];	/* /sys/class/backlight/..., or empty */
 static DBusConnection *bus;
 static Notif *notifs;
 static unsigned int lastid;
-static struct { int x0, x1, seg; } segs[8];
+static struct { int x0, x1, seg; Client *c; } segs[48];
 static int nsegs;
+
+static int ulen(const char *);
+static void ucut(char *, const char *, int, size_t);
+static void focus(Client *);
+static void closeclient(Client *);
+static void view(int);
+static void setfullscreen(Client *, int);
 
 static void
 die(const char *s)
@@ -182,6 +236,16 @@ run(const char *cmd)
 		execl("/bin/sh", "sh", "-c", cmd, (char *)NULL);
 		_exit(1);
 	}
+}
+
+/* the apps menu, or launchel if what the settings name isn't there (rofi, from before 0.6-r4) */
+static void
+runmenu(void)
+{
+	char prog[256];
+
+	sscanf(menu, "%255s", prog);
+	run(inpath(prog) || prog[0] == '/' ? menu : "launchel");
 }
 
 /* runs cmd and waits for it, keeping the first line it prints */
@@ -341,10 +405,14 @@ parsekey(char *name, char *value)
 		{ "terminal", ActTerminal }, { "appsmenu", ActMenu }, { "menu", ActMenu },
 		{ "closewindow", ActClose }, { "close", ActClose }, { "nextwindow", ActNext },
 		{ "fullscreen", ActFull }, { "logout", ActQuit }, { "quit", ActQuit }, { "lock", ActLock },
-		{ "lockscreen", ActLock },
+		{ "lockscreen", ActLock }, { "lefthalf", ActLeft }, { "righthalf", ActRight },
+		{ "fillscreen", ActMax }, { "putback", ActRestore }, { "volumeup", ActVolUp },
+		{ "volumedown", ActVolDown }, { "mute", ActMute }, { "brightnessup", ActLightUp },
+		{ "brightnessdown", ActLightDown }, { "restart", ActRestart },
 	};
 	unsigned int mod = 0, i;
 	char *tok, *last = NULL, act[64];
+	int n;
 
 	if (!strchr(name, '+'))
 		return 0;
@@ -367,6 +435,12 @@ parsekey(char *name, char *value)
 	if (!last)
 		return 0;
 	squash(act, value, sizeof act);
+	/* tty 3, send to tty 3 */
+	if ((!strncmp(act, "tty", 3) && (n = atoi(act + 3)) >= 1 && n <= NSCR)
+	|| (!strncmp(act, "sendtotty", 9) && (n = atoi(act + 9)) >= 1 && n <= NSCR)) {
+		addkey(mod, keyname(last), act[0] == 't' ? ActView : ActSend, n - 1, NULL);
+		return 1;
+	}
 	for (i = 0; i < LENGTH(acts); i++)
 		if (!strcmp(act, acts[i].word)) {
 			addkey(mod, keyname(last), acts[i].act, 0, NULL);
@@ -376,31 +450,68 @@ parsekey(char *name, char *value)
 	return 1;
 }
 
+/* window firefox = tty 2, full screen */
 static void
-loadconfig(int firsttime)
+addrule(const char *name, char *value)
 {
-	FILE *f;
-	char line[1024], *name, *value, *eq, key[64];
-	int i;
-	struct stat st;
+	Rule *r;
+	char *w, word[32];
 
-	if (stat(cfgpath, &st) < 0 && (f = fopen(cfgpath, "w"))) {
-		fputs(defaultconfig, f);
-		fclose(f);
+	if (!*name || !(r = realloc(rules, (nrules + 1) * sizeof(Rule))))
+		return;
+	rules = r;
+	r = &rules[nrules++];
+	snprintf(r->name, sizeof r->name, "%s", name);
+	r->scr = -1;
+	r->full = 0;
+	for (w = strtok(value, ","); w; w = strtok(NULL, ",")) {
+		squash(word, w, sizeof word);
+		if (!strncmp(word, "tty", 3) && atoi(word + 3) >= 1 && atoi(word + 3) <= NSCR)
+			r->scr = atoi(word + 3) - 1;
+		else if (!strcmp(word, "fullscreen"))
+			r->full = 1;
 	}
-	if (stat(cfgpath, &st) == 0)
-		cfgmtime = st.st_mtime;
+}
+
+/* bottom line = network volume clock tty */
+static void
+setbar(char *value)
+{
+	static const char *names[] = { "commands", "network", "volume", "brightness", "battery", "date", "clock", "tty" };
+	char *w;
+	int n = 0, i;
+
+	for (w = strtok(value, " \t,"); w && n < BarLast; w = strtok(NULL, " \t,"))
+		for (i = 0; i < BarLast; i++)
+			if (!strcasecmp(w, names[i]))
+				barorder[n++] = i;
+	barorder[n] = -1;
+}
+
+static int
+haskey(unsigned int mod, KeySym sym)
+{
+	int i;
 
 	for (i = 0; i < nkeys; i++)
-		free(keys[i].cmd);
-	nkeys = 0;
-	f = fopen(cfgpath, "r");
-	if (!f) {
-		/* no file and nowhere to write one: the defaults, straight from memory */
-		f = fmemopen((void *)defaultconfig, sizeof defaultconfig - 1, "r");
-		if (!f)
-			return;
-	}
+		if (keys[i].mod == mod && keys[i].keysym == sym)
+			return 1;
+	return 0;
+}
+
+static void
+defkey(unsigned int mod, KeySym sym, int act, int n)
+{
+	if (!haskey(mod, sym))
+		addkey(mod, sym, act, n, NULL);
+}
+
+static void
+readconfig(FILE *f, int firsttime, int depth)
+{
+	char line[1024], path[4096], *name, *value, *eq, key[64], *home;
+	FILE *inc;
+
 	while (fgets(line, sizeof line, f)) {
 		if ((eq = strchr(line, '#')))
 			*eq = '\0';
@@ -414,6 +525,10 @@ loadconfig(int firsttime)
 		if (parsekey(name, value))
 			continue;
 		squash(key, name, sizeof key);
+		if (!strncmp(name, "window ", 7) && !iskey(key, "windowcolour")) {
+			addrule(trim(name + 7), value);
+			continue;
+		}
 		if (iskey(key, "windowcolour"))
 			snprintf(colname[ColWindow], sizeof colname[0], "%s", value);
 		else if (iskey(key, "otherwindowscolour"))
@@ -422,10 +537,32 @@ loadconfig(int firsttime)
 			snprintf(colname[ColTitle], sizeof colname[0], "%s", value);
 		else if (iskey(key, "bottomlinecolour"))
 			snprintf(colname[ColBar], sizeof colname[0], "%s", value);
+		else if (iskey(key, "backgroundcolour"))
+			snprintf(colname[ColBg], sizeof colname[0], "%s", value);
 		else if (!strcmp(key, "textsize")) {
 			if (firsttime)
 				big = !strcasecmp(value, "big");
 		}
+		else if (!strcmp(key, "bordertyping"))
+			typing = yes(value);
+		else if (!strcmp(key, "typingspeed")) {
+			squash(key, value, sizeof key);
+			typespeed = !strcmp(key, "fast") ? 1500 : !strcmp(key, "slow") ? 250 : 600;
+		}
+		else if (!strcmp(key, "bottomline"))
+			setbar(value);
+		else if (!strcmp(key, "bottomlinecommand")) {
+			if (nbarcmds < (int)LENGTH(barcmd))
+				snprintf(barcmd[nbarcmds++], sizeof barcmd[0], "%s", value);
+		}
+		else if (!strcmp(key, "windowlist"))
+			winlist = yes(value);
+		else if (!strcmp(key, "wallpaper"))
+			snprintf(wallpaper, sizeof wallpaper, "%s", value);
+		else if (!strcmp(key, "wallpaperfit"))
+			squash(wallfit, value, sizeof wallfit);
+		else if (!strcmp(key, "shellbehindwindows"))
+			shells = yes(value);
 		else if (!strcmp(key, "network"))
 			shownetwork = yes(value);
 		else if (!strcmp(key, "volume"))
@@ -448,26 +585,71 @@ loadconfig(int firsttime)
 			if (firsttime)
 				run(value);
 		}
+		else if (!strcmp(key, "include")) {
+			/* ~/x, or next to the config */
+			if (value[0] == '~' && (home = getenv("HOME")))
+				snprintf(path, sizeof path, "%s%s", home, value + 1);
+			else if (value[0] != '/')
+				snprintf(path, sizeof path, "%.*s/%s", (int)(strrchr(cfgpath, '/') - cfgpath), cfgpath, value);
+			else
+				snprintf(path, sizeof path, "%s", value);
+			if (depth < 4 && (inc = fopen(path, "r"))) {
+				readconfig(inc, firsttime, depth + 1);
+				fclose(inc);
+			} else
+				fprintf(stderr, "ttywm: can't include %s\n", path);
+		}
 		else
 			fprintf(stderr, "ttywm: %s: don't know '%s'\n", cfgpath, name);
 	}
+}
+
+static void
+loadconfig(int firsttime)
+{
+	FILE *f;
+	int i;
+	struct stat st;
+
+	if (stat(cfgpath, &st) < 0 && (f = fopen(cfgpath, "w"))) {
+		fputs(defaultconfig, f);
+		fclose(f);
+	}
+	if (stat(cfgpath, &st) == 0)
+		cfgmtime = st.st_mtime;
+
+	for (i = 0; i < nkeys; i++)
+		free(keys[i].cmd);
+	nkeys = 0;
+	nrules = 0;
+	nbarcmds = 0;
+	wallpaper[0] = '\0';
+	shells = 0;
+	f = fopen(cfgpath, "r");
+	if (!f) {
+		/* no file and nowhere to write one: the defaults, straight from memory */
+		f = fmemopen((void *)defaultconfig, sizeof defaultconfig - 1, "r");
+		if (!f)
+			return;
+	}
+	readconfig(f, firsttime, 0);
 	fclose(f);
 
-	/* these are always there */
+	/* these are there unless the key does something else */
 	for (i = 0; i < NSCR; i++) {
-		addkey(Mod4Mask, XK_1 + i, ActView, i, NULL);
-		addkey(Mod4Mask|ShiftMask, XK_1 + i, ActSend, i, NULL);
+		defkey(Mod4Mask, XK_1 + i, ActView, i);
+		defkey(Mod4Mask|ShiftMask, XK_1 + i, ActSend, i);
 	}
-	addkey(0, XStringToKeysym("XF86AudioRaiseVolume"), ActVolUp, 0, NULL);
-	addkey(0, XStringToKeysym("XF86AudioLowerVolume"), ActVolDown, 0, NULL);
-	addkey(0, XStringToKeysym("XF86AudioMute"), ActMute, 0, NULL);
-	addkey(0, XStringToKeysym("XF86MonBrightnessUp"), ActLightUp, 0, NULL);
-	addkey(0, XStringToKeysym("XF86MonBrightnessDown"), ActLightDown, 0, NULL);
-	addkey(Mod4Mask, XK_Left, ActLeft, 0, NULL);
-	addkey(Mod4Mask, XK_Right, ActRight, 0, NULL);
-	addkey(Mod4Mask, XK_Up, ActMax, 0, NULL);
-	addkey(Mod4Mask, XK_Down, ActRestore, 0, NULL);
-	addkey(Mod4Mask, XK_l, ActLock, 0, NULL);
+	defkey(0, XStringToKeysym("XF86AudioRaiseVolume"), ActVolUp, 0);
+	defkey(0, XStringToKeysym("XF86AudioLowerVolume"), ActVolDown, 0);
+	defkey(0, XStringToKeysym("XF86AudioMute"), ActMute, 0);
+	defkey(0, XStringToKeysym("XF86MonBrightnessUp"), ActLightUp, 0);
+	defkey(0, XStringToKeysym("XF86MonBrightnessDown"), ActLightDown, 0);
+	defkey(Mod4Mask, XK_Left, ActLeft, 0);
+	defkey(Mod4Mask, XK_Right, ActRight, 0);
+	defkey(Mod4Mask, XK_Up, ActMax, 0);
+	defkey(Mod4Mask, XK_Down, ActRestore, 0);
+	defkey(Mod4Mask, XK_l, ActLock, 0);
 }
 
 static void
@@ -532,6 +714,119 @@ text(XftDraw *d, int c, int x, int y, const char *s)
 	XftDrawStringUtf8(d, &col[c], xfont, x, y + xfont->ascent, (const FcChar8 *)s, strlen(s));
 }
 
+static long long
+ms(void)
+{
+	struct timespec ts;
+
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	return ts.tv_sec * 1000LL + ts.tv_nsec / 1000000;
+}
+
+/* a pixmap the size of the frame, made again when the frame grows or shrinks */
+static void
+framepix(Client *c)
+{
+	int w = c->w + 2 * cw, h = c->h + 2 * ch, scr = DefaultScreen(dpy);
+
+	if (c->pix && c->pw == w && c->ph == h)
+		return;
+	if (c->draw)
+		XftDrawDestroy(c->draw);
+	if (c->pix)
+		XFreePixmap(dpy, c->pix);
+	c->pix = XCreatePixmap(dpy, c->frame, w, h, DefaultDepth(dpy, scr));
+	c->pw = w;
+	c->ph = h;
+	c->draw = XftDrawCreate(dpy, c->pix, DefaultVisual(dpy, scr), DefaultColormap(dpy, scr));
+	XftDrawRect(c->draw, &col[ColBg], 0, 0, w, h);
+}
+
+/* the border, the way it's typed: along the top, down the right, back along the bottom, up the left.
+ * cell i of it, as a place and a character */
+static void
+framecell(Client *c, int i, int *x, int *y, char *ch8, int *colour)
+{
+	int cols = c->w / cw + 2, rows = c->h / ch;
+	int n = MIN((int)strlen(c->name), MAX(cols - 10, 0));
+	int bc = c == sel ? ColWindow : ColOther;
+
+	*colour = bc;
+	if (i < cols) {
+		/* ┌─[ name ]───[x]┐ */
+		*x = i, *y = 0;
+		if (i == 0) strcpy(ch8, "┌");
+		else if (i == 1) strcpy(ch8, "─");
+		else if (i == 2) strcpy(ch8, "[");
+		else if (i < n + 5) {
+			*colour = ColTitle;
+			ch8[0] = i == 3 || i == n + 4 ? ' ' : c->name[i - 4];
+			ch8[1] = '\0';
+		}
+		else if (i == n + 5) strcpy(ch8, "]");
+		else if (i == cols - 4) strcpy(ch8, "[");
+		else if (i == cols - 3) strcpy(ch8, "x");
+		else if (i == cols - 2) strcpy(ch8, "]");
+		else if (i == cols - 1) strcpy(ch8, "┐");
+		else strcpy(ch8, "─");
+		return;
+	}
+	i -= cols;
+	if (i < rows) {
+		*x = cols - 1, *y = i + 1;
+		strcpy(ch8, "│");
+		return;
+	}
+	i -= rows;
+	if (i < cols) {
+		*x = cols - 1 - i, *y = rows + 1;
+		strcpy(ch8, i == 0 ? "┘" : i == cols - 1 ? "└" : "─");
+		return;
+	}
+	i -= cols;
+	*x = 0, *y = rows - i;
+	strcpy(ch8, "│");
+}
+
+/* cells a to b, onto the pixmap and the screen. a cursor block after them while it's typing */
+static void
+typecells(Client *c, int a, int b)
+{
+	char g[8];
+	int i, x, y, colour, x0 = INT32_MAX, y0 = INT32_MAX, x1 = 0, y1 = 0;
+
+	for (i = a; i <= b && i < c->total; i++) {
+		framecell(c, i, &x, &y, g, &colour);
+		XftDrawRect(c->draw, &col[ColBg], x * cw, y * ch, cw, ch);
+		if (i < b || b >= c->total)
+			text(c->draw, colour, x * cw, y * ch, g);
+		else
+			text(c->draw, c == sel ? ColWindow : ColOther, x * cw, y * ch, "█");
+		x0 = MIN(x0, x); y0 = MIN(y0, y);
+		x1 = MAX(x1, x); y1 = MAX(y1, y);
+	}
+	if (x1 >= x0 && y1 >= y0)
+		XCopyArea(dpy, c->pix, c->frame, DefaultGC(dpy, DefaultScreen(dpy)), x0 * cw, y0 * ch,
+		          (x1 - x0 + 1) * cw, (y1 - y0 + 1) * ch, x0 * cw, y0 * ch);
+}
+
+/* the four edges of the pixmap onto the frame. the window covers the middle, except while the border types:
+ * then the middle is the console's black too */
+static void
+showframe(Client *c)
+{
+	GC gc = DefaultGC(dpy, DefaultScreen(dpy));
+
+	if (c->typed < c->total) {
+		XCopyArea(dpy, c->pix, c->frame, gc, 0, 0, c->pw, c->ph, 0, 0);
+		return;
+	}
+	XCopyArea(dpy, c->pix, c->frame, gc, 0, 0, c->pw, ch, 0, 0);
+	XCopyArea(dpy, c->pix, c->frame, gc, 0, c->ph - ch, c->pw, ch, 0, c->ph - ch);
+	XCopyArea(dpy, c->pix, c->frame, gc, 0, ch, cw, c->ph - 2 * ch, 0, ch);
+	XCopyArea(dpy, c->pix, c->frame, gc, c->pw - cw, ch, cw, c->ph - 2 * ch, c->pw - cw, ch);
+}
+
 /* ┌─[ name ]───[x]┐ */
 static void
 drawframe(Client *c)
@@ -544,7 +839,19 @@ drawframe(Client *c)
 
 	if (c->isfull)
 		return;
-	XftDrawRect(c->draw, &col[ColBg], 0, 0, c->w + 2 * cw, c->h + 2 * ch);
+	framepix(c);
+	c->total = 2 * cols + 2 * rows;
+	if (c->typed < c->total) {
+		/* still typing: what's typed so far, the rest comes with the next frames */
+		XftDrawRect(c->draw, &col[ColBg], 0, 0, c->pw, c->ph);
+		typecells(c, 0, c->typed);
+		showframe(c);
+		return;
+	}
+	XftDrawRect(c->draw, &col[ColBg], 0, 0, c->pw, ch);
+	XftDrawRect(c->draw, &col[ColBg], 0, c->ph - ch, c->pw, ch);
+	XftDrawRect(c->draw, &col[ColBg], 0, 0, cw, c->ph);
+	XftDrawRect(c->draw, &col[ColBg], c->pw - cw, 0, cw, c->ph);
 
 	text(c->draw, bc, 0, 0, "┌─[");
 	snprintf(buf, sizeof buf, " %.*s ", n, c->name);
@@ -565,6 +872,52 @@ drawframe(Client *c)
 		p += sprintf(p, "─");
 	sprintf(p, "┘");
 	text(c->draw, bc, 0, (rows + 1) * ch, buf);
+	showframe(c);
+}
+
+/* the typing, a few cells a frame. 1 while some border is still being typed */
+static int
+animate(void)
+{
+	Client *c, **pg;
+	int busy = 0, want;
+	long long now = ms();
+
+	for (c = clients; c; c = c->next) {
+		if (c->typed >= c->total)
+			continue;
+		want = MIN((now - c->born) * typespeed / 1000, c->total);
+		if (want > c->typed) {
+			typecells(c, c->typed, want);
+			c->typed = want;
+		}
+		if (c->typed >= c->total) {
+			/* done: the window comes out */
+			drawframe(c);
+			XMapWindow(dpy, c->win);
+			if (sel == c)
+				XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
+		} else
+			busy = 1;
+	}
+	for (pg = &ghosts; (c = *pg);) {
+		want = c->total - (now - c->born) * typespeed / 1000;
+		if (want <= 0) {
+			*pg = c->next;
+			XftDrawDestroy(c->draw);
+			XFreePixmap(dpy, c->pix);
+			XDestroyWindow(dpy, c->frame);
+			free(c);
+			continue;
+		}
+		if (want < c->typed) {
+			c->typed = want;
+			drawframe(c);
+		}
+		busy = 1;
+		pg = &c->next;
+	}
+	return busy;
 }
 
 /* ---- the bottom line ---- */
@@ -693,51 +1046,123 @@ battery(char *s, size_t n)
 	return 1;
 }
 
+/* your own bottom line commands, every 5 seconds from tick */
+static void
+runbarcmds(void)
+{
+	int i;
+
+	for (i = 0; i < nbarcmds; i++) {
+		runwait(barcmd[i], barout[i], sizeof barout[i]);
+		barout[i][strcspn(barout[i], "\n")] = '\0';
+	}
+}
+
+/* [ firefox ] [ mpv ] on the left, the one with the keyboard in reverse, up to where the rest begins */
+static void
+drawwinlist(int end)
+{
+	char name[64], buf[80];
+	Client *c, *all[64];
+	int n = 0, x = 0, w;
+
+	for (c = clients; c && n < (int)LENGTH(all); c = c->next)
+		if (c->scr == cur)
+			all[n++] = c;
+	while (n-- && nsegs < (int)LENGTH(segs)) {
+		c = all[n];
+		ucut(name, *c->name ? c->name : "window", 20, sizeof name);
+		snprintf(buf, sizeof buf, "[ %s ]", name);
+		w = ulen(buf) * cw;
+		if (x + w > end)
+			break;
+		if (c == sel) {
+			XftDrawRect(bardraw, &col[ColBar], x, 0, w, ch);
+			text(bardraw, ColBg, x, 0, buf);
+		} else
+			text(bardraw, ColBar, x, 0, buf);
+		segs[nsegs].x0 = x;
+		segs[nsegs].x1 = x + w;
+		segs[nsegs].c = c;
+		segs[nsegs++].seg = SegWin;
+		x += w + cw;
+	}
+}
+
 static void
 drawbar(void)
 {
-	char seg[8][64];
-	int kind[8], n = 0, i, x, len = 0;
+	char seg[16][64];
+	int kind[16], n = 0, i, j, x, len = 0, pct;
 	time_t t = time(NULL);
 	struct tm *tm = localtime(&t);
 
-	if (shownetwork) {
-		network(seg[n], sizeof seg[n]);
-		kind[n++] = SegNet;
-	}
-	if (showvolume && vol >= 0) {
-		snprintf(seg[n], sizeof seg[n], muted ? "vol muted" : "vol %d%%", vol);
-		kind[n++] = SegVol;
-	}
-	if (showlight && light() >= 0) {
-		snprintf(seg[n], sizeof seg[n], "light %d%%", light());
-		kind[n++] = SegLight;
-	}
-	if (showbattery && battery(seg[n], sizeof seg[n]))
-		kind[n++] = SegNone;
-	if (showdate) {
-		strftime(seg[n], sizeof seg[n], "%a %d %b", tm);
-		kind[n++] = SegNone;
-	}
-	if (showclock) {
-		strftime(seg[n], sizeof seg[n], clock24 ? "%H:%M" : "%I:%M %p", tm);
-		kind[n++] = SegNone;
-	}
-	snprintf(seg[n], sizeof seg[n], "tty%d", cur + 1);
-	kind[n++] = SegNone;
+	for (j = 0; barorder[j] >= 0 && n < (int)LENGTH(seg) - 4; j++)
+		switch (barorder[j]) {
+		case BarCommands:
+			for (i = 0; i < nbarcmds; i++)
+				if (barout[i][0]) {
+					snprintf(seg[n], sizeof seg[n], "%s", barout[i]);
+					kind[n++] = SegNone;
+				}
+			break;
+		case BarNet:
+			if (shownetwork) {
+				network(seg[n], sizeof seg[n]);
+				kind[n++] = SegNet;
+			}
+			break;
+		case BarVol:
+			if (showvolume && vol >= 0) {
+				snprintf(seg[n], sizeof seg[n], muted ? "vol muted" : "vol %d%%", vol);
+				kind[n++] = SegVol;
+			}
+			break;
+		case BarLight:
+			if (showlight && (pct = light()) >= 0) {
+				snprintf(seg[n], sizeof seg[n], "light %d%%", pct);
+				kind[n++] = SegLight;
+			}
+			break;
+		case BarBattery:
+			if (showbattery && battery(seg[n], sizeof seg[n]))
+				kind[n++] = SegNone;
+			break;
+		case BarDate:
+			if (showdate) {
+				strftime(seg[n], sizeof seg[n], "%a %d %b", tm);
+				kind[n++] = SegNone;
+			}
+			break;
+		case BarClock:
+			if (showclock) {
+				strftime(seg[n], sizeof seg[n], clock24 ? "%H:%M" : "%I:%M %p", tm);
+				kind[n++] = SegNone;
+			}
+			break;
+		case BarTty:
+			snprintf(seg[n], sizeof seg[n], "tty%d", cur + 1);
+			kind[n++] = SegTty;
+			break;
+		}
 
 	for (i = 0; i < n; i++)
-		len += strlen(seg[i]) + 2;
+		len += ulen(seg[i]) + 2;
 	XftDrawRect(bardraw, &col[ColBg], 0, 0, sw, ch);
 	x = sw - len * cw;
 	nsegs = 0;
 	for (i = 0; i < n; i++) {
 		text(bardraw, ColBar, x, 0, seg[i]);
-		segs[nsegs].x0 = x;
-		segs[nsegs].x1 = x + strlen(seg[i]) * cw;
-		segs[nsegs++].seg = kind[i];
-		x += (strlen(seg[i]) + 2) * cw;
+		if (nsegs < (int)LENGTH(segs)) {
+			segs[nsegs].x0 = x;
+			segs[nsegs].x1 = x + ulen(seg[i]) * cw;
+			segs[nsegs].c = NULL;
+			segs[nsegs++].seg = kind[i];
+		}
+		x += (ulen(seg[i]) + 2) * cw;
 	}
+	if (winlist)
+		drawwinlist(sw - len * cw - cw);
 }
 
 static void
@@ -1061,12 +1486,15 @@ focus(Client *c)
 	sel = c;
 	if (old && old != c)
 		drawframe(old);
+	if (old != c)
+		drawbar();
 	if (!c) {
 		XSetInputFocus(dpy, shell[cur] ? shell[cur] : root, RevertToPointerRoot, CurrentTime);
 		return;
 	}
 	XRaiseWindow(dpy, c->frame);
-	XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
+	if (c->typed >= c->total)
+		XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
 	drawframe(c);
 }
 
@@ -1116,11 +1544,32 @@ move(Client *c, int x, int y)
 	XMoveWindow(dpy, c->frame, x, y);
 }
 
+/* the wallpaper through ttywmbg, or just the colour */
+static void
+setbackground(void)
+{
+	char cmd[2200], path[1100];
+
+	if (!wallpaper[0] || strchr(wallpaper, '\'')) {
+		XSetWindowBackground(dpy, root, col[ColBg].pixel);
+		XClearWindow(dpy, root);
+		return;
+	}
+	if (wallpaper[0] == '~')
+		snprintf(path, sizeof path, "%s%s", getenv("HOME") ? getenv("HOME") : "", wallpaper + 1);
+	else
+		snprintf(path, sizeof path, "%s", wallpaper);
+	snprintf(cmd, sizeof cmd, "exec ttywmbg '%s' %s", path, wallfit);
+	run(cmd);
+}
+
 static void
 spawnshell(int s)
 {
 	char cmd[64];
 
+	if (!shells)
+		return;
 	newshell = s;
 	snprintf(cmd, sizeof cmd, "exec %s -class %s", SHELLCMD, SHELLCLASS);
 	run(cmd);
@@ -1131,10 +1580,15 @@ manage(Window w, XWindowAttributes *wa)
 {
 	XClassHint hint = { NULL, NULL };
 	Client *c;
-	int isshell = 0;
+	Rule *rule = NULL;
+	int isshell = 0, i;
 
 	if (XGetClassHint(dpy, w, &hint)) {
 		isshell = hint.res_class && !strcmp(hint.res_class, SHELLCLASS);
+		for (i = 0; i < nrules && !rule; i++)
+			if ((hint.res_class && !strcasecmp(hint.res_class, rules[i].name))
+			|| (hint.res_name && !strcasecmp(hint.res_name, rules[i].name)))
+				rule = &rules[i];
 		XFree(hint.res_class);
 		XFree(hint.res_name);
 	}
@@ -1160,13 +1614,16 @@ manage(Window w, XWindowAttributes *wa)
 	if (!(c = calloc(1, sizeof(Client))))
 		die("calloc failed");
 	c->win = w;
-	c->scr = cur;
+	c->scr = rule && rule->scr >= 0 ? rule->scr : cur;
 	c->x = c->y = -1;
+	/* the border types itself in first, the window comes out after */
+	c->typed = typing && !(rule && rule->full) ? 0 : INT32_MAX;
+	c->born = ms();
 	updatetitle(c);
 	c->frame = XCreateSimpleWindow(dpy, root, 0, 0, 1, 1, 0, 0, col[ColBg].pixel);
+	/* no background: x would clear it before every redraw, and that's the flash */
+	XSetWindowBackgroundPixmap(dpy, c->frame, None);
 	XSelectInput(dpy, c->frame, SubstructureRedirectMask|SubstructureNotifyMask|ExposureMask|ButtonPressMask);
-	c->draw = XftDrawCreate(dpy, c->frame, DefaultVisual(dpy, DefaultScreen(dpy)),
-	                        DefaultColormap(dpy, DefaultScreen(dpy)));
 	move(c, MAX(0, (sw - wa->width) / 2 - cw) / cw * cw, MAX(0, (wh - wa->height) / 2 - ch) / ch * ch);
 
 	/* the frame is the window's parent, so they move together and clicks on the border come to us.
@@ -1182,10 +1639,15 @@ manage(Window w, XWindowAttributes *wa)
 	c->next = clients;
 	clients = c;
 	resize(c, wa->width, wa->height);
-	XMapWindow(dpy, w);
-	XMapWindow(dpy, c->frame);
+	if (c->typed >= c->total)
+		XMapWindow(dpy, w);
 	setclientstate(w, NormalState);
+	if (c->scr != cur)
+		return;
+	XMapWindow(dpy, c->frame);
 	focus(c);
+	if (rule && rule->full)
+		setfullscreen(c, 1);
 }
 
 static void
@@ -1201,13 +1663,27 @@ unmanage(Client *c, int destroyed)
 		XRemoveFromSaveSet(dpy, c->win);
 		setclientstate(c->win, WithdrawnState);
 	}
-	XftDrawDestroy(c->draw);
-	XDestroyWindow(dpy, c->frame);
 	if (sel == c) {
 		sel = NULL;
 		focus(topclient());
 	}
+	/* the border types itself away, then the frame goes */
+	if (running && typing && c->scr == cur && !c->isfull && c->typed >= c->total && c->pix) {
+		c->typed = c->total;
+		c->born = ms();
+		c->next = ghosts;
+		ghosts = c;
+		drawframe(c);
+		drawbar();
+		return;
+	}
+	if (c->draw)
+		XftDrawDestroy(c->draw);
+	if (c->pix)
+		XFreePixmap(dpy, c->pix);
+	XDestroyWindow(dpy, c->frame);
 	free(c);
+	drawbar();
 }
 
 /* ICCCM: ask with WM_DELETE_WINDOW if the window understands it, so it can save its work.
@@ -1243,6 +1719,10 @@ setfullscreen(Client *c, int full)
 {
 	if (full == c->isfull)
 		return;
+	if (c->typed < c->total) {
+		c->typed = INT32_MAX;
+		XMapWindow(dpy, c->win);
+	}
 	c->isfull = full;
 	if (full) {
 		c->oldx = c->x; c->oldy = c->y; c->oldw = c->w; c->oldh = c->h;
@@ -1307,12 +1787,15 @@ mousedrag(Client *c, int resizing)
 		return;
 	XQueryPointer(dpy, root, &dummy, &dummy, &px, &py, &di, &di, &dui);
 	do {
-		XMaskEvent(dpy, ButtonReleaseMask|PointerMotionMask, &ev);
-		if (ev.type != MotionNotify)
+		XMaskEvent(dpy, ButtonReleaseMask|PointerMotionMask|ExposureMask|SubstructureRedirectMask, &ev);
+		/* what it uncovers gets drawn again while it moves, not when it's let go */
+		if (ev.type == Expose || ev.type == ConfigureRequest || ev.type == MapRequest) {
+			handler[ev.type](&ev);
 			continue;
-		/* only the newest position, and no more than 60 times a second */
-		while (XCheckTypedEvent(dpy, MotionNotify, &ev));
-		if (ev.xmotion.time - last < 16)
+		}
+		/* only the newest position, no more than 60 times a second, and always where it was let go */
+		while (ev.type == MotionNotify && XCheckTypedEvent(dpy, MotionNotify, &ev));
+		if (ev.type == MotionNotify && ev.xmotion.time - last < 16)
 			continue;
 		last = ev.xmotion.time;
 		if (resizing)
@@ -1476,11 +1959,12 @@ doaction(Key *k)
 	switch (k->act) {
 	case ActRun:      run(k->cmd); break;
 	case ActTerminal: run(terminal); break;
-	case ActMenu:     run(menu); break;
+	case ActMenu:     runmenu(); break;
 	case ActClose:    if (sel) closeclient(sel); break;
 	case ActNext:     focusnext(); break;
 	case ActFull:     if (sel) setfullscreen(sel, !sel->isfull); break;
 	case ActQuit:     running = 0; break;
+	case ActRestart:  restarting = 1; running = 0; break;
 	case ActView:     view(k->n); break;
 	case ActSend:     sendto(k->n); break;
 	case ActVolUp:    setvolume("5%+"); break;
@@ -1518,7 +2002,19 @@ barclick(XButtonPressedEvent *ev)
 		} else if (segs[i].seg == SegNet && ev->button == Button1) {
 			snprintf(cmd, sizeof cmd, "exec %s -T network -e nmtui", SHELLCMD);
 			run(cmd);
+		} else if (segs[i].seg == SegTty) {
+			/* scroll or click through the ttys */
+			if (ev->button == Button4)
+				view((cur + NSCR - 1) % NSCR);
+			else if (ev->button == Button1 || ev->button == Button5)
+				view((cur + 1) % NSCR);
+		} else if (segs[i].seg == SegWin) {
+			if (ev->button == Button1)
+				focus(segs[i].c);
+			else if (ev->button == Button2)
+				closeclient(segs[i].c);
 		}
+		return;
 	}
 }
 
@@ -1628,8 +2124,12 @@ expose(XEvent *e)
 		drawbar();
 	else if (wintonotif(e->xexpose.window))
 		drawnotif(wintonotif(e->xexpose.window));
-	else if ((c = wintoclient(e->xexpose.window)))
-		drawframe(c);
+	else if ((c = wintoclient(e->xexpose.window)) && c->frame == e->xexpose.window) {
+		if (c->pix)
+			showframe(c);
+		else
+			drawframe(c);
+	}
 }
 
 static void
@@ -1662,6 +2162,7 @@ propertynotify(XEvent *e)
 	&& (e->xproperty.atom == XA_WM_NAME || e->xproperty.atom == netwmname)) {
 		updatetitle(c);
 		drawframe(c);
+		drawbar();
 	}
 }
 
@@ -1690,6 +2191,105 @@ static void (*handler[LASTEvent])(XEvent *) = {
 	[UnmapNotify] = unmapnotify
 };
 
+/* a new ttywm without logging out: the windows go back to root, where they are is written down,
+ * and the new binary picks them up again. x keeps them alive in between */
+static void
+restart(char **argv)
+{
+	char buf[16384], *p = buf, out[64], cmd[4200];
+	Client *c, *all[256];
+	int i, n = 0;
+
+	/* a broken binary would end the session: it has to answer first */
+	snprintf(cmd, sizeof cmd, "'%s' -v 2>&1", exepath);
+	runwait(cmd, out, sizeof out);
+	if (!strstr(out, "ttywm-")) {
+		fprintf(stderr, "ttywm: %s doesn't run, staying\n", exepath);
+		return;
+	}
+	p += snprintf(p, sizeof buf, "%d", cur);
+	for (i = 0; i < NSCR; i++)
+		if (shell[i] && p < buf + sizeof buf - 64)
+			p += sprintf(p, " s %d %lu", i, shell[i]);
+	/* oldest first, so they stack the same way again */
+	for (c = clients; c && n < (int)LENGTH(all); c = c->next)
+		all[n++] = c;
+	while (n--) {
+		c = all[n];
+		if (p >= buf + sizeof buf - 128)
+			break;
+		if (c->isfull)
+			p += sprintf(p, " c %lu %d %d %d %d %d 1", c->win, c->scr, c->oldx, c->oldy, c->oldw, c->oldh);
+		else
+			p += sprintf(p, " c %lu %d %d %d %d %d 0", c->win, c->scr, c->x, c->y, c->w, c->h);
+		XUngrabButton(dpy, AnyButton, AnyModifier, c->win);
+		XReparentWindow(dpy, c->win, root, c->x + cw, c->y + ch);
+		if (c->scr != cur)
+			XUnmapWindow(dpy, c->win);
+	}
+	setenv("TTYWM_STATE", buf, 1);
+	XSync(dpy, False);
+	XCloseDisplay(dpy);
+	execv(exepath, argv);
+	die("cannot run the new ttywm");
+}
+
+/* after a restart: the shells and windows from before, where they were */
+static int
+adopt(void)
+{
+	char *st = getenv("TTYWM_STATE"), *t;
+	Window w;
+	XWindowAttributes wa;
+	Client *c;
+	int s, scr, x, y, ww, wh2, full, was = typing;
+
+	if (!st || !*st)
+		return 0;
+	st = strdup(st);
+	unsetenv("TTYWM_STATE");
+	typing = 0;
+	cur = atoi(strtok(st, " "));
+	while ((t = strtok(NULL, " "))) {
+		if (!strcmp(t, "s")) {
+			s = atoi(strtok(NULL, " "));
+			w = strtoul(strtok(NULL, " "), NULL, 10);
+			if (s < 0 || s >= NSCR || !XGetWindowAttributes(dpy, w, &wa))
+				continue;
+			newshell = s;
+			manage(w, &wa);
+			if (s != cur)
+				XUnmapWindow(dpy, w);
+		} else if (!strcmp(t, "c")) {
+			w = strtoul(strtok(NULL, " "), NULL, 10);
+			scr = atoi(strtok(NULL, " "));
+			x = atoi(strtok(NULL, " "));
+			y = atoi(strtok(NULL, " "));
+			ww = atoi(strtok(NULL, " "));
+			wh2 = atoi(strtok(NULL, " "));
+			full = atoi(strtok(NULL, " "));
+			if (!XGetWindowAttributes(dpy, w, &wa) || !(manage(w, &wa), c = wintoclient(w)))
+				continue;
+			if (c->scr != scr) {
+				c->scr = scr;
+				if (scr == cur)
+					XMapWindow(dpy, c->frame);
+				else
+					XUnmapWindow(dpy, c->frame);
+			}
+			move(c, x, y);
+			resize(c, ww, wh2);
+			if (full)
+				setfullscreen(c, 1);
+		}
+	}
+	free(st);
+	typing = was;
+	sel = NULL;
+	focus(topclient());
+	return shell[cur] != 0;
+}
+
 /* once a second: the clock, the battery, and the settings file if it changed */
 static void
 tick(void)
@@ -1698,6 +2298,7 @@ tick(void)
 	time_t now = time(NULL);
 	struct stat st;
 	Client *c;
+	int i;
 
 	if (now == last)
 		return;
@@ -1706,16 +2307,32 @@ tick(void)
 		loadconfig(0);
 		grabkeys();
 		loadcolours();
+		setbackground();
+		/* the shells, turned on or off */
+		for (i = 0; i < NSCR; i++)
+			if (shell[i] && !shells)
+				XKillClient(dpy, shell[i]);
+		if (shells && !shell[cur])
+			spawnshell(cur);
 		for (c = clients; c; c = c->next)
 			drawframe(c);
+		runbarcmds();
 		last = 0;
+	}
+	/* apk put a new ttywm there: swap to it */
+	if (exepath[0] && stat(exepath, &st) == 0 && (st.st_ino != exest.st_ino || st.st_mtime != exest.st_mtime)) {
+		exest = st;
+		restarting = 1;
+		running = 0;
 	}
 	if (now - lastvol >= 10) {
 		readvolume();
 		lastvol = now;
 	}
-	if (now / 5 != last / 5)
+	if (now / 5 != last / 5) {
+		runbarcmds();
 		drawbar();
+	}
 	last = now;
 }
 
@@ -1773,8 +2390,7 @@ setup(void)
 	bardraw = XftDrawCreate(dpy, bar, DefaultVisual(dpy, screen), DefaultColormap(dpy, screen));
 	XMapWindow(dpy, bar);
 
-	XSetWindowBackground(dpy, root, col[ColBg].pixel);
-	XClearWindow(dpy, root);
+	setbackground();
 	XDefineCursor(dpy, root, XCreateFontCursor(dpy, XC_left_ptr));
 	XSelectInput(dpy, root, SubstructureRedirectMask|SubstructureNotifyMask);
 	grabkeys();
@@ -1789,7 +2405,7 @@ main(int argc, char *argv[])
 	XEvent ev;
 	fd_set fds;
 	struct timeval tv;
-	int fd, bfd = -1;
+	int fd, bfd = -1, busy = 0;
 
 	if (argc == 2 && !strcmp("-v", argv[1]))
 		die("ttywm-" VERSION);
@@ -1808,22 +2424,31 @@ main(int argc, char *argv[])
 	XSync(dpy, False);
 	XSetErrorHandler(xerror);
 
+	/* the binary, to notice when it's updated */
+	if ((fd = readlink("/proc/self/exe", exepath, sizeof exepath - 1)) > 0) {
+		exepath[fd] = '\0';
+		if (stat(exepath, &exest) < 0)
+			exepath[0] = '\0';
+	}
 	setup();
-	spawnshell(cur);
+	if (!adopt())
+		spawnshell(cur);
 	drawbar();
 
 	/* events, notifications, and a tick every second for the bottom line */
 	fd = ConnectionNumber(dpy);
 	if (bus)
 		dbus_connection_get_unix_fd(bus, &bfd);
+loop:
 	while (running) {
 		if (!XPending(dpy)) {
 			FD_ZERO(&fds);
 			FD_SET(fd, &fds);
 			if (bfd >= 0)
 				FD_SET(bfd, &fds);
-			tv.tv_sec = 1;
-			tv.tv_usec = 0;
+			/* a border typing itself in wakes us every frame, else once a second */
+			tv.tv_sec = busy ? 0 : 1;
+			tv.tv_usec = busy ? 16000 : 0;
 			if (select(MAX(fd, bfd) + 1, &fds, NULL, NULL, &tv) < 0 && errno != EINTR)
 				break;
 		}
@@ -1833,9 +2458,18 @@ main(int argc, char *argv[])
 			if (handler[ev.type])
 				handler[ev.type](&ev);
 		}
+		busy = animate();
+		XFlush(dpy);
 		tick();
 	}
 
+	if (restarting) {
+		restart(argv);
+		/* it didn't: carry on with this one */
+		running = 1;
+		restarting = 0;
+		goto loop;
+	}
 	while (clients)
 		unmanage(clients, 0);
 	XCloseDisplay(dpy);
