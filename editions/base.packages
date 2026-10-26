@@ -31,6 +31,9 @@ sof-firmware alsa-ucm-conf
 flatpak xdg-desktop-portal xdg-user-dirs firefox
 noto-fonts-ttf noto-fonts-emoji dejavu-fonts-ttf
 
+# the fluent theme and icons
+chamesle-fluent
+
 # toolchain for get
 gcc make pkg-config cmake meson ninja perl python3 autoconf automake libtool patch bison flex git
 

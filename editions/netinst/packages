@@ -1,0 +1,20 @@
+# the netinst: just enough to run jiggity and get online. the desktop and the rest come from the repo while it
+# installs, linux-firmware too: only the wi-fi and ethernet firmware in ./firmware is on the iso
+
+# core system
+base-files bash coreutils findutils diffutils grep sed gawk which file less
+gzip bzip2 xz zstd tar
+util-linux shadow procps-ng psmisc kmod eudev dbus elogind polkit dinit busybox apk-tools plymouth chamesle-plymouth
+iproute2 iputils NetworkManager wpa_supplicant curl ca-certificates rsync
+sudo nano tzdata ncurses kbd
+
+# kernel, microcode
+chamesle-kernel-cachyos intel-ucode
+
+# disks, filesystems, boot
+chamesle-grub grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
+e2fsprogs dosfstools ntfs-3g exfatprogs btrfs-progs xfsprogs cryptsetup lvm2 gptfdisk parted
+
+# jiggity in text, dracut for the installed system
+python3 python3-parted xkeyboard-config dracut
+

@@ -62,7 +62,7 @@ if [ -x "$ROOT/usr/bin/plymouthd" ]; then
     [ -n "$theme" ] && cp -a "$ROOT/usr/share/plymouth/themes/$theme" "$R/usr/share/plymouth/themes/"
     # a font for the passphrase prompt
     cp -a "$ROOT/etc/fonts" "$R/etc/" 2>/dev/null || true
-    font=$(find "$ROOT/usr/share/fonts" -name DejaVuSans.ttf | head -n1)
+    font=$(find "$ROOT/usr/share/fonts" -name DejaVuSans.ttf 2>/dev/null | head -n1 || true)
     [ -n "$font" ] && install -Dm644 "$font" "$R/usr/share/fonts/DejaVuSans.ttf"
 fi
 

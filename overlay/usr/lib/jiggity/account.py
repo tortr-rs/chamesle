@@ -37,35 +37,52 @@ def bad_username(u):
     return ""
 
 
-def make(zone, user, name, pw):
-    groups = [g.split(":")[0] for g in open("/etc/group")]
-    subprocess.run(["useradd", "-m", "-s", "/bin/bash", "-c", name, "-G",
-                    ",".join(g for g in GROUPS if g in groups), user])
-    subprocess.run(["chpasswd", "-c", "SHA512"], input="%s:%s\n" % (user, pw), text=True)
-    subprocess.run(["ln", "-sf", "/usr/share/zoneinfo/" + zone, "/etc/localtime"])
-    with open("/etc/timezone", "w") as f:
+def make(zone, user, name, pw, host=None, root="/"):
+    # root: the new system, when jiggity makes the account while it installs
+    r = root.rstrip("/")
+    inside = [] if root == "/" else ["chroot", root]
+    groups = [g.split(":")[0] for g in open(r + "/etc/group")]
+    subprocess.run(inside + ["useradd", "-m", "-s", "/bin/bash", "-c", name, "-G",
+                             ",".join(g for g in GROUPS if g in groups), user])
+    subprocess.run(inside + ["chpasswd", "-c", "SHA512"], input="%s:%s\n" % (user, pw), text=True)
+    subprocess.run(["ln", "-sf", "/usr/share/zoneinfo/" + zone, r + "/etc/localtime"])
+    with open(r + "/etc/timezone", "w") as f:
         f.write(zone + "\n")
-    host = re.sub(r"[^a-z0-9-]", "", user.lower())[:20] + "-pc"
-    with open("/etc/hostname", "w") as f:
+    host = host or hostname_from(user)
+    with open(r + "/etc/hostname", "w") as f:
         f.write(host + "\n")
-    with open("/etc/hosts", "w") as f:
+    with open(r + "/etc/hosts", "w") as f:
         f.write("127.0.0.1\tlocalhost\n127.0.1.1\t%s\n::1\tlocalhost ip6-localhost ip6-loopback\n" % host)
-    subprocess.run(["hostname", host])
-    remember_session(user)
-    os.unlink(MARK)
+    if root == "/":
+        subprocess.run(["hostname", host])
+    remember_session(user, r)
+    if os.path.exists(r + MARK):
+        os.unlink(r + MARK)
+
+
+def hostname_from(user):
+    return re.sub(r"[^a-z0-9-]", "", user.lower())[:20] + "-pc"
+
+
+# what's wrong with a computer name, or ""
+def bad_hostname(h):
+    if not re.fullmatch(r"[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?", h or ""):
+        return "A computer name is lowercase letters, numbers and dashes."
+    return ""
 
 
 # sddm lists wayland sessions first and would pick one (xfce's isn't ready): the edition's own session is the
 # last one used, so it's the one that starts
-def remember_session(user):
+def remember_session(user, r=""):
     try:
-        name = open("/etc/chamesle/session").read().strip()
+        name = open(r + "/etc/chamesle/session").read().strip()
     except OSError:
         return
     for d in ("/usr/share/xsessions", "/usr/share/wayland-sessions"):
         path = "%s/%s.desktop" % (d, name)
-        if os.path.exists(path) and os.path.isdir("/var/lib/sddm"):
-            with open("/var/lib/sddm/state.conf", "w") as f:
+        if os.path.exists(r + path) and os.path.isdir(r + "/var/lib/sddm"):
+            with open(r + "/var/lib/sddm/state.conf", "w") as f:
                 f.write("[Last]\nSession=%s\nUser=%s\n" % (path, user))
-            subprocess.run(["chown", "sddm:sddm", "/var/lib/sddm/state.conf"], stderr=subprocess.DEVNULL)
+            subprocess.run((["chroot", r] if r else []) + ["chown", "sddm:sddm", "/var/lib/sddm/state.conf"],
+                           stderr=subprocess.DEVNULL)
             return

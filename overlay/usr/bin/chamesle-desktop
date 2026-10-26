@@ -1,0 +1,75 @@
+#!/bin/sh
+# chamesle-desktop NAME: puts one of chamesle's desktops on this system, the same one its iso used to have
+#   chamesle-desktop          the list
+#   sudo chamesle-desktop kde
+# jiggity runs it in the new system while it installs. CHAMESLE_PROGRESS=FD gets apk's progress
+set -eu
+D=/usr/share/chamesle/editions
+
+if [ $# = 0 ]; then
+    for e in "$D"/*/edition; do
+        e=${e%/edition}; e=${e##*/}
+        [ "$e" = netinst ] || printf '%-10s %s\n' "$e" "$(sed -n 's/^name=//p' "$D/$e/edition")"
+    done
+    exit 0
+fi
+ED=$1
+[ -f "$D/$ED/packages" ] && [ "$ED" != netinst ] || { echo "chamesle-desktop: no desktop '$ED' (chamesle-desktop lists them)" >&2; exit 1; }
+[ "$(id -u)" = 0 ] || { echo "chamesle-desktop: needs root: sudo chamesle-desktop $ED" >&2; exit 1; }
+BASE=$(sed -n 's/^base=//p' "$D/$ED/edition")
+EDS="$BASE $ED"
+val() { for e in $ED $BASE; do v=$(sed -n "s/^$1=//p" "$D/$e/edition"); [ -n "$v" ] && { echo "$v"; return; }; done; return 0; }
+NAME=$(sed -n 's/^name=//p' "$D/$ED/edition")
+
+BASEPKGS=$D/base.packages; [ "$(val desktop-packages)" = no ] && BASEPKGS=
+pkgs=$(sed 's/#.*//' $BASEPKGS $(for e in $EDS; do echo "$D/$e/packages"; done) | tr ' \t' '\n\n' | grep -v '^$' | sort -u)
+echo "chamesle-desktop: $NAME, $(echo "$pkgs" | wc -l) packages and what they need"
+prog=; [ -n "${CHAMESLE_PROGRESS:-}" ] && prog="--progress-fd $CHAMESLE_PROGRESS"
+# the netinst came without most of the firmware: all of it, now that there's a disk to put it on
+if [ -s /etc/chamesle/trimmed ]; then
+    apk fix --no-interactive $prog --reinstall $(cat /etc/chamesle/trimmed)
+    rm /etc/chamesle/trimmed
+fi
+apk add --no-interactive $prog '!runit' '!runit-void' $pkgs
+
+fp=$(val flatpaks)
+if [ -n "$fp" ]; then
+    echo "chamesle-desktop: $fp from flathub"
+    flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    flatpak install --system -y --noninteractive flathub $fp
+fi
+
+for e in $EDS; do [ -d "$D/$e/overlay" ] && cp -a "$D/$e/overlay/." /; done
+# services: on for what's installed now, off for what isn't (the server has no bluetooth or printing)
+for s in $(cat "$D/services"); do
+    [ -f /etc/dinit.d/$s ] || continue
+    ok=1
+    for c in $(sed -n 's/^command *= *//p' /etc/dinit.d/$s); do
+        case $c in /*) [ -e "$c" ] || ok=;; esac
+    done
+    if [ -n "$ok" ]; then ln -sfn ../$s /etc/dinit.d/boot.d/$s; else rm -f /etc/dinit.d/boot.d/$s; fi
+done
+# xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
+if [ -d /usr/share/backgrounds/xfce ]; then
+    for f in xfce-x.svg xfce-shapes.svg xfce-stripes.png xfce-teal.png xfce-verticals.png; do
+        ln -sf ../chamesle/default.png /usr/share/backgrounds/xfce/$f
+    done
+fi
+# the windows key opens the start menu
+KS=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+if [ -f "$KS" ] && ! grep -q xfce4-popup-whiskermenu "$KS"; then
+    sed -i 's|^\( *\)<property name="&lt;Super&gt;e" type="string" value="thunar"/>|&\n\1<property name="Super_L" type="string" value="xfce4-popup-whiskermenu"/>|' "$KS"
+fi
+
+# what starts: a sign-in screen and the edition's session, or the console
+SESSION=$(val installed-session); [ -n "$SESSION" ] || SESSION=$(val session); SESSION=${SESSION:-${BASE:-$ED}}
+LOGIN=$(val login); LOGIN=${LOGIN:-sddm}
+mkdir -p /etc/chamesle
+echo "$SESSION" > /etc/chamesle/session
+echo "$LOGIN" > /etc/chamesle/login
+[ "$LOGIN" = console ] && rm -f /etc/dinit.d/boot.d/display-manager
+echo "$ED" > /usr/share/chamesle/edition
+sed -i "s/^PRETTY_NAME=\"\(Chamesle Linux [^(]*\)(.*)\"/PRETTY_NAME=\"\1($NAME)\"/; s/^VARIANT=.*/VARIANT=\"$NAME\"/; s/^VARIANT_ID=.*/VARIANT_ID=$ED/" /etc/os-release
+fc-cache -f >/dev/null 2>&1 || true
+gtk-update-icon-cache -q -f /usr/share/icons/hicolor 2>/dev/null || true
+echo "chamesle-desktop: $NAME is on, it starts after a restart"

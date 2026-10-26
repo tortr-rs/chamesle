@@ -1,0 +1,5 @@
+name=Setup
+# the one iso: jiggity in text, it installs the desktop you pick from the repo (chamesle-desktop)
+netinst=yes
+login=console
+desktop-packages=no

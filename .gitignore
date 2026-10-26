@@ -3,3 +3,4 @@ out/
 *.iso
 *.iso.sha256
 __pycache__/
+tools/pkg/chamesle-fluent/files/

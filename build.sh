@@ -1,6 +1,7 @@
 #!/bin/bash
 # builds the iso for one edition
 #   sudo EDITION=xfce ./build.sh   -> out/chamesle-VERSION-EDITION-x86_64.iso
+#   sudo EDITION=netinst ./build.sh -> out/chamesle-VERSION-x86_64.iso, the one that installs any of them
 # REPO= a dir or url with x86_64/Packages.adb (default work/repo, else the public one), WORK= OUT=
 # needs apk-tools 3, mksquashfs, xorriso, grub-mkrescue (bios + efi), readelf, zstd, cpio, depmod, curl
 set -euo pipefail
@@ -17,7 +18,11 @@ edval() { local e v; for e in $EDITION $BASE; do v=$(sed -n "s/^$1=//p" "$HERE/e
 EDITION_NAME=$(sed -n 's/^name=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null); EDITION_NAME=${EDITION_NAME:-$EDITION}
 WORK=${WORK:-$HERE/work/$EDITION}; ROOT=$WORK/root; ISO_DIR=$WORK/iso
 OUT=${OUT:-$HERE/out}; ISO=$OUT/chamesle-$VERSION-$EDITION-x86_64.iso
+NETINST=$(edval netinst)
+[ "$NETINST" = yes ] && ISO=$OUT/chamesle-$VERSION-x86_64.iso
 PUBLIC_REPO=https://downloads.sourceforge.net/project/chameslerepos
+# where the netinst installs from: the public repo. NETREPO="v3 URL;v3 URL" to test against others
+NETREPO=${NETREPO:-v3 $PUBLIC_REPO}
 REPO=${REPO:-$( [ -f "$HERE/work/repo/x86_64/Packages.adb" ] && echo "$HERE/work/repo" || echo "$PUBLIC_REPO")}
 APK=${APK:-apk}
 IN=$HERE/tools/in-image.sh
@@ -54,6 +59,23 @@ rm -rf "$ROOT/tmp/scripts"
 umount "$ROOT/proc" 2>/dev/null || true; umount -lR "$ROOT/dev" 2>/dev/null || true; trap - EXIT
 # what the installed system updates from
 echo "v3 $PUBLIC_REPO" > "$ROOT/etc/apk/repositories"
+mkdir -p "$ROOT/usr/share/chamesle"
+cp "$ROOT/etc/apk/repositories" "$ROOT/usr/share/chamesle/repositories"
+if [ "$NETINST" = yes ]; then
+    echo "$NETREPO" | tr ';' '\n' > "$ROOT/etc/apk/repositories"
+    # the kernel brings all of linux-firmware: only the wi-fi and ethernet parts stay. the installed system gets
+    # the rest back, chamesle-desktop reinstalls what /etc/chamesle/trimmed names
+    FWD=$ROOT/usr/lib/firmware; rm -rf "$WORK/firmware"; mv "$FWD" "$WORK/firmware"; mkdir -p "$FWD"
+    for d in $(sed 's/#.*//' "$HERE/editions/$EDITION/firmware"); do
+        mkdir -p "$FWD/$(dirname "$d")"
+        cp -a "$WORK/firmware/$d" "$FWD/$(dirname "$d")/"
+    done
+    mkdir -p "$ROOT/etc/chamesle"
+    pkg info --quiet | grep -E '^(linux-firmware|intel-ucode)' > "$ROOT/etc/chamesle/trimmed"
+    # iwlwifi: the 3 newest of each chip, the kernel takes the newest it knows
+    ls "$ROOT/usr/lib/firmware/intel/iwlwifi" | sed -n 's/-\([0-9]*\)\.ucode\.zst$/ \1/p' | sort -k1,1 -k2,2nr |
+        awk 'n[$1]++ >= 3 { print $1 "-" $2 ".ucode.zst" }' | sed "s|^|$ROOT/usr/lib/firmware/intel/iwlwifi/|" | xargs -r rm -f
+fi
 # flathub apps on the iso (play: steam). this machine's flatpak installs them into the image's system flatpaks
 FLATPAKS=$(edval flatpaks)
 if [ -n "$FLATPAKS" ]; then
@@ -76,7 +98,10 @@ for l in "$ROOT"/etc/dinit.d/boot.d/*; do
     c=$(sed -n 's/^command *= *\([^ ]*\).*/\1/p' "$ROOT/etc/dinit.d/${l##*/}" 2>/dev/null)
     [ -n "$c" ] && [ ! -e "$ROOT$c" ] && rm -f "$l"
 done
-"$HERE/tools/themes.sh" "$ROOT"
+# every edition, for chamesle-desktop: what jiggity installs on the netinst, and sudo chamesle-desktop later
+ED_DIR=$ROOT/usr/share/chamesle/editions; mkdir -p "$ED_DIR"
+cp -a "$HERE"/editions/* "$ED_DIR/"
+ls "$HERE/overlay/etc/dinit.d/boot.d" > "$ED_DIR/services"
 # the installer's slideshow starts with this edition's desktop (the website's picture of it) and how to get around
 SLIDES=$ROOT/usr/share/live-installer/slideshow
 SHOT=; for e in $EDITION $BASE; do [ -z "$SHOT" ] && [ -f "$HERE/docs/img/$e.png" ] && SHOT=$HERE/docs/img/$e.png; done
@@ -120,6 +145,11 @@ ln -sf /usr/share/zoneinfo/UTC "$ROOT/etc/localtime"
 "$IN" "$ROOT" /usr/bin/fc-cache -f
 "$IN" "$ROOT" /usr/bin/gtk-update-icon-cache -q -f /usr/share/icons/hicolor 2>/dev/null || true
 
+if [ "$NETINST" = yes ]; then
+# no live session: every boot entry is jiggity on tty1
+rm -f "$ROOT/etc/dinit.d/boot.d/display-manager"
+mkdir -p "$ROOT/etc/chamesle"; echo console > "$ROOT/etc/chamesle/login"
+else
 echo "=== [3/5] THE LIVE USER"
 # live user: no password, autologin, sudo. the installer removes all that
 "$IN" "$ROOT" /usr/bin/useradd -m -c "Live session" -s /bin/bash -G wheel,audio,video,input,network,storage,optical,scanner,lp,plugdev,users live
@@ -174,6 +204,7 @@ if [ -n "$GNOME_LOOK" ]; then
     rm -rf "$ROOT/tmp/live-dconf"
 fi
 "$IN" "$ROOT" /usr/bin/chown -R live:live /home/live
+fi
 rm -f "$ROOT/etc/machine-id" "$ROOT/var/lib/dbus/machine-id"
 rm -rf "$ROOT/var/cache/apk"/*
 
@@ -239,6 +270,21 @@ submenu "More options" {
     }
 }
 EOF
+if [ "$NETINST" = yes ]; then
+    # no live session to try: install, nothing else. no drivers that need firmware the iso hasn't got: the
+    # firmware's own screen does for text
+    sed -i '/^# two choices/,$d' "$ISO_DIR/boot/grub/grub.cfg"
+    cat >> "$ISO_DIR/boot/grub/grub.cfg" <<'EOF'
+menuentry "Install Chamesle" {
+    linux /live/vmlinuz chamesle.install=1 modprobe.blacklist=amdgpu,radeon,nouveau,xe quiet loglevel=3
+    initrd /live/initrd.img
+}
+menuentry "Install Chamesle (show boot messages)" {
+    linux /live/vmlinuz chamesle.install=1 modprobe.blacklist=amdgpu,radeon,nouveau,xe loglevel=4 console=tty0 console=ttyS0,115200
+    initrd /live/initrd.img
+}
+EOF
+fi
 "$GRUB_MKRESCUE" -o "$ISO" "$ISO_DIR" -volid CHAMESLE
 (cd "$OUT" && sha256sum "$(basename "$ISO")" > "$(basename "$ISO").sha256")
 ls -lh "$ISO"
