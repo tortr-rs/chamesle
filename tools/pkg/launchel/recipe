@@ -1,0 +1,14 @@
+name=launchel
+version=0.1
+rel=0
+desc="One line to type what you want to run"
+url=https://chamesle.org
+license="MIT"
+source=
+makedeps="gcc make pkg-config libX11-devel libXft-devel fontconfig-devel"
+depends=""
+
+build() {
+    make
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}
