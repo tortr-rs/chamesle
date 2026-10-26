@@ -1,0 +1,14 @@
+name=torrent
+version=0.1
+rel=0
+desc="Wayland compositor that looks like ttywm, without the tty behind"
+url=https://chamesle.org
+license="MIT AND GPL-2.0-only"
+source=
+makedeps="gcc make pkg-config wlroots0.19-devel wayland-devel wayland-protocols libxkbcommon-devel pixman-devel cairo-devel dbus-devel pam-devel libinput-devel libdrm-devel"
+depends="foot fuzzel dbus xorg-server-xwayland"
+
+build() {
+    make
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}
