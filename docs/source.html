@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chamesle Source - Chamesle Linux</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
+    <nav>
+      <a href="new.html">What's new</a>
+      <a href="editions.html">Editions</a>
+      <a href="packages.html">Packages</a>
+      <a href="docs.html">Docs</a>
+      <a href="board.html">Board</a>
+      <a href="about.html">About</a>
+      <a href="chat.html">Chat</a>
+    </nav>
+    <a class="button" href="download.html">Download</a>
+  </div>
+</header>
+
+<section class="pagehead">
+  <div class="wrap">
+    <h1>Chamesle Source</h1>
+    <p class="lead">A side project: the hardest Linux distro I could think of, made by the same person who
+makes the easy one.</p>
+  </div>
+</section>
+
+<main>
+
+<p>Chamesle Linux tries to do everything for you. Chamesle Source does nothing for you. It's a kernel and an
+editor, and everything else you write yourself.</p>
+
+<h2>What you get</h2>
+<ul>
+  <li><b>A Linux kernel.</b> The same one Chamesle Linux ships.</li>
+  <li><b>vi, as the first and only program.</b> Not a vi clone: Bill Joy's own ex 1.1 from 1977, the first
+  vi there was, brought over to today's C. It runs as PID 1, where an init system would normally be.</li>
+  <li><b>A C compiler behind it.</b> tcc is built into vi. Save with <code>wq</code> and what you wrote is
+  compiled and run. If it doesn't compile, you stay in vi and see the errors.</li>
+  <li><b>A libc in one file.</b> <code>c.h</code>, about 800 lines, our own. It's all the C library there is.</li>
+</ul>
+<p>That's it. There's no init, no shell, no <code>ls</code>, no <code>cp</code>, no network tools.</p>
+
+<h2>What you make</h2>
+<p>The first thing you write is a shell, because there isn't one. Then the commands you're used to: listing
+files, copying them, mounting a disk. Then a way to install the system onto that disk, so it survives a restart.
+Then <code>wget</code>, so the computer can download something, and <code>tar</code>, so it can unpack what it
+downloaded. With those two you can fetch a real compiler, gcc, and from there build bigger things.</p>
+<p>Every program on the system is one you typed in, in a 1977 editor, on top of a libc that fits on a few pages.</p>
+
+<h2>fbttywm</h2>
+<p><a href="docs.html#ttywm">ttywm</a> is the window manager Chamesle Linux uses for its TTY Flavor: the console,
+with floating windows on top. fbttywm is the same idea without Xorg underneath. It draws straight to the screen
+and reads the keyboard and mouse itself, and every window is one of its own terminals.</p>
+<p>It ships with Chamesle Source, but only as source code. To get windows you need gcc, so first you need
+<code>wget</code> and <code>tar</code>, and before those a shell and the basic commands. You have to earn it.</p>
+
+<h2>Why</h2>
+<p>Making a distro easy is mostly about hiding work: drivers sorted, apps found, settings that already make
+sense. Chamesle Source is that work with nothing hidden. Knowing every layer from the kernel up is what makes it
+possible to build the easy version properly, and having done it the hard way is the proof.</p>
+<p>It also answers a question people sometimes ask about small distros: is this just someone else's system with a
+new wallpaper? Chamesle Source has nothing of anyone else's in it except the kernel, the compiler and a 1977
+editor.</p>
+
+<h2>Try it</h2>
+<p>The code is on <a href="https://github.com/tortr-rs/chamesle-source">GitHub</a>. It runs in QEMU with one
+script.</p>
+
+<h2>Should I use it?</h2>
+<p>No. Nobody should use it for anything real. It's a side project for fun and for learning. If you want a
+computer that works, <a href="download.html">get Chamesle Linux</a>.</p>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols4">
+      <div>
+        <a class="brand" href="./">Chamesle Linux</a>
+        <p>A Void-based Linux distribution for everyday computers.</p>
+      </div>
+      <div>
+        <h4>Get it</h4>
+        <a href="download.html">Download</a>
+        <a href="editions.html">Editions</a>
+        <a href="packages.html">Packages</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="docs.html">Docs</a>
+        <a href="board.html">Board</a>
+        <a href="chat.html">Chat</a>
+        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <a href="new.html">What's new</a>
+        <a href="about.html">About and roadmap</a>
+        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
+      </div>
+    </div>
+    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
+  </div>
+</footer>
+
+<script src="egg.js?2"></script>
+</body>
+</html>
