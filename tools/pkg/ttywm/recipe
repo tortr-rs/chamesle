@@ -1,12 +1,12 @@
 name=ttywm
-version=0.5
-rel=0
+version=0.6
+rel=5
 desc="Floating window manager that looks like a tty"
 url=https://chamesle.org
 license="MIT AND GPL-2.0-only"
 source=
-makedeps="gcc make pkg-config libX11-devel libXft-devel fontconfig-devel dbus-devel pam-devel"
-depends="xterm rofi dbus"
+makedeps="gcc make pkg-config libX11-devel libXft-devel fontconfig-devel dbus-devel pam-devel libpng-devel libjpeg-turbo-devel"
+depends="tyrmel launchel dbus"
 
 build() {
     make

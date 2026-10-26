@@ -1,7 +1,7 @@
 ttywm - a window manager that looks like a tty
 ==============================================
-Every screen is a full screen shell, in the console's own font and colours.
-Windows float on top of it in frames drawn with that font:
+Windows float in frames drawn with the console's own font, on pitch black
+or a wallpaper:
 
 	┌─[ firefox ]──────────────[x]┐
 	│                             │
@@ -11,7 +11,11 @@ The bottom line shows the network, volume, battery, date, time and which tty
 you're on. Click the volume to mute, scroll on it to change it, click the
 network to set up wifi.
 
-X11 only, one C file, needs libX11, libXft, xterm, and rofi for the apps menu.
+X11 only, one C file, needs libX11, libXft, tyrmel for the terminal and launchel for the apps menu.
+ttywmbg puts the wallpaper up, and works with any window manager:
+
+	ttywmbg ~/pictures/sea.png fill
+	ttywmbg black
 
 Install
 -------
@@ -32,6 +36,26 @@ It's plain words, like
 	super+w = firefox
 
 Change a line and save: ttywm picks it up straight away.
+
+New in 0.6:
+
+	wallpaper = ~/pictures/sea.png    png or jpeg, nothing means black
+	wallpaper fit = fill              fill, fit, centre or tile
+	shell behind windows = on         the old look, a shell on every tty
+	border typing = on            new windows type their border in first
+	typing speed = fast           fast, normal or slow
+	bottom line = tty clock date  what the bottom line shows, in that order
+	bottom line command = uptime  your own things on it, up to 4
+	window firefox = tty 2        where a program's windows go
+	window mpv = full screen
+	include = keys                more settings from another file
+	super+h = left half           every key can do every action now
+
+Updates
+-------
+When ttywm is updated, it swaps itself for the new version on its own:
+your windows, shells and ttys stay as they were, no logging out.
+Put "super+shift+r = restart" in your settings to do it by hand.
 
 Keys
 ----
