@@ -28,18 +28,47 @@
 <section class="pagehead">
   <div class="wrap">
     <h1>What's new</h1>
-    <p class="lead">0.5.0 is out. Get it from the <a href="download.html">download page</a>, or run <code>sudo apk upgrade</code>.</p>
+    <p class="lead">0.6.0 is out. Get it from the <a href="download.html">download page</a>, or run <code>sudo apk upgrade</code>.</p>
   </div>
 </section>
 
 <main class="news">
+
+<h2>0.6.0: Jiggity, four new ISOs and a faster kernel</h2>
+<p><b>Jiggity, our own installer.</b> The USB stick now starts with two choices: <b>Try Chamesle</b> and
+<b>Install Chamesle</b>. Install goes straight into Jiggity, which works like the Windows installer: pick a
+drive or the free space next to Windows, tick encryption if you want it, and it installs and restarts. Your
+name, password and time zone you set on the first start, like a new Windows PC.</p>
+<p><b>Four new ISOs.</b></p>
+<ul>
+  <li><a href="editions.html#ranni"><b>Ranni</b></a>: KDE Plasma set up to feel like a Mac, with a menu bar at
+  the top, a dock at the bottom and Super+Space to search. The Khongoryn Els dunes on the desktop.</li>
+  <li><a href="editions.html#play"><b>Play</b></a>: KDE Plasma with Steam already on the USB stick, GameMode,
+  and controllers that work when you plug them in. The northern lights over Lofoten on the desktop.</li>
+  <li><a href="editions.html#tty"><b>TTY</b></a>: the console with floating windows, on ttywm.</li>
+  <li><a href="editions.html#server"><b>Server</b></a>: no desktop, Jiggity in text mode, SSH on from the
+  start.</li>
+</ul>
+<p><b>A faster kernel.</b> Chamesle now runs CachyOS's long-term kernel, tuned for desktops, so the system
+stays quick while something heavy runs in the background. If it ever crashes, the blue screen shows a QR
+code: scan it with your phone and it opens the crash report in a readable form, ready to send to us.</p>
+<p>Also in 0.6:</p>
+<ul>
+  <li><b>Lighter.</b> Bluetooth's tray icon only starts on computers that have Bluetooth, and services for
+  programs an edition doesn't have stay off.</li>
+  <li><b>ttywm 0.5.</b> Brightness keys, notifications in a frame in the top right, Super+arrows to put windows
+  side by side, and Super+L to lock with a login prompt.</li>
+  <li><b>fbttywm.</b> ttywm without X, straight on the screen: <code>sudo apk add fbttywm</code> and run it
+  from a text console.</li>
+</ul>
+<p>Already on Chamesle? <code>sudo apk upgrade</code> brings the new kernel, and a restart starts it.</p>
 
 <h2>ttywm: the console, with windows</h2>
 <p>Our own window manager is out. Every screen is a full screen shell in the real console font and colours, and
 windows float on top in frames drawn with box characters. Super+1 to Super+9 switch between tty1 and tty9, and
 the bottom line shows the network, volume, battery and the time. The settings are one file in plain words, and
 saving it changes things right away. <code>sudo apk add ttywm</code>, then pick ttywm on the sign-in screen.
-It's the base of the TTY Flavor coming in 0.6. <a href="editions.html#tty">Have a look</a>.</p>
+It's the base of the TTY Flavor. <a href="editions.html#tty">Have a look</a>.</p>
 
 <h2>0.5.0: KDE Plasma, and a friendlier start</h2>
 <p><b>A KDE Plasma edition.</b> A start menu and a taskbar like you're used to, light windows with the Inter
