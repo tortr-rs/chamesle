@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # first boot setup: time zone, wi-fi, user account
-import os
 import re
 import subprocess
 import sys
@@ -11,27 +10,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib
 
 sys.path.insert(0, "/usr/lib/jiggity")
+import account
 import ui
-
-MARK = "/etc/chamesle/firstboot"
-GROUPS = "wheel audio video input network storage optical scanner lp plugdev bluetooth users kvm".split()
-
-
-def zones():
-    out = []
-    try:
-        for line in open("/usr/share/zoneinfo/zone1970.tab"):
-            if not line.startswith("#"):
-                out.append(line.split("\t")[2].strip())
-    except OSError:
-        out = ["UTC"]
-    return sorted(out)
-
-
-def online():
-    r = subprocess.run(["nmcli", "-t", "-f", "STATE", "general"], text=True, stdout=subprocess.PIPE,
-                       stderr=subprocess.DEVNULL)
-    return r.stdout.strip() == "connected"
+from account import zones, online
 
 
 class FirstBoot(ui.SetupWindow):
@@ -144,15 +125,11 @@ class FirstBoot(ui.SetupWindow):
 
     def on_account(self, entry):
         if entry is self.name and not self.user_edited:
-            u = re.sub(r"[^a-z0-9_-]", "", self.name.get_text().split(" ")[0].lower())
-            self.user.set_text(u)
+            self.user.set_text(account.username_from(self.name.get_text()))
         u, p1, p2 = self.user.get_text(), self.pw1.get_text(), self.pw2.get_text()
-        note, ok = "", True
-        if u and not re.fullmatch(r"[a-z_][a-z0-9_-]{0,31}", u):
-            note, ok = "A username is lowercase letters and numbers, starting with a letter.", False
-        elif u in ("root", "live", "daemon", "bin", "nobody"):
-            note, ok = "That username is taken by the system. Pick another one.", False
-        elif p2 and p1 != p2:
+        note = account.bad_username(u)
+        ok = not note
+        if ok and p2 and p1 != p2:
             note, ok = "The passwords don't match.", False
         self.account_note.set_text(note)
         self.set_button_sensitive("Next", ok and bool(u and p1 and p1 == p2))
@@ -171,21 +148,7 @@ class FirstBoot(ui.SetupWindow):
         return box, []
 
     def make_account(self):
-        user, name, pw = self.user.get_text(), self.name.get_text(), self.pw1.get_text()
-        groups = [g.split(":")[0] for g in open("/etc/group")]
-        subprocess.run(["useradd", "-m", "-s", "/bin/bash", "-c", name, "-G",
-                        ",".join(g for g in GROUPS if g in groups), user])
-        subprocess.run(["chpasswd", "-c", "SHA512"], input="%s:%s\n" % (user, pw), text=True)
-        subprocess.run(["ln", "-sf", "/usr/share/zoneinfo/" + self.zone, "/etc/localtime"])
-        with open("/etc/timezone", "w") as f:
-            f.write(self.zone + "\n")
-        host = re.sub(r"[^a-z0-9-]", "", user.lower())[:20] + "-pc"
-        with open("/etc/hostname", "w") as f:
-            f.write(host + "\n")
-        with open("/etc/hosts", "w") as f:
-            f.write("127.0.0.1\tlocalhost\n127.0.1.1\t%s\n::1\tlocalhost ip6-localhost ip6-loopback\n" % host)
-        subprocess.run(["hostname", host])
-        os.unlink(MARK)
+        account.make(self.zone, self.user.get_text(), self.name.get_text(), self.pw1.get_text())
         GLib.idle_add(Gtk.main_quit)
 
     def show_page(self, n):
@@ -196,6 +159,7 @@ class FirstBoot(ui.SetupWindow):
             self.set_button_sensitive("Yes", False)
         if n == 2:
             self.set_button_sensitive("Next", False)
+            self.name.grab_focus()
 
 
 if __name__ == "__main__":

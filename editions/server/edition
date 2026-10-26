@@ -1,0 +1,5 @@
+name=Server
+# no desktop and no sign-in screen: the console, jiggity in text, ssh on. ttywm is startx away
+login=console
+session=ttywm
+desktop-packages=no

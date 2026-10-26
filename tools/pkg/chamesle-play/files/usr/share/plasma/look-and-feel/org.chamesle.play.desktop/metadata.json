@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{ "Name": "Chamesle Linux" }],
+        "Description": "The Chamesle taskbar with Steam on it, and the Lofoten aurora",
+        "Id": "org.chamesle.play.desktop",
+        "License": "GPL-3.0-or-later",
+        "Name": "Play",
+        "Version": "0.6.0",
+        "Website": "https://chamesle.org"
+    },
+    "X-Plasma-MainScript": "defaults",
+    "X-Plasma-Inherit": "org.chamesle.desktop"
+}

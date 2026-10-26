@@ -1,4 +1,5 @@
 # progress(step, percent): 0 partition, 1 copy, 2 configure, 3 bootloader, 4 cleanup
+import glob
 import os
 import subprocess
 import time
@@ -13,7 +14,7 @@ LIVE_ONLY = ["/etc/sudoers.d/live", "/etc/polkit-1/rules.d/49-live.rules", "/etc
              "/etc/sddm.conf.d/90-live.conf", "/usr/share/applications/chamesle-install.desktop", "/usr/bin/chamesle-install",
              "/usr/bin/live-installer", "/usr/lib/live-installer", "/usr/share/live-installer",
              "/usr/share/icons/live-installer-progress-dot-on.png", "/usr/share/icons/live-installer-progress-dot-off.png",
-             "/var/lib/AccountsService/users/live", "/usr/bin/jiggity"]
+             "/var/lib/AccountsService/users/live", "/usr/bin/jiggity", "/etc/chamesle/autologin"]
 
 
 def chroot(*cmd, input=None):
@@ -134,12 +135,16 @@ def install(row, passphrase, language, keyboard, progress):
         set_grub("GRUB_CMDLINE_LINUX", "rd.luks.uuid=%s" % uuid(plan.root))
     chroot("dracut", "--force", "--regenerate-all")
     progress(3, 40)
-    cmdline = "quiet splash loglevel=3 drm.panic_screen=kmsg"
+    cmdline = "quiet splash loglevel=3 drm.panic_screen=qr_code"
     if os.path.exists(T + "/usr/lib/chamesle/init"):
         cmdline += " init=/usr/lib/chamesle/init"
     set_grub("GRUB_DISTRIBUTOR", "Chamesle")
     set_grub("GRUB_CMDLINE_LINUX_DEFAULT", cmdline)
     set_grub("GRUB_DISABLE_OS_PROBER", "false")
+    # our kernel first, void's below it for when ours doesn't start
+    ours = sorted(glob.glob(T + "/boot/vmlinuz-*-cachyos-lts"))
+    if ours:
+        set_grub("GRUB_TOP_LEVEL", ours[-1][len(T):])
     set_grub("GRUB_GFXMODE", "auto")
     set_grub("GRUB_GFXPAYLOAD_LINUX", "keep")
     if os.path.exists(T + "/usr/share/grub/themes/chamesle/theme.txt"):

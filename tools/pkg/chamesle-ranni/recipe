@@ -1,0 +1,13 @@
+name=chamesle-ranni
+version=0.6.0
+rel=0
+desc="Chamesle Ranni: KDE Plasma like a Mac, with a menu bar, a dock, search on Super+Space and the Mongolian dunes"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends="chamesle-kde chamesle-sddm appmenu-gtk3-module"
+
+build() {
+    cp -a . "$pkgdir/"
+}

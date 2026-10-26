@@ -583,12 +583,16 @@ class InstallerEngine:
         if(self.setup.grub_device is not None):
             self.update_progress(80, False, False, _("Installing bootloader"))
             self.set_grub_option("GRUB_DISTRIBUTOR", "Chamesle")
-            cmdline = "quiet splash loglevel=3 drm.panic_screen=kmsg"
+            cmdline = "quiet splash loglevel=3 drm.panic_screen=qr_code"
             # dinit with the blue screen when the system can't finish starting
             if os.path.exists("/target/usr/lib/chamesle/init"):
                 cmdline += " init=/usr/lib/chamesle/init"
             self.set_grub_option("GRUB_CMDLINE_LINUX_DEFAULT", cmdline)
             self.set_grub_option("GRUB_DISABLE_OS_PROBER", "false")
+            # our kernel first, void's below it for when ours doesn't start
+            ours = sorted(glob("/target/boot/vmlinuz-*-cachyos-lts"))
+            if ours:
+                self.set_grub_option("GRUB_TOP_LEVEL", ours[-1][len("/target"):])
             self.set_grub_option("GRUB_GFXMODE", "auto")
             self.set_grub_option("GRUB_GFXPAYLOAD_LINUX", "keep")
             if os.path.exists("/target/usr/share/grub/themes/chamesle/theme.txt"):

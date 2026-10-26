@@ -1,0 +1,4 @@
+name=Play
+# a flavor: the kde plasma edition for games
+base=kde
+flatpaks=com.valvesoftware.Steam

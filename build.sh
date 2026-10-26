@@ -27,7 +27,9 @@ for t in "$APK" mksquashfs xorriso readelf zstd cpio depmod curl; do command -v 
 command -v grub-mkrescue >/dev/null || command -v grub2-mkrescue >/dev/null || missing="$missing grub-mkrescue"
 [ -z "$missing" ] || { echo "build: missing tools:$missing" >&2; exit 1; }
 GRUB_MKRESCUE=$(command -v grub-mkrescue || command -v grub2-mkrescue)
-packages() { sed 's/#.*//' "$HERE/editions/base.packages" $(for e in $EDS; do echo "$HERE/editions/$e/packages"; done) | tr ' \t' '\n\n' | grep -v '^$' | sort -u; }
+# an edition with desktop-packages=no (server) lists everything itself, without base.packages' desktop parts
+BASEPKGS=$HERE/editions/base.packages; [ "$(edval desktop-packages)" = no ] && BASEPKGS=
+packages() { sed 's/#.*//' $BASEPKGS $(for e in $EDS; do echo "$HERE/editions/$e/packages"; done) | tr ' \t' '\n\n' | grep -v '^$' | sort -u; }
 
 echo "=== [1/5] INSTALLING THE SYSTEM ($EDITION_NAME, from $REPO)"
 rm -rf "$WORK"; mkdir -p "$ROOT/etc/apk/keys" "$ISO_DIR/live" "$OUT"
@@ -52,6 +54,19 @@ rm -rf "$ROOT/tmp/scripts"
 umount "$ROOT/proc" 2>/dev/null || true; umount -lR "$ROOT/dev" 2>/dev/null || true; trap - EXIT
 # what the installed system updates from
 echo "v3 $PUBLIC_REPO" > "$ROOT/etc/apk/repositories"
+# flathub apps on the iso (play: steam). this machine's flatpak installs them into the image's system flatpaks
+FLATPAKS=$(edval flatpaks)
+if [ -n "$FLATPAKS" ]; then
+    command -v flatpak >/dev/null || { echo "build: flatpaks=$FLATPAKS needs flatpak on this machine" >&2; exit 1; }
+    export FLATPAK_SYSTEM_DIR=$ROOT/var/lib/flatpak
+    # a copy from an earlier build saves the download: install then only brings what's new
+    FLATPAK_SEED=${FLATPAK_SEED:-$HERE/work/flatpak-seed}
+    [ -d "$FLATPAK_SEED" ] && { mkdir -p "$FLATPAK_SYSTEM_DIR"; cp -a "$FLATPAK_SEED/." "$FLATPAK_SYSTEM_DIR/"; }
+    flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    flatpak install --system -y --noninteractive flathub $FLATPAKS
+    flatpak update --system -y --noninteractive
+    unset FLATPAK_SYSTEM_DIR
+fi
 
 echo "=== [2/5] CHAMESLE: SERVICES, LOOK AND BRANDING"
 cp -a "$HERE/overlay/." "$ROOT/"
@@ -60,9 +75,9 @@ for e in $EDS; do [ -d "$HERE/editions/$e/overlay" ] && cp -a "$HERE/editions/$e
 # the installer's slideshow starts with this edition's desktop (the website's picture of it) and how to get around
 SLIDES=$ROOT/usr/share/live-installer/slideshow
 SHOT=; for e in $EDITION $BASE; do [ -z "$SHOT" ] && [ -f "$HERE/docs/img/$e.png" ] && SHOT=$HERE/docs/img/$e.png; done
-if [ -n "$SHOT" ]; then cp "$SHOT" "$SLIDES/desktop.png"; else rm -f "$SLIDES/desktop.png"; fi
+if [ -d "$SLIDES" ] && [ -n "$SHOT" ]; then cp "$SHOT" "$SLIDES/desktop.png"; else rm -f "$SLIDES/desktop.png"; fi
 TOUR=$(edval tour)
-if [ -n "$TOUR" ]; then
+if [ -d "$SLIDES" ] && [ -n "$TOUR" ]; then
     sed -i "s|<p id=\"tour\">[^<]*</p>|<p id=\"tour\">${TOUR//&/\\&}</p>|" "$SLIDES/index.html"
 fi
 # xfce's stock wallpapers -> ours, for monitors xfce4-desktop.xml doesn't name
@@ -119,6 +134,10 @@ if [ "$LOGIN" = sddm ]; then
     mkdir -p "$ROOT/etc/sddm.conf.d"
     printf '# the live session only (the installer removes this file)\n[Autologin]\nUser=live\nSession=%s.desktop\n' "$SESSION" \
         > "$ROOT/etc/sddm.conf.d/90-live.conf"
+elif [ "$LOGIN" = console ]; then
+    # no sign-in screen: tty1 logs live in, and Install runs jiggity in text there
+    echo live > "$ROOT/etc/chamesle/autologin"
+    rm -f "$ROOT/etc/dinit.d/boot.d/display-manager"
 elif [ "$LOGIN" = gdm ]; then
     # gdm has a single config file, the installer takes these lines out again. the session comes from accountsservice
     sed -i 's/^\[daemon\]$/&\n# the live session only\nAutomaticLoginEnable=True\nAutomaticLogin=live/' "$ROOT/etc/gdm/custom.conf"
@@ -131,7 +150,8 @@ fi
 "$IN" "$ROOT" /usr/bin/xdg-user-dirs-update 2>/dev/null || true
 # installer icon on the desktop, marked trusted at login or xfce and caja ask first
 mkdir -p "$ROOT/home/live/Desktop" "$ROOT/home/live/.config/autostart"
-install -m755 "$ROOT/usr/share/applications/chamesle-install.desktop" "$ROOT/home/live/Desktop/"
+[ -f "$ROOT/usr/share/applications/chamesle-install.desktop" ] &&
+    install -m755 "$ROOT/usr/share/applications/chamesle-install.desktop" "$ROOT/home/live/Desktop/"
 cat > "$ROOT/home/live/.config/autostart/trust-installer.desktop" <<'EOF'
 [Desktop Entry]
 Type=Application
@@ -153,7 +173,9 @@ rm -f "$ROOT/etc/machine-id" "$ROOT/var/lib/dbus/machine-id"
 rm -rf "$ROOT/var/cache/apk"/*
 
 echo "=== [4/5] KERNEL AND INITRAMFS"
-KVER=$(ls "$ROOT/usr/lib/modules" | sort -V | tail -n1)
+# our kernel, not void's fallback next to it, even when void's has the higher version
+KVER=$(ls "$ROOT/usr/lib/modules" | grep -- '-cachyos-lts$' | sort -V | tail -n1)
+[ -n "$KVER" ] || KVER=$(ls "$ROOT/usr/lib/modules" | sort -V | tail -n1)
 BUILD_ID="$VERSION-$EDITION-$(date +%s)"
 cp "$ROOT/boot/vmlinuz-$KVER" "$ISO_DIR/live/vmlinuz"
 "$HERE/tools/initrd/build-initrd.sh" "$ROOT" "$KVER" "$ISO_DIR/live/initrd.img" "$BUILD_ID"
@@ -186,28 +208,28 @@ if [ ! -f /live/vmlinuz ]; then search --no-floppy --set=root --file /live/vmlin
 
 # two choices, like a Windows USB: try it, or install it. Install starts Jiggity alone on the screen, with no desktop
 menuentry "Try Chamesle" {
-    linux /live/vmlinuz quiet splash loglevel=3 drm.panic_screen=kmsg
+    linux /live/vmlinuz quiet splash loglevel=3 drm.panic_screen=qr_code
     initrd /live/initrd.img
 }
 menuentry "Install Chamesle" {
-    linux /live/vmlinuz chamesle.install=1 quiet splash loglevel=3 drm.panic_screen=kmsg
+    linux /live/vmlinuz chamesle.install=1 quiet splash loglevel=3 drm.panic_screen=qr_code
     initrd /live/initrd.img
 }
 submenu "More options" {
     menuentry "Try Chamesle (safe graphics)" {
-        linux /live/vmlinuz quiet loglevel=3 nomodeset drm.panic_screen=kmsg
+        linux /live/vmlinuz quiet loglevel=3 nomodeset drm.panic_screen=qr_code
         initrd /live/initrd.img
     }
     menuentry "Install Chamesle (safe graphics)" {
-        linux /live/vmlinuz chamesle.install=1 quiet loglevel=3 nomodeset drm.panic_screen=kmsg
+        linux /live/vmlinuz chamesle.install=1 quiet loglevel=3 nomodeset drm.panic_screen=qr_code
         initrd /live/initrd.img
     }
     menuentry "Try Chamesle (copy to RAM)" {
-        linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3 drm.panic_screen=kmsg
+        linux /live/vmlinuz chamesle.toram=1 quiet splash loglevel=3 drm.panic_screen=qr_code
         initrd /live/initrd.img
     }
     menuentry "Try Chamesle (show boot messages)" {
-        linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200 drm.panic_screen=kmsg
+        linux /live/vmlinuz loglevel=4 console=tty0 console=ttyS0,115200 drm.panic_screen=qr_code
         initrd /live/initrd.img
     }
 }
