@@ -1,10 +1,10 @@
 # ttywm
-VERSION = 0.4
+VERSION = 0.5
 PREFIX = /usr/local
 
-PKGS = x11 xft fontconfig
+PKGS = x11 xft fontconfig dbus-1
 CFLAGS += -std=c99 -pedantic -Wall -Os -D_DEFAULT_SOURCE -DVERSION=\"$(VERSION)\" `pkg-config --cflags $(PKGS)`
-LDLIBS += `pkg-config --libs $(PKGS)`
+LDLIBS += `pkg-config --libs $(PKGS)` -lpam
 
 ttywm: ttywm.c
 	$(CC) $(CFLAGS) -o $@ ttywm.c $(LDFLAGS) $(LDLIBS)
@@ -23,7 +23,18 @@ uninstall:
 	rm -rf $(DESTDIR)$(PREFIX)/bin/ttywm $(DESTDIR)$(PREFIX)/bin/ttywm-term $(DESTDIR)$(PREFIX)/bin/ttywm-session $(DESTDIR)/usr/share/fonts/ttywm \
 	      $(DESTDIR)/usr/share/xsessions/ttywm.desktop
 
-clean:
-	rm -f ttywm
+# fbttywm: the same on the framebuffer, without X. needs nothing but a libc
+fbttywm: fbttywm.c
+	$(CC) -O2 -Wall -o $@ fbttywm.c
 
-.PHONY: install uninstall clean
+install-fb: fbttywm
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	install -m 755 fbttywm $(DESTDIR)$(PREFIX)/bin/
+
+uninstall-fb:
+	rm -f $(DESTDIR)$(PREFIX)/bin/fbttywm
+
+clean:
+	rm -f ttywm fbttywm
+
+.PHONY: install uninstall install-fb uninstall-fb clean
