@@ -1,0 +1,6 @@
+#!/bin/sh
+# runs a program only on computers with bluetooth: blueman's tray icon is 60 MB for nothing without it
+for a in /sys/class/bluetooth/hci*; do
+    [ -e "$a" ] && exec "$@"
+done
+exit 0

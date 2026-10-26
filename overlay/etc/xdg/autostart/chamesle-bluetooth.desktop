@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetooth
+Comment=The bluetooth icon, on computers that have bluetooth
+Icon=blueman
+Exec=/usr/lib/chamesle/if-bluetooth blueman-applet
+TryExec=blueman-applet
+NoDisplay=true
