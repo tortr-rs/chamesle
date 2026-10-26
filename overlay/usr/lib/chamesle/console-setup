@@ -1,4 +1,4 @@
 #!/bin/sh
 # what console-getty runs instead of login: jiggity's text screens
-export TERM=linux LANG=en_US.UTF-8
+export TERM=linux LANG=C.UTF-8
 exec /usr/bin/python3 /usr/lib/jiggity/text.py "$1"

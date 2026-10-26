@@ -1,9 +1,13 @@
-# progress(step, percent): 0 partition, 1 copy, 2 configure, 3 bootloader, 4 cleanup
+# progress(step, percent): 0 partition, 1 copy, 2 configure, 3 bootloader, 4 cleanup.
+# the netinst puts the desktop in after the copy: 2 desktop, and the rest one later
 import glob
 import os
+import shutil
 import subprocess
+import sys
 import time
 
+import account
 import disks
 from disks import run
 
@@ -39,8 +43,11 @@ def set_grub(key, value):
         f.write("\n".join(lines).rstrip("\n") + "\n")
 
 
-def install(row, passphrase, language, keyboard, progress):
+def install(row, passphrase, language, keyboard, progress, desktop=None, user=None):
     os.makedirs(T, exist_ok=True)
+    if desktop:
+        step = progress
+        progress = lambda n, pc: step(n + (n >= 2), pc)
     progress(0, 0)
     plan = disks.make(row, passphrase is not None)
     progress(0, 40)
@@ -92,9 +99,13 @@ def install(row, passphrase, language, keyboard, progress):
         run("rm", "-rf", T + path)
     if os.path.exists(T + "/etc/gdm/custom.conf"):
         run("sed", "-i", "/^# the live session only$/d; /^AutomaticLogin/d", T + "/etc/gdm/custom.conf")
-    chroot("userdel", "-r", "live")
+    if "\nlive:" in "\n" + open(T + "/etc/passwd").read():
+        chroot("userdel", "-r", "live")
     chroot("passwd", "-dl", "root")
-    open(T + "/etc/chamesle/firstboot", "w").close()
+    if desktop:
+        add_desktop(desktop, step)
+    else:
+        open(T + "/etc/chamesle/firstboot", "w").close()
     progress(2, 30)
 
     with open(T + "/etc/fstab", "w") as f:
@@ -129,6 +140,8 @@ def install(row, passphrase, language, keyboard, progress):
                 '    Option "XkbLayout" "%s"\n    Option "XkbVariant" "%s"\nEndSection\n' % (layout, variant or ""))
     with open(T + "/etc/vconsole.conf", "w") as f:
         f.write("KEYMAP=%s\n" % (layout + ("-" + variant if variant else "")))
+    if user:
+        account.make(user["zone"], user["user"], user["name"], user["password"], user["host"], T)
     progress(2, 100)
 
     if passphrase is not None:
@@ -166,3 +179,28 @@ def install(row, passphrase, language, keyboard, progress):
     if passphrase is not None:
         subprocess.run(["cryptsetup", "close", "chamesle"])
     progress(4, 100)
+
+
+# the netinst: the desktop from the repo, with apk's progress. the wi-fi jiggity connected to comes along
+def add_desktop(desktop, step):
+    step(2, 0)
+    shutil.copy("/etc/resolv.conf", T + "/etc/resolv.conf")
+    nm = "/etc/NetworkManager/system-connections"
+    if os.path.isdir(nm):
+        os.makedirs(T + nm, exist_ok=True)
+        for f in os.listdir(nm):
+            shutil.copy2(os.path.join(nm, f), T + nm)
+    r, w = os.pipe()
+    print("jiggity: chamesle-desktop", desktop)
+    p = subprocess.Popen(["chroot", T, "/usr/bin/env", "CHAMESLE_PROGRESS=%d" % w, "/usr/bin/chamesle-desktop", desktop],
+                         pass_fds=(w,), stdout=sys.stderr, stderr=sys.stderr)
+    os.close(w)
+    with os.fdopen(r) as f:
+        for line in f:
+            done, _, total = line.strip().partition("/")
+            if done.isdigit() and total.isdigit() and int(total):
+                step(2, min(99, int(done) * 100 // int(total)))
+    if p.wait():
+        raise RuntimeError("installing the desktop failed, check the internet connection")
+    shutil.copy("/usr/share/chamesle/repositories", T + "/etc/apk/repositories")
+    step(2, 100)

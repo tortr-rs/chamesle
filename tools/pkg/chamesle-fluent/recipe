@@ -1,0 +1,14 @@
+name=chamesle-fluent
+version=2026.07.27
+rel=0
+desc="Fluent GTK and Xfwm4 themes and Fluent icons (vinceliuice), the look every Chamesle desktop uses"
+url=https://github.com/vinceliuice/Fluent-gtk-theme
+license=GPL-3.0-or-later
+source=
+makedeps=""
+depends=""
+# files/ isn't in git: tools/themes.sh tools/pkg/chamesle-fluent/files makes it
+
+build() {
+    cp -a . "$pkgdir/"
+}

@@ -1,0 +1,4 @@
+# what of /usr/lib/firmware is on the iso, so wi-fi and ethernet work while installing. the installed system gets
+# all of it. iwlwifi keeps the 3 newest of each chip
+intel/iwlwifi ath9k_htc ath10k ath11k/WCN6855 ath11k/QCA6390 ath12k/WCN7850 mediatek rtw88 rtw89 rtlwifi rtl_nic
+brcm cypress
