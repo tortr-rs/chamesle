@@ -49,29 +49,32 @@
 
 
 <h2 id="first">First steps</h2>
-<p>When the live session starts you're logged in as <code>live</code>. Some things worth knowing:</p>
+<p>After installing, you restart straight into your desktop. Some things worth knowing:</p>
 <ul>
   <li>The Windows key opens the start menu. Type to search.</li>
   <li>Wi-Fi is the network icon in the bottom right.</li>
   <li>The terminal is in the menu under System, or right-click the desktop.</li>
-  <li>The live user can use <code>sudo</code> without a password.</li>
-  <li>Nothing you do in the live session is saved when you restart, unless you save it to a disk or USB stick.</li>
+  <li>Your user can use <code>sudo</code> with the password you picked in Jiggity.</li>
 </ul>
 
 <h2 id="install">Installing Chamesle</h2>
 <p><b>Before you install, back up anything important.</b> Shrinking Windows works fine almost always, but
 &ldquo;almost&rdquo; isn't &ldquo;always&rdquo;. If Windows uses BitLocker, get the recovery key
 (<a href="https://aka.ms/myrecoverykey">aka.ms/myrecoverykey</a>) or turn BitLocker off before you start.</p>
-<p>Boot the USB stick, then double-click <b>Install Chamesle</b> on the desktop.</p>
+<p>Boot the USB stick and pick <b>Install Chamesle</b>. Jiggity, the installer, asks everything first and
+installs after, so you can walk away once you've answered. It needs the internet, by cable or Wi-Fi, to
+download your desktop.</p>
 <ol>
-  <li><b>Language:</b> pick yours from the list.</li>
-  <li><b>Timezone:</b> click where you are on the map.</li>
-  <li><b>Keyboard:</b> pick your layout, there's a picture of it and a box to try it.</li>
-  <li><b>User account:</b> your name, a username, a password and a name for the computer.</li>
-  <li><b>Installation type:</b> &ldquo;Automated&rdquo; erases a disk and sets everything up, with encryption
-  if you tick it. &ldquo;Manual&rdquo; lets you choose partitions yourself. To keep Windows, pick Manual, open
-  GParted from there, shrink the Windows partition, and install into the free space.</li>
-  <li><b>Summary:</b> check it and click Install. Restart when it's done and take the stick out.</li>
+  <li><b>Language</b> and <b>keyboard:</b> pick yours from the lists.</li>
+  <li><b>Network:</b> a cable just works. For Wi-Fi, pick your network and type the password.</li>
+  <li><b>Time zone:</b> your region, then your city.</li>
+  <li><b>You:</b> your name, a username, a password and a name for the computer.</li>
+  <li><b>Disk:</b> a whole drive, or the free space next to Windows. To keep Windows, shrink it from Windows
+  first (Disk Management, &ldquo;Shrink Volume&rdquo;) so there's free space to pick. Tick encryption if you
+  want it.</li>
+  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Ranni, Play, TTY, or Server with no desktop.</li>
+  <li><b>Summary:</b> check it and pick Install. Nothing on your disk changes before this. Restart when it's
+  done and take the stick out.</li>
 </ol>
 
 <h2 id="apps">Installing apps</h2>
@@ -121,7 +124,7 @@ depends-on = network</code></pre>
 
 <h2 id="windows">Windows programs</h2>
 <p>Double-click a <code>.exe</code> or <code>.msi</code>. The first time, Chamesle offers to install Windows
-support (Wine). It needs about 3&nbsp;GB, so it won't fit in the live session: install Chamesle first. Programs
+support (Wine). It needs about 3&nbsp;GB. Programs
 you install this way show up in your menu like any other app. Not every Windows program works; the
 <a href="https://appdb.winehq.org/">Wine app database</a> says how well a given one does.</p>
 <p>For Steam games, use Steam (it's on Flathub) and turn on Proton in its settings.</p>
