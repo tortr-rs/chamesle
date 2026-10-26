@@ -1,0 +1,52 @@
+interber - a web browser that looks like a tty
+=============================================
+The whole window is the page. One line at the bottom to type in, the
+console's font and colours, and [ tabs ] on top when there's more than one:
+
+	[ github ] [ youtube ]
+	...the page...
+	https://github.com/tortr-rs/chamesle                      42%
+
+Type an address, or words to search. The home page is your bookmarks.
+
+One C file on WebKitGTK, the same engine as surf and GNOME Web.
+
+Install
+-------
+	make
+	sudo make install
+
+Settings
+--------
+~/.config/interber/config, made the first time interber starts. Plain words:
+
+	home page = interber:home
+	search = https://duckduckgo.com/?q=%s
+	remember tabs = on
+	javascript = on
+	zoom = 100%
+	downloads = ~/Downloads
+	text colour = grey
+	background colour = black
+
+Change a line and save: it works from the next page you open.
+Bookmarks are ~/.config/interber/bookmarks, one "address name" a line.
+
+Keys
+----
+	Ctrl+l              type an address or a search
+	Ctrl+t              new tab
+	Ctrl+w              close tab
+	Ctrl+Shift+t        bring the closed tab back
+	Ctrl+Tab            next tab, Ctrl+1..9 a tab
+	Alt+Left, Alt+Right back, forward
+	Ctrl+r              reload
+	Ctrl+f              find on the page, Enter for the next one
+	Ctrl+d              bookmark the page
+	Ctrl+plus, minus, 0 zoom
+	F11                 full screen
+	Ctrl+h              home
+	Ctrl+q              quit
+
+Middle click or Ctrl+click a link for a new tab, middle click a tab to close it.
+Downloads go straight into ~/Downloads.
