@@ -2,6 +2,7 @@
 # build one of our own packages into the repo: tools/pkg/build.sh python3-parted
 # a recipe sets name version rel desc url license source sha256 makedeps depends and build(),
 # which runs in a clean root and installs into $pkgdir
+# BASE=DIR starts from a copy of a root that has the makedeps already, for when the repo is slow
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 TOP=$HERE/../..
@@ -28,6 +29,9 @@ fi
 W=$TOP/work/pkg/$name
 unshare --map-root-user --map-auto rm -rf "$W"
 ROOT=$W/root
+mkdir -p "$ROOT"
+[ -z "${BASE:-}" ] || unshare --map-root-user --map-auto cp -a "$BASE/." "$ROOT/"
+unshare --map-root-user --map-auto rm -rf "$ROOT/build"
 mkdir -p "$ROOT/etc/apk/keys" "$ROOT/build/src" "$ROOT/build/pkg"
 cp "$TOP"/keys/apk/*.pub "$ROOT/etc/apk/keys/"
 echo "v3 $PULL" > "$ROOT/etc/apk/repositories"
@@ -40,10 +44,12 @@ cp "$HERE/$1/recipe" "$ROOT/build/"
 [ -d "$HERE/$1/patches" ] && cp -r "$HERE/$1/patches" "$ROOT/build/"
 
 unshare --map-root-user --map-auto --mount --pid --fork bash -euo pipefail -c '
-APK=$1 ROOT=$2 IN=$3 makedeps=$4
+APK=$1 ROOT=$2 IN=$3 makedeps=$4 base=$5
+if [ -z "$base" ]; then
 "$APK" --root "$ROOT" --arch x86_64 add --initdb --no-cache --quiet --no-scripts base-files bash coreutils sed grep findutils
 "$APK" --root "$ROOT" --arch x86_64 fix --no-cache --quiet --reinstall $("$APK" --root "$ROOT" info --quiet)
 [ -z "$makedeps" ] || "$APK" --root "$ROOT" --arch x86_64 add --no-cache --quiet $makedeps
+fi
 cat > "$ROOT/build/run" <<"EOF"
 set -euo pipefail
 . /build/recipe
@@ -54,7 +60,7 @@ export MAKEFLAGS=-j$(nproc) CFLAGS="-O2 -pipe" CXXFLAGS="-O2 -pipe"
 build
 EOF
 "$IN" "$ROOT" /bin/bash /build/run
-' - "$APK" "$ROOT" "$TOP/tools/in-image.sh" "$makedeps"
+ ' - "$APK" "$ROOT" "$TOP/tools/in-image.sh" "$makedeps" "${BASE:-}"
 
 # shared libraries it links to, minus the ones it brings itself
 PKG=$ROOT/build/pkg
