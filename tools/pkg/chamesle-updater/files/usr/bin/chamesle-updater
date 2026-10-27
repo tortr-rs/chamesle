@@ -8,6 +8,8 @@ gi.require_version("Notify", "0.7")
 from gi.repository import GLib, Gtk, Notify
 
 FIRST, EVERY = 3 * 60, 6 * 60 * 60
+AUTO_STATE = "/var/lib/chamesle/auto-update"
+SEEN = os.path.join(GLib.get_user_cache_dir(), "chamesle-updater-seen")
 
 
 def count():
@@ -28,6 +30,7 @@ class Notifier:
         GLib.timeout_add_seconds(FIRST, self.check)
 
     def check(self):
+        self.auto_done()
         threading.Thread(target=lambda: GLib.idle_add(self.show, count()), daemon=True).start()
         GLib.timeout_add_seconds(EVERY, self.check)
         return False
@@ -43,6 +46,22 @@ class Notifier:
             note.add_action("open", "Update", lambda *a: self.open())
             note.show()
         self.told = n
+
+    def auto_done(self):
+        # once for each time updates installed on their own
+        try:
+            when, n = open(AUTO_STATE).read().split()[:2]
+            seen = open(SEEN).read().strip() if os.path.exists(SEEN) else ""
+        except (OSError, ValueError):
+            return
+        if when == seen:
+            return
+        with open(SEEN, "w") as f:
+            f.write(when)
+        if seen and int(n) > 0:
+            Notify.Notification.new("Chamesle updated itself",
+                                    "%s update%s installed. Some start working after a restart." % (n, "" if n == "1" else "s"),
+                                    "software-update-available").show()
 
     def open(self):
         subprocess.Popen(["chamesle-store", "--updates"])

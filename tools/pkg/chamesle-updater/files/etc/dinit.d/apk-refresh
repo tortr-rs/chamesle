@@ -1,4 +1,4 @@
-# refresh the package list every 6 hours, for the update notifier
+# refresh the package and firmware lists every 6 hours, and install updates once a day if that's on
 type = process
 command = /usr/libexec/chamesle-refresh
 depends-on = network

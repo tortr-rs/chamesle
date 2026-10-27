@@ -1,6 +1,6 @@
 #!/bin/sh
 # what the store runs as root, through pkexec: nothing else gets through
-#   add|del PKG...   driver PKG...   upgrade   import FILE.deb|FILE.rpm
+#   add|del PKG...   driver PKG...   upgrade   import FILE.deb|FILE.rpm   auto on|off   firmware DEVICE-ID
 set -eu
 cmd=${1:-}
 [ $# -gt 0 ] && shift
@@ -26,8 +26,20 @@ import)
     case $1 in *.deb|*.rpm) ;; *) echo "only .deb and .rpm files" >&2; exit 2;; esac
     exec pkgimport install "$1"
     ;;
+auto)
+    # updates on their own or not, read by /usr/libexec/chamesle-auto-update
+    case ${1:-} in on) v=yes;; off) v=no;; *) exit 2;; esac
+    mkdir -p /etc/chamesle
+    printf '# install updates on their own once a day while plugged in (the store'"'"'s switch)\nauto=%s\n' $v > /etc/chamesle/updates.conf
+    ;;
+firmware)
+    # fwupd device ids are 40 hex characters
+    [ $# = 1 ] || exit 2
+    case $1 in *[!0-9a-f]*|"") echo "not a device id: $1" >&2; exit 2;; esac
+    exec fwupdmgr update "$1" --assume-yes --no-reboot-check
+    ;;
 *)
-    echo "usage: chamesle-store-helper add|del|driver PKG... | upgrade | import FILE" >&2
+    echo "usage: chamesle-store-helper add|del|driver PKG... | upgrade | import FILE | auto on|off | firmware ID" >&2
     exit 2
     ;;
 esac
