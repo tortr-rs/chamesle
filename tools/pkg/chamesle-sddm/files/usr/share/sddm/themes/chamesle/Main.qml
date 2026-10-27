@@ -72,6 +72,26 @@ Rectangle {
         Behavior on opacity { NumberAnimation { duration: 350; easing.type: Easing.OutCubic } }
     }
 
+    // dark at the top and bottom so the white clock and labels read on bright photos
+    Rectangle {
+        anchors.top: parent.top
+        width: parent.width
+        height: parent.height * 0.42
+        gradient: Gradient {
+            GradientStop { position: 0; color: "#66000000" }
+            GradientStop { position: 1; color: "#00000000" }
+        }
+    }
+    Rectangle {
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: parent.height * 0.2
+        gradient: Gradient {
+            GradientStop { position: 0; color: "#00000000" }
+            GradientStop { position: 1; color: "#73000000" }
+        }
+    }
+
     // ---- the lock screen ----
     Item {
         id: lock
@@ -123,46 +143,63 @@ Rectangle {
         visible: opacity > 0
         Behavior on opacity { NumberAnimation { duration: 300 } }
 
-        Column {
-            id: box
+        // the glass: a drop shadow, the tint, a shine on the top half, two streaks and the edges
+        Repeater {
+            model: 4
+            Rectangle {
+                x: pane.x - (index + 1) * 4 * root.s
+                y: pane.y + 10 * root.s - (index + 1) * 3 * root.s
+                width: pane.width + (index + 1) * 8 * root.s
+                height: pane.height + (index + 1) * 8 * root.s
+                radius: pane.radius + (index + 1) * 4 * root.s
+                color: "#14000000"
+            }
+        }
+        Rectangle {
+            id: pane
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -40 * root.s
-            spacing: 18 * root.s
-
-            // the picture people set, or the plain one
-            Item {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: 176 * root.s
-                height: width
-                Image {
-                    id: face
-                    anchors.fill: parent
-                    source: root.user && root.user.icon ? root.user.icon : "assets/user.svg"
-                    sourceSize: Qt.size(width * 2, height * 2)
-                    fillMode: Image.PreserveAspectCrop
-                    visible: false
-                    onStatusChanged: if (status === Image.Error) source = "assets/user.svg"
-                }
-                // round crop without shaders: works on machines with no 3d acceleration too
-                Canvas {
-                    id: round
-                    anchors.fill: parent
-                    property var img: face.source
-                    onImgChanged: { loadImage(img); requestPaint() }
-                    onImageLoaded: requestPaint()
-                    onPaint: {
-                        var c = getContext("2d")
-                        c.reset()
-                        c.beginPath()
-                        c.arc(width / 2, height / 2, width / 2, 0, 2 * Math.PI)
-                        c.closePath()
-                        c.clip()
-                        if (isImageLoaded(img)) c.drawImage(img, 0, 0, width, height)
-                        else { c.fillStyle = "#e6e9ee"; c.fill() }
-                    }
+            anchors.verticalCenterOffset: 20 * root.s
+            width: 520 * root.s
+            height: box.implicitHeight + 104 * root.s
+            radius: 14 * root.s
+            color: "#75208cd0"
+            border.color: "#8c000000"
+            border.width: 1
+            clip: true
+            Rectangle {
+                width: 70 * root.s; height: parent.height * 2
+                x: parent.width * .18; y: -parent.height / 2
+                rotation: 25
+                color: "#14ffffff"
+            }
+            Rectangle {
+                width: 30 * root.s; height: parent.height * 2
+                x: parent.width * .62; y: -parent.height / 2
+                rotation: 25
+                color: "#10ffffff"
+            }
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: 1
+                radius: parent.radius - 1
+                border.color: "#73ffffff"
+                border.width: 1
+                gradient: Gradient {
+                    GradientStop { position: 0; color: "#6bffffff" }
+                    GradientStop { position: 0.46; color: "#24ffffff" }
+                    GradientStop { position: 0.5; color: "#00ffffff" }
+                    GradientStop { position: 1; color: "#14ffffff" }
                 }
             }
+        }
+
+        Column {
+            id: box
+            anchors.horizontalCenter: pane.horizontalCenter
+            anchors.top: pane.top
+            anchors.topMargin: 82 * root.s
+            spacing: 16 * root.s
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -171,28 +208,46 @@ Rectangle {
                 font.pixelSize: 30 * root.s
                 font.weight: Font.DemiBold
                 text: root.shownName
+                style: Text.Raised
+                styleColor: "#99000000"
             }
 
             // the password box, with the arrow inside it like windows
             Item {
                 id: field
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 320 * root.s
-                height: 40 * root.s
+                width: 300 * root.s
+                height: 38 * root.s
+                anchors.horizontalCenterOffset: -27 * root.s
                 visible: !root.user || root.user.needsPassword
                 SequentialAnimation {
                     id: shake
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -12; duration: 50 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: 12; duration: 70 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -6; duration: 60 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: 0; duration: 50 }
+                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -39 * root.s; duration: 50 }
+                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -15 * root.s; duration: 70 }
+                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -33 * root.s; duration: 60 }
+                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -27 * root.s; duration: 50 }
                 }
                 Rectangle {
                     anchors.fill: parent
-                    radius: 6 * root.s
-                    color: password.activeFocus ? "#a0101828" : "#80101828"
-                    border.color: "#40ffffff"
+                    anchors.margins: -1
+                    radius: 5 * root.s
+                    color: "#66ffffff"
+                }
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 4 * root.s
+                    color: "#f2ffffff"
+                    border.color: "#99000000"
                     border.width: 1
+                    Rectangle {  // inset shadow along the top
+                        anchors.top: parent.top; anchors.topMargin: 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width - 2; height: 3 * root.s
+                        gradient: Gradient {
+                            GradientStop { position: 0; color: "#30000000" }
+                            GradientStop { position: 1; color: "#00000000" }
+                        }
+                    }
                     Rectangle {  // the accent line under the box when it's active
                         anchors.bottom: parent.bottom
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -206,9 +261,9 @@ Rectangle {
                     id: password
                     anchors.left: parent.left
                     anchors.right: reveal.left
-                    anchors.leftMargin: 14 * root.s
+                    anchors.leftMargin: 12 * root.s
                     anchors.verticalCenter: parent.verticalCenter
-                    color: "white"
+                    color: "#10161e"
                     font.family: root.fontName
                     font.pixelSize: 17 * root.s
                     echoMode: reveal.pressed ? TextInput.Normal : TextInput.Password
@@ -222,14 +277,14 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: "Password"
-                        color: "#c8ffffff"
+                        color: "#7a8794"
                         font: password.font
                         visible: !password.text && !password.preeditText
                     }
                 }
                 MouseArea {
                     id: reveal
-                    anchors.right: go.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     width: 32 * root.s
                     height: parent.height
@@ -237,7 +292,7 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     Image {
                         anchors.centerIn: parent
-                        source: "assets/eye.svg"
+                        source: "assets/eye-dark.svg"
                         width: 18 * root.s
                         height: width
                         sourceSize: Qt.size(width * 2, height * 2)
@@ -246,23 +301,43 @@ Rectangle {
                 }
                 MouseArea {
                     id: go
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4 * root.s
+                    anchors.left: parent.right
+                    anchors.leftMargin: 10 * root.s
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 32 * root.s
-                    height: 32 * root.s
+                    width: 44 * root.s
+                    height: 44 * root.s
                     cursorShape: Qt.PointingHandCursor
                     onClicked: root.signIn()
+                    // a glossy blue bead that glows
                     Rectangle {
                         anchors.fill: parent
-                        radius: 5 * root.s
-                        color: go.pressed ? "#3a7fe0" : (go.containsMouse ? "#4f9dff" : "#30ffffff")
+                        anchors.margins: -5 * root.s
+                        radius: width / 2
+                        color: go.containsMouse ? "#706ec8ff" : "#406ec8ff"
+                    }
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        border.color: "#0d3a66"
+                        border.width: 1
+                        gradient: Gradient {
+                            GradientStop { position: 0; color: go.pressed ? "#1d6cc4" : "#6cc0f5" }
+                            GradientStop { position: 0.49; color: go.pressed ? "#1a5aa8" : "#2f8de4" }
+                            GradientStop { position: 0.5; color: "#17579f" }
+                            GradientStop { position: 1; color: go.containsMouse ? "#8fdcff" : "#4aa8ee" }
+                        }
+                        Rectangle {
+                            anchors.fill: parent; anchors.margins: 1
+                            radius: width / 2
+                            color: "transparent"
+                            border.color: "#66ffffff"; border.width: 1
+                        }
                     }
                     hoverEnabled: true
                     Image {
                         anchors.centerIn: parent
                         source: "assets/arrow.svg"
-                        width: 18 * root.s
+                        width: 20 * root.s
                         height: width
                         sourceSize: Qt.size(width * 2, height * 2)
                         visible: !busy.running
@@ -284,8 +359,14 @@ Rectangle {
                 visible: root.user && !root.user.needsPassword
                 width: 160 * root.s
                 height: 40 * root.s
-                radius: 6 * root.s
-                color: plain.pressed ? "#3a7fe0" : "#4f9dff"
+                radius: 5 * root.s
+                border.color: "#0d3a66"
+                gradient: Gradient {
+                    GradientStop { position: 0; color: plain.pressed ? "#1d6cc4" : "#6cc0f5" }
+                    GradientStop { position: 0.49; color: "#2f8de4" }
+                    GradientStop { position: 0.5; color: "#17579f" }
+                    GradientStop { position: 1; color: "#4aa8ee" }
+                }
                 Text {
                     anchors.centerIn: parent
                     text: "Sign in"
@@ -302,10 +383,67 @@ Rectangle {
                 color: "white"
                 font.family: root.fontName
                 font.pixelSize: 15 * root.s
+                style: Text.Raised
+                styleColor: "#99000000"
                 text: root.error || (keyboard.capsLock ? "Caps Lock is on" : " ")
                 opacity: text.trim() ? 1 : 0
             }
         }
+
+        // the picture people set, or the plain one
+        Item {
+            anchors.horizontalCenter: pane.horizontalCenter
+            y: pane.y - height / 2
+            width: 128 * root.s
+            height: width
+            // white frame with a blue glow, like a photo on the glass
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: -6 * root.s
+                radius: 22 * root.s
+                color: "#308cd2ff"
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 16 * root.s
+                border.color: "#8c000000"
+                border.width: 1
+                gradient: Gradient {
+                    GradientStop { position: 0; color: "#ffffff" }
+                    GradientStop { position: 1; color: "#dce6f0" }
+                }
+            }
+            Image {
+                id: face
+                anchors.fill: parent
+                source: root.user && root.user.icon ? root.user.icon : "assets/user.svg"
+                sourceSize: Qt.size(width * 2, height * 2)
+                fillMode: Image.PreserveAspectCrop
+                visible: false
+                onStatusChanged: if (status === Image.Error) source = "assets/user.svg"
+            }
+            // rounded crop without shaders: works on machines with no 3d acceleration too
+            Canvas {
+                id: round
+                anchors.fill: parent
+                anchors.margins: 8 * root.s
+                property var img: face.source
+                onImgChanged: { loadImage(img); requestPaint() }
+                onImageLoaded: requestPaint()
+                onPaint: {
+                    var c = getContext("2d")
+                    c.reset()
+                    var r = 10 * root.s
+                    c.beginPath()
+                    c.roundedRect(0, 0, width, height, r, r)
+                    c.closePath()
+                    c.clip()
+                    if (isImageLoaded(img)) c.drawImage(img, 0, 0, width, height)
+                    else { c.fillStyle = "#e6e9ee"; c.fill() }
+                }
+            }
+        }
+
 
         // other people on this computer, bottom left
         Column {
@@ -360,6 +498,36 @@ Rectangle {
         }
     }
 
+    Row {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30 * root.s
+        spacing: 12 * root.s
+        Image {
+            anchors.verticalCenter: parent.verticalCenter
+            source: "assets/logo.png"
+            width: 34 * root.s
+            height: width
+        }
+        Text {
+            anchors.verticalCenter: parent.verticalCenter
+            text: "Chamesle"
+            color: "white"
+            font.family: root.fontName
+            font.pixelSize: 26 * root.s
+            font.weight: Font.DemiBold
+            style: Text.Raised
+            styleColor: "#99000000"
+        }
+        Text {
+            anchors.verticalCenter: parent.verticalCenter
+            text: config.version || ""
+            color: "#d9ffffff"
+            font.family: root.fontName
+            font.pixelSize: 20 * root.s
+        }
+    }
+
     // bottom right on both screens: which desktop, and power
     Row {
         anchors.right: parent.right
@@ -393,6 +561,7 @@ Rectangle {
         }
         Corner {
             icon: "assets/power.svg"
+            red: true
             onClicked: powerMenu.open()
             Menu {
                 id: powerMenu
@@ -408,6 +577,7 @@ Rectangle {
         id: corner
         property string icon
         property string label: ""
+        property bool red: false
         width: label ? labelText.implicitWidth + 56 * root.s : 44 * root.s
         height: 44 * root.s
         hoverEnabled: true
@@ -415,7 +585,28 @@ Rectangle {
         Rectangle {
             anchors.fill: parent
             radius: 6 * root.s
+            visible: !corner.red
             color: corner.pressed ? "#40ffffff" : (corner.containsMouse ? "#28ffffff" : "transparent")
+        }
+        // shut down: glossy red, like the close button
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -4 * root.s
+            radius: 10 * root.s
+            visible: corner.red
+            color: corner.containsMouse ? "#70ff7850" : "#40ff7850"
+        }
+        Rectangle {
+            anchors.fill: parent
+            radius: 6 * root.s
+            visible: corner.red
+            border.color: "#99000000"
+            gradient: Gradient {
+                GradientStop { position: 0; color: corner.containsMouse ? "#ffb49c" : "#f5a48c" }
+                GradientStop { position: 0.48; color: "#e0583e" }
+                GradientStop { position: 0.51; color: corner.pressed ? "#9e2510" : "#c2341b" }
+                GradientStop { position: 1; color: "#db4d30" }
+            }
         }
         Row {
             anchors.centerIn: parent

@@ -1,6 +1,6 @@
 name=chamesle-kde
 version=0.7.0
-rel=1
+rel=2
 desc="The Chamesle look for KDE Plasma: the Matterhorn, Breeze with a dark taskbar, Inter and the Chamesle start button"
 url=https://chamesle.org
 license=GPL-3.0-or-later
