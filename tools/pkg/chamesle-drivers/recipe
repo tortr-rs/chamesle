@@ -1,6 +1,6 @@
 name=chamesle-drivers
 version=0.2.0
-rel=1
+rel=2
 desc="Finds drivers your hardware needs (NVIDIA, Broadcom Wi-Fi, VM tools, HP printers) and installs them"
 url=https://chamesle.org
 license=GPL-3.0-or-later

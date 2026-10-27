@@ -13,6 +13,8 @@ add|del|driver)
     if [ "$cmd" = driver ]; then
         # drivers: install, then a new initramfs so the right one (not nouveau) loads at boot
         apk add --no-interactive --progress-fd 1 "$@"
+        # nvidia: flatpak apps need their part of it too
+        [ -x /usr/libexec/chamesle-nvidia-flatpak ] && /usr/libexec/chamesle-nvidia-flatpak >&2 || true
         exec dracut --force --regenerate-all
     fi
     # --progress-fd 1: "done/total" lines on stdout, the store turns them into a progress bar

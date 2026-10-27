@@ -4,7 +4,13 @@
 # nothing to do in the live session, but stay up so dinit doesn't keep restarting us
 [ -e /run/chamesle-live ] && exec sleep infinity
 sleep 120
+# the firmware the installer left for later (hardware this computer doesn't have), once
+if [ -s /etc/chamesle/trimmed ] && [ -x /usr/libexec/chamesle-get ]; then
+    /usr/libexec/chamesle-get "fix --reinstall $(cat /etc/chamesle/trimmed)" >/dev/null 2>&1 && rm /etc/chamesle/trimmed
+fi
 while :; do
+    # the nvidia driver got updated: flatpak's part of it follows
+    [ -x /usr/libexec/chamesle-nvidia-flatpak ] && /usr/libexec/chamesle-nvidia-flatpak >/dev/null 2>&1
     apk update --quiet >/dev/null 2>&1
     [ -x /usr/bin/fwupdmgr ] && fwupdmgr refresh --force >/dev/null 2>&1
     /usr/libexec/chamesle-auto-update
