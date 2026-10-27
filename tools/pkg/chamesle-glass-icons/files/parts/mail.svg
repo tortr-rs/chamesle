@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="env" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d4dde6"/></linearGradient>
+<linearGradient id="flap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef3f7"/><stop offset="1" stop-color="#b9c4cf"/></linearGradient>
+<radialGradient id="stamp" cx=".5" cy=".3" r=".75"><stop offset="0" stop-color="#bfeaff"/><stop offset=".55" stop-color="#2f8de4"/><stop offset="1" stop-color="#0f4f96"/></radialGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="108" rx="56" ry="7" fill="url(#shadow)"/>
+<rect x="8" y="28" width="112" height="74" rx="5" fill="url(#env)" stroke="#5d6873" stroke-width="1.5"/>
+<path d="M8 98l44-34M120 98L76 64" stroke="#9aa5b0" stroke-width="1.5"/>
+<path d="M10 30l54 42 54-42" fill="url(#flap)" stroke="#5d6873" stroke-width="1.5" stroke-linejoin="round"/>
+<circle cx="98" cy="84" r="14" fill="url(#stamp)" stroke="#0b3866" stroke-width="1.5"/>
+<path d="M92 84l4 4 8-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

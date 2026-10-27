@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f9bf0"/><stop offset="1" stop-color="#c8efff"/></linearGradient>
+<linearGradient id="hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe35a"/><stop offset="1" stop-color="#2f8a2a"/></linearGradient>
+<linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f07a"/><stop offset="1" stop-color="#4fae36"/></linearGradient>
+<radialGradient id="sun" cx=".4" cy=".4" r=".6"><stop offset="0" stop-color="#fffbe0"/><stop offset="1" stop-color="#ffc21f"/></radialGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<clipPath id="c"><rect x="24" y="30" width="80" height="58"/></clipPath>
+</defs>
+<ellipse cx="64" cy="112" rx="52" ry="7" fill="url(#shadow)"/>
+<g transform="rotate(-6 64 62)">
+<rect x="14" y="20" width="100" height="84" rx="3" fill="#ffffff" stroke="#8a96a2" stroke-width="1.5"/>
+<g clip-path="url(#c)">
+<rect x="24" y="30" width="80" height="58" fill="url(#sky)"/>
+<circle cx="84" cy="46" r="9" fill="url(#sun)"/>
+<path d="M20 74c18-14 36-12 52 0s30 6 36-2v20H20z" fill="url(#hill2)"/>
+<path d="M20 82c20-12 44-12 62-2s22 2 26 0v12H20z" fill="url(#hill)"/>
+<path d="M24 30h80v14C76 40 46 50 24 64z" fill="url(#gloss)"/>
+</g>
+<rect x="24" y="30" width="80" height="58" fill="none" stroke="#5d6873"/>
+</g>
+</svg>

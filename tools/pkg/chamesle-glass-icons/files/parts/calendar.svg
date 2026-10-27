@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dde5ec"/></linearGradient>
+<linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a80"/><stop offset=".5" stop-color="#e0452c"/><stop offset="1" stop-color="#b8301c"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#b9c1ca"/><stop offset="1" stop-color="#6f7a86"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="116" rx="48" ry="6" fill="url(#shadow)"/>
+<rect x="14" y="18" width="100" height="94" rx="8" fill="url(#paper)" stroke="#5d6873" stroke-width="1.5"/>
+<path d="M14 26a8 8 0 0 1 8-8h84a8 8 0 0 1 8 8v16H14z" fill="url(#top)" stroke="#7d200c" stroke-width="1.5"/>
+<rect x="16" y="20" width="96" height="10" rx="5" fill="#fff" opacity=".35"/>
+<g fill="url(#metal)" stroke="#3a434c"><rect x="34" y="8" width="8" height="20" rx="4"/><rect x="86" y="8" width="8" height="20" rx="4"/></g>
+<text x="64" y="98" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="48" fill="#262c32">27</text>
+</svg>

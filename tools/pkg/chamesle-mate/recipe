@@ -1,12 +1,12 @@
 name=chamesle-mate
-version=0.2.0
-rel=3
+version=0.7.0
+rel=0
 desc="The Chamesle look for MATE: wallpaper, panel, theme settings, login screen"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="chamesle-artwork mate-menu"
+depends="chamesle-glass chamesle-glass-icons chamesle-artwork mate-menu"
 
 build() {
     cp -a . "$pkgdir/"

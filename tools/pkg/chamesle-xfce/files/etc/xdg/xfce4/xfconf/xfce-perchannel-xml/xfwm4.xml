@@ -2,12 +2,13 @@
 <!-- Windows-style title bars: icon on the left, minimise / maximise / close on the right -->
 <channel name="xfwm4" version="1.0">
   <property name="general" type="empty">
-    <property name="theme" type="string" value="Fluent-Light"/>
+    <property name="theme" type="string" value="Chamesle-Glass"/>
     <property name="button_layout" type="string" value="O|HMC"/>
     <property name="title_alignment" type="string" value="left"/>
     <property name="title_font" type="string" value="Noto Sans 10"/>
     <property name="workspace_count" type="int" value="1"/>
     <property name="use_compositing" type="bool" value="true"/>
+    <property name="frame_opacity" type="int" value="88"/>
     <property name="show_dock_shadow" type="bool" value="true"/>
     <property name="snap_to_border" type="bool" value="true"/>
     <property name="tile_on_move" type="bool" value="true"/>

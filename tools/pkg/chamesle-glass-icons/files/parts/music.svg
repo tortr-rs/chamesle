@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<radialGradient id="disc" cx=".5" cy=".5" r=".5"><stop offset=".2" stop-color="#f4f6f8"/><stop offset=".9" stop-color="#c9d1d9"/><stop offset="1" stop-color="#9aa5b0"/></radialGradient>
+<linearGradient id="note" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#f0602e"/><stop offset="1" stop-color="#b8361a"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<filter id="soft"><feGaussianBlur stdDeviation="4"/></filter>
+<clipPath id="c"><circle cx="58" cy="58" r="46"/></clipPath>
+</defs>
+<ellipse cx="64" cy="114" rx="50" ry="7" fill="url(#shadow)"/>
+<circle cx="58" cy="58" r="46" fill="url(#disc)" stroke="#5d6873" stroke-width="1.5"/>
+<g clip-path="url(#c)" filter="url(#soft)" opacity=".55">
+<path d="M58 58L20 10h30z" fill="#ff5fa2"/>
+<path d="M58 58L104 30v26z" fill="#4fd0ff"/>
+<path d="M58 58l40 46H72z" fill="#ffe15a"/>
+<path d="M58 58L10 80V60z" fill="#7cff8a"/>
+</g>
+<circle cx="58" cy="58" r="16" fill="#e8edf2" fill-opacity=".8" stroke="#8a96a2"/>
+<circle cx="58" cy="58" r="6" fill="#ffffff" stroke="#6f7a86"/>
+<path d="M22 38c10-22 60-26 74-6" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
+<circle cx="92" cy="90" r="27" fill="url(#note)" stroke="#7d200c" stroke-width="1.5"/>
+<path d="M88 102V78l14-4v20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="84" cy="102" rx="5.5" ry="4.5" fill="#fff"/><ellipse cx="98" cy="96" rx="5.5" ry="4.5" fill="#fff"/>
+<ellipse cx="92" cy="76" rx="20" ry="10" fill="url(#gloss)" opacity=".75"/>
+</svg>

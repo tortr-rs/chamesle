@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f8fa"/><stop offset=".5" stop-color="#c3cad2"/><stop offset="1" stop-color="#7d8892"/></linearGradient>
+<linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6873"/><stop offset="1" stop-color="#262c32"/></linearGradient>
+<linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dde5ec"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="112" rx="56" ry="7" fill="url(#shadow)"/>
+<rect x="34" y="10" width="60" height="36" fill="url(#paper)" stroke="#8a96a2" stroke-width="1.5"/>
+<rect x="10" y="40" width="108" height="50" rx="8" fill="url(#body)" stroke="#4a545e" stroke-width="1.5"/>
+<rect x="12" y="42" width="104" height="20" rx="7" fill="url(#gloss)" opacity=".7"/>
+<rect x="26" y="76" width="76" height="10" rx="2" fill="url(#dark)"/>
+<path d="M30 84h68l6 24H24z" fill="url(#paper)" stroke="#8a96a2" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M36 94h44M34 102h56" stroke="#8fa0b0" stroke-width="3" stroke-linecap="round"/>
+<circle cx="102" cy="54" r="4" fill="#2fd35a" stroke="#16692c"/>
+</svg>

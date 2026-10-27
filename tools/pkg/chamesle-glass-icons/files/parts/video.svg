@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="film" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a525c"/><stop offset="1" stop-color="#0d0f12"/></linearGradient>
+<linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f7fd6"/><stop offset=".6" stop-color="#4fc3e8"/><stop offset="1" stop-color="#bff0d0"/></linearGradient>
+<radialGradient id="play" cx=".5" cy=".3" r=".75"><stop offset="0" stop-color="#ffc9a8"/><stop offset=".55" stop-color="#e0583e"/><stop offset="1" stop-color="#9a2a12"/></radialGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="112" rx="56" ry="7" fill="url(#shadow)"/>
+<g transform="rotate(-8 64 60)">
+<rect x="8" y="22" width="112" height="76" rx="5" fill="url(#film)" stroke="#000" stroke-width="1.5"/>
+<g fill="#e8edf2"><rect x="14" y="27" width="8" height="6" rx="1"/><rect x="30" y="27" width="8" height="6" rx="1"/><rect x="46" y="27" width="8" height="6" rx="1"/><rect x="62" y="27" width="8" height="6" rx="1"/><rect x="78" y="27" width="8" height="6" rx="1"/><rect x="94" y="27" width="8" height="6" rx="1"/><rect x="110" y="27" width="6" height="6" rx="1"/>
+<rect x="14" y="87" width="8" height="6" rx="1"/><rect x="30" y="87" width="8" height="6" rx="1"/><rect x="46" y="87" width="8" height="6" rx="1"/><rect x="62" y="87" width="8" height="6" rx="1"/><rect x="78" y="87" width="8" height="6" rx="1"/><rect x="94" y="87" width="8" height="6" rx="1"/><rect x="110" y="87" width="6" height="6" rx="1"/></g>
+<rect x="14" y="38" width="100" height="44" fill="url(#screen)"/>
+</g>
+<circle cx="64" cy="60" r="24" fill="url(#play)" stroke="#5a1006" stroke-width="1.5"/>
+<path d="M57 48l18 12-18 12z" fill="#fff"/>
+<ellipse cx="64" cy="48" rx="17" ry="9" fill="url(#gloss)" opacity=".75"/>
+</svg>

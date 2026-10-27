@@ -1,6 +1,6 @@
 name=chamesle-artwork
-version=0.2.0
-rel=3
+version=0.7.0
+rel=0
 desc="Chamesle wallpapers, icon theme and login screen"
 url=https://chamesle.org
 license=GPL-3.0-or-later

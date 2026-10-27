@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<radialGradient id="ring" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9d1d9"/></radialGradient>
+<linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a80"/><stop offset=".5" stop-color="#e0452c"/><stop offset="1" stop-color="#9a2a12"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<mask id="hole"><rect width="128" height="128" fill="#fff"/><circle cx="64" cy="60" r="22" fill="#000"/></mask>
+</defs>
+<ellipse cx="64" cy="114" rx="48" ry="7" fill="url(#shadow)"/>
+<g mask="url(#hole)">
+<circle cx="64" cy="60" r="48" fill="url(#ring)" stroke="#4a545e" stroke-width="1.5"/>
+<path d="M64 60L30 26a48 48 0 0 1 68 0zM64 60l34 34a48 48 0 0 1-68 0z" fill="url(#red)" stroke="#7d200c" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="64" cy="30" rx="34" ry="16" fill="url(#gloss)" opacity=".7"/>
+</g>
+<circle cx="64" cy="60" r="22" fill="none" stroke="#4a545e" stroke-width="1.5"/>
+</svg>
