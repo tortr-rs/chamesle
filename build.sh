@@ -9,6 +9,8 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 EDITION=${EDITION:-xfce}
 [ -f "$HERE/editions/$EDITION/packages" ] || { echo "build: no edition '$EDITION' (editions/*/packages)" >&2; exit 1; }
 VERSION=$(cat "$HERE/VERSION"); CODENAME=$(cat "$HERE/CODENAME" 2>/dev/null || true)
+# each update has its own name on top of the codename, 0.7 is "Be Kool"
+UPDATE=$(cat "$HERE/UPDATE" 2>/dev/null || true)
 # a flavor (astro) is an edition on top of another one: base=gnome brings that edition's packages, overlay, session and
 # login, the flavor adds its own
 BASE=$(sed -n 's/^base=//p' "$HERE/editions/$EDITION/edition" 2>/dev/null)
@@ -121,12 +123,12 @@ if [ -f "$KS" ] && ! grep -q 'xfce4-popup-whiskermenu' "$KS"; then
     sed -i 's|^\( *\)<property name="&lt;Super&gt;e" type="string" value="thunar"/>|&\n\1<property name="Super_L" type="string" value="xfce4-popup-whiskermenu"/>|' "$KS"
 fi
 # identity
-SUFFIX=${CODENAME:+ $CODENAME}
+SUFFIX=${UPDATE:+ $UPDATE}
 cat > "$ROOT/etc/os-release" <<EOF
 NAME="Chamesle Linux"
 PRETTY_NAME="Chamesle Linux $VERSION$SUFFIX ($EDITION_NAME)"
 ID=chamesle
-VERSION="$VERSION${CODENAME:+ ($CODENAME)}"
+VERSION="$VERSION${UPDATE:+ $UPDATE}${CODENAME:+ ($CODENAME)}"
 VERSION_ID="$VERSION"
 ${CODENAME:+VERSION_CODENAME=$(echo "$CODENAME" | tr '[:upper:]' '[:lower:]')}
 VARIANT="$EDITION_NAME"
