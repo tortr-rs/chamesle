@@ -344,3 +344,7 @@ input[type=search].big { font-size: 19px; padding: 14px 16px; border-radius: 10p
 .notfound { text-align: center; padding: 72px 0 24px; }
 .notfound .code { font-size: 72px; font-weight: 700; margin: 0; color: var(--blue); line-height: 1; }
 .notfound h1 { margin: 12px 0 6px; }
+
+/* homepage banner, the light lockup */
+h1.banner { margin: 0 0 4px -6px; line-height: 0; }
+h1.banner img { max-width: 100%; height: auto; }

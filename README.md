@@ -1,4 +1,4 @@
-# Chamesle Linux
+<p align="center"><img src="artwork/banner.png" alt="Chamesle Linux" width="480"></p>
 
 *Pronounced /tʃa.mes.le/.*
 
