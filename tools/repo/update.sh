@@ -44,7 +44,7 @@ for name in ("current", "nonfree"):
         first = seen.setdefault(p["pkgver"], today)
         # NOW names a package or its whole source package (php8.4 takes php8.4-fpm too)
         if n in now or p.get("sourcepkg") in now or today - first >= hold * 86400:
-            take.append(base + "/" + f)
+            take += [base + "/" + f, base + "/" + f + ".sig2"]
         else:
             waiting.append("%s (%d days to go)" % (p["pkgver"], hold - (today - first) // 86400))
 # forget versions that are long gone
@@ -54,7 +54,7 @@ if take:
     print("\n".join(take))
 with open(os.path.join(out, "waiting.list"), "w") as f:
     f.write("".join(w + "\n" for w in sorted(waiting)))
-print("%d to take, %d still waiting (waiting.list)" % (len(take), len(waiting)), file=sys.stderr)
+print("%d to take, %d still waiting (waiting.list)" % (len(take) // 2, len(waiting)), file=sys.stderr)
 EOF
 # a week whose check failed is still waiting in Packages.adb.new: try it again
 [ -s "$OUT/take.list" ] || [ -e "$R/Packages.adb.new" ] || { echo "nothing to update"; exit 0; }

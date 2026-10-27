@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # turn an .xbps package into an apk v3 package
 # usage: xbps2apk.py PKG.xbps OUTDIR   (APK=path/to/apk, SIGN_KEY=key.rsa)
+#        xbps2apk.py --verify PKG.xbps ...  checks void's signature (PKG.xbps.sig2) on each, names the bad ones
 #        xbps2apk.py --todo CACHEDIR OUTDIR   prints the .xbps files that have no .apk yet
 import functools, os, plistlib, re, shutil, subprocess, sys, tempfile
 
@@ -97,7 +98,21 @@ def alternatives(p, root):
     return add, rm
 
 
+# void's key, a copy kept in the repo (same as void-linux/xbps data/). what we sign must be what void built:
+# no .sig2 or a bad one and the package isn't converted
+VOID_KEY = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../keys/void/60:ae:0c:d6:f0:95:17:80:bc:93:46:7a:89:af:a3:2d.pem')
+
+
+def signed(src):
+    if not os.path.exists(src + '.sig2'):
+        return False
+    return subprocess.run(['openssl', 'dgst', '-sha256', '-verify', VOID_KEY, '-signature', src + '.sig2', src],
+                          capture_output=True).returncode == 0
+
+
 def convert(src, outdir):
+    if not signed(src):
+        sys.exit('xbps2apk: %s: no good void signature, not converting it' % src)
     tmp = tempfile.mkdtemp(prefix='x2a.')
     try:
         root = os.path.join(tmp, 'root')
@@ -252,6 +267,10 @@ if __name__ == '__main__':
             f = vs[-1][1]
             if apkname(f) not in have:
                 print(os.path.join(sys.argv[2], f))
+    elif sys.argv[1] == '--verify':
+        bad = [f for f in sys.argv[2:] if not signed(f)]
+        print('\n'.join(bad)) if bad else None
+        sys.exit(1 if bad else 0)
     elif sys.argv[1] in ('--prune', '--prune-list'):
         byname = {}
         for f in os.listdir(sys.argv[2]):
