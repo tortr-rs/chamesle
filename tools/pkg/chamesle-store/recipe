@@ -1,6 +1,6 @@
 name=chamesle-store
 version=0.3.0
-rel=0
+rel=1
 desc="The Chamesle store: apps from Flathub and the Chamesle repo with screenshots and ratings, updates, firmware, .deb and .rpm files"
 url=https://chamesle.org
 license=GPL-3.0-or-later

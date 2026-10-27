@@ -1,0 +1,20 @@
+#!/bin/sh
+# flatpak apps (steam...) need flathub's GL.nvidia-X-Y-Z that matches the installed driver to the digit, or they
+# can't draw and quit. flatpak only adds it itself when the driver is loaded: here it follows the package.
+# run as root by the driver manager and by chamesle-refresh, after driver updates too
+command -v flatpak >/dev/null || exit 0
+flatpak remotes --system 2>/dev/null | grep -q '^flathub' || exit 0
+v=$(apk info -e nvidia nvidia580 nvidia470 nvidia390 2>/dev/null | head -n1)
+[ -n "$v" ] || exit 0
+v=$(apk list -I "$v" 2>/dev/null | sed -n 's/^[a-z0-9]*-\([0-9.]*\)-r[0-9]*.*/\1/p' | tr . -)
+[ -n "$v" ] || exit 0
+want="org.freedesktop.Platform.GL.nvidia-$v org.freedesktop.Platform.GL32.nvidia-$v"
+have=$(flatpak list --system --runtime --columns=application 2>/dev/null)
+for r in $want; do
+    echo "$have" | grep -qx "$r" || flatpak install --system -y --noninteractive flathub "$r//1.4" || exit 1
+done
+# the ones for the driver that was there before
+for r in $(echo "$have" | grep -E '^org\.freedesktop\.Platform\.GL(32)?\.nvidia-' | grep -v -- "-$v\$"); do
+    flatpak uninstall --system -y --noninteractive "$r" >/dev/null 2>&1
+done
+exit 0

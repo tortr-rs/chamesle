@@ -1,6 +1,6 @@
 name=chamesle-updater
 version=0.3.0
-rel=1
+rel=2
 desc="Installs updates in the background, or tells you when there are some and opens the store"
 url=https://chamesle.org
 license=GPL-3.0-or-later
