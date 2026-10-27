@@ -36,7 +36,8 @@ if [ "${ALL:-0}" = 1 ]; then
 import plistlib, sys
 r = sys.argv[1]
 for name, p in plistlib.load(open(sys.argv[2], "rb")).items():
-    print(r + "/" + p["pkgver"] + "." + p["architecture"] + ".xbps")' "$r" "$f"
+    u = r + "/" + p["pkgver"] + "." + p["architecture"] + ".xbps"
+    print(u); print(u + ".sig2")' "$r" "$f"
     done > "$OUT/upstream.list"
     echo "$(wc -l < "$OUT/upstream.list") packages upstream"
     while read -r u; do [ -e "$CACHE/${u##*/}" ] || echo "$u"; done < "$OUT/upstream.list" > "$OUT/fetch.list"
