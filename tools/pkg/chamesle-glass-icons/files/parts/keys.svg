@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".5" stop-color="#e9b41c"/><stop offset="1" stop-color="#9a6a10"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="112" rx="48" ry="6" fill="url(#shadow)"/>
+<g transform="rotate(-35 64 64)">
+<path d="M14 64a26 26 0 1 1 50 10h52v14h-10v12H94V88H84v12H72V74H64A26 26 0 0 1 14 64zm14 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0z" fill="url(#gold)" stroke="#6b4a08" stroke-width="2" fill-rule="evenodd" stroke-linejoin="round"/>
+<path d="M18 58a22 22 0 0 1 42 0" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+<path d="M66 77h48" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
+</g>
+</svg>

@@ -6,15 +6,15 @@ color-shading-type='solid'
 primary-color='#0b2552'
 
 [org.mate.interface]
-gtk-theme='Fluent-Light'
-icon-theme='Chamesle'
+gtk-theme='Chamesle-Glass'
+icon-theme='Chamesle-Glass'
 font-name='Inter 10'
 document-font-name='Inter 10'
 monospace-font-name='Noto Sans Mono 10'
 gtk-decoration-layout='menu:minimize,maximize,close'
 
 [org.mate.Marco.general]
-theme='Fluent-Light'
+theme='Chamesle-Glass'
 titlebar-font='Inter Semi-Bold 10'
 button-layout='menu:minimize,maximize,close'
 compositing-manager=true

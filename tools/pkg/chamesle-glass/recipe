@@ -1,0 +1,14 @@
+name=chamesle-glass
+version=0.7
+rel=0
+desc="Chamesle Glass: glass window frames, panels and glossy buttons for KDE, Xfce, Cinnamon and MATE"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps="python3 python3-Pillow"
+depends=""
+
+# make.py draws the frames and buttons and writes every desktop's theme
+build() {
+    python3 make.py "$pkgdir/usr/share"
+}

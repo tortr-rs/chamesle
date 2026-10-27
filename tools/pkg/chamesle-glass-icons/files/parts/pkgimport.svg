@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d9a6"/><stop offset="1" stop-color="#d9a65f"/></linearGradient>
+<linearGradient id="left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2b26a"/><stop offset="1" stop-color="#a8723a"/></linearGradient>
+<linearGradient id="right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9924f"/><stop offset="1" stop-color="#8a5a28"/></linearGradient>
+<radialGradient id="arrow" cx=".5" cy=".3" r=".75"><stop offset="0" stop-color="#bfeaff"/><stop offset=".55" stop-color="#2f8de4"/><stop offset="1" stop-color="#0f4f96"/></radialGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="114" rx="52" ry="7" fill="url(#shadow)"/>
+<path d="M64 30l50 20-50 20-50-20z" fill="url(#top)" stroke="#6b4318" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M14 50l50 20v42L14 92z" fill="url(#left)" stroke="#6b4318" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M114 50L64 70v42l50-20z" fill="url(#right)" stroke="#6b4318" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M14 50l50 20 50-20" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+<circle cx="64" cy="34" r="24" fill="url(#arrow)" stroke="#0b3866" stroke-width="1.5"/>
+<path d="M64 20v24M54 34l10 11 10-11" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="64" cy="22" rx="16" ry="8" fill="#fff" opacity=".5"/>
+</svg>

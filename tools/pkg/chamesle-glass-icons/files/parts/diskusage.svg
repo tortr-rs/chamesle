@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fdcff"/><stop offset="1" stop-color="#1667b8"/></linearGradient>
+<linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9f5b5"/><stop offset="1" stop-color="#2a9a1d"/></linearGradient>
+<linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a0"/><stop offset="1" stop-color="#e07a1c"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<clipPath id="top"><rect x="0" y="0" width="128" height="52"/></clipPath>
+</defs>
+<ellipse cx="62" cy="114" rx="50" ry="7" fill="url(#shadow)"/>
+<path d="M64 60V12A48 48 0 0 1 88 101.6z" fill="url(#a)" stroke="#0b3866" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M64 60L88 101.6A48 48 0 0 1 18.9 76.4z" fill="url(#b)" stroke="#1b6a14" stroke-width="1.5" stroke-linejoin="round"/>
+<g transform="translate(-5.7 -4)">
+<path d="M64 60L18.9 76.4A48 48 0 0 1 64 12z" fill="url(#c)" stroke="#8a4a10" stroke-width="1.5" stroke-linejoin="round"/>
+</g>
+<g clip-path="url(#top)"><ellipse cx="60" cy="34" rx="40" ry="22" fill="url(#gloss)" opacity=".55"/></g>
+</svg>

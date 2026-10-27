@@ -1,0 +1,15 @@
+name=chamesle-glass-icons
+version=0.7
+rel=2
+desc="Chamesle Glass icons: Oxygen with the Chamesle orb, store, updater and the 2007 firefox logo"
+url=https://chamesle.org
+license="GPL-3.0-or-later AND MPL-1.1"
+source=
+makedeps="python3"
+depends="oxygen-icons5 breeze-icons"
+
+# the icons are drawn in parts/, make.py builds the theme from them
+# firefox.png is mozilla's 2004-2009 logo, released under the mpl
+build() {
+    python3 make.py "$pkgdir/usr/share/icons"
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#b9c1ca"/><stop offset="1" stop-color="#6f7a86"/></linearGradient>
+<radialGradient id="eye" cx=".5" cy=".3" r=".75"><stop offset="0" stop-color="#bff0ff"/><stop offset=".55" stop-color="#2f8de4"/><stop offset="1" stop-color="#0f4f96"/></radialGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="114" rx="44" ry="7" fill="url(#shadow)"/>
+<g fill="url(#metal)" stroke="#3f4954" stroke-width="1.5" stroke-linejoin="round">
+<path d="M56 10h16l3 15 10 4 13-8 11 11-8 13 4 10 15 3v16l-15 3-4 10 8 13-11 11-13-8-10 4-3 15H56l-3-15-10-4-13 8-11-11 8-13-4-10-15-3V56l15-3 4-10-8-13 11-11 13 8 10-4z"/>
+</g>
+<circle cx="64" cy="64" r="34" fill="none" stroke="#ffffff" stroke-opacity=".6" stroke-width="1.5"/>
+<circle cx="64" cy="64" r="20" fill="url(#eye)" stroke="#0b3866" stroke-width="2"/>
+<ellipse cx="64" cy="55" rx="13" ry="7" fill="url(#gloss)"/>
+<path d="M24 46c10-22 70-22 80 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+</svg>

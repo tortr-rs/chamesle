@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="box" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a525c"/><stop offset=".5" stop-color="#262c32"/><stop offset="1" stop-color="#0a0c0f"/></linearGradient>
+<radialGradient id="cone" cx=".45" cy=".4" r=".6"><stop offset="0" stop-color="#9aa4ae"/><stop offset=".6" stop-color="#3a434c"/><stop offset="1" stop-color="#0a0c0f"/></radialGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="118" rx="40" ry="6" fill="url(#shadow)"/>
+<rect x="28" y="8" width="72" height="108" rx="8" fill="url(#box)" stroke="#000" stroke-width="1.5"/>
+<circle cx="64" cy="36" r="15" fill="url(#cone)" stroke="#000"/><circle cx="64" cy="36" r="5" fill="#5d6873"/>
+<circle cx="64" cy="82" r="26" fill="url(#cone)" stroke="#000"/><circle cx="64" cy="82" r="9" fill="#5d6873"/>
+<circle cx="64" cy="82" r="20" fill="none" stroke="#8fdcff" stroke-opacity=".5" stroke-width="1.5"/>
+<path d="M28 16a8 8 0 0 1 8-8h56a8 8 0 0 1 8 8v4C78 28 50 50 28 80z" fill="url(#gloss)"/>
+</svg>

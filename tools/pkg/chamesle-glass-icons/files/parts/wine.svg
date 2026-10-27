@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#dff5ff" stop-opacity=".35"/><stop offset=".3" stop-color="#ffffff" stop-opacity=".15"/><stop offset="1" stop-color="#9fc8dc" stop-opacity=".35"/></linearGradient>
+<linearGradient id="wine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8163e"/><stop offset="1" stop-color="#5a0418"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="116" rx="34" ry="6" fill="url(#shadow)"/>
+<path d="M34 50h60c0 18-12 30-30 30S34 68 34 50z" fill="url(#wine)"/>
+<ellipse cx="64" cy="50" rx="30" ry="5" fill="#e0405e"/>
+<path d="M30 10h68c4 26 2 48-6 60-6 8-16 12-28 12s-22-4-28-12c-8-12-10-34-6-60z" fill="url(#glass)" stroke="#4a7a8a" stroke-opacity=".8" stroke-width="1.5"/>
+<path d="M62 82h4v24h-4z" fill="url(#glass)" stroke="#4a7a8a" stroke-opacity=".8"/>
+<ellipse cx="64" cy="110" rx="26" ry="6" fill="url(#glass)" stroke="#4a7a8a" stroke-opacity=".8" stroke-width="1.5"/>
+<path d="M38 16c-2 20 0 40 8 50" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,12 +1,12 @@
 name=chamesle-xfce
-version=0.2.0
-rel=3
+version=0.7.0
+rel=0
 desc="The Chamesle look for Xfce: wallpaper, panel, theme settings, login screen"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="chamesle-artwork"
+depends="chamesle-glass chamesle-glass-icons chamesle-artwork"
 # our settings win over the stock ones these ship
 replaces="xfce4-settings xfce4-panel xfwm4 xfdesktop xfce4-whiskermenu-plugin"
 

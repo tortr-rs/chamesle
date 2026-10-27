@@ -1,14 +1,14 @@
 [kdeglobals][General]
-ColorScheme=BreezeLight
+ColorScheme=ChamesleGlass
 
 [kdeglobals][Icons]
-Theme=breeze
+Theme=Chamesle-Glass
 
 [kdeglobals][KDE]
 widgetStyle=Breeze
 
 [plasmarc][Theme]
-name=breeze-dark
+name=chamesle-glass
 
 [Wallpaper]
 Image=Play

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bfeee6" stop-opacity=".7"/><stop offset=".3" stop-color="#ffffff" stop-opacity=".45"/><stop offset=".7" stop-color="#9fdcd2" stop-opacity=".4"/><stop offset="1" stop-color="#5fb0a8" stop-opacity=".65"/></linearGradient>
+<linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8fbf7"/><stop offset="1" stop-color="#7cc7bd"/></linearGradient>
+<radialGradient id="ball" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9d3dc"/></radialGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".4"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="114" rx="40" ry="6" fill="url(#shadow)"/>
+<ellipse cx="64" cy="26" rx="31" ry="4" fill="#3f8c84" fill-opacity=".35"/>
+<g stroke="#8a96a2" stroke-width="1.2" fill="url(#ball)">
+<path d="M42 104c-4-8 0-16 8-17 6-1 11 4 10 11s-5 11-11 10c-3 0-5-2-7-4z"/>
+<path d="M60 106c-3-9 2-17 11-17 7 0 12 6 10 13s-8 9-14 8c-3-1-6-2-7-4z"/>
+<path d="M46 86c-3-9 3-16 11-16s12 7 10 14-8 10-14 8c-3-1-6-3-7-6z"/>
+<path d="M66 72c-2-9 4-15 12-14s11 8 9 14-9 9-14 7c-4-1-6-4-7-7z"/>
+<path d="M44 62c-2-8 4-14 11-13s10 7 8 13-8 8-13 6c-3-1-5-3-6-6z"/>
+<path d="M58 40c-3-8 3-15 11-15s12 7 10 14-8 10-14 8c-3-1-6-4-7-7z"/>
+<path d="M40 34c0-7 6-12 12-10s8 9 5 14-10 6-14 3c-2-2-3-4-3-7z"/>
+</g>
+<g stroke="#9aa5b0" stroke-width="1" fill="none" opacity=".7"><path d="M62 33c4 1 7 4 9 8M47 30c2 2 4 5 4 8M50 92c4 0 7 2 9 5"/></g>
+<path d="M28 26h72l-8 80a7 7 0 0 1-7 6H43a7 7 0 0 1-7-6z" fill="url(#glass)" stroke="#2f6f68" stroke-opacity=".8" stroke-width="1.5"/>
+<g stroke="#ffffff" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round">
+<path d="M44 36l3 66M56 36l1 68M72 36l-1 68M84 36l-3 66"/>
+</g>
+<path d="M34 32l6 72" stroke="#fff" stroke-opacity=".85" stroke-width="5" stroke-linecap="round"/>
+<path d="M27 26a37 7 0 0 0 74 0" fill="none" stroke="#2f6f68" stroke-width="5"/>
+<path d="M27 26a37 7 0 0 0 74 0" fill="none" stroke="url(#rim)" stroke-width="3"/>
+<path d="M27 26a37 7 0 0 1 74 0" fill="none" stroke="#2f6f68" stroke-opacity=".7" stroke-width="1.5"/>
+</svg>

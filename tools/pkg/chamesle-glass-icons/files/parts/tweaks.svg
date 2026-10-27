@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<defs>
+<linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f8fa"/><stop offset="1" stop-color="#c3cad2"/></linearGradient>
+<radialGradient id="knob" cx=".4" cy=".3" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#bfe6ff"/><stop offset="1" stop-color="#2f8de4"/></radialGradient>
+<linearGradient id="fill" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8fdcff"/><stop offset="1" stop-color="#1667b8"/></linearGradient>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+</defs>
+<ellipse cx="64" cy="112" rx="54" ry="7" fill="url(#shadow)"/>
+<rect x="10" y="16" width="108" height="90" rx="10" fill="url(#panel)" stroke="#4a545e" stroke-width="1.5"/>
+<rect x="12" y="18" width="104" height="30" rx="9" fill="url(#gloss)" opacity=".6"/>
+<g stroke="#4a545e" stroke-width="1.5">
+<rect x="24" y="34" width="80" height="8" rx="4" fill="#d9dfe5"/><rect x="24" y="34" width="58" height="8" rx="4" fill="url(#fill)"/>
+<rect x="24" y="58" width="80" height="8" rx="4" fill="#d9dfe5"/><rect x="24" y="58" width="28" height="8" rx="4" fill="url(#fill)"/>
+<rect x="24" y="82" width="80" height="8" rx="4" fill="#d9dfe5"/><rect x="24" y="82" width="70" height="8" rx="4" fill="url(#fill)"/>
+<circle cx="82" cy="38" r="9" fill="url(#knob)"/><circle cx="52" cy="62" r="9" fill="url(#knob)"/><circle cx="94" cy="86" r="9" fill="url(#knob)"/>
+</g>
+</svg>
