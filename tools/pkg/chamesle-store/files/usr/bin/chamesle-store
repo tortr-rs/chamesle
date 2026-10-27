@@ -1,16 +1,28 @@
 #!/usr/bin/python3
-# Chamesle Store: apps from Flathub and from the Chamesle repo in one place, plus .deb/.rpm files through pkgimport
-import gzip, json, os, re, subprocess, sys, threading, urllib.request
+# Chamesle Store: apps from Flathub and from the Chamesle repo in one place, plus .deb/.rpm files through pkgimport,
+# firmware through fwupd. ratings and reviews are gnome's odrs, the ones gnome software shows
+import gzip, hashlib, json, os, re, subprocess, sys, threading, time, urllib.request
 import xml.etree.ElementTree as ET
 
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, GLib, GObject, Gtk, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
 
 APPSTREAM = "/var/lib/flatpak/appstream/flathub/x86_64/active"
 CACHE = os.path.join(GLib.get_user_cache_dir(), "chamesle-store")
 HELPER = "/usr/libexec/chamesle-store-helper"
+ODRS = "https://odrs.gnome.org/1.0/reviews/api"
+AUTO_CONF = "/etc/chamesle/updates.conf"
+AUTO_STATE = "/var/lib/chamesle/auto-update"
+# bump when the flathub cache gets new fields
+CACHE_V = 2
+
+CSS = b"""
+.stars { color: #e5a50a; }
+.stars-off { color: alpha(currentColor, .25); }
+.shot { border-radius: 8px; }
+"""
 
 FEATURED = ["com.spotify.Client", "com.discordapp.Discord", "com.valvesoftware.Steam", "com.obsproject.Studio",
             "org.gimp.GIMP", "org.libreoffice.LibreOffice", "org.videolan.VLC", "org.telegram.desktop",
@@ -31,8 +43,9 @@ CATEGORIES = [
 
 
 class Source:
-    def __init__(self, kind, ref, summary="", description="", icon=None):
+    def __init__(self, kind, ref, summary="", description="", icon=None, shots=None, version=""):
         self.kind, self.ref, self.summary, self.description, self.icon = kind, ref, summary, description, icon
+        self.shots, self.version = shots or [], version
 
     @property
     def label(self):
@@ -53,6 +66,10 @@ class App:
     @property
     def icon(self):
         return next((s.icon for s in self.sources if s.icon), None)
+
+    @property
+    def flathub(self):
+        return self.source("flathub")
 
 
 def run(cmd):
@@ -83,9 +100,35 @@ def text_of(el):
     return "\n\n".join(x for x in out if x)
 
 
+def user_hash():
+    # odrs knows a reviewer by this, never by name: the same on every run, different on every machine
+    try:
+        mid = open("/etc/machine-id").read().strip()
+    except OSError:
+        mid = ""
+    return hashlib.sha1(("chamesle-store[%s:%s]" % (GLib.get_user_name(), mid)).encode()).hexdigest()
+
+
+def post(url, data):
+    req = urllib.request.Request(url, json.dumps(data).encode(), {"Content-Type": "application/json"})
+    return json.load(urllib.request.urlopen(req, timeout=20))
+
+
+def stars(avg, size=None):
+    # five stars, the filled ones gold
+    box = Gtk.Box(spacing=1)
+    for i in range(5):
+        l = Gtk.Label(label="★", css_classes=["stars" if avg >= i + 0.5 else "stars-off"])
+        if size:
+            l.add_css_class(size)
+        box.append(l)
+    return box
+
+
 class Catalog:
     def __init__(self):
         self.apps = {}
+        self.ratings = {}
         self.by_flathub, self.by_pkg = {}, {}
         self.installed_apk, self.installed_flatpak = set(), set()
 
@@ -111,9 +154,9 @@ class Catalog:
         stamp = os.path.getmtime(path)
         try:
             c = json.load(open(cached))
-            if c["stamp"] == stamp:
+            if c["stamp"] == stamp and c.get("v") == CACHE_V:
                 for a in c["apps"]:
-                    self.add(a[0], Source("flathub", a[1], a[2], a[3], a[4]), a[5])
+                    self.add(a[0], Source("flathub", a[1], a[2], a[3], a[4], a[6], a[7]), a[5])
                 return
         except (OSError, ValueError, KeyError):
             pass
@@ -141,10 +184,19 @@ class Catalog:
                     break
             cats = [c.text for c in comp.iter("category") if c.text]
             desc = text_of(desc) if desc is not None else ""
-            self.add(name, Source("flathub", cid, summary, desc, icon), cats)
-            keep.append([name, cid, summary, desc, icon, cats])
+            # screenshots: flathub's 624 wide thumbnails, or the closest it has
+            shots = []
+            for sh in comp.iter("screenshot"):
+                imgs = [(int(i.get("width") or 0), i.text) for i in sh.findall("image") if i.text]
+                thumbs = [x for x in imgs if 500 <= x[0] <= 800] or sorted(imgs)
+                if thumbs:
+                    shots.append(thumbs[0][1].strip())
+            rel = comp.find("releases/release")
+            version = rel.get("version", "") if rel is not None else ""
+            self.add(name, Source("flathub", cid, summary, desc, icon, shots[:6], version), cats)
+            keep.append([name, cid, summary, desc, icon, cats, shots[:6], version])
         os.makedirs(CACHE, exist_ok=True)
-        json.dump({"stamp": stamp, "apps": keep}, open(cached, "w"))
+        json.dump({"stamp": stamp, "v": CACHE_V, "apps": keep}, open(cached, "w"))
 
     def load_repo(self):
         url = repo_url()
@@ -159,6 +211,28 @@ class Catalog:
         for a in json.load(open(local)):
             icon = ("repo", a["icon"]) if a.get("icon") else None
             self.add(a["name"], Source("apk", a["pkg"], a.get("summary", ""), "", icon), a.get("categories", []))
+
+    def load_ratings(self):
+        # every app's star counts in one 2 MB file, fetched again once a day
+        path = os.path.join(CACHE, "ratings.json")
+        try:
+            if not os.path.exists(path) or time.time() - os.path.getmtime(path) > 86400:
+                urllib.request.urlretrieve(ODRS + "/ratings", path + ".new")
+                os.replace(path + ".new", path)
+            self.ratings = json.load(open(path))
+        except Exception:
+            pass
+
+    def rating(self, app):
+        # (average out of 5, how many), or None
+        f = app.flathub
+        r = f and (self.ratings.get(f.ref) or self.ratings.get(f.ref + ".desktop"))
+        if not r or not r.get("total"):
+            return None
+        n = sum(r.get("star%d" % i, 0) for i in range(1, 6))
+        if not n:
+            return None
+        return sum(i * r.get("star%d" % i, 0) for i in range(1, 6)) / n, n
 
     def load_installed(self):
         self.installed_apk = set(run(["apk", "info", "--quiet"]).stdout.split())
@@ -177,6 +251,29 @@ class Catalog:
                 apk.append(m.groups())
         flat = run(["flatpak", "remote-ls", "--updates", "--app", "--columns=application"]).stdout.split()
         return apk, flat
+
+    def firmware(self):
+        # devices fwupd has a newer firmware for: [(device id, name, version now, release)], None without fwupd
+        if not os.path.exists("/usr/bin/fwupdmgr"):
+            return None
+        p = run(["fwupdmgr", "get-updates", "--json"])
+        try:
+            devs = json.loads(p.stdout).get("Devices", [])
+        except ValueError:
+            return []
+        out = []
+        for d in devs:
+            rels = d.get("Releases") or []
+            if rels and d.get("DeviceId"):
+                out.append((d["DeviceId"], d.get("Name", "Device"), d.get("Version", ""), rels[0]))
+        return out
+
+    def needs_reboot(self):
+        try:
+            devs = json.loads(run(["fwupdmgr", "get-devices", "--json"]).stdout).get("Devices", [])
+        except ValueError:
+            return False
+        return any("needs-reboot" in (d.get("Flags") or []) for d in devs)
 
 
 def icon_widget(app, size):
@@ -219,6 +316,9 @@ class Store(Adw.Application):
         if win:
             win.present()
             return
+        css = Gtk.CssProvider()
+        css.load_from_data(CSS, -1)
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.win = Adw.ApplicationWindow(application=self, title="Store", default_width=1000, default_height=720)
         self.toasts = Adw.ToastOverlay()
         self.nav = Adw.NavigationView()
@@ -303,6 +403,7 @@ class Store(Adw.Application):
     def load(self):
         self.catalog.load_flathub()
         self.catalog.load_repo()
+        self.catalog.load_ratings()
         self.catalog.load_installed()
         GLib.idle_add(self.loaded)
 
@@ -316,7 +417,9 @@ class Store(Adw.Application):
 
     def check_updates(self):
         apk, flat = self.catalog.updates()
-        GLib.idle_add(self.show_updates, apk, flat)
+        GLib.idle_add(self.show_updates, apk, flat, None)
+        fw = self.catalog.firmware()
+        GLib.idle_add(self.show_updates, apk, flat, fw)
 
     # ---- pages
 
@@ -335,6 +438,12 @@ class Store(Adw.Application):
         text.append(Gtk.Label(label=app.name, xalign=0, css_classes=["heading"], ellipsize=Pango.EllipsizeMode.END))
         text.append(Gtk.Label(label=app.summary, xalign=0, css_classes=["dim-label", "caption"],
                               ellipsize=Pango.EllipsizeMode.END, max_width_chars=28))
+        r = self.catalog.rating(app)
+        if r and r[1] >= 5:
+            line = Gtk.Box(spacing=6)
+            line.append(stars(r[0], "caption"))
+            line.append(Gtk.Label(label="%d" % r[1], css_classes=["dim-label", "caption"]))
+            text.append(line)
         box.append(text)
         b.set_child(box)
         b.connect("clicked", lambda *a: self.show_app(app))
@@ -408,27 +517,116 @@ class Store(Adw.Application):
                 group.add(row)
             self.installed_page.append(group)
 
-    def show_updates(self, apk, flat):
+    def auto_group(self):
+        # updates on their own, and when they last happened
+        group = Adw.PreferencesGroup(margin_bottom=18)
+        on = True
+        try:
+            on = not any(l.strip() == "auto=no" for l in open(AUTO_CONF))
+        except OSError:
+            pass
+        row = Adw.SwitchRow(title="Install updates automatically", active=on,
+                            subtitle="Once a day while plugged in. A snapshot is taken first, so an update can be "
+                                     "undone from the boot menu.")
+        row.connect("notify::active", lambda r, *a: self.set_auto(r))
+        group.add(row)
+        try:
+            when, n = open(AUTO_STATE).read().split()[:2]
+            last = GLib.DateTime.new_from_unix_local(int(when)).format("%A %-d %B, %H:%M")
+            group.add(Adw.ActionRow(title="Last automatic update", subtitle="%s, %s update%s" % (
+                last, n, "" if n == "1" else "s")))
+        except (OSError, ValueError):
+            pass
+        return group
+
+    def set_auto(self, row):
+        # the switch flipping back after a cancelled password asks nothing
+        if getattr(self, "reverting", False):
+            self.reverting = False
+            return
+        want = row.get_active()
+
+        def go():
+            ok = subprocess.run(["pkexec", HELPER, "auto", "on" if want else "off"], capture_output=True).returncode == 0
+            GLib.idle_add(done, ok)
+
+        def done(ok):
+            if ok:
+                self.toast("Updates will install automatically" if want else "Updates wait for you now")
+            else:
+                self.reverting = True
+                row.set_active(not want)
+        threading.Thread(target=go, daemon=True).start()
+
+    def show_updates(self, apk, flat, fw):
         self.clear(self.updates_page)
-        total = len(apk) + len(flat)
+        self.updates_page.append(self.auto_group())
+        total = len(apk) + len(flat) + len(fw or [])
         self.updates_title.set_needs_attention(total > 0)
         self.updates_title.set_badge_number(total)
-        if not total:
-            self.updates_page.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title="Everything is up to date"))
-            return
-        top = Gtk.Box(spacing=12, margin_top=6, margin_bottom=12)
-        top.append(Gtk.Label(label="%d updates" % total, xalign=0, hexpand=True, css_classes=["title-2"]))
-        go = Gtk.Button(label="Update all", css_classes=["suggested-action", "pill"])
-        go.connect("clicked", lambda *a: self.update_all())
-        top.append(go)
-        self.updates_page.append(top)
-        group = Adw.PreferencesGroup()
-        for name, old, new in apk:
-            group.add(Adw.ActionRow(title=name, subtitle="%s → %s" % (old, new)))
-        for ref in flat:
-            app = self.catalog.by_flathub.get(ref)
-            group.add(Adw.ActionRow(title=GLib.markup_escape_text(app.name if app else ref), subtitle="Flathub"))
-        self.updates_page.append(group)
+        if not len(apk) + len(flat):
+            self.updates_page.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title="Everything is up to date",
+                                                    vexpand=False))
+        else:
+            top = Gtk.Box(spacing=12, margin_top=6, margin_bottom=12)
+            top.append(Gtk.Label(label="%d updates" % (len(apk) + len(flat)), xalign=0, hexpand=True,
+                                 css_classes=["title-2"]))
+            go = Gtk.Button(label="Update all", css_classes=["suggested-action", "pill"])
+            go.connect("clicked", lambda *a: self.update_all())
+            top.append(go)
+            self.updates_page.append(top)
+            group = Adw.PreferencesGroup()
+            for name, old, new in apk:
+                group.add(Adw.ActionRow(title=name, subtitle="%s → %s" % (old, new)))
+            for ref in flat:
+                app = self.catalog.by_flathub.get(ref)
+                group.add(Adw.ActionRow(title=GLib.markup_escape_text(app.name if app else ref), subtitle="Flathub"))
+            self.updates_page.append(group)
+        self.updates_page.append(self.firmware_group(fw))
+
+    def firmware_group(self, fw):
+        # the computer's own firmware: bios, ssd, docks, touchpads... from the vendors, through lvfs
+        group = Adw.PreferencesGroup(title="Firmware", margin_top=24,
+                                     description="Updates for the BIOS, the SSD and other parts, from the people "
+                                                 "who made them.")
+        if fw is None and not os.path.exists("/usr/bin/fwupdmgr"):
+            group.add(Adw.ActionRow(title="Firmware updates aren't installed", subtitle="sudo apk add fwupd"))
+        elif fw is None:
+            row = Adw.ActionRow(title="Checking for firmware updates…")
+            row.add_suffix(Gtk.Spinner(spinning=True))
+            group.add(row)
+        elif not fw:
+            group.add(Adw.ActionRow(title="Your firmware is up to date"))
+        for dev, name, now, rel in fw or []:
+            row = Adw.ActionRow(title=GLib.markup_escape_text(name),
+                                subtitle=GLib.markup_escape_text("%s → %s%s" % (
+                                    now, rel.get("Version", "?"),
+                                    (" · " + rel["Summary"]) if rel.get("Summary") else "")))
+            b = Gtk.Button(label="Update", valign=Gtk.Align.CENTER, css_classes=["pill"])
+            b.connect("clicked", lambda w, d=dev, n=name: self.update_firmware(d, n))
+            row.add_suffix(b)
+            group.add(row)
+        return group
+
+    def update_firmware(self, dev, name):
+        d = Adw.AlertDialog(heading="Update the firmware of %s?" % name,
+                            body="Keep the computer plugged in. Some firmware is installed while the computer "
+                                 "restarts: don't turn it off until it's back.")
+        d.add_response("cancel", "Cancel")
+        d.add_response("go", "Update")
+        d.set_response_appearance("go", Adw.ResponseAppearance.SUGGESTED)
+
+        def answered(d, r):
+            if r != "go":
+                return
+            title = "Updating the firmware of " + name
+
+            def after():
+                if self.catalog.needs_reboot():
+                    self.toast("Restart the computer to finish the firmware update")
+            self.job(title, self.apk_job(["firmware", dev], title), "Firmware updated", after)
+        d.connect("response", answered)
+        d.present(self.win)
 
     def show_app(self, app):
         page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
@@ -454,8 +652,20 @@ class Store(Adw.Application):
         button = Gtk.Button(css_classes=["pill"])
         row.append(button)
         page.append(row)
+        r = self.catalog.rating(app)
+        if r:
+            line = Gtk.Box(spacing=8)
+            line.append(Gtk.Label(label="%.1f" % r[0], css_classes=["title-3"]))
+            line.append(stars(r[0]))
+            line.append(Gtk.Label(label="%d ratings" % r[1], css_classes=["dim-label"]))
+            info.append(line)
+        f = app.flathub
+        if f and f.shots:
+            page.append(self.screenshots(f.shots))
         desc = Gtk.Label(xalign=0, wrap=True, selectable=True, margin_top=12)
         page.append(desc)
+        if f:
+            page.append(self.reviews(app, f))
 
         def update(*a):
             s = sources[choice.get_selected()]
@@ -471,6 +681,149 @@ class Store(Adw.Application):
         view.add_top_bar(Adw.HeaderBar())
         view.set_content(self.scrolled(page))
         self.nav.push(Adw.NavigationPage(child=view, title=app.name))
+
+    def screenshots(self, urls):
+        # a row you swipe or click through, each picture fetched once into the cache
+        car = Adw.Carousel(allow_scroll_wheel=False, spacing=12, height_request=360)
+        os.makedirs(os.path.join(CACHE, "shots"), exist_ok=True)
+        for url in urls:
+            pic = Gtk.Picture(content_fit=Gtk.ContentFit.CONTAIN, hexpand=True, css_classes=["shot"])
+            path = os.path.join(CACHE, "shots", hashlib.sha1(url.encode()).hexdigest() + ".png")
+
+            def fetch(url=url, path=path, pic=pic):
+                try:
+                    if not os.path.exists(path):
+                        urllib.request.urlretrieve(url, path + ".part")
+                        os.replace(path + ".part", path)
+                    GLib.idle_add(pic.set_filename, path)
+                except Exception:
+                    pass
+            threading.Thread(target=fetch, daemon=True).start()
+            car.append(pic)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin_top=12)
+        over = Gtk.Overlay(child=car)
+        for icon, step, align in (("go-previous-symbolic", -1, Gtk.Align.START), ("go-next-symbolic", 1, Gtk.Align.END)):
+            b = Gtk.Button(icon_name=icon, halign=align, valign=Gtk.Align.CENTER, margin_start=6, margin_end=6,
+                           css_classes=["circular", "osd"], visible=len(urls) > 1)
+
+            def go(b, step=step):
+                i = int(round(car.get_position())) + step
+                if 0 <= i < car.get_n_pages():
+                    car.scroll_to(car.get_nth_page(i), True)
+            b.connect("clicked", go)
+            over.add_overlay(b)
+        box.append(over)
+        if len(urls) > 1:
+            box.append(Adw.CarouselIndicatorDots(carousel=car))
+        return box
+
+    def reviews(self, app, src):
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        top = Gtk.Box(spacing=12, margin_top=18)
+        top.append(Gtk.Label(label="Reviews", xalign=0, hexpand=True, css_classes=["title-2"]))
+        write = Gtk.Button(label="Write a review", css_classes=["pill"])
+        write.connect("clicked", lambda *a: self.write_review(app, src))
+        write.set_sensitive(src in self.catalog.installed(app))
+        write.set_tooltip_text(None if write.get_sensitive() else "Install it first, then tell people what you think")
+        top.append(write)
+        box.append(top)
+        group = Adw.PreferencesGroup()
+        box.append(group)
+        wait = Adw.ActionRow(title="Getting reviews…")
+        group.add(wait)
+
+        def fetch():
+            try:
+                got = post(ODRS + "/fetch", {"app_id": src.ref, "locale": "en_US", "distro": "Chamesle",
+                                             "version": src.version or "unknown", "user_hash": user_hash(), "limit": 5})
+            except Exception:
+                got = None
+            GLib.idle_add(show, got)
+
+        def show(got):
+            group.remove(wait)
+            got = [g for g in (got or []) if isinstance(g, dict) and g.get("summary")]
+            if not got:
+                group.add(Adw.ActionRow(title="No reviews yet"))
+                return
+            # odrs hands back a key with the reviews, needed to write one
+            self.skeys = getattr(self, "skeys", {})
+            self.skeys[src.ref] = got[0].get("user_skey")
+            for g in got[:5]:
+                r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, margin_top=12, margin_bottom=12,
+                            margin_start=12, margin_end=12)
+                head = Gtk.Box(spacing=8)
+                head.append(stars(g.get("rating", 0) / 20))
+                head.append(Gtk.Label(label=g["summary"], xalign=0, css_classes=["heading"], wrap=True))
+                r.append(head)
+                when = GLib.DateTime.new_from_unix_local(int(g.get("date_created", 0))).format("%-d %B %Y")
+                r.append(Gtk.Label(label="%s · %s" % (g.get("user_display") or "Someone", when), xalign=0,
+                                   css_classes=["dim-label", "caption"]))
+                r.append(Gtk.Label(label=g.get("description", ""), xalign=0, wrap=True, selectable=True))
+                group.add(r)
+        threading.Thread(target=fetch, daemon=True).start()
+        return box
+
+    def write_review(self, app, src):
+        d = Adw.AlertDialog(heading="Review %s" % app.name,
+                            body="Your review is shared with everyone who uses GNOME Software or the Chamesle Store.")
+        form = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        picked = {"n": 0}
+        row = Gtk.Box(spacing=2, halign=Gtk.Align.CENTER)
+        btns = []
+
+        def pick(b, n):
+            picked["n"] = n
+            for i, x in enumerate(btns):
+                x.get_child().set_css_classes(["title-1", "stars" if i < n else "stars-off"])
+            d.set_response_enabled("send", ready())
+        for i in range(5):
+            b = Gtk.Button(child=Gtk.Label(label="★", css_classes=["title-1", "stars-off"]), css_classes=["flat"])
+            b.connect("clicked", pick, i + 1)
+            btns.append(b)
+            row.append(b)
+        form.append(row)
+        name = Gtk.Entry(placeholder_text="Your name (shown with the review)", text=GLib.get_real_name())
+        summary = Gtk.Entry(placeholder_text="In a few words")
+        text = Gtk.TextView(wrap_mode=Gtk.WrapMode.WORD_CHAR, top_margin=6, bottom_margin=6, left_margin=6,
+                            right_margin=6)
+        form.append(name)
+        form.append(summary)
+        form.append(Gtk.Frame(child=Gtk.ScrolledWindow(child=text, min_content_height=120)))
+
+        def ready(*a):
+            b = text.get_buffer()
+            return bool(picked["n"] and summary.get_text().strip() and
+                        b.get_text(b.get_start_iter(), b.get_end_iter(), False).strip())
+        summary.connect("changed", lambda *a: d.set_response_enabled("send", ready()))
+        text.get_buffer().connect("changed", lambda *a: d.set_response_enabled("send", ready()))
+        d.set_extra_child(form)
+        d.add_response("cancel", "Cancel")
+        d.add_response("send", "Send")
+        d.set_response_appearance("send", Adw.ResponseAppearance.SUGGESTED)
+        d.set_response_enabled("send", False)
+
+        def answered(d, r):
+            if r != "send":
+                return
+            b = text.get_buffer()
+            body = {"app_id": src.ref, "locale": "en_US", "distro": "Chamesle", "version": src.version or "unknown",
+                    "user_hash": user_hash(), "user_skey": getattr(self, "skeys", {}).get(src.ref, ""),
+                    "user_display": name.get_text().strip() or "Someone", "rating": picked["n"] * 20,
+                    "summary": summary.get_text().strip(),
+                    "description": b.get_text(b.get_start_iter(), b.get_end_iter(), False).strip()}
+
+            def send():
+                try:
+                    got = post(ODRS + "/submit", body)
+                    ok = got.get("success", False)
+                    msg = got.get("msg", "")
+                except Exception as e:
+                    ok, msg = False, str(e)
+                GLib.idle_add(self.toast, "Thanks, your review is sent" if ok else "The review didn't go through: " + msg)
+            threading.Thread(target=send, daemon=True).start()
+        d.connect("response", answered)
+        d.present(self.win)
 
     # ---- doing things
 

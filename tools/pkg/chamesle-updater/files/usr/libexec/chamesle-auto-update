@@ -1,0 +1,20 @@
+#!/bin/sh
+# installs updates on its own, once a day, while the computer is plugged in. the snapshot hook takes a
+# snapshot first, as for any upgrade. auto=no in /etc/chamesle/updates.conf (the store's switch) turns it off
+conf=/etc/chamesle/updates.conf
+state=/var/lib/chamesle/auto-update
+log=/var/log/chamesle-auto-update.log
+grep -qs '^auto=no' $conf && exit 0
+[ -f $state ] && [ $(($(date +%s) - $(stat -c %Y $state))) -lt 82800 ] && exit 0
+# a laptop on battery waits for its charger. desktops have no power supply to ask
+for s in /sys/class/power_supply/*; do
+    [ "$(cat $s/type 2>/dev/null)" = Mains ] && [ "$(cat $s/online 2>/dev/null)" = 0 ] && exit 0
+done
+n=$(apk list --upgradable 2>/dev/null | wc -l)
+{
+    date
+    [ "$n" -gt 0 ] && apk upgrade --no-interactive
+    flatpak update --system --noninteractive --assumeyes
+} > $log 2>&1
+mkdir -p ${state%/*}
+echo "$(date +%s) $n" > $state

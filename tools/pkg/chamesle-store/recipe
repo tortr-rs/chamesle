@@ -1,12 +1,12 @@
 name=chamesle-store
-version=0.2.0
-rel=6
-desc="The Chamesle store: apps from Flathub and the Chamesle repo, updates, .deb and .rpm files"
+version=0.3.0
+rel=0
+desc="The Chamesle store: apps from Flathub and the Chamesle repo with screenshots and ratings, updates, firmware, .deb and .rpm files"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="python3 python3-gobject gtk4 libadwaita flatpak polkit chamesle-base chamesle-updater chamesle-drivers chamesle-wine"
+depends="python3 python3-gobject gtk4 libadwaita flatpak polkit fwupd fwupd-efi chamesle-base chamesle-updater chamesle-drivers chamesle-wine"
 
 build() {
     cp -a . "$pkgdir/"

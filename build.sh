@@ -162,6 +162,11 @@ echo 'live ALL=(ALL:ALL) NOPASSWD: ALL' > "$ROOT/etc/sudoers.d/live"; chmod 440 
 # same for the password prompts of the store, drivers and updates: live has no password to type
 mkdir -p "$ROOT/etc/polkit-1/rules.d"
 printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == "live") return polkit.Result.YES;\n});\n' > "$ROOT/etc/polkit-1/rules.d/49-live.rules"
+# no lock screen when idle: live has no password, so a locked live session can't be opened again
+mkdir -p "$ROOT/home/live/.config"
+printf '[Daemon]\nAutolock=false\nLockOnResume=false\n' > "$ROOT/home/live/.config/kscreenlockerrc"
+printf '[org.gnome.desktop.screensaver]\nlock-enabled=false\n\n[org.cinnamon.desktop.screensaver]\nlock-enabled=false\n\n[org.mate.screensaver]\nlock-enabled=false\n' > "$ROOT/usr/share/glib-2.0/schemas/99_chamesle-live.gschema.override"
+"$IN" "$ROOT" /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 SESSION=$(edval session); SESSION=${SESSION:-${BASE:-$EDITION}}
 LOGIN=$(edval login); LOGIN=${LOGIN:-sddm}
 # what an installed system starts: the live one, unless the edition says otherwise (gnome and kde: x11 live, where

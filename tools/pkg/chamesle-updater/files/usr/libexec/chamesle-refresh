@@ -1,9 +1,12 @@
 #!/bin/sh
-# keeps apk's package list fresh so the update notifier (running as you) can see what's new
+# keeps apk's package list and fwupd's firmware list fresh so the store and the update notifier (running as you)
+# can see what's new, and installs updates when that's on (chamesle-auto-update)
 # nothing to do in the live session, but stay up so dinit doesn't keep restarting us
 [ -e /run/chamesle-live ] && exec sleep infinity
 sleep 120
 while :; do
     apk update --quiet >/dev/null 2>&1
+    [ -x /usr/bin/fwupdmgr ] && fwupdmgr refresh --force >/dev/null 2>&1
+    /usr/libexec/chamesle-auto-update
     sleep 21600
 done
