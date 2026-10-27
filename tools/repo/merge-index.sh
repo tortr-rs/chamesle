@@ -9,10 +9,10 @@ set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 TOP=$HERE/../..
 APK=${APK:-apk}
-INDEX=${INDEX:-https://downloads.sourceforge.net/project/chameslerepos/x86_64/Packages.adb}
+INDEX=${INDEX:-https://master.dl.sourceforge.net/project/chameslerepos/x86_64/Packages.adb}
 KEY=$(ls "$HOME"/.config/chamesle/chamesle-*.rsa | sort | tail -n1)
 OUT=${OUT:-$TOP/work/publish/x86_64}
-T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
+T=$TOP/work/merge-tmp; rm -rf "$T"; mkdir -p "$T"; trap 'rm -rf "$T"' EXIT
 
 curl -fsSL -o "$T/old.adb" "$INDEX"
 # only an index we signed: one of the keys in keys/apk has to check out

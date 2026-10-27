@@ -1,0 +1,6 @@
+#!/bin/sh
+# downloads.sourceforge.net sends apk to a random mirror and some never finish: use sourceforge's own server
+for f in /etc/apk/repositories /usr/share/chamesle/repositories; do
+    [ -f $f ] && sed -i 's|https://downloads.sourceforge.net/project/chameslerepos|https://master.dl.sourceforge.net/project/chameslerepos|' $f
+done
+exit 0

@@ -23,7 +23,9 @@ OUT=${OUT:-$HERE/out}; ISO=$OUT/chamesle-$VERSION-$EDITION-x86_64.iso
 NETINST=$(edval netinst)
 # no version: it installs whatever the repo has, the same link always gets the current one
 [ "$NETINST" = yes ] && ISO=$OUT/chamesle-x86_64.iso
-PUBLIC_REPO=https://downloads.sourceforge.net/project/chameslerepos
+# sourceforge's own server, not downloads.sourceforge.net: that one sends each file to a random mirror,
+# some of them crawl, and apk waits on them forever
+PUBLIC_REPO=https://master.dl.sourceforge.net/project/chameslerepos
 # where the netinst installs from: the public repo. NETREPO="v3 URL;v3 URL" to test against others
 NETREPO=${NETREPO:-v3 $PUBLIC_REPO}
 REPO=${REPO:-$( [ -f "$HERE/work/repo/x86_64/Packages.adb" ] && echo "$HERE/work/repo" || echo "$PUBLIC_REPO")}

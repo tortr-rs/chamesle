@@ -13,7 +13,7 @@ KEYDIR=${KEYDIR:-$HOME/.config/chamesle}
 KEY=$(ls "$KEYDIR"/chamesle-*.rsa | sort | tail -n1)
 ARCH=x86_64
 # what it builds with comes from the repo here, or the public one when there's no full copy here
-PULL=${PULL:-$( [ -f "$REPO/$ARCH/Packages.adb" ] && echo "$REPO" || echo https://downloads.sourceforge.net/project/chameslerepos)}
+PULL=${PULL:-$( [ -f "$REPO/$ARCH/Packages.adb" ] && echo "$REPO" || echo https://master.dl.sourceforge.net/project/chameslerepos)}
 
 [ $# = 1 ] && [ -f "$HERE/$1/recipe" ] || { echo "usage: $0 NAME   (one of: $(cd "$HERE" && ls */recipe | sed 's|/recipe||' | tr '\n' ' '))" >&2; exit 1; }
 . "$HERE/$1/recipe"
