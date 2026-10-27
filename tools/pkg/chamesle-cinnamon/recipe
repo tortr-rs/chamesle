@@ -1,6 +1,6 @@
 name=chamesle-cinnamon
 version=0.7.0
-rel=0
+rel=1
 desc="The Chamesle look for Cinnamon: wallpaper, theme settings, login screen, and fixes for its settings"
 url=https://chamesle.org
 license=GPL-3.0-or-later

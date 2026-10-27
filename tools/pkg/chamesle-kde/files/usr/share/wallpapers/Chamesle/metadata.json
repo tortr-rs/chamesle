@@ -1,9 +1,9 @@
 {
     "KPlugin": {
-        "Authors": [{ "Name": "Sam Ferrara" }],
-        "Description": "The Matterhorn at sunset",
+        "Authors": [{ "Name": "Jebulon" }],
+        "Description": "The bay at Komos, Crete",
         "Id": "Chamesle",
         "License": "CC0-1.0",
-        "Name": "Matterhorn"
+        "Name": "Crete"
     }
 }
