@@ -24,15 +24,27 @@ NAME=$(sed -n 's/^name=//p' "$D/$ED/edition")
 BASEPKGS=$D/base.packages; [ "$(val desktop-packages)" = no ] && BASEPKGS=
 pkgs=$(sed 's/#.*//' $BASEPKGS $(for e in $EDS; do echo "$D/$e/packages"; done) | tr ' \t' '\n\n' | grep -v '^$' | sort -u)
 echo "chamesle-desktop: $NAME, $(echo "$pkgs" | wc -l) packages and what they need"
-prog=; [ -n "${CHAMESLE_PROGRESS:-}" ] && prog="--progress-fd $CHAMESLE_PROGRESS"
-# the netinst came without most of the firmware: all of it, now that there's a disk to put it on
+# the netinst came without most of the firmware. now: what this computer's graphics and processor need.
+# the rest (wi-fi chips it doesn't have, phones...) comes later in the background, chamesle-refresh does that
+now=
 if [ -s /etc/chamesle/trimmed ]; then
-    apk fix --no-interactive $prog --reinstall $(cat /etc/chamesle/trimmed)
-    rm /etc/chamesle/trimmed
+    v=$(cat /sys/bus/pci/devices/*/vendor 2>/dev/null; grep -m1 vendor_id /proc/cpuinfo)
+    for f in $(cat /etc/chamesle/trimmed); do
+        case $f in
+        linux-firmware) now="$now $f";;
+        linux-firmware-amd) echo "$v" | grep -qiE '0x1002|AuthenticAMD' && now="$now $f";;
+        linux-firmware-intel) echo "$v" | grep -qiE '0x8086|GenuineIntel' && now="$now $f";;
+        intel-ucode) echo "$v" | grep -qi GenuineIntel && now="$now $f";;
+        linux-firmware-nvidia) echo "$v" | grep -qi '0x10de' && now="$now $f";;
+        esac
+    done
+    for f in $now; do sed -i "/^$f\$/d" /etc/chamesle/trimmed; done
+    [ -s /etc/chamesle/trimmed ] || rm /etc/chamesle/trimmed
 fi
-# what came from an older iso: as new as the repo, kernel and all
-apk upgrade --no-interactive $prog
-apk add --no-interactive $prog '!runit' '!runit-void' $pkgs
+# what came from an older iso: as new as the repo, kernel and all. curl does the downloading, with one
+# percentage for all of it (chamesle-get)
+fix=; [ -n "$now" ] && fix="fix --reinstall$now"
+/usr/libexec/chamesle-get ${fix:+"$fix"} "upgrade" "add !runit !runit-void $(echo $pkgs)"
 
 fp=$(val flatpaks)
 if [ -n "$fp" ]; then

@@ -1,0 +1,152 @@
+#!/usr/bin/python3
+# chamesle-get "APK ARGS" ...: apk commands, with the downloads done by curl first.
+# apk's own downloader waits forever on a slow mirror; curl gives up on one and tries again. the files land in
+# a local copy of the repo (the signed index and the packages it needs), then apk runs from that, offline.
+# CHAMESLE_PROGRESS=FD gets "done/1000" lines for the whole thing: downloading is the first 80%, installing the rest
+#   chamesle-get "fix --reinstall linux-firmware-amd" "upgrade" "add kde-plasma"
+import os, re, shutil, subprocess, sys, threading, time
+
+LOCAL = "/var/cache/chamesle-get"
+DL = LOCAL + "/x86_64"
+DOWN = 800
+
+fd = os.environ.get("CHAMESLE_PROGRESS")
+out = os.fdopen(int(fd), "w", buffering=1) if fd else None
+last = [-1]
+
+
+def say(n):
+    n = max(0, min(1000, int(n)))
+    if out and n != last[0]:
+        last[0] = n
+        out.write("%d/1000\n" % n)
+
+
+def repo():
+    for line in open("/etc/apk/repositories"):
+        p = line.split()
+        if p and not line.startswith("#") and p[-1].startswith("http"):
+            return p[-1].rstrip("/")
+    sys.exit("chamesle-get: no http repo in /etc/apk/repositories")
+
+
+def curl(url, path, size=0):
+    # under 300 KB/s for 8 s: that mirror crawls, drop it and go again where it left off. the redirect picks
+    # another one most times. the last tries take anything
+    for i in range(12):
+        slow = "300000" if i < 9 else "1000"
+        r = subprocess.run(["curl", "-fsSL", "-C", "-", "--connect-timeout", "15", "--speed-limit", slow,
+                            "--speed-time", "8", "-o", path + ".part", url])
+        if r.returncode == 0 and (not size or os.path.getsize(path + ".part") == size):
+            os.replace(path + ".part", path)
+            return True
+        if r.returncode == 33 or (size and os.path.exists(path + ".part") and os.path.getsize(path + ".part") > size):
+            os.remove(path + ".part")
+        time.sleep(2)
+    return False
+
+
+def apk(args, progress=None):
+    cmd = ["apk", "--repositories-file", LOCAL + "/repositories", "--no-interactive"] + args
+    if progress is None:
+        return subprocess.run(cmd, capture_output=True, text=True)
+    r, w = os.pipe()
+    p = subprocess.Popen(cmd[:1] + ["--progress-fd", str(w)] + cmd[1:], pass_fds=(w,))
+    os.close(w)
+    with os.fdopen(r) as f:
+        for line in f:
+            d, _, t = line.strip().partition("/")
+            if d.isdigit() and t.isdigit() and int(t):
+                progress(int(d) / int(t))
+    return p.wait()
+
+
+def sizes():
+    # name-version -> file size, from the index
+    got, name, ver = {}, None, None
+    dump = subprocess.run(["apk", "adbdump", DL + "/Packages.adb"], capture_output=True, text=True).stdout
+    for line in dump.splitlines():
+        if line.startswith("  - name: "):
+            name, ver = line[10:].strip(), None
+        elif line.startswith("    version: "):
+            ver = line[13:].strip()
+        elif line.startswith("    file-size: ") and name and ver:
+            got["%s-%s" % (name, ver)] = int(line[15:])
+    return got
+
+
+def main():
+    steps = [s.split() for s in sys.argv[1:]]
+    if not steps:
+        sys.exit("usage: chamesle-get \"APK ARGS\" ...")
+    url = repo()
+    os.makedirs(DL, exist_ok=True)
+    with open(LOCAL + "/repositories", "w") as f:
+        f.write("v3 %s\n" % LOCAL)
+    say(0)
+    if not curl(url + "/x86_64/Packages.adb", DL + "/Packages.adb"):
+        sys.exit("chamesle-get: can't get the package list from %s" % url)
+    size = sizes()
+
+    # what apk would fetch, from a dry run of every step
+    want = {}
+    for s in steps:
+        r = apk(["--simulate"] + s)
+        if r.returncode:
+            sys.stderr.write(r.stdout + r.stderr)
+            sys.exit("chamesle-get: apk %s won't work" % " ".join(s))
+        for line in r.stdout.splitlines():
+            m = re.match(r"\(\s*\d+/\d+\) (Installing|Upgrading|Downgrading|Replacing|Reinstalling) (\S+) \((?:.* -> )?(\S+)\)", line)
+            if m:
+                pv = "%s-%s" % (m.group(2), m.group(3))
+                want[pv] = size.get(pv, 0)
+
+    total = sum(want.values()) or 1
+    done = {pv: n for pv, n in want.items() if os.path.exists("%s/%s.apk" % (DL, pv)) and os.path.getsize("%s/%s.apk" % (DL, pv)) == n}
+    todo = [pv for pv in want if pv not in done]
+    print("chamesle-get: %d packages, %d MB to download" % (len(want), sum(want[p] for p in todo) // 1048576), file=sys.stderr)
+    bad, lock = [], threading.Lock()
+
+    def worker():
+        while True:
+            with lock:
+                if not todo:
+                    return
+                pv = todo.pop(0)
+            if curl("%s/x86_64/%s.apk" % (url, pv), "%s/%s.apk" % (DL, pv), want[pv]):
+                with lock:
+                    done[pv] = want[pv]
+            else:
+                with lock:
+                    bad.append(pv)
+    threads = [threading.Thread(target=worker, daemon=True) for _ in range(6)]
+    for t in threads:
+        t.start()
+    while any(t.is_alive() for t in threads):
+        part = 0
+        for pv in want:
+            if pv not in done:
+                try:
+                    part += os.path.getsize("%s/%s.apk.part" % (DL, pv))
+                except OSError:
+                    pass
+        with lock:
+            have = sum(done.values())
+        say(DOWN * (have + part) / total)
+        time.sleep(0.5)
+    if bad:
+        sys.exit("chamesle-get: couldn't download %s" % ", ".join(bad))
+    say(DOWN)
+
+    # now apk, offline, each step its share of the last 20%
+    share = (1000 - DOWN) / len(steps)
+    for i, s in enumerate(steps):
+        base = DOWN + i * share
+        if apk(s, lambda f, base=base: say(base + f * share)):
+            sys.exit("chamesle-get: apk %s failed" % " ".join(s))
+    say(1000)
+    shutil.rmtree(LOCAL, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    main()
