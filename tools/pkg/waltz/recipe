@@ -1,0 +1,25 @@
+name=waltz
+version=0.3.0
+rel=0
+desc="Video, picture and shader wallpapers, per monitor, cloned or spanned"
+url=https://github.com/tortr-rs/waltz
+# no LICENSE in the repo yet: set this once there is one
+license=unknown
+source=https://github.com/tortr-rs/waltz/archive/refs/tags/v$version.tar.gz
+sha256=657a267c4dc47db594494215f31820e12c399ee6df77dd6d5c59abb5ccd0a425
+makedeps="cargo rust pkg-config mpv-devel wayland-devel libglvnd-devel"
+depends="python3 python3-gobject gtk4 libadwaita libayatana-appindicator ffmpeg mpv"
+
+build() {
+    cd waltzer-white
+    cargo build --release --locked
+    cd ..
+    # waltz finds its renderer next to itself, so the tree goes in whole
+    d=$pkgdir/usr/lib/waltz
+    mkdir -p "$d/waltzer-white/target/release" "$pkgdir/usr/bin" "$pkgdir/usr/share/applications"
+    cp -r waltz plasma shaders bin "$d/"
+    cp waltzer-white/target/release/waltzer-white "$d/waltzer-white/target/release/"
+    ln -s ../lib/waltz/bin/waltz "$pkgdir/usr/bin/waltz"
+    ln -s ../lib/waltz/waltzer-white/target/release/waltzer-white "$pkgdir/usr/bin/waltzer-white"
+    sed 's|^Exec=.*|Exec=waltz|' waltz.desktop > "$pkgdir/usr/share/applications/waltz.desktop"
+}
