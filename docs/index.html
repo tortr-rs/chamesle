@@ -48,76 +48,116 @@
 
 <main class="home">
 
-<div class="wrap top">
-  <div class="intro">
-    <h1 class="banner"><img src="img/banner.png" alt="Chamesle Linux" width="400" height="171"></h1>
-    <p>A Linux distribution for PCs, based on Void Linux. It comes with a desktop set up like Windows, runs
-    Flathub apps, <code>.deb</code> and <code>.rpm</code> packages and Windows programs, and installs next to
-    Windows if you want to keep it.</p>
-    <div class="get">
-      <a class="button go" href="download.html">Download Chamesle 0.7</a>
-      <span class="small">618&nbsp;MB &middot; 64-bit PC &middot; free</span>
+<section class="hero">
+  <div class="wrap">
+    <div class="pitch">
+      <div class="logo"><img src="img/logo.png" alt="" width="52" height="52"> Chamesle Linux 0.7</div>
+      <h1>Your computer, just working.</h1>
+      <p>A Linux desktop for people leaving Windows. It looks like what you're used to, runs Flathub apps,
+      <code>.deb</code>, <code>.rpm</code> and Windows programs, and installs next to Windows if you want to keep it.</p>
+      <div class="get">
+        <a class="button go" href="download.html">Download Chamesle 0.7</a>
+        <a class="button ghost" href="editions.html">See the desktops</a>
+      </div>
+      <p class="small">618&nbsp;MB &middot; 64-bit PC &middot; free &middot; already on it? <code>sudo apk upgrade</code></p>
     </div>
-    <p class="small">Already running it? <code>sudo apk upgrade</code></p>
+    <a class="window" href="editions.html#kde"><img src="img/hero-kde.jpg" alt="Chamesle 0.7 with KDE Plasma and Chamesle Glass" width="1280" height="800"></a>
   </div>
-  <a class="shot" href="editions.html"><img src="img/xfce.png?8" alt="The Xfce edition of Chamesle 0.7" width="1280" height="800"></a>
-</div>
+</section>
 
-<div class="wrap boxes">
-  <section class="box">
-    <h2>News</h2>
-    <ul class="news-list">
-      <li><b>0.7 "Be Kool" is out.</b> Glass windows, taskbar and sign-in screen, Oxygen icons, a new logo,
-      and a Store with screenshots, ratings, firmware and updates in the background. <a href="new.html">What's new</a></li>
-      <li><b>0.6.0</b> brought one ISO for every desktop, the Jiggity installer, and Ranni, Play,
-      TTY and Server editions.</li>
-      <li><b>ttywm</b>, the console with windows on it, is in the repo. <a href="editions.html#tty">TTY edition</a></li>
-    </ul>
-  </section>
+<section class="section">
+  <div class="wrap">
+    <h2>Everything you need, already there</h2>
+    <p class="sub">Install it, sign in, and get on with your day. No terminal needed, unless you want one.</p>
+    <div class="features">
+      <div class="box feature">
+        <div class="orb"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Feels familiar</h3>
+        <p>A taskbar, a start menu and windows you can see through: Chamesle Glass, on every desktop but GNOME.</p>
+      </div>
+      <div class="box feature">
+        <div class="orb green"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg></div>
+        <h3>Apps with a double-click</h3>
+        <p>The Chamesle Store brings Flathub and our repo together. <code>.deb</code>, <code>.rpm</code>, <code>.exe</code> and <code>.msi</code> files just open.</p>
+      </div>
+      <div class="box feature">
+        <div class="orb violet"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></div>
+        <h3>Updates you can undo</h3>
+        <p>A snapshot before every update. If something breaks, pick the one from before in the boot menu.</p>
+      </div>
+      <div class="box feature">
+        <div class="orb amber"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="9" height="14" rx="1"/><rect x="13" y="5" width="9" height="14" rx="1"/></svg></div>
+        <h3>Next to Windows</h3>
+        <p>Jiggity, the installer, makes room next to Windows, or takes the whole disk, encrypted if you like.</p>
+      </div>
+      <div class="box feature">
+        <div class="orb"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="10" rx="2"/><path d="M8 7V4M16 7V4M8 20v-3M16 20v-3"/></svg></div>
+        <h3>Drivers sorted</h3>
+        <p>The Driver Manager sets up NVIDIA cards and Wi-Fi chips that need it. Firmware for your hardware comes with the install.</p>
+      </div>
+      <div class="box feature">
+        <div class="orb green"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+        <h3>Solid underneath</h3>
+        <p>Void Linux, an LTS kernel and almost 15,000 signed packages. Updates weekly, held back until they've proven themselves.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section class="box">
-    <h2>Editions</h2>
-    <table class="eds">
-      <tr><td><a href="editions.html">Xfce</a></td><td>light, set up like Windows</td></tr>
-      <tr><td><a href="editions.html">MATE</a></td><td>lighter still, for older PCs</td></tr>
-      <tr><td><a href="editions.html">Cinnamon</a></td><td>Linux Mint's desktop</td></tr>
-      <tr><td><a href="editions.html#kde">KDE Plasma</a></td><td>changes to fit you</td></tr>
-      <tr><td><a href="editions.html">GNOME</a></td><td>an overview and a dock</td></tr>
-      <tr><td><a href="editions.html#ranni">Ranni</a></td><td>Plasma laid out like a Mac</td></tr>
-      <tr><td><a href="editions.html#play">Play</a></td><td>Plasma with Steam, for games</td></tr>
-      <tr><td><a href="editions.html#astro">Astro</a></td><td>GNOME with sky apps</td></tr>
-    </table>
-    <p class="small">One download for all of them, you pick while installing.</p>
-  </section>
+<section class="section tint">
+  <div class="wrap">
+    <h2>Pick your desktop</h2>
+    <p class="sub">One download for all of them. You choose while installing, and can add another later.</p>
+    <div class="gallery">
+      <a class="box ed" href="editions.html#kde"><img src="img/thumb/kde.jpg" alt="" loading="lazy" width="720" height="450"><b>KDE Plasma</b><span>changes to fit you</span></a>
+      <a class="box ed" href="editions.html"><img src="img/thumb/xfce.jpg" alt="" loading="lazy" width="720" height="450"><b>Xfce</b><span>light, set up like Windows</span></a>
+      <a class="box ed" href="editions.html"><img src="img/thumb/cinnamon.jpg" alt="" loading="lazy" width="720" height="450"><b>Cinnamon</b><span>Linux Mint's desktop</span></a>
+      <a class="box ed" href="editions.html"><img src="img/thumb/mate.jpg" alt="" loading="lazy" width="720" height="450"><b>MATE</b><span>lighter still, for older PCs</span></a>
+      <a class="box ed" href="editions.html"><img src="img/thumb/gnome.jpg" alt="" loading="lazy" width="720" height="450"><b>GNOME</b><span>an overview and a dock</span></a>
+      <a class="box ed" href="editions.html#play"><img src="img/thumb/play.jpg" alt="" loading="lazy" width="720" height="450"><b>Play</b><span>Steam and controllers, ready</span></a>
+      <a class="box ed" href="editions.html#ranni"><img src="img/thumb/ranni.jpg" alt="" loading="lazy" width="720" height="450"><b>Ranni</b><span>Plasma laid out like a Mac</span></a>
+      <a class="box ed" href="editions.html#astro"><img src="img/thumb/astro.jpg" alt="" loading="lazy" width="720" height="450"><b>Astro</b><span>GNOME with sky apps</span></a>
+    </div>
+    <p class="gallery-note small">Also: <a href="editions.html#server">Server</a> and <a href="editions.html#tty">TTY</a>, the console with windows on it.</p>
+  </div>
+</section>
 
-  <section class="box">
-    <h2>Facts</h2>
-    <table class="eds">
-      <tr><td>Release</td><td>0.7 "Be Kool" (Margit)</td></tr>
-      <tr><td>Based on</td><td>Void Linux</td></tr>
-      <tr><td>Packages</td><td>about 15,000, signed</td></tr>
-      <tr><td>Package manager</td><td>apk</td></tr>
-      <tr><td>Init</td><td>dinit</td></tr>
-      <tr><td>Kernel</td><td>Linux 6.18 LTS</td></tr>
-      <tr><td>Updates</td><td>weekly</td></tr>
-    </table>
-    <p class="small"><a href="packages.html">Packages</a> &middot; <a href="docs.html">Docs</a> &middot; <a href="https://github.com/tortr-rs/chamesle">Source</a></p>
-  </section>
-</div>
+<section class="section">
+  <div class="wrap duo">
+    <div class="box">
+      <h2>News</h2>
+      <ul class="news-list">
+        <li><b>0.7 "Be Kool" is out.</b> Glass windows, taskbar and sign-in screen, Oxygen icons, a new logo,
+        and a Store with screenshots, ratings, firmware and updates in the background. <a href="new.html">What's new</a></li>
+        <li><b>Serp is coming with 1.0</b>: a desktop of our own, with a public beta first. <a href="about.html">Roadmap</a></li>
+        <li><b>0.6</b> brought one ISO for every desktop, the Jiggity installer, and Ranni, Play, TTY and Server.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Facts</h2>
+      <table class="facts">
+        <tr><td>Release</td><td>0.7 "Be Kool" (Margit)</td></tr>
+        <tr><td>Based on</td><td>Void Linux</td></tr>
+        <tr><td>Packages</td><td>about 15,000, signed</td></tr>
+        <tr><td>Package manager</td><td>apk</td></tr>
+        <tr><td>Init</td><td>dinit</td></tr>
+        <tr><td>Kernel</td><td>Linux 6.18 LTS</td></tr>
+        <tr><td>Updates</td><td>weekly</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
 
-<div class="wrap">
-  <section class="box wide">
-    <h2>What's on it</h2>
-    <ul class="cols2">
-      <li>Firefox, a file manager, printing, Bluetooth, Wi-Fi and laptop firmware, installed.</li>
-      <li>The Chamesle Store: Flathub and our own repo in one window, with screenshots and ratings.</li>
-      <li><code>.deb</code>, <code>.rpm</code>, <code>.exe</code> and <code>.msi</code> files open with a double-click.</li>
-      <li>The Driver Manager sets up NVIDIA and some Wi-Fi chips.</li>
-      <li>Jiggity, the installer: next to Windows or the whole disk, encrypted if you like.</li>
-      <li>Updates once a week, held back a while first. They can be undone.</li>
-    </ul>
-  </section>
-</div>
+<section class="cta">
+  <div class="wrap">
+    <h2>Give it a try</h2>
+    <p>Run it from a USB stick first. Nothing changes on your computer until you say so.</p>
+    <div class="actions">
+      <a class="button go" href="download.html">Download Chamesle 0.7</a>
+      <a class="button ghost" href="docs.html">Read the docs</a>
+    </div>
+  </div>
+</section>
 
 </main>
 
