@@ -5,13 +5,18 @@
 A Linux desktop for people who just want their computer to work. Boot it, it looks like what you're used to,
 apps come from Flathub, and there's a real package manager underneath if you want it.
 
-- **pkgimport**: double-click any `.deb` or `.rpm` and it installs, with the libraries it needs
-- based on **Void Linux**: glibc, **dinit** for init, **apk** for packages
-- the Chamesle repo: almost 15,000 packages, all signed
-- an installer based on Linux Mint's: whole disk (with encryption or LVM) or your own partitions, GParted built in
-- linux-firmware, Mesa, os-prober and Firefox out of the box
+**Latest release: 0.7 "Be Kool"** (October 2026). What's new: [chamesle.org/new.html](https://chamesle.org/new.html)
 
-Editions: **Xfce**, **MATE** and **Cinnamon**, set up like Windows, and **GNOME**. KDE Plasma later.
+- **Chamesle Glass**: see-through window frames and taskbar, glossy buttons
+- **Jiggity**, our own installer: one small ISO, pick your desktop, install next to Windows or on the whole disk
+- double-click any `.deb`, `.rpm`, `.exe` or `.msi` and it installs
+- **updates you can undo**: a btrfs snapshot before every update, pick it in the boot menu if one breaks something
+- Driver Manager for NVIDIA and Wi-Fi, a store, LTS kernel
+- based on **Void Linux**: glibc, **dinit** for init, **apk** for packages
+- the Chamesle repo: almost 15,000 packages, all checked against Void's signatures and signed
+
+Desktops: **KDE Plasma**, **Xfce**, **MATE** and **Cinnamon** set up like Windows, and **GNOME**. Flavors:
+**Play** (gaming), **Ranni** (Mac-like), **Astro** (astronomy), **Server** and **TTY**.
 
 Website: [chamesle.org](https://chamesle.org) · downloads and the package repo:
 [SourceForge](https://sourceforge.net/projects/chameslerepos/)
@@ -22,7 +27,8 @@ Website: [chamesle.org](https://chamesle.org) · downloads and the package repo:
 You need apk-tools 3, squashfs-tools, xorriso, GRUB (i386-pc and x86_64-efi), zstd, cpio and kmod.
 
 ```sh
-sudo EDITION=xfce ./build.sh
+sudo EDITION=netinst ./build.sh   # the installer ISO that installs any desktop
+sudo EDITION=kde ./build.sh       # or one edition on its own
 ```
 
 The ISO ends up in `out/`. Packages come from `work/repo` if you built the repo yourself, otherwise from the
