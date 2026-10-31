@@ -232,7 +232,7 @@ h3 { font-size: 17px; margin: 26px 0 4px; color: var(--heading); font-weight: 60
 
 /* ---- inner pages ---- */
 
-.pagehead { padding: 40px 0 46px; color: #fff; }
+.pagehead { padding: 40px 0 46px; color: #fff; background: linear-gradient(180deg, rgba(4, 44, 100, .72), rgba(4, 44, 100, .5) 65%, rgba(4, 44, 100, 0)); }
 .pagehead h1 {
   margin: 0 0 6px; font-size: 40px; color: #fff;
   text-shadow: 0 1px 3px rgba(0, 30, 70, .7), 0 0 20px rgba(0, 60, 130, .5);
