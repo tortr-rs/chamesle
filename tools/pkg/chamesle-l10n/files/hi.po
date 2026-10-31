@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Chamesle package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Chamesle\n"
+"Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
+"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
+msgid "Games"
+msgstr "गेम"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:40
+msgid "Internet"
+msgstr "इंटरनेट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:41
+msgid "Music & Video"
+msgstr "संगीत और वीडियो"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:42
+msgid "Graphics & Photos"
+msgstr "ग्राफ़िक्स और फ़ोटो"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:43
+msgid "Office"
+msgstr "ऑफ़िस"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:44
+msgid "Development"
+msgstr "डेवलपमेंट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:45
+msgid "Education & Science"
+msgstr "शिक्षा और विज्ञान"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:46
+msgid "Utilities"
+msgstr "उपयोगिताएँ"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:47
+msgid "System"
+msgstr "सिस्टम"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:282
+msgid "Device"
+msgstr "डिवाइस"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+msgid "Store"
+msgstr "स्टोर"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:360
+msgid "Explore"
+msgstr "खोजें और देखें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:361
+msgid "Installed"
+msgstr "इंस्टॉल किए गए"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+msgid "Updates"
+msgstr "अपडेट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:368
+msgid "Search"
+msgstr "खोजें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:371
+msgid "Install a .deb or .rpm file…"
+msgstr ".deb या .rpm फ़ाइल इंस्टॉल करें…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:377
+msgid "Search apps"
+msgstr "ऐप्स खोजें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "Getting the app lists ready"
+msgstr "ऐप सूचियाँ तैयार हो रही हैं"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "This takes a moment the first time."
+msgstr "पहली बार इसमें थोड़ा समय लगता है।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:477
+msgid "Popular"
+msgstr "लोकप्रिय"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:479
+msgid "Categories"
+msgstr "श्रेणियाँ"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:492
+#, python-format
+msgid "%d app from Flathub and the Chamesle repo"
+msgid_plural "%d apps from Flathub and the Chamesle repo"
+msgstr[0] "Flathub और Chamesle रेपो से %d ऐप"
+msgstr[1] "Flathub और Chamesle रेपो से %d ऐप"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:514
+msgid "Nothing found"
+msgstr "कुछ नहीं मिला"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:515
+msgid "Try another word, or install a .deb or .rpm file from the menu."
+msgstr "कोई दूसरा शब्द आज़माएँ, या मेन्यू से .deb या .rpm फ़ाइल इंस्टॉल करें।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:524
+msgid "Installed apps"
+msgstr "इंस्टॉल किए गए ऐप"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:542
+msgid "Install updates automatically"
+msgstr "अपडेट अपने आप इंस्टॉल करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:543
+msgid "Once a day while plugged in. A snapshot is taken first, so an update can be undone from the boot menu."
+msgstr "दिन में एक बार, चार्जर लगे होने पर। पहले एक स्नैपशॉट लिया जाता है, ताकि अपडेट को बूट मेन्यू से वापस लिया जा सके।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:550
+msgid "Last automatic update"
+msgstr "पिछला स्वचालित अपडेट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:551
+#, python-format
+msgid "%(when)s, %(n)d update"
+msgid_plural "%(when)s, %(n)d updates"
+msgstr[0] "%(when)s, %(n)d अपडेट"
+msgstr[1] "%(when)s, %(n)d अपडेट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates wait for you now"
+msgstr "अब अपडेट आपका इंतज़ार करेंगे"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates will install automatically"
+msgstr "अपडेट अपने आप इंस्टॉल होंगे"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:582
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Everything is up to date"
+msgstr "सब कुछ अप टू डेट है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:587
+#, python-format
+msgid "%d update"
+msgid_plural "%d updates"
+msgstr[0] "%d अपडेट"
+msgstr[1] "%d अपडेट"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:589
+msgid "Update all"
+msgstr "सभी अपडेट करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:604
+msgid "Firmware"
+msgstr "फ़र्मवेयर"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:605
+msgid "Updates for the BIOS, the SSD and other parts, from the people who made them."
+msgstr "BIOS, SSD और अन्य पुर्ज़ों के अपडेट, उन्हें बनाने वालों की ओर से।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:608
+msgid "Firmware updates aren't installed"
+msgstr "फ़र्मवेयर अपडेट इंस्टॉल नहीं हैं"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:610
+msgid "Checking for firmware updates…"
+msgstr "फ़र्मवेयर अपडेट की जाँच हो रही है…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:614
+msgid "Your firmware is up to date"
+msgstr "आपका फ़र्मवेयर अप टू डेट है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+msgid "Update"
+msgstr "अपडेट करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:627
+#, python-format
+msgid "Update the firmware of %s?"
+msgstr "%s का फ़र्मवेयर अपडेट करें?"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
+msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
+msgstr "कंप्यूटर को प्लग में लगा रहने दें। कुछ फ़र्मवेयर रीस्टार्ट के दौरान इंस्टॉल होते हैं: वापस आने तक इसे बंद न करें।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
+#, python-format
+msgid "Updating the firmware of %s"
+msgstr "%s का फ़र्मवेयर अपडेट हो रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:641
+msgid "Restart the computer to finish the firmware update"
+msgstr "फ़र्मवेयर अपडेट पूरा करने के लिए कंप्यूटर रीस्टार्ट करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:642
+msgid "Firmware updated"
+msgstr "फ़र्मवेयर अपडेट हो गया"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:661
+msgid "From"
+msgstr "स्रोत"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:664
+#, python-format
+msgid "From %s"
+msgstr "स्रोत: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:675
+#, python-format
+msgid "%d rating"
+msgid_plural "%d ratings"
+msgstr[0] "%d रेटिंग"
+msgstr[1] "%d रेटिंग"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Install"
+msgstr "इंस्टॉल करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Remove"
+msgstr "हटाएँ"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:738
+msgid "Reviews"
+msgstr "समीक्षाएँ"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:739
+msgid "Write a review"
+msgstr "समीक्षा लिखें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:742
+msgid "Install it first, then tell people what you think"
+msgstr "पहले इंस्टॉल करें, फिर लोगों को बताएँ कि आप क्या सोचते हैं"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:747
+msgid "Getting reviews…"
+msgstr "समीक्षाएँ लाई जा रही हैं…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:767
+msgid "No reviews yet"
+msgstr "अभी कोई समीक्षा नहीं"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:777
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:829
+msgid "Someone"
+msgstr "कोई व्यक्ति"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:785
+#, python-format
+msgid "Review %s"
+msgstr "%s की समीक्षा करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:786
+msgid "Your review is shared with everyone who uses GNOME Software or the Chamesle Store."
+msgstr "आपकी समीक्षा GNOME Software या Chamesle स्टोर के सभी उपयोगकर्ताओं के साथ साझा की जाती है।"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:803
+msgid "Your name (shown with the review)"
+msgstr "आपका नाम (समीक्षा के साथ दिखेगा)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:804
+msgid "In a few words"
+msgstr "कुछ शब्दों में"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:819
+msgid "Send"
+msgstr "भेजें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+msgid "Thanks, your review is sent"
+msgstr "धन्यवाद, आपकी समीक्षा भेज दी गई"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+#, python-format
+msgid "The review didn't go through: %s"
+msgstr "समीक्षा नहीं भेजी जा सकी: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:859
+msgid "One thing at a time, the last one is still going"
+msgstr "एक बार में एक काम, पिछला अभी चल रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:882
+msgid "Cancelled"
+msgstr "रद्द किया गया"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "यह काम नहीं किया"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+#, python-format
+msgid "The full error is also saved in %s"
+msgstr "पूरी त्रुटि %s में भी सहेजी गई है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "ठीक है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
+#, python-format
+msgid "%(what)s · %(pkg)s (%(n)s of %(total)s)"
+msgstr "%(what)s · %(pkg)s (%(total)s में से %(n)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:957
+#, python-format
+msgid "%(what)s (%(n)d of %(total)d: %(name)s)"
+msgstr "%(what)s (%(total)d में से %(n)d: %(name)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1005
+#, python-format
+msgid "Installing %s"
+msgstr "%s इंस्टॉल हो रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#, python-format
+msgid "Removing %s"
+msgstr "%s हटाया जा रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s installed"
+msgstr "%s इंस्टॉल हो गया"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s removed"
+msgstr "%s हटा दिया गया"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:979
+msgid "Updating the system"
+msgstr "सिस्टम अपडेट हो रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:985
+msgid "Updating apps"
+msgstr "ऐप्स अपडेट हो रहे हैं"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Updating everything"
+msgstr "सब कुछ अपडेट हो रहा है"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:990
+msgid ".deb and .rpm packages"
+msgstr ".deb और .rpm पैकेज"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:995
+msgid "Install a .deb or .rpm file"
+msgstr ".deb या .rpm फ़ाइल इंस्टॉल करें"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1006
+#, python-format
+msgid "%s is installed"
+msgstr "%s इंस्टॉल है"

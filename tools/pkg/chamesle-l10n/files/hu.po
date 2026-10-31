@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Chamesle package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Chamesle\n"
+"Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
+"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
+msgid "Games"
+msgstr "Játékok"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:40
+msgid "Internet"
+msgstr "Internet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:41
+msgid "Music & Video"
+msgstr "Zene és videó"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:42
+msgid "Graphics & Photos"
+msgstr "Grafika és fotó"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:43
+msgid "Office"
+msgstr "Iroda"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:44
+msgid "Development"
+msgstr "Fejlesztés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:45
+msgid "Education & Science"
+msgstr "Oktatás és tudomány"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:46
+msgid "Utilities"
+msgstr "Segédeszközök"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:47
+msgid "System"
+msgstr "Rendszer"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:282
+msgid "Device"
+msgstr "Eszköz"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+msgid "Store"
+msgstr "Áruház"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:360
+msgid "Explore"
+msgstr "Felfedezés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:361
+msgid "Installed"
+msgstr "Telepítve"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+msgid "Updates"
+msgstr "Frissítések"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:368
+msgid "Search"
+msgstr "Keresés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:371
+msgid "Install a .deb or .rpm file…"
+msgstr ".deb vagy .rpm fájl telepítése…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:377
+msgid "Search apps"
+msgstr "Alkalmazások keresése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "Getting the app lists ready"
+msgstr "Az alkalmazáslisták előkészítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "This takes a moment the first time."
+msgstr "Először ez eltart egy pillanatig."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:477
+msgid "Popular"
+msgstr "Népszerű"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:479
+msgid "Categories"
+msgstr "Kategóriák"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:492
+#, python-format
+msgid "%d app from Flathub and the Chamesle repo"
+msgid_plural "%d apps from Flathub and the Chamesle repo"
+msgstr[0] "%d alkalmazás a Flathubról és a Chamesle tárolóból"
+msgstr[1] "%d alkalmazás a Flathubról és a Chamesle tárolóból"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:514
+msgid "Nothing found"
+msgstr "Nincs találat"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:515
+msgid "Try another word, or install a .deb or .rpm file from the menu."
+msgstr "Próbáljon másik szót, vagy telepítsen .deb vagy .rpm fájlt a menüből."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:524
+msgid "Installed apps"
+msgstr "Telepített alkalmazások"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:542
+msgid "Install updates automatically"
+msgstr "Frissítések automatikus telepítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:543
+msgid "Once a day while plugged in. A snapshot is taken first, so an update can be undone from the boot menu."
+msgstr "Naponta egyszer, töltőre csatlakoztatva. Előbb pillanatkép készül, így a frissítés a rendszerindító menüből visszavonható."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:550
+msgid "Last automatic update"
+msgstr "Legutóbbi automatikus frissítés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:551
+#, python-format
+msgid "%(when)s, %(n)d update"
+msgid_plural "%(when)s, %(n)d updates"
+msgstr[0] "%(when)s, %(n)d frissítés"
+msgstr[1] "%(when)s, %(n)d frissítés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates wait for you now"
+msgstr "A frissítések mostantól Önre várnak"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates will install automatically"
+msgstr "A frissítések automatikusan települnek"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:582
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Everything is up to date"
+msgstr "Minden naprakész"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:587
+#, python-format
+msgid "%d update"
+msgid_plural "%d updates"
+msgstr[0] "%d frissítés"
+msgstr[1] "%d frissítés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:589
+msgid "Update all"
+msgstr "Összes frissítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:604
+msgid "Firmware"
+msgstr "Firmware"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:605
+msgid "Updates for the BIOS, the SSD and other parts, from the people who made them."
+msgstr "A BIOS, az SSD és más alkatrészek frissítései a gyártóiktól."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:608
+msgid "Firmware updates aren't installed"
+msgstr "A firmware-frissítések nincsenek telepítve"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:610
+msgid "Checking for firmware updates…"
+msgstr "Firmware-frissítések keresése…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:614
+msgid "Your firmware is up to date"
+msgstr "A firmware naprakész"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+msgid "Update"
+msgstr "Frissítés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:627
+#, python-format
+msgid "Update the firmware of %s?"
+msgstr "Frissíti ennek a firmware-ét: %s?"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
+msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
+msgstr "Hagyja a számítógépet áramra csatlakoztatva. Egyes firmware-ek újraindítás közben települnek: ne kapcsolja ki, amíg vissza nem tér."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+msgid "Cancel"
+msgstr "Mégse"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
+#, python-format
+msgid "Updating the firmware of %s"
+msgstr "Firmware frissítése: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:641
+msgid "Restart the computer to finish the firmware update"
+msgstr "Indítsa újra a számítógépet a firmware-frissítés befejezéséhez"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:642
+msgid "Firmware updated"
+msgstr "Firmware frissítve"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:661
+msgid "From"
+msgstr "Forrás"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:664
+#, python-format
+msgid "From %s"
+msgstr "Forrás: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:675
+#, python-format
+msgid "%d rating"
+msgid_plural "%d ratings"
+msgstr[0] "%d értékelés"
+msgstr[1] "%d értékelés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Install"
+msgstr "Telepítés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:738
+msgid "Reviews"
+msgstr "Vélemények"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:739
+msgid "Write a review"
+msgstr "Vélemény írása"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:742
+msgid "Install it first, then tell people what you think"
+msgstr "Előbb telepítse, aztán mondja el, mit gondol róla"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:747
+msgid "Getting reviews…"
+msgstr "Vélemények lekérése…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:767
+msgid "No reviews yet"
+msgstr "Még nincs vélemény"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:777
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:829
+msgid "Someone"
+msgstr "Valaki"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:785
+#, python-format
+msgid "Review %s"
+msgstr "Vélemény: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:786
+msgid "Your review is shared with everyone who uses GNOME Software or the Chamesle Store."
+msgstr "A véleményét mindenki látja, aki a GNOME Szoftvereket vagy a Chamesle Áruházat használja."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:803
+msgid "Your name (shown with the review)"
+msgstr "Az Ön neve (a vélemény mellett jelenik meg)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:804
+msgid "In a few words"
+msgstr "Néhány szóban"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:819
+msgid "Send"
+msgstr "Küldés"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+msgid "Thanks, your review is sent"
+msgstr "Köszönjük, a véleményét elküldtük"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+#, python-format
+msgid "The review didn't go through: %s"
+msgstr "A vélemény elküldése nem sikerült: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:859
+msgid "One thing at a time, the last one is still going"
+msgstr "Egyszerre egy dolgot, az előző még folyamatban van"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:882
+msgid "Cancelled"
+msgstr "Megszakítva"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Ez nem sikerült"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+#, python-format
+msgid "The full error is also saved in %s"
+msgstr "A teljes hiba ide is mentve: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
+#, python-format
+msgid "%(what)s · %(pkg)s (%(n)s of %(total)s)"
+msgstr "%(what)s · %(pkg)s (%(n)s / %(total)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:957
+#, python-format
+msgid "%(what)s (%(n)d of %(total)d: %(name)s)"
+msgstr "%(what)s (%(n)d / %(total)d: %(name)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1005
+#, python-format
+msgid "Installing %s"
+msgstr "Telepítés: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#, python-format
+msgid "Removing %s"
+msgstr "Eltávolítás: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s installed"
+msgstr "Telepítve: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s removed"
+msgstr "Eltávolítva: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:979
+msgid "Updating the system"
+msgstr "A rendszer frissítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:985
+msgid "Updating apps"
+msgstr "Alkalmazások frissítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Updating everything"
+msgstr "Minden frissítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:990
+msgid ".deb and .rpm packages"
+msgstr ".deb és .rpm csomagok"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:995
+msgid "Install a .deb or .rpm file"
+msgstr ".deb vagy .rpm fájl telepítése"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1006
+#, python-format
+msgid "%s is installed"
+msgstr "Telepítve: %s"
