@@ -2,12 +2,14 @@
 # chamesle-get "APK ARGS" ...: apk commands, with the downloads done by curl first.
 # apk's own downloader waits forever on a slow mirror; curl gives up on one and tries again. the files land in
 # a local copy of the repo (the signed index and the packages it needs), then apk runs from that, offline.
-# CHAMESLE_PROGRESS=FD gets "done/1000" lines for the whole thing: downloading is the first 80%, installing the rest
+# CHAMESLE_PROGRESS=FD gets "done/1000" lines for the whole thing: the package list and dry run are the first 3%,
+# downloading up to 80%, installing the rest
 #   chamesle-get "fix --reinstall linux-firmware-amd" "upgrade" "add kde-plasma"
 import os, re, shutil, subprocess, sys, threading, time
 
 LOCAL = "/var/cache/chamesle-get"
 DL = LOCAL + "/x86_64"
+START = 30
 DOWN = 800
 
 fd = os.environ.get("CHAMESLE_PROGRESS")
@@ -86,6 +88,7 @@ def main():
     say(0)
     if not curl(url + "/x86_64/Packages.adb", DL + "/Packages.adb"):
         sys.exit("chamesle-get: can't get the package list from %s" % url)
+    say(START / 2)
     size = sizes()
 
     # what apk would fetch, from a dry run of every step
@@ -101,6 +104,7 @@ def main():
                 pv = "%s-%s" % (m.group(2), m.group(3))
                 want[pv] = size.get(pv, 0)
 
+    say(START)
     total = sum(want.values()) or 1
     done = {pv: n for pv, n in want.items() if os.path.exists("%s/%s.apk" % (DL, pv)) and os.path.getsize("%s/%s.apk" % (DL, pv)) == n}
     todo = [pv for pv in want if pv not in done]
@@ -132,7 +136,7 @@ def main():
                     pass
         with lock:
             have = sum(done.values())
-        say(DOWN * (have + part) / total)
+        say(START + (DOWN - START) * (have + part) / total)
         time.sleep(0.5)
     if bad:
         sys.exit("chamesle-get: couldn't download %s" % ", ".join(bad))
