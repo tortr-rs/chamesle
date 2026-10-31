@@ -1,10 +1,9 @@
 name=waltz
 version=0.3.0
-rel=0
+rel=1
 desc="Video, picture and shader wallpapers, per monitor, cloned or spanned"
 url=https://github.com/tortr-rs/waltz
-# no LICENSE in the repo yet: set this once there is one
-license=unknown
+license=MIT
 source=https://github.com/tortr-rs/waltz/archive/refs/tags/v$version.tar.gz
 sha256=657a267c4dc47db594494215f31820e12c399ee6df77dd6d5c59abb5ccd0a425
 makedeps="cargo rust pkg-config mpv-devel wayland-devel libglvnd-devel"
