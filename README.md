@@ -13,7 +13,7 @@ apps come from Flathub, and there's a real package manager underneath if you wan
 - **updates you can undo**: a btrfs snapshot before every update, pick it in the boot menu if one breaks something
 - Driver Manager for NVIDIA and Wi-Fi, a store, LTS kernel
 - based on **Void Linux**: glibc, **dinit** for init, **apk** for packages
-- the Chamesle repo: almost 15,000 packages, all checked against Void's signatures and signed
+- the Chamesle repo: almost 15,000 signed packages, and every new one checked against Void's signature first
 
 Desktops: **KDE Plasma**, **Xfce**, **MATE** and **Cinnamon** set up like Windows, and **GNOME**. Flavors:
 **Play** (gaming), **Ranni** (Mac-like), **Astro** (astronomy), **Server** and **TTY**.
