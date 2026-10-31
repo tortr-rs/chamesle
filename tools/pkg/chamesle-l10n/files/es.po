@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Chamesle package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Chamesle\n"
+"Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
+"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
+msgid "Games"
+msgstr "Juegos"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:40
+msgid "Internet"
+msgstr "Internet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:41
+msgid "Music & Video"
+msgstr "Música y vídeo"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:42
+msgid "Graphics & Photos"
+msgstr "Gráficos y fotos"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:43
+msgid "Office"
+msgstr "Oficina"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:44
+msgid "Development"
+msgstr "Desarrollo"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:45
+msgid "Education & Science"
+msgstr "Educación y ciencia"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:46
+msgid "Utilities"
+msgstr "Utilidades"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:47
+msgid "System"
+msgstr "Sistema"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:282
+msgid "Device"
+msgstr "Dispositivo"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+msgid "Store"
+msgstr "Tienda"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:360
+msgid "Explore"
+msgstr "Explorar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:361
+msgid "Installed"
+msgstr "Instaladas"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+msgid "Updates"
+msgstr "Actualizaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:368
+msgid "Search"
+msgstr "Buscar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:371
+msgid "Install a .deb or .rpm file…"
+msgstr "Instalar un archivo .deb o .rpm…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:377
+msgid "Search apps"
+msgstr "Buscar aplicaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "Getting the app lists ready"
+msgstr "Preparando las listas de aplicaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "This takes a moment the first time."
+msgstr "La primera vez tarda un momento."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:477
+msgid "Popular"
+msgstr "Populares"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:479
+msgid "Categories"
+msgstr "Categorías"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:492
+#, python-format
+msgid "%d app from Flathub and the Chamesle repo"
+msgid_plural "%d apps from Flathub and the Chamesle repo"
+msgstr[0] "%d aplicación de Flathub y del repositorio de Chamesle"
+msgstr[1] "%d aplicaciones de Flathub y del repositorio de Chamesle"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:514
+msgid "Nothing found"
+msgstr "No se encontró nada"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:515
+msgid "Try another word, or install a .deb or .rpm file from the menu."
+msgstr "Prueba con otra palabra, o instala un archivo .deb o .rpm desde el menú."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:524
+msgid "Installed apps"
+msgstr "Aplicaciones instaladas"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:542
+msgid "Install updates automatically"
+msgstr "Instalar actualizaciones automáticamente"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:543
+msgid "Once a day while plugged in. A snapshot is taken first, so an update can be undone from the boot menu."
+msgstr "Una vez al día con el cargador conectado. Antes se toma una instantánea, así que una actualización se puede deshacer desde el menú de arranque."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:550
+msgid "Last automatic update"
+msgstr "Última actualización automática"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:551
+#, python-format
+msgid "%(when)s, %(n)d update"
+msgid_plural "%(when)s, %(n)d updates"
+msgstr[0] "%(when)s, %(n)d actualización"
+msgstr[1] "%(when)s, %(n)d actualizaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates wait for you now"
+msgstr "Las actualizaciones ahora te esperan"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates will install automatically"
+msgstr "Las actualizaciones se instalarán automáticamente"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:582
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Everything is up to date"
+msgstr "Todo está actualizado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:587
+#, python-format
+msgid "%d update"
+msgid_plural "%d updates"
+msgstr[0] "%d actualización"
+msgstr[1] "%d actualizaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:589
+msgid "Update all"
+msgstr "Actualizar todo"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:604
+msgid "Firmware"
+msgstr "Firmware"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:605
+msgid "Updates for the BIOS, the SSD and other parts, from the people who made them."
+msgstr "Actualizaciones de la BIOS, el SSD y otras piezas, de quienes las fabricaron."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:608
+msgid "Firmware updates aren't installed"
+msgstr "Las actualizaciones de firmware no están instaladas"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:610
+msgid "Checking for firmware updates…"
+msgstr "Buscando actualizaciones de firmware…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:614
+msgid "Your firmware is up to date"
+msgstr "Tu firmware está actualizado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+msgid "Update"
+msgstr "Actualizar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:627
+#, python-format
+msgid "Update the firmware of %s?"
+msgstr "¿Actualizar el firmware de %s?"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
+msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
+msgstr "Mantén el ordenador enchufado. Parte del firmware se instala mientras se reinicia: no lo apagues hasta que vuelva."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
+#, python-format
+msgid "Updating the firmware of %s"
+msgstr "Actualizando el firmware de %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:641
+msgid "Restart the computer to finish the firmware update"
+msgstr "Reinicia el ordenador para terminar la actualización del firmware"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:642
+msgid "Firmware updated"
+msgstr "Firmware actualizado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:661
+msgid "From"
+msgstr "Origen"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:664
+#, python-format
+msgid "From %s"
+msgstr "Origen: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:675
+#, python-format
+msgid "%d rating"
+msgid_plural "%d ratings"
+msgstr[0] "%d valoración"
+msgstr[1] "%d valoraciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Install"
+msgstr "Instalar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Remove"
+msgstr "Eliminar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:738
+msgid "Reviews"
+msgstr "Reseñas"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:739
+msgid "Write a review"
+msgstr "Escribir una reseña"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:742
+msgid "Install it first, then tell people what you think"
+msgstr "Instálala primero y luego cuenta qué te parece"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:747
+msgid "Getting reviews…"
+msgstr "Obteniendo reseñas…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:767
+msgid "No reviews yet"
+msgstr "Aún no hay reseñas"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:777
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:829
+msgid "Someone"
+msgstr "Alguien"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:785
+#, python-format
+msgid "Review %s"
+msgstr "Reseña de %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:786
+msgid "Your review is shared with everyone who uses GNOME Software or the Chamesle Store."
+msgstr "Tu reseña se comparte con todos los que usan GNOME Software o la Tienda de Chamesle."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:803
+msgid "Your name (shown with the review)"
+msgstr "Tu nombre (se muestra con la reseña)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:804
+msgid "In a few words"
+msgstr "En pocas palabras"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:819
+msgid "Send"
+msgstr "Enviar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+msgid "Thanks, your review is sent"
+msgstr "Gracias, tu reseña se ha enviado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+#, python-format
+msgid "The review didn't go through: %s"
+msgstr "La reseña no se pudo enviar: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:859
+msgid "One thing at a time, the last one is still going"
+msgstr "Una cosa cada vez, la anterior sigue en marcha"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:882
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Eso no funcionó"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+#, python-format
+msgid "The full error is also saved in %s"
+msgstr "El error completo también se guarda en %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "Aceptar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
+#, python-format
+msgid "%(what)s · %(pkg)s (%(n)s of %(total)s)"
+msgstr "%(what)s · %(pkg)s (%(n)s de %(total)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:957
+#, python-format
+msgid "%(what)s (%(n)d of %(total)d: %(name)s)"
+msgstr "%(what)s (%(n)d de %(total)d: %(name)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1005
+#, python-format
+msgid "Installing %s"
+msgstr "Instalando %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#, python-format
+msgid "Removing %s"
+msgstr "Eliminando %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s installed"
+msgstr "%s instalado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s removed"
+msgstr "%s eliminado"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:979
+msgid "Updating the system"
+msgstr "Actualizando el sistema"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:985
+msgid "Updating apps"
+msgstr "Actualizando aplicaciones"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Updating everything"
+msgstr "Actualizando todo"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:990
+msgid ".deb and .rpm packages"
+msgstr "Paquetes .deb y .rpm"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:995
+msgid "Install a .deb or .rpm file"
+msgstr "Instalar un archivo .deb o .rpm"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1006
+#, python-format
+msgid "%s is installed"
+msgstr "%s está instalado"

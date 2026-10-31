@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Chamesle package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Chamesle\n"
+"Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
+"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
+msgid "Games"
+msgstr "Spel"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:40
+msgid "Internet"
+msgstr "Internet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:41
+msgid "Music & Video"
+msgstr "Musik och video"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:42
+msgid "Graphics & Photos"
+msgstr "Grafik och foton"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:43
+msgid "Office"
+msgstr "Kontor"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:44
+msgid "Development"
+msgstr "Utveckling"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:45
+msgid "Education & Science"
+msgstr "Utbildning och vetenskap"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:46
+msgid "Utilities"
+msgstr "Verktyg"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:47
+msgid "System"
+msgstr "System"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:282
+msgid "Device"
+msgstr "Enhet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+msgid "Store"
+msgstr "Butik"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:360
+msgid "Explore"
+msgstr "Utforska"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:361
+msgid "Installed"
+msgstr "Installerade"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+msgid "Updates"
+msgstr "Uppdateringar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:368
+msgid "Search"
+msgstr "Sök"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:371
+msgid "Install a .deb or .rpm file…"
+msgstr "Installera en .deb- eller .rpm-fil…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:377
+msgid "Search apps"
+msgstr "Sök appar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "Getting the app lists ready"
+msgstr "Applistorna förbereds"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:389
+msgid "This takes a moment the first time."
+msgstr "Det tar en stund första gången."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:477
+msgid "Popular"
+msgstr "Populärt"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:479
+msgid "Categories"
+msgstr "Kategorier"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:492
+#, python-format
+msgid "%d app from Flathub and the Chamesle repo"
+msgid_plural "%d apps from Flathub and the Chamesle repo"
+msgstr[0] "%d app från Flathub och Chamesle-förrådet"
+msgstr[1] "%d appar från Flathub och Chamesle-förrådet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:514
+msgid "Nothing found"
+msgstr "Inget hittades"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:515
+msgid "Try another word, or install a .deb or .rpm file from the menu."
+msgstr "Prova ett annat ord, eller installera en .deb- eller .rpm-fil från menyn."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:524
+msgid "Installed apps"
+msgstr "Installerade appar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:542
+msgid "Install updates automatically"
+msgstr "Installera uppdateringar automatiskt"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:543
+msgid "Once a day while plugged in. A snapshot is taken first, so an update can be undone from the boot menu."
+msgstr "En gång om dagen med laddaren ansluten. En ögonblicksbild tas först, så en uppdatering kan ångras från startmenyn."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:550
+msgid "Last automatic update"
+msgstr "Senaste automatiska uppdatering"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:551
+#, python-format
+msgid "%(when)s, %(n)d update"
+msgid_plural "%(when)s, %(n)d updates"
+msgstr[0] "%(when)s, %(n)d uppdatering"
+msgstr[1] "%(when)s, %(n)d uppdateringar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates wait for you now"
+msgstr "Uppdateringar väntar på dig nu"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:569
+msgid "Updates will install automatically"
+msgstr "Uppdateringar installeras automatiskt"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:582
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Everything is up to date"
+msgstr "Allt är uppdaterat"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:587
+#, python-format
+msgid "%d update"
+msgid_plural "%d updates"
+msgstr[0] "%d uppdatering"
+msgstr[1] "%d uppdateringar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:589
+msgid "Update all"
+msgstr "Uppdatera alla"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:604
+msgid "Firmware"
+msgstr "Fast programvara"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:605
+msgid "Updates for the BIOS, the SSD and other parts, from the people who made them."
+msgstr "Uppdateringar för BIOS, SSD och andra delar, från dem som tillverkade dem."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:608
+msgid "Firmware updates aren't installed"
+msgstr "Uppdateringar av fast programvara är inte installerade"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:610
+msgid "Checking for firmware updates…"
+msgstr "Söker efter uppdateringar av fast programvara…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:614
+msgid "Your firmware is up to date"
+msgstr "Din fasta programvara är uppdaterad"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+msgid "Update"
+msgstr "Uppdatera"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:627
+#, python-format
+msgid "Update the firmware of %s?"
+msgstr "Uppdatera den fasta programvaran för %s?"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
+msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
+msgstr "Håll datorn ansluten till ström. En del fast programvara installeras vid omstart: stäng inte av den förrän den är tillbaka."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
+#, python-format
+msgid "Updating the firmware of %s"
+msgstr "Uppdaterar den fasta programvaran för %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:641
+msgid "Restart the computer to finish the firmware update"
+msgstr "Starta om datorn för att slutföra uppdateringen av den fasta programvaran"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:642
+msgid "Firmware updated"
+msgstr "Den fasta programvaran är uppdaterad"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:661
+msgid "From"
+msgstr "Från"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:664
+#, python-format
+msgid "From %s"
+msgstr "Från %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:675
+#, python-format
+msgid "%d rating"
+msgid_plural "%d ratings"
+msgstr[0] "%d betyg"
+msgstr[1] "%d betyg"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Install"
+msgstr "Installera"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+msgid "Remove"
+msgstr "Ta bort"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:738
+msgid "Reviews"
+msgstr "Recensioner"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:739
+msgid "Write a review"
+msgstr "Skriv en recension"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:742
+msgid "Install it first, then tell people what you think"
+msgstr "Installera först och berätta sedan vad du tycker"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:747
+msgid "Getting reviews…"
+msgstr "Hämtar recensioner…"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:767
+msgid "No reviews yet"
+msgstr "Inga recensioner än"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:777
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:829
+msgid "Someone"
+msgstr "Någon"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:785
+#, python-format
+msgid "Review %s"
+msgstr "Recensera %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:786
+msgid "Your review is shared with everyone who uses GNOME Software or the Chamesle Store."
+msgstr "Din recension delas med alla som använder GNOME Software eller Chamesle Butik."
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:803
+msgid "Your name (shown with the review)"
+msgstr "Ditt namn (visas med recensionen)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:804
+msgid "In a few words"
+msgstr "Med några få ord"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:819
+msgid "Send"
+msgstr "Skicka"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+msgid "Thanks, your review is sent"
+msgstr "Tack, din recension är skickad"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:840
+#, python-format
+msgid "The review didn't go through: %s"
+msgstr "Recensionen gick inte fram: %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:859
+msgid "One thing at a time, the last one is still going"
+msgstr "En sak i taget, den förra pågår fortfarande"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:882
+msgid "Cancelled"
+msgstr "Avbrutet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Det fungerade inte"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+#, python-format
+msgid "The full error is also saved in %s"
+msgstr "Hela felet finns också sparat i %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
+#, python-format
+msgid "%(what)s · %(pkg)s (%(n)s of %(total)s)"
+msgstr "%(what)s · %(pkg)s (%(n)s av %(total)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:957
+#, python-format
+msgid "%(what)s (%(n)d of %(total)d: %(name)s)"
+msgstr "%(what)s (%(n)d av %(total)d: %(name)s)"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1005
+#, python-format
+msgid "Installing %s"
+msgstr "Installerar %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:970
+#, python-format
+msgid "Removing %s"
+msgstr "Tar bort %s"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s installed"
+msgstr "%s installerat"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:975
+#, python-format
+msgid "%s removed"
+msgstr "%s borttaget"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:979
+msgid "Updating the system"
+msgstr "Uppdaterar systemet"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:985
+msgid "Updating apps"
+msgstr "Uppdaterar appar"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:987
+msgid "Updating everything"
+msgstr "Uppdaterar allt"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:990
+msgid ".deb and .rpm packages"
+msgstr ".deb- och .rpm-paket"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:995
+msgid "Install a .deb or .rpm file"
+msgstr "Installera en .deb- eller .rpm-fil"
+
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:1006
+#, python-format
+msgid "%s is installed"
+msgstr "%s är installerat"

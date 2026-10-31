@@ -1,0 +1,17 @@
+name=chamesle-l10n
+version=0.8.0
+rel=0
+desc="Chamesle's own apps in every language"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps="gettext"
+depends=""
+
+build() {
+    for f in *.po; do
+        l=${f%.po}
+        mkdir -p "$pkgdir/usr/share/locale/$l/LC_MESSAGES"
+        msgfmt --check-format -o "$pkgdir/usr/share/locale/$l/LC_MESSAGES/chamesle.mo" "$f"
+    done
+}

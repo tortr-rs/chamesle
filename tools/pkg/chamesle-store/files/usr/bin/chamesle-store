@@ -1,13 +1,16 @@
 #!/usr/bin/python3
 # Chamesle Store: apps from Flathub and from the Chamesle repo in one place, plus .deb/.rpm files through pkgimport,
 # firmware through fwupd. ratings and reviews are gnome's odrs, the ones gnome software shows
-import gzip, hashlib, json, os, re, subprocess, sys, threading, time, urllib.request
+import gettext, gzip, hashlib, json, os, re, subprocess, sys, threading, time, urllib.request
 import xml.etree.ElementTree as ET
 
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
+
+gettext.textdomain("chamesle")
+_, ngettext = gettext.gettext, gettext.ngettext
 
 APPSTREAM = "/var/lib/flatpak/appstream/flathub/x86_64/active"
 CACHE = os.path.join(GLib.get_user_cache_dir(), "chamesle-store")
@@ -17,6 +20,9 @@ AUTO_CONF = "/etc/chamesle/updates.conf"
 AUTO_STATE = "/var/lib/chamesle/auto-update"
 # bump when the flathub cache gets new fields
 CACHE_V = 2
+# de_DE from de_DE.UTF-8, what odrs wants
+LANG = next((l for l in GLib.get_language_names() if "." not in l and "@" not in l and l != "C"), "en_US")
+XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
 
 CSS = b"""
 .stars { color: #e5a50a; }
@@ -30,15 +36,15 @@ FEATURED = ["com.spotify.Client", "com.discordapp.Discord", "com.valvesoftware.S
 
 # freedesktop categories -> what the store shows
 CATEGORIES = [
-    ("Games", "Game", "applications-games-symbolic"),
-    ("Internet", "Network", "applications-internet-symbolic"),
-    ("Music & Video", "AudioVideo", "applications-multimedia-symbolic"),
-    ("Graphics & Photos", "Graphics", "applications-graphics-symbolic"),
-    ("Office", "Office", "x-office-document-symbolic"),
-    ("Development", "Development", "applications-engineering-symbolic"),
-    ("Education & Science", "Education", "applications-science-symbolic"),
-    ("Utilities", "Utility", "applications-utilities-symbolic"),
-    ("System", "System", "applications-system-symbolic"),
+    (_("Games"), "Game", "applications-games-symbolic"),
+    (_("Internet"), "Network", "applications-internet-symbolic"),
+    (_("Music & Video"), "AudioVideo", "applications-multimedia-symbolic"),
+    (_("Graphics & Photos"), "Graphics", "applications-graphics-symbolic"),
+    (_("Office"), "Office", "x-office-document-symbolic"),
+    (_("Development"), "Development", "applications-engineering-symbolic"),
+    (_("Education & Science"), "Education", "applications-science-symbolic"),
+    (_("Utilities"), "Utility", "applications-utilities-symbolic"),
+    (_("System"), "System", "applications-system-symbolic"),
 ]
 
 
@@ -89,10 +95,18 @@ def repo_url():
     return None
 
 
+def localized(comp, tag):
+    # the element in the user's language, or the untranslated one
+    els = {e.get(XML_LANG): e for e in comp.findall(tag)}
+    return next((els[l] for l in GLib.get_language_names() if l in els), els.get(None))
+
+
 def text_of(el):
     # appstream descriptions: <p> and <li>, as plain paragraphs
     out = []
     for c in el:
+        if c.get(XML_LANG):
+            continue
         if c.tag == "p":
             out.append("".join(c.itertext()).strip())
         elif c.tag in ("ul", "ol"):
@@ -154,7 +168,7 @@ class Catalog:
         stamp = os.path.getmtime(path)
         try:
             c = json.load(open(cached))
-            if c["stamp"] == stamp and c.get("v") == CACHE_V:
+            if c["stamp"] == stamp and c.get("v") == CACHE_V and c.get("lang") == LANG:
                 for a in c["apps"]:
                     self.add(a[0], Source("flathub", a[1], a[2], a[3], a[4], a[6], a[7]), a[5])
                 return
@@ -166,12 +180,12 @@ class Catalog:
             if comp.get("type") not in ("desktop-application", "desktop"):
                 continue
             cid = comp.findtext("id")
-            name = next((n.text for n in comp.findall("name") if not n.get("{http://www.w3.org/XML/1998/namespace}lang")), None)
+            name = next((n.text for n in comp.findall("name") if not n.get(XML_LANG)), None)
             if not cid or not name:
                 continue
-            summary = next((n.text for n in comp.findall("summary")
-                            if not n.get("{http://www.w3.org/XML/1998/namespace}lang")), "") or ""
-            desc = comp.find("description")
+            summary = localized(comp, "summary")
+            summary = summary.text or "" if summary is not None else ""
+            desc = localized(comp, "description")
             icon = None
             for ic in comp.findall("icon"):
                 if ic.get("type") == "cached":
@@ -196,7 +210,7 @@ class Catalog:
             self.add(name, Source("flathub", cid, summary, desc, icon, shots[:6], version), cats)
             keep.append([name, cid, summary, desc, icon, cats, shots[:6], version])
         os.makedirs(CACHE, exist_ok=True)
-        json.dump({"stamp": stamp, "v": CACHE_V, "apps": keep}, open(cached, "w"))
+        json.dump({"stamp": stamp, "v": CACHE_V, "lang": LANG, "apps": keep}, open(cached, "w"))
 
     def load_repo(self):
         url = repo_url()
@@ -265,7 +279,7 @@ class Catalog:
         for d in devs:
             rels = d.get("Releases") or []
             if rels and d.get("DeviceId"):
-                out.append((d["DeviceId"], d.get("Name", "Device"), d.get("Version", ""), rels[0]))
+                out.append((d["DeviceId"], d.get("Name", _("Device")), d.get("Version", ""), rels[0]))
         return out
 
     def needs_reboot(self):
@@ -319,7 +333,7 @@ class Store(Adw.Application):
         css = Gtk.CssProvider()
         css.load_from_data(CSS, -1)
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-        self.win = Adw.ApplicationWindow(application=self, title="Store", default_width=1000, default_height=720)
+        self.win = Adw.ApplicationWindow(application=self, title=_("Store"), default_width=1000, default_height=720)
         self.toasts = Adw.ToastOverlay()
         self.nav = Adw.NavigationView()
         self.prog = Gtk.ProgressBar(hexpand=True, valign=Gtk.Align.CENTER)
@@ -343,24 +357,24 @@ class Store(Adw.Application):
         self.explore = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.installed_page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.updates_page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.stack.add_titled_with_icon(self.scrolled(self.explore), "explore", "Explore", "system-search-symbolic")
-        self.stack.add_titled_with_icon(self.scrolled(self.installed_page), "installed", "Installed", "emblem-ok-symbolic")
-        self.updates_title = self.stack.add_titled_with_icon(self.scrolled(self.updates_page), "updates", "Updates",
+        self.stack.add_titled_with_icon(self.scrolled(self.explore), "explore", _("Explore"), "system-search-symbolic")
+        self.stack.add_titled_with_icon(self.scrolled(self.installed_page), "installed", _("Installed"), "emblem-ok-symbolic")
+        self.updates_title = self.stack.add_titled_with_icon(self.scrolled(self.updates_page), "updates", _("Updates"),
                                                              "software-update-available-symbolic")
         self.stack.connect("notify::visible-child-name", lambda *a: self.refresh_tab())
 
         header = Adw.HeaderBar()
         header.set_title_widget(Adw.ViewSwitcher(stack=self.stack, policy=Adw.ViewSwitcherPolicy.WIDE))
-        self.search_button = Gtk.ToggleButton(icon_name="system-search-symbolic", tooltip_text="Search")
+        self.search_button = Gtk.ToggleButton(icon_name="system-search-symbolic", tooltip_text=_("Search"))
         header.pack_start(self.search_button)
         menu = Gio.Menu()
-        menu.append("Install a .deb or .rpm file…", "app.import")
+        menu.append(_("Install a .deb or .rpm file…"), "app.import")
         header.pack_end(Gtk.MenuButton(icon_name="open-menu-symbolic", menu_model=menu))
         act = Gio.SimpleAction.new("import", None)
         act.connect("activate", lambda *a: self.pick_file())
         self.add_action(act)
 
-        self.search = Gtk.SearchEntry(placeholder_text="Search apps", hexpand=True)
+        self.search = Gtk.SearchEntry(placeholder_text=_("Search apps"), hexpand=True)
         bar = Gtk.SearchBar(child=Adw.Clamp(child=self.search, maximum_size=600))
         bar.connect_entry(self.search)
         bar.set_key_capture_widget(self.win)
@@ -372,7 +386,7 @@ class Store(Adw.Application):
         self.main_stack = Gtk.Stack()
         self.main_stack.add_named(self.stack, "tabs")
         self.main_stack.add_named(self.scrolled(self.results), "search")
-        self.loading = Adw.StatusPage(title="Getting the app lists ready", description="This takes a moment the first time.")
+        self.loading = Adw.StatusPage(title=_("Getting the app lists ready"), description=_("This takes a moment the first time."))
         self.loading.set_child(Gtk.Spinner(spinning=True, width_request=32, height_request=32))
         self.main_stack.add_named(self.loading, "loading")
         self.main_stack.set_visible_child_name("loading")
@@ -381,7 +395,7 @@ class Store(Adw.Application):
         view.add_top_bar(header)
         view.add_top_bar(bar)
         view.set_content(self.main_stack)
-        self.nav.add(Adw.NavigationPage(child=view, title="Store", tag="main"))
+        self.nav.add(Adw.NavigationPage(child=view, title=_("Store"), tag="main"))
         self.win.present()
         threading.Thread(target=self.load, daemon=True).start()
 
@@ -442,7 +456,7 @@ class Store(Adw.Application):
         if r and r[1] >= 5:
             line = Gtk.Box(spacing=6)
             line.append(stars(r[0], "caption"))
-            line.append(Gtk.Label(label="%d" % r[1], css_classes=["dim-label", "caption"]))
+            line.append(Gtk.Label(label=str(r[1]), css_classes=["dim-label", "caption"]))
             text.append(line)
         box.append(text)
         b.set_child(box)
@@ -460,9 +474,9 @@ class Store(Adw.Application):
         self.clear(self.explore)
         featured = [self.catalog.by_flathub[i] for i in FEATURED if i in self.catalog.by_flathub]
         if featured:
-            self.explore.append(self.heading("Popular"))
+            self.explore.append(self.heading(_("Popular")))
             self.explore.append(self.grid(featured))
-        self.explore.append(self.heading("Categories"))
+        self.explore.append(self.heading(_("Categories")))
         flow = Gtk.FlowBox(selection_mode=Gtk.SelectionMode.NONE, homogeneous=True, max_children_per_line=3,
                            column_spacing=12, row_spacing=12)
         for title, cat, icon in CATEGORIES:
@@ -475,7 +489,7 @@ class Store(Adw.Application):
             flow.append(b)
         self.explore.append(flow)
         n = len(self.catalog.apps)
-        self.explore.append(Gtk.Label(label="%d apps from Flathub and the Chamesle repo" % n,
+        self.explore.append(Gtk.Label(label=ngettext("%d app from Flathub and the Chamesle repo", "%d apps from Flathub and the Chamesle repo", n) % n,
                                       css_classes=["dim-label", "caption"], margin_top=24))
 
     def show_category(self, title, cat):
@@ -497,8 +511,8 @@ class Store(Adw.Application):
         hits = [a for a in self.catalog.apps.values() if text in a.name.lower() or text in a.summary.lower()]
         hits.sort(key=lambda a: (not a.name.lower().startswith(text), text not in a.name.lower(), a.name.lower()))
         if not hits:
-            self.results.append(Adw.StatusPage(icon_name="system-search-symbolic", title="Nothing found",
-                                               description="Try another word, or install a .deb or .rpm file from the menu."))
+            self.results.append(Adw.StatusPage(icon_name="system-search-symbolic", title=_("Nothing found"),
+                                               description=_("Try another word, or install a .deb or .rpm file from the menu.")))
             return
         self.results.append(self.grid(hits[:120]))
 
@@ -507,7 +521,7 @@ class Store(Adw.Application):
         if name == "installed":
             self.clear(self.installed_page)
             apps = sorted((a for a in self.catalog.apps.values() if self.catalog.installed(a)), key=lambda a: a.name.lower())
-            self.installed_page.append(self.heading("Installed apps"))
+            self.installed_page.append(self.heading(_("Installed apps")))
             group = Adw.PreferencesGroup()
             for a in apps:
                 row = Adw.ActionRow(title=GLib.markup_escape_text(a.name),
@@ -525,16 +539,16 @@ class Store(Adw.Application):
             on = not any(l.strip() == "auto=no" for l in open(AUTO_CONF))
         except OSError:
             pass
-        row = Adw.SwitchRow(title="Install updates automatically", active=on,
-                            subtitle="Once a day while plugged in. A snapshot is taken first, so an update can be "
-                                     "undone from the boot menu.")
+        row = Adw.SwitchRow(title=_("Install updates automatically"), active=on,
+                            subtitle=_("Once a day while plugged in. A snapshot is taken first, so an update can be "
+                                       "undone from the boot menu."))
         row.connect("notify::active", lambda r, *a: self.set_auto(r))
         group.add(row)
         try:
             when, n = open(AUTO_STATE).read().split()[:2]
-            last = GLib.DateTime.new_from_unix_local(int(when)).format("%A %-d %B, %H:%M")
-            group.add(Adw.ActionRow(title="Last automatic update", subtitle="%s, %s update%s" % (
-                last, n, "" if n == "1" else "s")))
+            last = GLib.DateTime.new_from_unix_local(int(when)).format("%c")
+            group.add(Adw.ActionRow(title=_("Last automatic update"), subtitle=ngettext(
+                "%(when)s, %(n)d update", "%(when)s, %(n)d updates", int(n)) % {"when": last, "n": int(n)}))
         except (OSError, ValueError):
             pass
         return group
@@ -552,7 +566,7 @@ class Store(Adw.Application):
 
         def done(ok):
             if ok:
-                self.toast("Updates will install automatically" if want else "Updates wait for you now")
+                self.toast(_("Updates will install automatically") if want else _("Updates wait for you now"))
             else:
                 self.reverting = True
                 row.set_active(not want)
@@ -565,13 +579,14 @@ class Store(Adw.Application):
         self.updates_title.set_needs_attention(total > 0)
         self.updates_title.set_badge_number(total)
         if not len(apk) + len(flat):
-            self.updates_page.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title="Everything is up to date",
+            self.updates_page.append(Adw.StatusPage(icon_name="emblem-ok-symbolic", title=_("Everything is up to date"),
                                                     vexpand=False))
         else:
             top = Gtk.Box(spacing=12, margin_top=6, margin_bottom=12)
-            top.append(Gtk.Label(label="%d updates" % (len(apk) + len(flat)), xalign=0, hexpand=True,
+            n = len(apk) + len(flat)
+            top.append(Gtk.Label(label=ngettext("%d update", "%d updates", n) % n, xalign=0, hexpand=True,
                                  css_classes=["title-2"]))
-            go = Gtk.Button(label="Update all", css_classes=["suggested-action", "pill"])
+            go = Gtk.Button(label=_("Update all"), css_classes=["suggested-action", "pill"])
             go.connect("clicked", lambda *a: self.update_all())
             top.append(go)
             self.updates_page.append(top)
@@ -586,45 +601,45 @@ class Store(Adw.Application):
 
     def firmware_group(self, fw):
         # the computer's own firmware: bios, ssd, docks, touchpads... from the vendors, through lvfs
-        group = Adw.PreferencesGroup(title="Firmware", margin_top=24,
-                                     description="Updates for the BIOS, the SSD and other parts, from the people "
-                                                 "who made them.")
+        group = Adw.PreferencesGroup(title=_("Firmware"), margin_top=24,
+                                     description=_("Updates for the BIOS, the SSD and other parts, from the people "
+                                                   "who made them."))
         if fw is None and not os.path.exists("/usr/bin/fwupdmgr"):
-            group.add(Adw.ActionRow(title="Firmware updates aren't installed", subtitle="sudo apk add fwupd"))
+            group.add(Adw.ActionRow(title=_("Firmware updates aren't installed"), subtitle="sudo apk add fwupd"))
         elif fw is None:
-            row = Adw.ActionRow(title="Checking for firmware updates…")
+            row = Adw.ActionRow(title=_("Checking for firmware updates…"))
             row.add_suffix(Gtk.Spinner(spinning=True))
             group.add(row)
         elif not fw:
-            group.add(Adw.ActionRow(title="Your firmware is up to date"))
+            group.add(Adw.ActionRow(title=_("Your firmware is up to date")))
         for dev, name, now, rel in fw or []:
             row = Adw.ActionRow(title=GLib.markup_escape_text(name),
                                 subtitle=GLib.markup_escape_text("%s → %s%s" % (
                                     now, rel.get("Version", "?"),
                                     (" · " + rel["Summary"]) if rel.get("Summary") else "")))
-            b = Gtk.Button(label="Update", valign=Gtk.Align.CENTER, css_classes=["pill"])
+            b = Gtk.Button(label=_("Update"), valign=Gtk.Align.CENTER, css_classes=["pill"])
             b.connect("clicked", lambda w, d=dev, n=name: self.update_firmware(d, n))
             row.add_suffix(b)
             group.add(row)
         return group
 
     def update_firmware(self, dev, name):
-        d = Adw.AlertDialog(heading="Update the firmware of %s?" % name,
-                            body="Keep the computer plugged in. Some firmware is installed while the computer "
-                                 "restarts: don't turn it off until it's back.")
-        d.add_response("cancel", "Cancel")
-        d.add_response("go", "Update")
+        d = Adw.AlertDialog(heading=_("Update the firmware of %s?") % name,
+                            body=_("Keep the computer plugged in. Some firmware is installed while the computer "
+                                   "restarts: don't turn it off until it's back."))
+        d.add_response("cancel", _("Cancel"))
+        d.add_response("go", _("Update"))
         d.set_response_appearance("go", Adw.ResponseAppearance.SUGGESTED)
 
         def answered(d, r):
             if r != "go":
                 return
-            title = "Updating the firmware of " + name
+            title = _("Updating the firmware of %s") % name
 
             def after():
                 if self.catalog.needs_reboot():
-                    self.toast("Restart the computer to finish the firmware update")
-            self.job(title, self.apk_job(["firmware", dev], title), "Firmware updated", after)
+                    self.toast(_("Restart the computer to finish the firmware update"))
+            self.job(title, self.apk_job(["firmware", dev], title), _("Firmware updated"), after)
         d.connect("response", answered)
         d.present(self.win)
 
@@ -643,10 +658,10 @@ class Store(Adw.Application):
         choice = Gtk.DropDown.new_from_strings([s.label for s in sources])
         row = Gtk.Box(spacing=12)
         if len(sources) > 1:
-            row.append(Gtk.Label(label="From"))
+            row.append(Gtk.Label(label=_("From")))
             row.append(choice)
         else:
-            row.append(Gtk.Label(label="From " + sources[0].label, css_classes=["dim-label"]))
+            row.append(Gtk.Label(label=_("From %s") % sources[0].label, css_classes=["dim-label"]))
         spacer = Gtk.Box(hexpand=True)
         row.append(spacer)
         button = Gtk.Button(css_classes=["pill"])
@@ -657,7 +672,7 @@ class Store(Adw.Application):
             line = Gtk.Box(spacing=8)
             line.append(Gtk.Label(label="%.1f" % r[0], css_classes=["title-3"]))
             line.append(stars(r[0]))
-            line.append(Gtk.Label(label="%d ratings" % r[1], css_classes=["dim-label"]))
+            line.append(Gtk.Label(label=ngettext("%d rating", "%d ratings", r[1]) % r[1], css_classes=["dim-label"]))
             info.append(line)
         f = app.flathub
         if f and f.shots:
@@ -670,7 +685,7 @@ class Store(Adw.Application):
         def update(*a):
             s = sources[choice.get_selected()]
             inst = s in self.catalog.installed(app)
-            button.set_label("Remove" if inst else "Install")
+            button.set_label(_("Remove") if inst else _("Install"))
             button.set_css_classes(["pill", "destructive-action" if inst else "suggested-action"])
             desc.set_label(s.description or s.summary or "")
         choice.connect("notify::selected", update)
@@ -720,21 +735,21 @@ class Store(Adw.Application):
     def reviews(self, app, src):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         top = Gtk.Box(spacing=12, margin_top=18)
-        top.append(Gtk.Label(label="Reviews", xalign=0, hexpand=True, css_classes=["title-2"]))
-        write = Gtk.Button(label="Write a review", css_classes=["pill"])
+        top.append(Gtk.Label(label=_("Reviews"), xalign=0, hexpand=True, css_classes=["title-2"]))
+        write = Gtk.Button(label=_("Write a review"), css_classes=["pill"])
         write.connect("clicked", lambda *a: self.write_review(app, src))
         write.set_sensitive(src in self.catalog.installed(app))
-        write.set_tooltip_text(None if write.get_sensitive() else "Install it first, then tell people what you think")
+        write.set_tooltip_text(None if write.get_sensitive() else _("Install it first, then tell people what you think"))
         top.append(write)
         box.append(top)
         group = Adw.PreferencesGroup()
         box.append(group)
-        wait = Adw.ActionRow(title="Getting reviews…")
+        wait = Adw.ActionRow(title=_("Getting reviews…"))
         group.add(wait)
 
         def fetch():
             try:
-                got = post(ODRS + "/fetch", {"app_id": src.ref, "locale": "en_US", "distro": "Chamesle",
+                got = post(ODRS + "/fetch", {"app_id": src.ref, "locale": LANG, "distro": "Chamesle",
                                              "version": src.version or "unknown", "user_hash": user_hash(), "limit": 5})
             except Exception:
                 got = None
@@ -742,13 +757,15 @@ class Store(Adw.Application):
 
         def show(got):
             group.remove(wait)
-            got = [g for g in (got or []) if isinstance(g, dict) and g.get("summary")]
+            got = [g for g in got or [] if isinstance(g, dict)]
+            # the key to write a review with. an app without reviews gets it alone, in an empty one
+            if got:
+                self.skeys = getattr(self, "skeys", {})
+                self.skeys[src.ref] = got[0].get("user_skey")
+            got = [g for g in got if g.get("summary")]
             if not got:
-                group.add(Adw.ActionRow(title="No reviews yet"))
+                group.add(Adw.ActionRow(title=_("No reviews yet")))
                 return
-            # odrs hands back a key with the reviews, needed to write one
-            self.skeys = getattr(self, "skeys", {})
-            self.skeys[src.ref] = got[0].get("user_skey")
             for g in got[:5]:
                 r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, margin_top=12, margin_bottom=12,
                             margin_start=12, margin_end=12)
@@ -756,8 +773,8 @@ class Store(Adw.Application):
                 head.append(stars(g.get("rating", 0) / 20))
                 head.append(Gtk.Label(label=g["summary"], xalign=0, css_classes=["heading"], wrap=True))
                 r.append(head)
-                when = GLib.DateTime.new_from_unix_local(int(g.get("date_created", 0))).format("%-d %B %Y")
-                r.append(Gtk.Label(label="%s · %s" % (g.get("user_display") or "Someone", when), xalign=0,
+                when = GLib.DateTime.new_from_unix_local(int(g.get("date_created", 0))).format("%x")
+                r.append(Gtk.Label(label="%s · %s" % (g.get("user_display") or _("Someone"), when), xalign=0,
                                    css_classes=["dim-label", "caption"]))
                 r.append(Gtk.Label(label=g.get("description", ""), xalign=0, wrap=True, selectable=True))
                 group.add(r)
@@ -765,8 +782,8 @@ class Store(Adw.Application):
         return box
 
     def write_review(self, app, src):
-        d = Adw.AlertDialog(heading="Review %s" % app.name,
-                            body="Your review is shared with everyone who uses GNOME Software or the Chamesle Store.")
+        d = Adw.AlertDialog(heading=_("Review %s") % app.name,
+                            body=_("Your review is shared with everyone who uses GNOME Software or the Chamesle Store."))
         form = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         picked = {"n": 0}
         row = Gtk.Box(spacing=2, halign=Gtk.Align.CENTER)
@@ -783,8 +800,8 @@ class Store(Adw.Application):
             btns.append(b)
             row.append(b)
         form.append(row)
-        name = Gtk.Entry(placeholder_text="Your name (shown with the review)", text=GLib.get_real_name())
-        summary = Gtk.Entry(placeholder_text="In a few words")
+        name = Gtk.Entry(placeholder_text=_("Your name (shown with the review)"), text=GLib.get_real_name())
+        summary = Gtk.Entry(placeholder_text=_("In a few words"))
         text = Gtk.TextView(wrap_mode=Gtk.WrapMode.WORD_CHAR, top_margin=6, bottom_margin=6, left_margin=6,
                             right_margin=6)
         form.append(name)
@@ -798,8 +815,8 @@ class Store(Adw.Application):
         summary.connect("changed", lambda *a: d.set_response_enabled("send", ready()))
         text.get_buffer().connect("changed", lambda *a: d.set_response_enabled("send", ready()))
         d.set_extra_child(form)
-        d.add_response("cancel", "Cancel")
-        d.add_response("send", "Send")
+        d.add_response("cancel", _("Cancel"))
+        d.add_response("send", _("Send"))
         d.set_response_appearance("send", Adw.ResponseAppearance.SUGGESTED)
         d.set_response_enabled("send", False)
 
@@ -807,9 +824,9 @@ class Store(Adw.Application):
             if r != "send":
                 return
             b = text.get_buffer()
-            body = {"app_id": src.ref, "locale": "en_US", "distro": "Chamesle", "version": src.version or "unknown",
+            body = {"app_id": src.ref, "locale": LANG, "distro": "Chamesle", "version": src.version or "unknown",
                     "user_hash": user_hash(), "user_skey": getattr(self, "skeys", {}).get(src.ref, ""),
-                    "user_display": name.get_text().strip() or "Someone", "rating": picked["n"] * 20,
+                    "user_display": name.get_text().strip() or _("Someone"), "rating": picked["n"] * 20,
                     "summary": summary.get_text().strip(),
                     "description": b.get_text(b.get_start_iter(), b.get_end_iter(), False).strip()}
 
@@ -820,7 +837,7 @@ class Store(Adw.Application):
                     msg = got.get("msg", "")
                 except Exception as e:
                     ok, msg = False, str(e)
-                GLib.idle_add(self.toast, "Thanks, your review is sent" if ok else "The review didn't go through: " + msg)
+                GLib.idle_add(self.toast, _("Thanks, your review is sent") if ok else _("The review didn't go through: %s") % msg)
             threading.Thread(target=send, daemon=True).start()
         d.connect("response", answered)
         d.present(self.win)
@@ -839,7 +856,7 @@ class Store(Adw.Application):
     def job(self, title, work, done_text, then=None):
         """run work(report) in a thread; report(text, fraction) moves the bar; work returns an error or None"""
         if self.busy:
-            self.toast("One thing at a time, the last one is still going")
+            self.toast(_("One thing at a time, the last one is still going"))
             return
         self.busy = True
         self.show_progress(title, 0.0)
@@ -862,7 +879,7 @@ class Store(Adw.Application):
             if not err:
                 self.toast(done_text)
             elif err == "cancelled":
-                self.toast("Cancelled")
+                self.toast(_("Cancelled"))
             else:
                 # the whole error, scrollable and copyable, and kept in a file to send to someone
                 log = os.path.join(CACHE, "last-error.txt")
@@ -873,9 +890,9 @@ class Store(Adw.Application):
                                     top_margin=8, bottom_margin=8, left_margin=8, right_margin=8)
                 text.get_buffer().set_text(err)
                 box = Gtk.ScrolledWindow(child=text, min_content_height=220, min_content_width=480)
-                d = Adw.AlertDialog(heading="That didn't work", body="The full error is also saved in " + log)
+                d = Adw.AlertDialog(heading=_("That didn't work"), body=_("The full error is also saved in %s") % log)
                 d.set_extra_child(box)
-                d.add_response("ok", "OK")
+                d.add_response("ok", _("OK"))
                 d.present(self.win)
             self.catalog.load_installed()
             self.refresh_tab()
@@ -899,7 +916,8 @@ class Store(Adw.Application):
                 if m and int(m.group(2)):
                     report(label, int(m.group(1)) / int(m.group(2)))
                 elif step:
-                    label = "%s · %s (%s of %s)" % (title, step.group(3), step.group(1), step.group(2))
+                    label = _("%(what)s · %(pkg)s (%(n)s of %(total)s)") % {"what": title, "pkg": step.group(3), "n": step.group(1),
+                                                                         "total": step.group(2)}
                     out.append(line)
                 else:
                     out.append(line)
@@ -936,7 +954,7 @@ class Store(Adw.Application):
 
                 def changed(progress):
                     frac = (state["n"] - 1 + progress.get_progress() / 100) / total
-                    report("%s (%d of %d: %s)" % (title, state["n"], total, name), frac)
+                    report(_("%(what)s (%(n)d of %(total)d: %(name)s)") % {"what": title, "n": state["n"], "total": total, "name": name}, frac)
                 progress.connect("changed", changed)
                 changed(progress)
             t.connect("new-operation", new_op)
@@ -949,32 +967,32 @@ class Store(Adw.Application):
 
     def install_or_remove(self, app, src, then):
         inst = src in self.catalog.installed(app)
-        title = "%s %s" % ("Removing" if inst else "Installing", app.name)
+        title = (_("Removing %s") if inst else _("Installing %s")) % app.name
         if src.kind == "flathub":
             work = self.flatpak_job([src.ref], title, remove=inst)
         else:
             work = self.apk_job(["del" if inst else "add", src.ref], title)
-        self.job(title, work, "%s %s" % (app.name, "removed" if inst else "installed"), then)
+        self.job(title, work, (_("%s removed") if inst else _("%s installed")) % app.name, then)
 
     def update_all(self):
         def work(report):
-            err = self.apk_job(["upgrade"], "Updating the system")(report)
+            err = self.apk_job(["upgrade"], _("Updating the system"))(report)
             if err:
                 return err
             from gi.repository import Flatpak
             refs = [r.format_ref() for r in Flatpak.Installation.new_system(None).list_installed_refs_for_update(None)
                     if r.get_kind() == Flatpak.RefKind.APP]
-            return self.flatpak_job(refs, "Updating apps", update=True)(report) if refs else None
+            return self.flatpak_job(refs, _("Updating apps"), update=True)(report) if refs else None
         gi.require_version("Flatpak", "1.0")
-        self.job("Updating everything", work, "Everything is up to date")
+        self.job(_("Updating everything"), work, _("Everything is up to date"))
 
     def pick_file(self):
-        f = Gtk.FileFilter(name=".deb and .rpm packages")
+        f = Gtk.FileFilter(name=_(".deb and .rpm packages"))
         for p in ("*.deb", "*.rpm"):
             f.add_pattern(p)
         filters = Gio.ListStore.new(Gtk.FileFilter)
         filters.append(f)
-        d = Gtk.FileDialog(title="Install a .deb or .rpm file", filters=filters)
+        d = Gtk.FileDialog(title=_("Install a .deb or .rpm file"), filters=filters)
         d.open(self.win, None, lambda d, res: self.picked(d, res))
 
     def picked(self, d, res):
@@ -984,8 +1002,8 @@ class Store(Adw.Application):
             pass
 
     def import_file(self, path):
-        title = "Installing " + os.path.basename(path)
-        self.job(title, self.apk_job(["import", path], title), "%s is installed" % os.path.basename(path))
+        title = _("Installing %s") % os.path.basename(path)
+        self.job(title, self.apk_job(["import", path], title), _("%s is installed") % os.path.basename(path))
 
 
 if __name__ == "__main__":
