@@ -1,6 +1,6 @@
 name=chamesle-base
-version=0.5.0
-rel=1
+version=0.8.0
+rel=0
 desc="Chamesle system setup: sound, kernel modules at boot, a few small touches"
 url=https://chamesle.org
 license=GPL-3.0-or-later
