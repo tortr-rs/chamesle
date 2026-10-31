@@ -2,7 +2,8 @@
 # chamesle-desktop NAME: puts one of chamesle's desktops on this system, the same one its iso used to have
 #   chamesle-desktop          the list
 #   sudo chamesle-desktop kde
-# jiggity runs it in the new system while it installs. CHAMESLE_PROGRESS=FD gets apk's progress
+# jiggity runs it in the new system while it installs. CHAMESLE_PROGRESS=FD gets apk's progress,
+# CHAMESLE_EXTRA=PKGS goes in with the rest
 set -eu
 D=/usr/share/chamesle/editions
 
@@ -44,7 +45,7 @@ fi
 # what came from an older iso: as new as the repo, kernel and all. curl does the downloading, with one
 # percentage for all of it (chamesle-get)
 fix=; [ -n "$now" ] && fix="fix --reinstall$now"
-/usr/libexec/chamesle-get ${fix:+"$fix"} "upgrade" "add !runit !runit-void $(echo $pkgs)"
+/usr/libexec/chamesle-get ${fix:+"$fix"} "upgrade" "add !runit !runit-void $(echo $pkgs) ${CHAMESLE_EXTRA:-}"
 
 fp=$(val flatpaks)
 if [ -n "$fp" ]; then

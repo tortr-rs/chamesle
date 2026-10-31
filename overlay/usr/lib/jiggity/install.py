@@ -103,7 +103,7 @@ def install(row, passphrase, language, keyboard, progress, desktop=None, user=No
         chroot("userdel", "-r", "live")
     chroot("passwd", "-dl", "root")
     if desktop:
-        add_desktop(desktop, step)
+        add_desktop(desktop, step, language)
     else:
         open(T + "/etc/chamesle/firstboot", "w").close()
     progress(2, 30)
@@ -182,7 +182,7 @@ def install(row, passphrase, language, keyboard, progress, desktop=None, user=No
 
 
 # the netinst: the desktop from the repo, with apk's progress. the wi-fi jiggity connected to comes along
-def add_desktop(desktop, step):
+def add_desktop(desktop, step, language):
     step(2, 0)
     shutil.copy("/etc/resolv.conf", T + "/etc/resolv.conf")
     nm = "/etc/NetworkManager/system-connections"
@@ -192,7 +192,10 @@ def add_desktop(desktop, step):
             shutil.copy2(os.path.join(nm, f), T + nm)
     r, w = os.pipe()
     print("jiggity: chamesle-desktop", desktop)
-    p = subprocess.Popen(["chroot", T, "/usr/bin/env", "CHAMESLE_PROGRESS=%d" % w, "/usr/bin/chamesle-desktop", desktop],
+    # noto-fonts-ttf has no chinese, japanese or korean
+    extra = "noto-fonts-cjk-sans" if language[:2] in ("ja", "ko", "zh") else ""
+    p = subprocess.Popen(["chroot", T, "/usr/bin/env", "CHAMESLE_PROGRESS=%d" % w, "CHAMESLE_EXTRA=" + extra,
+                          "/usr/bin/chamesle-desktop", desktop],
                          pass_fds=(w,), stdout=sys.stderr, stderr=sys.stderr)
     os.close(w)
     with os.fdopen(r) as f:
