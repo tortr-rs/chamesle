@@ -77,7 +77,14 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, 4 pm <span class="new">NEW</span></dt>
+<dt>November 8, 2026, 8 pm <span class="new">NEW</span></dt>
+<dd>Mice and touchpads go through libinput now, like keyboards already did through the kernel. Before, the server
+read <code>/dev/input/mice</code>, where the kernel makes every pointer look like a PS/2 mouse from the nineties:
+a touchpad moved the pointer and that was all. With libinput you get tap to click, two finger scrolling, palm
+detection and the rest, set up the way every other desktop sets them up. Scrolling turns into the wheel buttons X
+has always used, sideways too. In the virtual machine the mouse moves and the wheel scrolls. A real touchpad is
+next, on real hardware, which is where the rest of step 2 happens.</dd>
+<dt>November 8, 2026, 4 pm</dt>
 <dd>Compositing works, which is step 4. Windows can draw into pictures of their own, and a compositor puts them
 on the screen however it likes: with shadows, see-through, fading in and out. Below is xcompmgr, the small
 compositor from X.Org, drawing shadows under dwm's windows on X8664, in the virtual machine.
@@ -163,7 +170,7 @@ happen until it runs. <b>Done</b> November 8.</td></tr>
 <tr><td>2</td><td><b>Real screens through the kernel.</b> Kernel mode-setting (KMS) for every graphics card, and
 libinput for keyboards, mice and touchpads.</td><td>XFree86's drivers program the graphics chip themselves, the 2008
 way. Today the kernel does that, for every card, and does it right. <i>Doing this now:</i> screens and keyboards
-work in a virtual machine. Touchpads, and mice beyond the basic kind, are next.</td></tr>
+work in a virtual machine, and mice and touchpads go through libinput. Real hardware is next.</td></tr>
 <tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
 tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
 "smooth" means. Tearing is the thing people notice first. <b>Done</b> November 8, in a virtual machine.
