@@ -1,0 +1,4 @@
+#!/bin/sh
+# r0 left these folders readable by root only, and apk keeps a folder's mode on an upgrade
+chmod -R u=rwX,go=rX /usr/share/themes/OneStepBack
+exit 0
