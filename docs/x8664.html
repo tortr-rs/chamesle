@@ -77,7 +77,13 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 9, 2026, past midnight <span class="new">NEW</span></dt>
+<dt>November 9, 2026, later <span class="new">NEW</span></dt>
+<dd>Three smaller things. UK keyboards work (<code>X8664_KEYMAP=gb</code>), and other layouts are a few lines each.
+When the screensaver says so, the monitor now really switches off, through the kernel, instead of showing black.
+And the server has the extensions a desktop expects back: XFree86's small server left out SYNC, DPMS, the screen
+saver extension, double buffering, RECORD, X-Resource and Xinerama to stay small. GTK times its frames with SYNC, so
+that one matters for step 3.</dd>
+<dt>November 9, 2026, past midnight</dt>
 <dd>No more tearing. X8664 now keeps two buffers: the monitor shows one while the next frame is drawn into the
 other, and the kernel swaps them at the moment the screen starts a new refresh (a <b>page flip</b>). Until it says
 the swap happened, new drawing waits for the next frame. So the screen never shows half a frame, and nothing is
