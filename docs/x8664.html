@@ -77,7 +77,19 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, 3 pm <span class="new">NEW</span></dt>
+<dt>November 8, 2026, 4 pm <span class="new">NEW</span></dt>
+<dd>Compositing works, which is step 4. Windows can draw into pictures of their own, and a compositor puts them
+on the screen however it likes: with shadows, see-through, fading in and out. Below is xcompmgr, the small
+compositor from X.Org, drawing shadows under dwm's windows on X8664, in the virtual machine.
+<p><img src="img/x8664-composite.png?9" alt="dwm on X8664 with xcompmgr running: three dark windows with soft shadows along their edges, the amber bar on top" width="640" height="400"></p>
+<p>XFree86 4.8 never had the Composite, Damage or XFixes extensions. X.Org added them in 2004, in X11R6.8, back
+when the two were still close, so we brought them over from there, along with the bits of the server
+underneath that they lean on. That also gives Present its missing XFixes.</p>
+<p>Three old bugs turned up on the way: drawing through RENDER ignored "include child windows", a common way of
+painting drew nothing at all, and the test server couldn't make 8 or 32 bit pictures. And the server now draws
+into memory of its own and copies only what changed into the next frame, which is simpler than what XFree86 did
+and is what lets a compositor's drawing reach the screen.</p></dd>
+<dt>November 8, 2026, 3 pm</dt>
 <dd>The Present extension is in, which finishes step 3. With Present a program says "put this picture in my
 window at frame 1000" or "tell me when frame 1000 happens", and the server tells it back exactly when that was.
 It's how games, video players and GTK line their drawing up with the monitor instead of guessing.
@@ -157,7 +169,8 @@ tears, and the Present extension so programs know when their frame was shown.</t
 "smooth" means. Tearing is the thing people notice first. <b>Done</b> November 8, in a virtual machine.
 Real hardware still has to say so.</td></tr>
 <tr><td>4</td><td><b>Compositing.</b> The Composite and Damage extensions.</td><td>XFree86 4.8 has neither.
-Without them there are no compositors, no shadows, no smooth window effects.</td></tr>
+Without them there are no compositors, no shadows, no smooth window effects. <b>Done</b> November 8, in a
+virtual machine, with xcompmgr.</td></tr>
 <tr><td>5</td><td><b>Drawing on the GPU.</b> OpenGL-backed 2D drawing and DRI3, so programs and games render
 straight on the graphics card.</td><td>Faster drawing, and the same path games and browsers expect.</td></tr>
 <tr><td>6</td><td><b>Today's screens.</b> Plugging monitors in and out, several monitors, HiDPI, 144&nbsp;Hz and
