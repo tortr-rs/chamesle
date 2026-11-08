@@ -23,174 +23,141 @@
 <link rel="icon" href="img/logo.png">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
-    <nav>
-      <a href="new.html">What's new</a>
-      <a href="editions.html">Editions</a>
-      <a href="packages.html">Packages</a>
-      <a href="docs.html">Docs</a>
-      <a href="board.html">Board</a>
-      <a href="about.html">About</a>
-      <a href="chat.html">Chat</a>
-    </nav>
-    <a class="button" href="download.html">Download</a>
-  </div>
-</header>
+<div class="layout">
+<nav class="side">
+<a class="brand" href="./"><img src="img/logo.png" alt="Chamesle" width="64" height="64"></a>
+<p class="name">Chamesle <br>Linux</p>
+<ul>
+  <li><b>Home</b></li>
+  <li><a href="new.html">What's new</a></li>
+  <li><a href="download.html">Download</a></li>
+  <li><a href="editions.html">Desktops</a></li>
+  <li><a href="docs.html">Docs</a></li>
+  <li><a href="packages.html">Packages</a></li>
+  <li><a href="board.html">Board</a></li>
+  <li><a href="chat.html">Chat</a></li>
+  <li><a href="about.html">About &amp; roadmap</a></li>
+  <li><a href="source.html">Chamesle Source</a></li>
+</ul>
+<p class="head">Elsewhere</p>
+<ul>
+  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
+  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
+  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
+  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
+</nav>
+<div class="content">
 
-<div class="help">
-  <div class="wrap"><b>Chamesle needs your help!</b> One person makes it. Developers, testers and donations all make a
-  difference. <a href="about.html#help">How to help</a> &middot; <a href="https://ko-fi.com/L6N725GI1V">Donate on Ko-fi</a></div>
+<main>
+
+<div class="top">
+<img src="img/logo.png" alt="" width="72" height="72">
+<div>
+<h1>Chamesle Linux</h1>
+<p>a Linux for the computer you already have</p>
+</div>
 </div>
 
-<main class="home">
+<div class="release">
+<p><b>Current release: 0.7 "Be Kool"</b>, October 28, 2026.</p>
+<p><a class="button go" href="download.html">Download Chamesle 0.7</a> (618&nbsp;MB, 64-bit PC) &middot;
+<a href="new.html">what's new</a> &middot; already running it? <code>sudo apk upgrade</code></p>
+</div>
 
-<section class="hero">
-  <div class="wrap">
-    <div class="win pitch" data-title="Welcome to Chamesle">
-      <div class="logo"><img src="img/logo.png" alt="" width="52" height="52"> Chamesle Linux 0.7</div>
-      <h1>Your computer, just working.</h1>
-      <p>A Linux desktop for people leaving Windows. It looks like what you're used to, runs Flathub apps,
-      <code>.deb</code>, <code>.rpm</code> and Windows programs, and installs next to Windows if you want to keep it.</p>
-      <div class="get">
-        <a class="button go" href="download.html">Download Chamesle 0.7</a>
-        <a class="button ghost" href="editions.html">See the desktops</a>
-      </div>
-      <p class="small">618&nbsp;MB &middot; 64-bit PC &middot; free &middot; already on it? <code>sudo apk upgrade</code></p>
-    </div>
-    <a class="win window" data-title="Chamesle 0.7 - KDE Plasma" href="editions.html#kde"><img src="img/hero-kde.jpg" alt="Chamesle 0.7 with KDE Plasma and Chamesle Glass" width="1280" height="800"></a>
-  </div>
-</section>
+<h2>What is it?</h2>
 
-<section class="section">
-  <div class="wrap">
-    <h2>Everything you need, already there</h2>
-    <p class="sub">Install it, sign in, and get on with your day. No terminal needed, unless you want one.</p>
-    <div class="features">
-      <div class="box feature">
-        <div class="orb"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-        <h3>Feels familiar</h3>
-        <p>A taskbar, a start menu and windows you can see through: Chamesle Glass, on every desktop but GNOME.</p>
-      </div>
-      <div class="box feature">
-        <div class="orb green"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg></div>
-        <h3>Apps with a double-click</h3>
-        <p>The Chamesle Store brings Flathub and our repo together. <code>.deb</code>, <code>.rpm</code>, <code>.exe</code> and <code>.msi</code> files just open.</p>
-      </div>
-      <div class="box feature">
-        <div class="orb violet"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></div>
-        <h3>Updates you can undo</h3>
-        <p>A snapshot before every update. If something breaks, pick the one from before in the boot menu.</p>
-      </div>
-      <div class="box feature">
-        <div class="orb amber"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="9" height="14" rx="1"/><rect x="13" y="5" width="9" height="14" rx="1"/></svg></div>
-        <h3>Next to Windows</h3>
-        <p>Jiggity, the installer, makes room next to Windows, or takes the whole disk, encrypted if you like.</p>
-      </div>
-      <div class="box feature">
-        <div class="orb"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="10" rx="2"/><path d="M8 7V4M16 7V4M8 20v-3M16 20v-3"/></svg></div>
-        <h3>Drivers sorted</h3>
-        <p>The Driver Manager sets up NVIDIA cards and Wi-Fi chips that need it. Firmware for your hardware comes with the install.</p>
-      </div>
-      <div class="box feature">
-        <div class="orb green"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
-        <h3>Solid underneath</h3>
-        <p>Void Linux, an LTS kernel and almost 15,000 signed packages. Updates weekly, held back until they've proven themselves.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<p>Chamesle is a Linux distribution for people coming from Windows. It's built on
+<a href="https://voidlinux.org">Void Linux</a> and one person makes it.</p>
 
-<section class="section tint">
-  <div class="wrap">
-    <h2>Pick your desktop</h2>
-    <p class="sub">One download for all of them. You choose while installing, and can add another later.</p>
-    <div class="gallery">
-      <a class="win ed" data-title="KDE Plasma" href="editions.html#kde"><img src="img/thumb/kde.jpg" alt="" loading="lazy" width="720" height="450"><span>changes to fit you</span></a>
-      <a class="win ed" data-title="Xfce" href="editions.html"><img src="img/thumb/xfce.jpg" alt="" loading="lazy" width="720" height="450"><span>light, set up like Windows</span></a>
-      <a class="win ed" data-title="Cinnamon" href="editions.html"><img src="img/thumb/cinnamon.jpg" alt="" loading="lazy" width="720" height="450"><span>Linux Mint's desktop</span></a>
-      <a class="win ed" data-title="MATE" href="editions.html"><img src="img/thumb/mate.jpg" alt="" loading="lazy" width="720" height="450"><span>lighter still, for older PCs</span></a>
-      <a class="win ed" data-title="GNOME" href="editions.html"><img src="img/thumb/gnome.jpg" alt="" loading="lazy" width="720" height="450"><span>an overview and a dock</span></a>
-      <a class="win ed" data-title="Play" href="editions.html#play"><img src="img/thumb/play.jpg" alt="" loading="lazy" width="720" height="450"><span>Steam and controllers, ready</span></a>
-      <a class="win ed" data-title="Ranni" href="editions.html#ranni"><img src="img/thumb/ranni.jpg" alt="" loading="lazy" width="720" height="450"><span>Plasma laid out like a Mac</span></a>
-      <a class="win ed" data-title="Astro" href="editions.html#astro"><img src="img/thumb/astro.jpg" alt="" loading="lazy" width="720" height="450"><span>GNOME with sky apps</span></a>
-    </div>
-    <p class="gallery-note small"><span>Also: <a href="editions.html#server">Server</a> and <a href="editions.html#tty">TTY</a>, the console with windows on it.</span></p>
-  </div>
-</section>
+<p>It goes next to Windows if you want to keep Windows, or on the whole disk. <code>.deb</code>, <code>.rpm</code>,
+<code>.exe</code> and <code>.msi</code> files open with a double-click. The Driver Manager sorts out NVIDIA cards
+and the Wi-Fi chips that need it. And before every update it takes a snapshot of the system, so if an update
+breaks something you pick "before the update" in the boot menu and you're back.</p>
 
-<section class="section">
-  <div class="wrap duo">
-    <div class="win" data-title="News">
-      <ul class="news-list">
-        <li><b>0.7 "Be Kool" is out.</b> Glass windows, taskbar and sign-in screen, Oxygen icons, a new logo,
-        and a Store with screenshots, ratings, firmware and updates in the background. <a href="new.html">What's new</a></li>
-        <li><b>Serp is coming with 1.0</b>: a desktop of our own, with a public beta first. <a href="about.html">Roadmap</a></li>
-        <li><b>0.6</b> brought one ISO for every desktop, the Jiggity installer, and Ranni, Play, TTY and Server.</li>
-      </ul>
-    </div>
-    <div class="win" data-title="Facts">
-      <table class="facts">
-        <tr><td>Release</td><td>0.7 "Be Kool" (Margit)</td></tr>
-        <tr><td>Based on</td><td>Void Linux</td></tr>
-        <tr><td>Packages</td><td>about 15,000, signed</td></tr>
-        <tr><td>Package manager</td><td>apk</td></tr>
-        <tr><td>Init</td><td>dinit</td></tr>
-        <tr><td>Kernel</td><td>Linux 6.18 LTS</td></tr>
-        <tr><td>Updates</td><td>weekly</td></tr>
-      </table>
-    </div>
-  </div>
-</section>
+<p>It's free. It's also still early, so back up your files before you put it on a computer you care about.</p>
 
-<section class="cta">
-  <div class="wrap win" data-title="Get Chamesle">
-    <h2>Give it a try</h2>
-    <p>Jiggity asks everything first and doesn't touch your disk until you say Install.</p>
-    <div class="actions">
-      <a class="button go" href="download.html">Download Chamesle 0.7</a>
-      <a class="button ghost" href="docs.html">Read the docs</a>
-    </div>
-  </div>
-</section>
+<h2>News</h2>
+
+<dl class="news">
+<dt>November 8, 2026 <span class="new">NEW</span></dt>
+<dd>The key that signs the package repo changed. If <code>sudo apk update</code> says <b>UNTRUSTED
+signature</b>, there's a one-line fix on the <a href="new.html">what's new</a> page.</dd>
+<dt>October 28, 2026</dt>
+<dd>0.7 "Be Kool" is out. New look, Oxygen icons, and a Store with screenshots, reviews and firmware updates
+for your BIOS and SSD. After this: fixes only until 0.8.</dd>
+<dt>October 26, 2026</dt>
+<dd>0.6: one download for every desktop. Jiggity, our own installer, asks everything first and then installs
+the desktop you picked.</dd>
+</dl>
+
+<h2>Coming up</h2>
+
+<ul>
+<li><b>0.8</b>, late November or early December: Chamesle's own apps in every language, and a screen reader,
+high contrast and large text from the first boot.</li>
+<li><b>1.0</b> "Godrick", with <b>Serp</b>, a desktop of our own. There'll be a public beta first.</li>
+</ul>
+<p>The whole plan is on the <a href="about.html#roadmap">roadmap</a>.</p>
+
+<h2>Desktops</h2>
+
+<p>Eight of them, all on the same download. You pick one while installing.
+<a href="editions.html">More about each one</a>.</p>
+
+<table class="grid shots">
+<tr>
+  <td><a href="editions.html#xfce"><img src="img/thumb/xfce.jpg" alt="" width="144" height="90">Xfce</a><br><span>light, set up like Windows</span></td>
+  <td><a href="editions.html#kde"><img src="img/thumb/kde.jpg" alt="" width="144" height="90">KDE Plasma</a><br><span>change almost anything</span></td>
+  <td><a href="editions.html#cinnamon"><img src="img/thumb/cinnamon.jpg" alt="" width="144" height="90">Cinnamon</a><br><span>Linux Mint's desktop</span></td>
+  <td><a href="editions.html#mate"><img src="img/thumb/mate.jpg" alt="" width="144" height="90">MATE</a><br><span>for older machines</span></td>
+</tr>
+<tr>
+  <td><a href="editions.html#gnome"><img src="img/thumb/gnome.jpg" alt="" width="144" height="90">GNOME</a><br><span>an overview and a dock</span></td>
+  <td><a href="editions.html#astro"><img src="img/thumb/astro.jpg" alt="" width="144" height="90">Astro</a><br><span>GNOME with the sky apps</span></td>
+  <td><a href="editions.html#tty"><img src="img/thumb/tty.jpg" alt="" width="144" height="90">TTY</a><br><span>the console, with windows</span></td>
+  <td><a href="editions.html#server"><img src="img/thumb/server.jpg" alt="" width="144" height="90">Server</a><br><span>no desktop, SSH on</span></td>
+</tr>
+</table>
+
+<p>Changed your mind later? Add another one:</p>
+<pre>$ chamesle-desktop          <i># the list</i>
+$ sudo chamesle-desktop kde</pre>
+
+<h2>At a glance</h2>
+
+<table class="facts">
+<tr><td>Based on</td><td>Void Linux</td></tr>
+<tr><td>Packages</td><td>about 15,000, signed, installed with apk</td></tr>
+<tr><td>Init</td><td>dinit</td></tr>
+<tr><td>Kernel</td><td>6.18 LTS</td></tr>
+<tr><td>Updates</td><td>weekly, held back a while first</td></tr>
+<tr><td>Installer</td><td>Jiggity</td></tr>
+<tr><td>Costs</td><td>nothing</td></tr>
+</table>
+
+<h2>Help</h2>
+
+<p>Start with the <a href="docs.html">docs</a>. Questions go on the <a href="board.html">board</a> or in the
+<a href="chat.html">chat</a>, bugs on <a href="https://github.com/tortr-rs/chamesle/issues">GitHub</a>.
+If you want to help out, <a href="about.html#help">here's how</a>. Tell a friend who's thinking about leaving
+Windows, that helps too.</p>
 
 </main>
+<hr>
+<address>
+Last updated November 8, 2026.<br>
+Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
+<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
+Chamesle Linux is free software. Source code for every package is available on request.
+</address>
+</div>
+</div>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="cols4">
-      <div>
-        <a class="brand" href="./">Chamesle Linux</a>
-        <p>A Linux distribution based on Void.</p>
-      </div>
-      <div>
-        <h4>Get it</h4>
-        <a href="download.html">Download</a>
-        <a href="editions.html">Editions</a>
-        <a href="packages.html">Packages</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="docs.html">Docs</a>
-        <a href="board.html">Board</a>
-        <a href="chat.html">Chat</a>
-        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
-      </div>
-      <div>
-        <h4>Project</h4>
-        <a href="new.html">What's new</a>
-        <a href="about.html">About and roadmap</a>
-        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
-        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
-      </div>
-    </div>
-    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
-  </div>
-</footer>
-
-<script src="egg.js?2"></script>
+<script src="egg.js?4"></script>
 </body>
 </html>

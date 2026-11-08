@@ -16,7 +16,7 @@ apps come from Flathub, and there's a real package manager underneath if you wan
 - the Chamesle repo: almost 15,000 signed packages, and every new one checked against Void's signature first
 
 Desktops: **KDE Plasma**, **Xfce**, **MATE** and **Cinnamon** set up like Windows, and **GNOME**. Flavors:
-**Play** (gaming), **Ranni** (Mac-like), **Astro** (astronomy), **Server** and **TTY**.
+**Astro** (astronomy), **Server** and **TTY**.
 
 Website: [chamesle.org](https://chamesle.org) · downloads and the package repo:
 [SourceForge](https://sourceforge.net/projects/chameslerepos/)
