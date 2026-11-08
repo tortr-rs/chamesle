@@ -1,5 +1,5 @@
 #!/bin/bash
-# the weekly sync: stable rolling
+# the sync with void: every six months, or for a security fix (NOW=) in between
 #   tools/repo/update.sh                  take upstream versions we've seen for at least HOLD days
 #   NOW="php8.4 openssl" tools/repo/update.sh   those go out right away too (security fixes)
 #   NOUPLOAD=1 tools/repo/update.sh       everything but the upload
@@ -110,7 +110,7 @@ echo "== website package list"
 "$APK" adbdump "$R/Packages.adb" | python3 "$TOP/tools/site/package-list.py" > "$TOP/docs/packages.json"
 if ! git -C "$TOP" diff --quiet -- docs/packages.json; then
     git -C "$TOP" add docs/packages.json
-    git -C "$TOP" -c user.name=torter -c user.email=koubbamohamedrayan@gmail.com commit -q -m "packages: weekly sync $(date +%Y-%m-%d)"
+    git -C "$TOP" -c user.name=torter -c user.email=koubbamohamedrayan@gmail.com commit -q -m "packages: sync $(date +%Y-%m-%d)"
     git -C "$TOP" push -q origin main || echo "update.sh: couldn't push the package list, push it yourself" >&2
 fi
 
