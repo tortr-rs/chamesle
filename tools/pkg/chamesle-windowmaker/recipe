@@ -1,6 +1,6 @@
 name=chamesle-windowmaker
 version=0.1
-rel=0
+rel=1
 desc="Chamesle's Window Maker session: the dock apps, network, sound and OneStepBack for the apps"
 url=https://chamesle.org
 license=GPL-3.0-or-later

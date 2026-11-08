@@ -191,20 +191,28 @@ def add_desktop(desktop, step, language):
         os.makedirs(T + nm, exist_ok=True)
         for f in os.listdir(nm):
             shutil.copy2(os.path.join(nm, f), T + nm)
-    r, w = os.pipe()
-    print("jiggity: chamesle-desktop", desktop)
     # noto-fonts-ttf has no chinese, japanese or korean
     extra = "noto-fonts-cjk-sans" if language[:2] in ("ja", "ko", "zh") else ""
-    p = subprocess.Popen(["chroot", T, "/usr/bin/env", "CHAMESLE_PROGRESS=%d" % w, "CHAMESLE_EXTRA=" + extra,
-                          "/usr/bin/chamesle-desktop", desktop],
-                         pass_fds=(w,), stdout=sys.stderr, stderr=sys.stderr)
-    os.close(w)
-    with os.fdopen(r) as f:
-        for line in f:
-            done, _, total = line.strip().partition("/")
-            if done.isdigit() and total.isdigit() and int(total):
-                step(2, min(99, int(done) * 100 // int(total)))
-    if p.wait():
+    # sourceforge's mirrors drop out now and then, for long enough that chamesle-get's own tries on a file all
+    # fail. it keeps what it got, so going again only fetches what's missing
+    for attempt in range(4):
+        if attempt:
+            print("jiggity: the desktop didn't install, again in a minute (%d of 3)" % attempt, file=sys.stderr)
+            time.sleep(60)
+        r, w = os.pipe()
+        print("jiggity: chamesle-desktop", desktop)
+        p = subprocess.Popen(["chroot", T, "/usr/bin/env", "CHAMESLE_PROGRESS=%d" % w, "CHAMESLE_EXTRA=" + extra,
+                              "/usr/bin/chamesle-desktop", desktop],
+                             pass_fds=(w,), stdout=sys.stderr, stderr=sys.stderr)
+        os.close(w)
+        with os.fdopen(r) as f:
+            for line in f:
+                done, _, total = line.strip().partition("/")
+                if done.isdigit() and total.isdigit() and int(total):
+                    step(2, min(99, int(done) * 100 // int(total)))
+        if not p.wait():
+            break
+    else:
         raise RuntimeError("installing the desktop failed, check the internet connection")
     shutil.copy("/usr/share/chamesle/repositories", T + "/etc/apk/repositories")
     step(2, 100)
