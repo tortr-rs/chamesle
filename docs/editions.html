@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Editions - Chamesle Linux</title>
-<meta name="description" content="Chamesle's desktops and flavors: KDE Plasma, Xfce, MATE, Cinnamon, GNOME, Play for gaming, Ranni, Astro, Server and TTY.">
+<meta name="description" content="Chamesle's desktops and flavors: KDE Plasma, Xfce, MATE, Cinnamon, GNOME, Astro, Server and TTY.">
 <link rel="canonical" href="https://chamesle.org/editions.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle Linux">
 <meta property="og:title" content="Editions - Chamesle Linux">
-<meta property="og:description" content="Chamesle's desktops and flavors: KDE Plasma, Xfce, MATE, Cinnamon, GNOME, Play for gaming, Ranni, Astro, Server and TTY.">
+<meta property="og:description" content="Chamesle's desktops and flavors: KDE Plasma, Xfce, MATE, Cinnamon, GNOME, Astro, Server and TTY.">
 <meta property="og:url" content="https://chamesle.org/editions.html">
 <meta property="og:image" content="https://chamesle.org/img/kde.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -18,34 +18,42 @@
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
-    <nav>
-      <a href="new.html">What's new</a>
-      <a href="editions.html" class="here">Editions</a>
-      <a href="packages.html">Packages</a>
-      <a href="docs.html">Docs</a>
-      <a href="board.html">Board</a>
-      <a href="about.html">About</a>
-      <a href="chat.html">Chat</a>
-    </nav>
-    <a class="button" href="download.html">Download</a>
-  </div>
-</header>
+<div class="layout">
+<nav class="side">
+<a class="brand" href="./"><img src="img/logo.png" alt="Chamesle" width="64" height="64"></a>
+<p class="name">Chamesle <br>Linux</p>
+<ul>
+  <li><a href="./">Home</a></li>
+  <li><a href="new.html">What's new</a></li>
+  <li><a href="download.html">Download</a></li>
+  <li><b>Desktops</b></li>
+  <li><a href="docs.html">Docs</a></li>
+  <li><a href="packages.html">Packages</a></li>
+  <li><a href="board.html">Board</a></li>
+  <li><a href="chat.html">Chat</a></li>
+  <li><a href="about.html">About &amp; roadmap</a></li>
+  <li><a href="source.html">Chamesle Source</a></li>
+</ul>
+<p class="head">Elsewhere</p>
+<ul>
+  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
+  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
+  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
+  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
+</nav>
+<div class="content">
 
-<section class="pagehead">
-  <div class="wrap">
+<main class="wide">
+<header class="dochead">
     <h1>Editions</h1>
     <p class="lead">Same system underneath, different desktop on top. There's one download for all of them: you pick the one you like
 the look of while you install. You can always add another later, for example <code>sudo chamesle-desktop kde</code>.</p>
-  </div>
-</section>
-
-<main class="wide" data-title="Editions - Chamesle Linux">
+</header>
 
 
-<div class="edition">
+<div class="edition" id="xfce">
   <h2>Xfce <span class="tag">out now</span></h2>
   <img src="img/xfce.png?8" alt="The Xfce edition's desktop" width="1280" height="800" loading="lazy">
   <p>The one to start with. Light on memory, and set up like Windows: one taskbar at the bottom, start menu
@@ -54,7 +62,7 @@ the look of while you install. You can always add another later, for example <co
   <p class="small">Good for: most people, older laptops, anyone coming from Windows. 2&nbsp;GB RAM is fine.</p>
 </div>
 
-<div class="edition">
+<div class="edition" id="mate">
   <h2>MATE <span class="tag">out now</span></h2>
   <img src="img/mate.png?8" alt="The MATE edition's desktop" width="1280" height="800" loading="lazy">
   <p>The desktop Linux Mint's MATE edition is built on, rock solid and very light. Same glass look as Xfce,
@@ -63,7 +71,7 @@ the look of while you install. You can always add another later, for example <co
   <p class="small">Good for: old machines, netbooks, people who like things to stay where they put them.</p>
 </div>
 
-<div class="edition">
+<div class="edition" id="cinnamon">
   <h2>Cinnamon <span class="tag">out now</span></h2>
   <img src="img/cinnamon.png?8" alt="The Cinnamon edition's desktop" width="1280" height="800" loading="lazy">
   <p>Linux Mint's own desktop, the most polished of the Windows-style ones: smooth effects, a great start menu and pinned
@@ -71,7 +79,7 @@ the look of while you install. You can always add another later, for example <co
   <p class="small">Good for: Windows switchers with a computer from the last 8 years or so. 4&nbsp;GB of RAM or more.</p>
 </div>
 
-<div class="edition">
+<div class="edition" id="gnome">
   <h2>GNOME <span class="tag">out now</span></h2>
   <img src="img/gnome.png?5" alt="The GNOME edition's overview: the Matterhorn at sunset and the dock" width="1280" height="720" loading="lazy">
   <p>Clean, modern, and different from Windows: one top bar, an overview with all your windows, and a dock at
@@ -99,26 +107,6 @@ the look of while you install. You can always add another later, for example <co
   windows and taskbar with the desktop blurred through them, Dolphin for your files and the Crete coast
   on the desktop.</p>
   <p class="small">Good for: tinkerers, gamers, anyone with 4&nbsp;GB of RAM or more.</p>
-</div>
-
-<div class="edition" id="ranni">
-  <h2>Ranni <span class="tag">new</span></h2>
-  <img src="img/ranni.png?7" alt="The Ranni flavor: a menu bar at the top, a dock at the bottom, glass windows and the Mongolian dunes" width="1280" height="800" loading="lazy">
-  <p>KDE Plasma set up to feel like a Mac. A menu bar along the top with the open app's menus in it, a dock
-  at the bottom that gets out of the way of your windows, and the window buttons on the left. Press Super+Space
-  to search for apps, files and settings, like Spotlight. The wallpaper is the Khongoryn Els dunes in the Gobi
-  (Bernard Gagnon, CC0).</p>
-  <p class="small">Good for: people coming from a Mac, anyone who likes a dock. 4&nbsp;GB of RAM or more.</p>
-</div>
-
-<div class="edition" id="play">
-  <h2>Play <span class="tag">new</span></h2>
-  <img src="img/play.png?7" alt="The Play flavor: KDE Plasma with Steam on the taskbar and the northern lights over Lofoten" width="1280" height="800" loading="lazy">
-  <p>The KDE Plasma edition, ready for games. Steam is installed with it, so it's there the moment
-  Chamesle starts, and Proton runs most Windows games in it. Controllers work when you plug them in, and
-  GameMode gives games the full speed of your processor while they run. The wallpaper is the northern lights
-  over Lofoten (Johannes Groll, CC0).</p>
-  <p class="small">Good for: gamers. 8&nbsp;GB of RAM.</p>
 </div>
 
 <div class="edition" id="tty">
@@ -149,38 +137,16 @@ already know it from Mint, pick that.</p>
 
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="cols4">
-      <div>
-        <a class="brand" href="./">Chamesle Linux</a>
-        <p>A Void-based Linux distribution for everyday computers.</p>
-      </div>
-      <div>
-        <h4>Get it</h4>
-        <a href="download.html">Download</a>
-        <a href="editions.html">Editions</a>
-        <a href="packages.html">Packages</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="docs.html">Docs</a>
-        <a href="board.html">Board</a>
-        <a href="chat.html">Chat</a>
-        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
-      </div>
-      <div>
-        <h4>Project</h4>
-        <a href="new.html">What's new</a>
-        <a href="about.html">About and roadmap</a>
-        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
-        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
-      </div>
-    </div>
-    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
-  </div>
-</footer>
+<hr>
+<address>
+Last updated November 8, 2026.<br>
+Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
+<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
+Chamesle Linux is free software. Source code for every package is available on request.
+</address>
+</div>
+</div>
 
-<script src="egg.js?2"></script>
+<script src="egg.js?4"></script>
 </body>
 </html>

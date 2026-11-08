@@ -84,3 +84,4 @@
     setTimeout(function () { img.remove(); }, 9500);
   });
 })();
+

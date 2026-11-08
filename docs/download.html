@@ -18,36 +18,45 @@
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
-    <nav>
-      <a href="new.html">What's new</a>
-      <a href="editions.html">Editions</a>
-      <a href="packages.html">Packages</a>
-      <a href="docs.html">Docs</a>
-      <a href="board.html">Board</a>
-      <a href="about.html">About</a>
-      <a href="chat.html">Chat</a>
-    </nav>
-    <a class="button" href="download.html">Download</a>
-  </div>
-</header>
+<div class="layout">
+<nav class="side">
+<a class="brand" href="./"><img src="img/logo.png" alt="Chamesle" width="64" height="64"></a>
+<p class="name">Chamesle <br>Linux</p>
+<ul>
+  <li><a href="./">Home</a></li>
+  <li><a href="new.html">What's new</a></li>
+  <li><b>Download</b></li>
+  <li><a href="editions.html">Desktops</a></li>
+  <li><a href="docs.html">Docs</a></li>
+  <li><a href="packages.html">Packages</a></li>
+  <li><a href="board.html">Board</a></li>
+  <li><a href="chat.html">Chat</a></li>
+  <li><a href="about.html">About &amp; roadmap</a></li>
+  <li><a href="source.html">Chamesle Source</a></li>
+</ul>
+<p class="head">Elsewhere</p>
+<ul>
+  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
+  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
+  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
+  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
+</nav>
+<div class="content">
 
-<section class="pagehead">
-  <div class="wrap">
+<main>
+<header class="dochead">
     <h1>Download</h1>
     <p class="lead">Free, 64-bit, about 620&nbsp;MB. One download for every desktop: you pick yours while you install.</p>
-  </div>
-</section>
-<main data-title="Download - Chamesle Linux">
+</header>
   <div>
 <div class="dl-grid">
   <div class="dl">
     <img src="img/hero-kde.jpg" alt="Chamesle 0.7 with KDE Plasma" width="1280" height="800">
     <div>
       <h3>Chamesle 0.7</h3>
-      <p>Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Ranni, Play, TTY or Server. You choose in the installer.</p>
+      <p>Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, TTY or Server. You choose in the installer.</p>
       <p class="small">Chamesle 0.7.0 "Be Kool" &middot; 64-bit &middot; 618&nbsp;MB</p>
       <a class="button go" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-x86_64.iso/download">Download Chamesle</a>
       <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-x86_64.iso.sha256/download">SHA-256</a>
@@ -67,7 +76,7 @@ into your new system. Read <a href="#before">Before you start</a> first. <a href
 <h2>What you need</h2>
 <ul>
   <li>a 64-bit PC from roughly the last 12 years (BIOS or UEFI both work)</li>
-  <li>2&nbsp;GB of RAM, 4 for GNOME, KDE Plasma and Cinnamon, 8 for Play</li>
+  <li>2&nbsp;GB of RAM, 4 for GNOME, KDE Plasma and Cinnamon</li>
   <li>a USB stick of 2&nbsp;GB or more</li>
   <li><b>an internet connection while you install</b>, by cable or Wi-Fi. Jiggity downloads the desktop you
   pick, so how long it takes depends on your connection.</li>
@@ -109,7 +118,7 @@ screen stays black). Jiggity asks, in this order:</p>
   <li><b>Time zone</b></li>
   <li><b>You:</b> your name, a username, a password and a name for the computer</li>
   <li><b>Disk:</b> a whole drive, or the free space next to Windows, and encryption if you want it</li>
-  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Ranni, Play, TTY, or Server with no
+  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, TTY, or Server with no
   desktop</li>
   <li><b>Summary:</b> check it, then Install</li>
 </ol>
@@ -130,38 +139,16 @@ qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -drive file=chamesle.qcow2 -cdrom ch
 
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="cols4">
-      <div>
-        <a class="brand" href="./">Chamesle Linux</a>
-        <p>A Void-based Linux distribution for everyday computers.</p>
-      </div>
-      <div>
-        <h4>Get it</h4>
-        <a href="download.html">Download</a>
-        <a href="editions.html">Editions</a>
-        <a href="packages.html">Packages</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="docs.html">Docs</a>
-        <a href="board.html">Board</a>
-        <a href="chat.html">Chat</a>
-        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
-      </div>
-      <div>
-        <h4>Project</h4>
-        <a href="new.html">What's new</a>
-        <a href="about.html">About and roadmap</a>
-        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
-        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
-      </div>
-    </div>
-    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
-  </div>
-</footer>
+<hr>
+<address>
+Last updated November 8, 2026.<br>
+Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
+<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
+Chamesle Linux is free software. Source code for every package is available on request.
+</address>
+</div>
+</div>
 
-<script src="egg.js?2"></script>
+<script src="egg.js?4"></script>
 </body>
 </html>

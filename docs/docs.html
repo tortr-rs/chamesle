@@ -18,30 +18,38 @@
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="img/logo.png" alt="" width="32" height="32"> Chamesle</a>
-    <nav>
-      <a href="new.html">What's new</a>
-      <a href="editions.html">Editions</a>
-      <a href="packages.html">Packages</a>
-      <a href="docs.html" class="here">Docs</a>
-      <a href="board.html">Board</a>
-      <a href="about.html">About</a>
-      <a href="chat.html">Chat</a>
-    </nav>
-    <a class="button" href="download.html">Download</a>
-  </div>
-</header>
+<div class="layout">
+<nav class="side">
+<a class="brand" href="./"><img src="img/logo.png" alt="Chamesle" width="64" height="64"></a>
+<p class="name">Chamesle <br>Linux</p>
+<ul>
+  <li><a href="./">Home</a></li>
+  <li><a href="new.html">What's new</a></li>
+  <li><a href="download.html">Download</a></li>
+  <li><a href="editions.html">Desktops</a></li>
+  <li><b>Docs</b></li>
+  <li><a href="packages.html">Packages</a></li>
+  <li><a href="board.html">Board</a></li>
+  <li><a href="chat.html">Chat</a></li>
+  <li><a href="about.html">About &amp; roadmap</a></li>
+  <li><a href="source.html">Chamesle Source</a></li>
+</ul>
+<p class="head">Elsewhere</p>
+<ul>
+  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
+  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
+  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
+  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
+</nav>
+<div class="content">
 
-<section class="pagehead">
-  <div class="wrap">
+<main class="docs">
+<header class="dochead">
     <h1>Docs</h1>
     <p class="lead">Installing Chamesle, getting apps, keeping it updated, and fixing things.</p>
-  </div>
-</section>
-
-<main class="docs" data-title="Docs - Chamesle Linux">
+</header>
 <nav class="toc">
   <h4>On this page</h4>
   <a href="#first">First steps</a>
@@ -81,7 +89,7 @@ download your desktop.</p>
   <li><b>Disk:</b> a whole drive, or the free space next to Windows. To keep Windows, shrink it from Windows
   first (Disk Management, &ldquo;Shrink Volume&rdquo;) so there's free space to pick. Tick encryption if you
   want it.</li>
-  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Ranni, Play, TTY, or Server with no desktop.</li>
+  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, TTY, or Server with no desktop.</li>
   <li><b>Summary:</b> check it and pick Install. Nothing on your disk changes before this. Restart when it's
   done and take the stick out.</li>
 </ol>
@@ -274,38 +282,16 @@ chips, HP printers and scanners, and the extras for VirtualBox and VMware.</p>
 </article>
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <div class="cols4">
-      <div>
-        <a class="brand" href="./">Chamesle Linux</a>
-        <p>A Void-based Linux distribution for everyday computers.</p>
-      </div>
-      <div>
-        <h4>Get it</h4>
-        <a href="download.html">Download</a>
-        <a href="editions.html">Editions</a>
-        <a href="packages.html">Packages</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="docs.html">Docs</a>
-        <a href="board.html">Board</a>
-        <a href="chat.html">Chat</a>
-        <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a>
-      </div>
-      <div>
-        <h4>Project</h4>
-        <a href="new.html">What's new</a>
-        <a href="about.html">About and roadmap</a>
-        <a href="https://github.com/tortr-rs/chamesle">GitHub</a>
-        <a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a>
-      </div>
-    </div>
-    <p class="legal">Chamesle Linux. Free software. Source code for every package is available on request.</p>
-  </div>
-</footer>
+<hr>
+<address>
+Last updated November 8, 2026.<br>
+Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
+<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
+Chamesle Linux is free software. Source code for every package is available on request.
+</address>
+</div>
+</div>
 
-<script src="egg.js?2"></script>
+<script src="egg.js?4"></script>
 </body>
 </html>

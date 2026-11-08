@@ -154,8 +154,6 @@ DESKTOPS = [
     ("gnome", "Modern and clean, with an overview of your windows and a dock."),
     ("kde", "Familiar at first, and you can change almost anything about it."),
     ("astro", "GNOME with the sky apps: Stellarium, KStars, Siril and Gpredict."),
-    ("ranni", "KDE Plasma set up to feel like a Mac."),
-    ("play", "KDE Plasma for games, with Steam, GameMode and controllers."),
     ("tty", "The console, with floating windows on top, on ttywm."),
     ("server", "No desktop. SSH is on from the first start."),
 ]
