@@ -57,8 +57,8 @@ smooth as Wayland, without giving up a single X program.</p>
 </header>
 
 <div class="release">
-<p><b>Where it's at:</b> it builds, and it draws on a real screen through the kernel, so far in a virtual
-machine. Nothing to download yet. Progress goes in the news below as it happens.</p>
+<p><b>Where it's at:</b> it builds, draws on a real screen through the kernel without tearing, and takes
+keyboards and mice, so far in a virtual machine. Nothing to download yet. Progress goes in the news below as it happens.</p>
 </div>
 
 <h2>What is it?</h2>
@@ -77,7 +77,13 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, late night <span class="new">NEW</span></dt>
+<dt>November 9, 2026, past midnight <span class="new">NEW</span></dt>
+<dd>No more tearing. X8664 now keeps two buffers: the monitor shows one while the next frame is drawn into the
+other, and the kernel swaps them at the moment the screen starts a new refresh (a <b>page flip</b>). Until it says
+the swap happened, new drawing waits for the next frame. So the screen never shows half a frame, and nothing is
+drawn faster than the monitor can show it. That's the heart of step 3. The other half, letting programs know when
+their frame was shown (the Present extension), comes next.</dd>
+<dt>November 8, 2026, late night</dt>
 <dd>The code is on GitHub: <a href="https://github.com/tortr-rs/x8664">tortr-rs/x8664</a>. Also new: keyboards come
 straight from the kernel's input devices now, with the Super key working, which XFree86's small server never saw.
 dwm is all Super, so that mattered. There was one bug: the first key combo after starting did nothing. The mic
@@ -130,7 +136,8 @@ way. Today the kernel does that, for every card, and does it right. <i>Doing thi
 a virtual machine, input is next.</td></tr>
 <tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
 tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
-"smooth" means. Tearing is the thing people notice first.</td></tr>
+"smooth" means. Tearing is the thing people notice first. <i>Half done:</i> page flips work, Present is
+next.</td></tr>
 <tr><td>4</td><td><b>Compositing.</b> The Composite and Damage extensions.</td><td>XFree86 4.8 has neither.
 Without them there are no compositors, no shadows, no smooth window effects.</td></tr>
 <tr><td>5</td><td><b>Drawing on the GPU.</b> OpenGL-backed 2D drawing and DRI3, so programs and games render
