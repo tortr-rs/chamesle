@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# the chamesle ring, three 2007 finishes. same geometry as artwork/logo.png:
+# the chamesle ring: flat like it started, and three 2007 finishes. same geometry as artwork/logo.png:
 # three 108 degree pieces, 12 degree gaps at the bottom and upper corners, hole half the ring
 import math, os, sys
 
@@ -83,12 +83,18 @@ def chrome(p):
 	o.append('</g>')
 	return ''.join(d), ''.join(o)
 
+# the first one, back again from 0.8: three plain pieces, no shine, no shadow
+FLAT = {'green': '#00bf62', 'blue': '#1800ac', 'red': '#ff3131'}
+
+def flat(p):
+	return '', ''.join('<path d="%s" fill="%s"/>' % (seg(a, b), FLAT[n]) for n, a, b, *_ in SEGS)
+
 def svg(kind, size, p, extra=''):
-	defs, body = {'gel': gel, 'glass': glass, 'chrome': chrome}[kind](p)
+	defs, body = {'flat': flat, 'gel': gel, 'glass': glass, 'chrome': chrome}[kind](p)
 	return ('<svg xmlns="http://www.w3.org/2000/svg" width="%s" height="%s" viewBox="-16 -16 544 560" role="img" aria-label="Chamesle logo">'
 		'<defs>%s</defs>%s%s</svg>' % (size, size, defs, body, extra))
 
 if __name__ == '__main__':
 	out = sys.argv[1] if len(sys.argv) > 1 else '.'
-	for k in ('gel', 'glass', 'chrome'):
+	for k in ('flat', 'gel', 'glass', 'chrome'):
 		open(os.path.join(out, 'logo-%s.svg' % k), 'w').write(svg(k, 512, k[0]))
