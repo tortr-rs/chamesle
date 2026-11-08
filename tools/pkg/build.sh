@@ -9,12 +9,14 @@ TOP=$HERE/../..
 APK=${APK:-apk}
 REPO=${REPO:-$TOP/work/repo}
 SRC=${SRC_CACHE:-$HOME/.cache/chamesle-src}
+APKCACHE=${APK_CACHE:-$HOME/.cache/chamesle-apk}
 KEYDIR=${KEYDIR:-$HOME/.config/chamesle}
 KEY=$(ls "$KEYDIR"/chamesle-*.rsa | sort | tail -n1)
 ARCH=x86_64
 # what it builds with comes from the repo here, or the public one when there's no full copy here
 PULL=${PULL:-$( [ -f "$REPO/$ARCH/Packages.adb" ] && echo "$REPO" || echo https://master.dl.sourceforge.net/project/chameslerepos)}
 
+mkdir -p "$APKCACHE"
 [ $# = 1 ] && [ -f "$HERE/$1/recipe" ] || { echo "usage: $0 NAME   (one of: $(cd "$HERE" && ls */recipe | sed 's|/recipe||' | tr '\n' ' '))" >&2; exit 1; }
 . "$HERE/$1/recipe"
 
@@ -45,11 +47,14 @@ cp "$HERE/$1/recipe" "$ROOT/build/"
 [ -d "$HERE/$1/patches" ] && cp -r "$HERE/$1/patches" "$ROOT/build/"
 
 unshare --map-root-user --map-auto --mount --pid --fork bash -euo pipefail -c '
-APK=$1 ROOT=$2 IN=$3 makedeps=$4 base=$5
+APK=$1 ROOT=$2 IN=$3 makedeps=$4 base=$5 CACHE=$6
+# downloads are kept in $CACHE, so a dropped connection only costs the file it dropped,
+# and each step gets three tries
+try() { "$@" || { sleep 5; "$@"; } || { sleep 20; "$@"; }; }
 if [ -z "$base" ]; then
-"$APK" --root "$ROOT" --arch x86_64 add --initdb --no-cache --quiet --no-scripts base-files bash coreutils sed grep findutils
-"$APK" --root "$ROOT" --arch x86_64 fix --no-cache --quiet --reinstall $("$APK" --root "$ROOT" info --quiet)
-[ -z "$makedeps" ] || "$APK" --root "$ROOT" --arch x86_64 add --no-cache --quiet $makedeps
+try "$APK" --root "$ROOT" --arch x86_64 add --initdb --cache-dir "$CACHE" --quiet --no-scripts base-files bash coreutils sed grep findutils
+try "$APK" --root "$ROOT" --arch x86_64 fix --cache-dir "$CACHE" --quiet --reinstall $("$APK" --root "$ROOT" info --quiet)
+[ -z "$makedeps" ] || try "$APK" --root "$ROOT" --arch x86_64 add --cache-dir "$CACHE" --quiet $makedeps
 fi
 cat > "$ROOT/build/run" <<"EOF"
 set -euo pipefail
@@ -61,7 +66,7 @@ export MAKEFLAGS=-j$(nproc) CFLAGS="-O2 -pipe" CXXFLAGS="-O2 -pipe"
 build
 EOF
 "$IN" "$ROOT" /bin/bash /build/run
- ' - "$APK" "$ROOT" "$TOP/tools/in-image.sh" "$makedeps" "${BASE:-}"
+ ' - "$APK" "$ROOT" "$TOP/tools/in-image.sh" "$makedeps" "${BASE:-}" "$APKCACHE"
 
 # shared libraries it links to, minus the ones it brings itself
 PKG=$ROOT/build/pkg
