@@ -79,6 +79,31 @@ table { border-collapse: collapse; }
 .linkus img { float: left; margin: 2px 12px 4px 0; border: 0; image-rendering: pixelated; }
 .linkus pre { clear: both; margin: 8px 0 0; font-size: 13px; }
 
+/* the chess page: a plain board, cream and blue, a move list beside it */
+.chessbar { margin: 10px 0 14px; }
+.chessbar label { margin-right: 12px; white-space: nowrap; }
+.chessbar select, .chessbar button { font: inherit; margin: 0 2px 6px; }
+.chess { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+.board { display: grid; grid-template-columns: repeat(8, 1fr); width: min(480px, calc(100vw - 32px));
+  border: 3px outset #9aa6c8; }
+.sq { aspect-ratio: 1; border: 0; margin: 0; padding: 0; position: relative; cursor: pointer; display: block; }
+.sq img { width: 100%; height: 100%; display: block; border: 0; pointer-events: none; }
+.sq.light { background: #ffffe0; }
+.sq.dark { background: #8fa4cf; }
+.sq.last { background: #e8d870; }
+.sq.picked { outline: 3px solid #0000ee; outline-offset: -3px; }
+.sq.to::after { content: ""; position: absolute; left: 38%; top: 38%; width: 24%; height: 24%; border-radius: 50%; background: rgba(0, 0, 128, .35); }
+.sq.take { box-shadow: inset 0 0 0 4px rgba(200, 0, 0, .6); }
+.sq.check { background: #ff6060; }
+.sq .file, .sq .rank { position: absolute; font: bold 11px Arial, Helvetica, sans-serif; color: #000080; }
+.sq .file { right: 3px; bottom: 2px; }
+.sq .rank { left: 3px; top: 2px; }
+.status { font-weight: bold; margin: 8px 0; }
+.status.over { color: #c00; }
+.moves { border: 2px inset #c0c0c0; padding: 6px 10px; min-width: 150px; max-height: 480px; overflow-y: auto;
+  font: 15px "Courier New", Courier, "Liberation Mono", monospace; }
+.moves ol { margin: 4px 0 0; padding-left: 30px; }
+
 /* what other pages already use, kept plain */
 .button { font-weight: bold; }
 .button.go::before { content: "\00bb\00a0"; }
