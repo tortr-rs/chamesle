@@ -36,7 +36,7 @@ EOF
 *)
     # with only a few packages here this would empty the repo on sourceforge
     [ "$(ls "$R" | grep -c '\.apk$')" -gt 10000 ] || { echo "upload: $R isn't a full copy of the repo, use publish" >&2; exit 1; }
-    # --delete-after: versions the weekly sync replaced go from sourceforge too
+    # --delete-after: versions the sync replaced go from sourceforge too
     rsync -av --partial --progress --delete-after -e ssh "$R/" "$DEST/x86_64/"
     ;;
 esac
