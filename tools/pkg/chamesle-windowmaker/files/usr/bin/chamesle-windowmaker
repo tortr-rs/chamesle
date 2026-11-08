@@ -18,4 +18,10 @@ wmix &
 xset s 600
 xss-lock -- xlock -mode blank &
 
+# the chamesle wallpaper the first time only. after that it's whatever you set in WPrefs
+if [ ! -e "$HOME/GNUstep/.chamesle-wallpaper" ]; then
+    mkdir -p "$HOME/GNUstep"
+    wmsetbg -u -S -f -b '#246070' /usr/share/backgrounds/chamesle/teal.jpg && touch "$HOME/GNUstep/.chamesle-wallpaper"
+fi
+
 exec wmaker

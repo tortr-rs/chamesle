@@ -1,9 +1,9 @@
 {
     "KPlugin": {
-        "Authors": [{ "Name": "Jebulon" }],
-        "Description": "The bay at Komos, Crete",
+        "Authors": [{ "Name": "Chamesle Linux" }],
+        "Description": "Teal, with the Chamesle ring",
         "Id": "Chamesle",
         "License": "CC0-1.0",
-        "Name": "Crete"
+        "Name": "Teal"
     }
 }
