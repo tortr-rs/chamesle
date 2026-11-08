@@ -77,25 +77,37 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 9, 2026, later <span class="new">NEW</span></dt>
+<dt>November 8, 2026, 3 pm <span class="new">NEW</span></dt>
+<dd>The Present extension is in, which finishes step 3. With Present a program says "put this picture in my
+window at frame 1000" or "tell me when frame 1000 happens", and the server tells it back exactly when that was.
+It's how games, video players and GTK line their drawing up with the monitor instead of guessing.
+<p>XFree86 4.8 is older than Present, and also older than the kind of long event Present sends, so both had to be
+written from nothing, about 600 lines. The frame counter comes from the kernel. QEMU's virtual card doesn't have
+one, so there the server keeps a 60 Hz clock itself, and that's what we could test today: 60 frames took
+1.000 seconds, and 20 pictures asked for 20 frames in a row went up on 20 frames in a row. The kernel's counter
+gets its first real test on real hardware.</p>
+<p>Not there yet: updating just part of a window (that needs the XFixes extension, which XFree86 also doesn't
+have), fences, and handing a whole-screen window straight to the monitor without a copy. Those come with
+steps 4 and 5.</p></dd>
+<dt>November 8, 2026, 2:50 pm</dt>
 <dd>Three smaller things. UK keyboards work (<code>X8664_KEYMAP=gb</code>), and other layouts are a few lines each.
 When the screensaver says so, the monitor now really switches off, through the kernel, instead of showing black.
 And the server has the extensions a desktop expects back: XFree86's small server left out SYNC, DPMS, the screen
 saver extension, double buffering, RECORD, X-Resource and Xinerama to stay small. GTK times its frames with SYNC, so
 that one matters for step 3.</dd>
-<dt>November 9, 2026, past midnight</dt>
+<dt>November 8, 2026, 2:35 pm</dt>
 <dd>No more tearing. X8664 now keeps two buffers: the monitor shows one while the next frame is drawn into the
 other, and the kernel swaps them at the moment the screen starts a new refresh (a <b>page flip</b>). Until it says
 the swap happened, new drawing waits for the next frame. So the screen never shows half a frame, and nothing is
 drawn faster than the monitor can show it. That's the heart of step 3. The other half, letting programs know when
 their frame was shown (the Present extension), comes next.</dd>
-<dt>November 8, 2026, late night</dt>
+<dt>November 8, 2026, 1:50 pm</dt>
 <dd>The code is on GitHub: <a href="https://github.com/tortr-rs/x8664">tortr-rs/x8664</a>. Also new: keyboards come
 straight from the kernel's input devices now, with the Super key working, which XFree86's small server never saw.
 dwm is all Super, so that mattered. There was one bug: the first key combo after starting did nothing. The mic
 mute key's number was one past the end of the server's key table, and writing it there marked Super as already
-held down, so the first real press looked like key repeat and got dropped. Fixed the same night.</dd>
-<dt>November 8, 2026, later still</dt>
+held down, so the first real press looked like key repeat and got dropped. Fixed the same afternoon.</dd>
+<dt>November 8, 2026, 1:25 pm</dt>
 <dd>Real screens! Well, a real screen in a virtual machine, but it's the same road a real graphics card takes.
 <p>XFree86 4.8 came with a small server called Xfbdev, which draws on <code>/dev/fb0</code>. We tried it, and found
 out most Linux kernels don't make <code>/dev/fb0</code> any more. So we taught it the way kernels do screens now,
@@ -109,7 +121,7 @@ hardware.</p>
 <img src="img/x8664-kms.png?9" alt="dwm on X8664 on QEMU's virtual screen: amber bar, three tiled windows, the teal wallpaper and a mouse pointer" width="640" height="400">
 <figcaption>X8664 on a screen through the kernel, inside QEMU. Note the mouse pointer: that's the server's own.</figcaption>
 </figure></dd>
-<dt>November 8, 2026, evening</dt>
+<dt>November 8, 2026, 1:10 pm</dt>
 <dd>It runs! Xvfb builds on GCC 16, and our dwm runs on it, with the gaps, the bar and the wallpaper, the same
 setup as on our own desktop. Step 1 is done.
 <p>The first bug was a funny one: dwm's amber came out blue. XFree86's Xvfb puts red in the low byte of each pixel
@@ -119,7 +131,7 @@ masks came out backwards. Three lines to fix, an hour to find.</p>
 <img src="img/x8664-dwm.png?9" alt="dwm on X8664: the amber bar with tag icons, volume, battery and the time, three windows tiled with gaps over the teal Chamesle wallpaper" width="640" height="400">
 <figcaption>dwm on X8664, three windows tiled. Drawn in memory and saved, since there's no screen yet.</figcaption>
 </figure></dd>
-<dt>November 8, 2026</dt>
+<dt>November 8, 2026, 3 am</dt>
 <dd>Day one. XFree86 4.8.0 is in our repo, untouched, as the first commit. The first build on a 2026 compiler is
 running: 2008 C doesn't go through GCC 16 without some convincing. The first goal is small on purpose: build
 <b>Xvfb</b>, the X server that draws into memory instead of a screen, and run dwm on it. Our dwm is in the same
@@ -138,12 +150,12 @@ order:</p>
 happen until it runs. <b>Done</b> November 8.</td></tr>
 <tr><td>2</td><td><b>Real screens through the kernel.</b> Kernel mode-setting (KMS) for every graphics card, and
 libinput for keyboards, mice and touchpads.</td><td>XFree86's drivers program the graphics chip themselves, the 2008
-way. Today the kernel does that, for every card, and does it right. <i>Doing this now:</i> screens work in
-a virtual machine, input is next.</td></tr>
+way. Today the kernel does that, for every card, and does it right. <i>Doing this now:</i> screens and keyboards
+work in a virtual machine. Touchpads, and mice beyond the basic kind, are next.</td></tr>
 <tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
 tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
-"smooth" means. Tearing is the thing people notice first. <i>Half done:</i> page flips work, Present is
-next.</td></tr>
+"smooth" means. Tearing is the thing people notice first. <b>Done</b> November 8, in a virtual machine.
+Real hardware still has to say so.</td></tr>
 <tr><td>4</td><td><b>Compositing.</b> The Composite and Damage extensions.</td><td>XFree86 4.8 has neither.
 Without them there are no compositors, no shadows, no smooth window effects.</td></tr>
 <tr><td>5</td><td><b>Drawing on the GPU.</b> OpenGL-backed 2D drawing and DRI3, so programs and games render
