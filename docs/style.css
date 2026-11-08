@@ -104,6 +104,8 @@ table { border-collapse: collapse; }
   font: 15px "Courier New", Courier, "Liberation Mono", monospace; }
 .moves ol { margin: 4px 0 0; padding-left: 30px; }
 
+.xlogo { float: right; margin: 0 0 10px 18px; border: 0; }
+
 /* what other pages already use, kept plain */
 .button { font-weight: bold; }
 .button.go::before { content: "\00bb\00a0"; }
