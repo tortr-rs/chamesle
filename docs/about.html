@@ -101,6 +101,16 @@ on Friday. Security fixes don't wait for that, they go out as soon as they're re
 Chamesle's own apps. Every update has to install and boot in a test machine before it goes out. The kernel
 stays on the long-term support line.</p>
 
+<h2 id="x">We run on X</h2>
+<p>Chamesle believes in X. Every desktop we ship runs on Xorg, GNOME and KDE Plasma included, even though both of
+them would rather you used Wayland now. We keep Wayland out wherever we can.</p>
+<p>Why: X works. Screen sharing, screen readers, remote desktop, global hotkeys, color pickers, xdotool, old games,
+the program you wrote in 2004: all of it just works, on every graphics card, without anyone having to write a new
+protocol for it first. Thirty years of software expects X, and we'd rather spend our time on the desktop than on
+finding out what broke this week.</p>
+<p>If you want Wayland anyway, it's your computer: the Wayland sessions are in the repo and the sign-in screen
+lists whatever you install.</p>
+
 <h2>How it's built</h2>
 <p>Each ISO is made by one script, <code>build.sh</code>, from a list of packages per edition. The init system is dinit,
 the boot is GRUB with a small initramfs of our own, and the desktop look is Chamesle Glass, our own theme, with the Oxygen icons.
