@@ -80,8 +80,9 @@ on.</p>
 <dt>November 8, 2026, late night <span class="new">NEW</span></dt>
 <dd>The code is on GitHub: <a href="https://github.com/tortr-rs/x8664">tortr-rs/x8664</a>. Also new: keyboards come
 straight from the kernel's input devices now, with the Super key working, which XFree86's small server never saw.
-dwm is all Super, so that mattered. One bug left there: the first key combo after starting does nothing. The keys
-arrive, so it's somewhere inside, and we're after it.</dd>
+dwm is all Super, so that mattered. There was one bug: the first key combo after starting did nothing. The mic
+mute key's number was one past the end of the server's key table, and writing it there marked Super as already
+held down, so the first real press looked like key repeat and got dropped. Fixed the same night.</dd>
 <dt>November 8, 2026, later still</dt>
 <dd>Real screens! Well, a real screen in a virtual machine, but it's the same road a real graphics card takes.
 <p>XFree86 4.8 came with a small server called Xfbdev, which draws on <code>/dev/fb0</code>. We tried it, and found
