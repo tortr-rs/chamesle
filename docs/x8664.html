@@ -77,7 +77,12 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, later still <span class="new">NEW</span></dt>
+<dt>November 8, 2026, late night <span class="new">NEW</span></dt>
+<dd>The code is on GitHub: <a href="https://github.com/tortr-rs/x8664">tortr-rs/x8664</a>. Also new: keyboards come
+straight from the kernel's input devices now, with the Super key working, which XFree86's small server never saw.
+dwm is all Super, so that mattered. One bug left there: the first key combo after starting does nothing. The keys
+arrive, so it's somewhere inside, and we're after it.</dd>
+<dt>November 8, 2026, later still</dt>
 <dd>Real screens! Well, a real screen in a virtual machine, but it's the same road a real graphics card takes.
 <p>XFree86 4.8 came with a small server called Xfbdev, which draws on <code>/dev/fb0</code>. We tried it, and found
 out most Linux kernels don't make <code>/dev/fb0</code> any more. So we taught it the way kernels do screens now,
@@ -153,8 +158,10 @@ that only speak Wayland won't, the same as on any X server.</p>
 <a href="docs.html">Jiggity</a>, and after that, maybe the default. Not before it's passed step 7.</p>
 
 <h3>Where's the code?</h3>
-<p>On our computer for now. It goes up on GitHub, under the <a href="https://github.com/tortr-rs">same account</a>
-as Chamesle, once it builds.</p>
+<p>On GitHub: <a href="https://github.com/tortr-rs/x8664">github.com/tortr-rs/x8664</a>. The first commit is
+XFree86 4.8.0 exactly as released, and everything after it is ours, so <code>git log</code> tells the whole story.
+The README says how to build it and run it, and <code>test/vm</code> boots it in QEMU if you want to see it on a
+screen without touching your own X.</p>
 
 <h3>What license?</h3>
 <p>XFree86's code keeps the license it came with, the XFree86 License 1.1, and the other X licenses on the
