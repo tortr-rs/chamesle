@@ -333,8 +333,12 @@ readhistory(void)
 		trim(line);
 		if ((it = find(line)))
 			it->used++;
-		else if (*line)
-			add(line, line, 0), find(line)->used = 1;
+		else if (*line) {
+			/* the list can be full, then it isn't added */
+			add(line, line, 0);
+			if ((it = find(line)))
+				it->used = 1;
+		}
 	}
 	fclose(f);
 }

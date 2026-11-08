@@ -1,5 +1,5 @@
 # launchel
-VERSION = 0.1
+VERSION = 0.1.1
 PREFIX = /usr/local
 
 PKGS = x11 xft fontconfig

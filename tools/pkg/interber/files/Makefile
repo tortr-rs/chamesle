@@ -1,5 +1,5 @@
 # interber
-VERSION = 0.1
+VERSION = 0.1.1
 PREFIX = /usr/local
 
 PKGS = gtk+-3.0 webkit2gtk-4.1

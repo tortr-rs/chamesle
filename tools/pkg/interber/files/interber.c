@@ -525,6 +525,30 @@ onhover(WebKitWebView *v, WebKitHitTestResult *h, guint mods, gpointer data)
 	updatestatus();
 }
 
+/* a site whose certificate doesn't check out isn't loaded. say why instead of showing nothing */
+static gboolean
+ontls(WebKitWebView *v, char *uri, GTlsCertificate *cert, GTlsCertificateFlags errors, gpointer data)
+{
+	GUri *gu = g_uri_parse(uri, G_URI_FLAGS_NONE, NULL);
+	char *e, *html;
+
+	e = g_markup_escape_text(gu && g_uri_get_host(gu) ? g_uri_get_host(gu) : uri, -1);
+	html = g_strdup_printf("<!doctype html><meta charset=utf-8><style>body{background:%s;color:%s;"
+		"font:16px VGA,monospace;margin:16px}</style><pre>%s isn't safe to open.\n\n"
+		"Its certificate doesn't check out%s, so someone could be in the middle\n"
+		"reading or changing what you send. interber didn't load it.</pre>",
+		colourhex(bg), colourhex(fg), e,
+		errors & G_TLS_CERTIFICATE_EXPIRED ? " (it's expired)" :
+		errors & G_TLS_CERTIFICATE_BAD_IDENTITY ? " (it's for a different site)" :
+		errors & G_TLS_CERTIFICATE_UNKNOWN_CA ? " (nobody we trust vouches for it)" : "");
+	webkit_web_view_load_alternate_html(v, html, uri, NULL);
+	g_free(html);
+	g_free(e);
+	if (gu)
+		g_uri_unref(gu);
+	return TRUE;
+}
+
 /* target=_blank and window.open: a new tab */
 static GtkWidget *
 oncreate(WebKitWebView *v, WebKitNavigationAction *a, gpointer data)
@@ -543,10 +567,13 @@ onpolicy(WebKitWebView *v, WebKitPolicyDecision *d, WebKitPolicyDecisionType typ
 	if (type == WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) {
 		a = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(d));
 		u = webkit_uri_request_get_uri(webkit_navigation_action_get_request(a));
-		/* the home page's search box */
+		/* the home page's search box. only from our own pages: a website sending you to
+		   interber:search?q=file:///... would get us to open your files for it */
 		if (u && !strncmp(u, "interber:search", 15)) {
+			const char *from = webkit_web_view_get_uri(v);
+
 			webkit_policy_decision_ignore(d);
-			if ((q = strstr(u, "q="))) {
+			if (from && !strncmp(from, "interber:", 9) && (q = strstr(u, "q="))) {
 				t = g_strdup(q + 2);
 				for (p = t; *p; p++)
 					if (*p == '+')
@@ -648,6 +675,7 @@ newtab(const char *uri, WebKitWebView *related, int show)
 	g_signal_connect(t->view, "enter-fullscreen", G_CALLBACK(onfull), GINT_TO_POINTER(1));
 	g_signal_connect(t->view, "leave-fullscreen", G_CALLBACK(onfull), GINT_TO_POINTER(0));
 	g_signal_connect(t->view, "button-press-event", G_CALLBACK(onbutton), NULL);
+	g_signal_connect(t->view, "load-failed-with-tls-errors", G_CALLBACK(ontls), NULL);
 
 	t->label = gtk_button_new_with_label("[ new tab ]");
 	gtk_button_set_relief(GTK_BUTTON(t->label), GTK_RELIEF_NONE);
@@ -733,8 +761,12 @@ ondest(WebKitDownload *d, char *name, gpointer data)
 	char path[2048], base[1024], *dot, *uri;
 	int i;
 
+	char *b = name && *name ? g_path_get_basename(name) : NULL;
+
 	g_mkdir_with_parents(downloads, 0755);
-	snprintf(base, sizeof base, "%s", name && *name ? name : "download");
+	/* the website picks the name: only the last part of it, so it can't climb out of Downloads */
+	snprintf(base, sizeof base, "%s", b && strcmp(b, ".") && strcmp(b, "..") && strcmp(b, "/") ? b : "download");
+	g_free(b);
 	snprintf(path, sizeof path, "%s/%s", downloads, base);
 	/* never over something that's there: name (1).ext */
 	for (i = 1; access(path, F_OK) == 0 && i < 1000; i++) {
@@ -838,7 +870,7 @@ onkey(GtkWidget *w, GdkEventKey *e, gpointer data)
 		switch (k) {
 		case GDK_KEY_t: newtab(home, NULL, 1); gtk_widget_grab_focus(entry); return TRUE;
 		case GDK_KEY_w: closetab(t); return TRUE;
-		case GDK_KEY_q: gtk_main_quit(); return TRUE;
+		case GDK_KEY_q: savetabs(); gtk_main_quit(); return TRUE;
 		case GDK_KEY_l: gtk_widget_grab_focus(entry); return TRUE;
 		case GDK_KEY_r: webkit_web_view_reload(t->view); return TRUE;
 		case GDK_KEY_h: go(t, home); return TRUE;

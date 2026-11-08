@@ -537,6 +537,7 @@ sbpop(int n, VTermScreenCell *cells, void *user)
 			cells[i].attrs.bold = !!(l->cells[i].flags & FBold);
 			cells[i].attrs.underline = !!(l->cells[i].flags & FUnder);
 			cells[i].attrs.reverse = !!(l->cells[i].flags & FReverse);
+			cells[i].attrs.strike = !!(l->cells[i].flags & FStrike);
 			if (!(l->cells[i].flags & FDefFg))
 				vterm_color_rgb(&cells[i].fg, l->cells[i].fg[0], l->cells[i].fg[1], l->cells[i].fg[2]);
 			if (!(l->cells[i].flags & FDefBg))
@@ -547,6 +548,32 @@ sbpop(int n, VTermScreenCell *cells, void *user)
 	l->cells = NULL;
 	dirty = 1;
 	return 1;
+}
+
+/* the scrollback setting changed while running: the lines that fit go into a ring of the new size */
+static void
+setscrollback(int n)
+{
+	Line *nsb = n ? calloc(n, sizeof *nsb) : NULL;
+	int keep = MIN(sbn, n), i;
+
+	if (n && !nsb)
+		return;
+	for (i = 0; i < sbn; i++) {
+		if (i < sbn - keep)
+			free(sbline(i)->cells);
+		else
+			nsb[i - (sbn - keep)] = *sbline(i);
+	}
+	free(sb);
+	sb = nsb;
+	sbhead = 0;
+	sbn = keep;
+	scrollmax = n;
+	view = MIN(view, sbn);
+	sel.on = 0;
+	dropplaces();
+	dirty = 1;
 }
 
 static int
@@ -739,6 +766,13 @@ makepic(Place *p)
 		h = MAX(1, (long)p->sh * w / p->sw);
 	else
 		w = MAX(1, (long)p->sw * h / p->sh);
+	/* a program asking for a picture a million cells wide gets one X can actually make */
+	if (w > 4096 || h > 4096) {
+		if (w >= h)
+			h = MAX(1, (long)h * 4096 / w), w = 4096;
+		else
+			w = MAX(1, (long)w * 4096 / h), h = 4096;
+	}
 	if (!(px = malloc((size_t)w * h * 4)))
 		return;
 	for (y = 0; y < h; y++) {
@@ -854,6 +888,28 @@ delete(int what, unsigned int id, int x, int y)
 	dirty = 1;
 }
 
+static int
+intemp(const char *path)
+{
+	const char *dirs[] = { "/tmp/", "/dev/shm/", "/var/tmp/", getenv("TMPDIR") };
+	struct stat st;
+	char real[PATH_MAX], dir[PATH_MAX];
+	unsigned int i;
+	size_t n;
+
+	if (lstat(path, &st) < 0 || !S_ISREG(st.st_mode) || !realpath(path, real) || strstr(real, "/../"))
+		return 0;
+	for (i = 0; i < LENGTH(dirs); i++) {
+		if (!dirs[i] || !*dirs[i])
+			continue;
+		snprintf(dir, sizeof dir, "%s%s", dirs[i], dirs[i][strlen(dirs[i]) - 1] == '/' ? "" : "/");
+		n = strlen(dir);
+		if (!strncmp(real, dir, n) && !strchr(real + n, '/'))
+			return 1;
+	}
+	return 0;
+}
+
 /* ESC _ G key=value,... ; base64 ESC \ */
 static void
 graphics(char *s, size_t n)
@@ -952,7 +1008,9 @@ graphics(char *s, size_t n)
 			rawlen = raw ? fread(raw, 1, st.st_size, f) : 0;
 			fclose(f);
 		}
-		if (k.medium == 't' && strstr(path, "tty-graphics-protocol"))
+		/* t means "delete it after": only ever in a temporary folder, or anything a program prints
+		   could delete your files */
+		if (k.medium == 't' && strstr(path, "tty-graphics-protocol") && intemp(path))
 			unlink(path);
 	} else if (k.medium != 'd') {
 		free(raw);
@@ -1491,10 +1549,22 @@ selectionnotify(XSelectionEvent *e)
 	if (XGetWindowProperty(dpy, win, e->property, 0, 1 << 20, True, AnyPropertyType, &type, &fmt,
 	    &n, &after, &data) != Success)
 		return;
-	/* new lines are enter keys */
-	for (i = 0; i < n; i++)
-		if (data[i] == '\n')
-			data[i] = '\r';
+	/* new lines are enter keys. other control characters go, like xterm does it: otherwise pasted
+	   text could end the paste early and the rest would run as if you'd typed it */
+	{
+		unsigned long j = 0;
+
+		for (i = 0; i < n; i++) {
+			if (data[i] == '\n')
+				data[i] = '\r';
+			if (data[i] < 0x20 && data[i] != '\r' && data[i] != '\t')
+				continue;
+			if (data[i] == 0x7f)
+				continue;
+			data[j++] = data[i];
+		}
+		n = j;
+	}
 	vterm_keyboard_start_paste(vt);
 	writepty((char *)data, n);
 	vterm_keyboard_end_paste(vt);
@@ -1856,13 +1926,18 @@ static void
 checkconfig(void)
 {
 	struct stat st;
-	int oldsize = fontsize;
+	int oldsize = fontsize, oldscroll = scrollmax, newscroll;
 	char oldfont[256];
 
 	if (stat(cfgpath, &st) < 0 || st.st_mtime == cfgmtime)
 		return;
 	snprintf(oldfont, sizeof oldfont, "%s", fontname);
 	loadconfig();
+	/* the ring is still the old size until it's moved */
+	newscroll = scrollmax;
+	scrollmax = oldscroll;
+	if (newscroll != oldscroll)
+		setscrollback(newscroll);
 	if (forcesize > 3)
 		fontsize = forcesize;
 	setcolours();

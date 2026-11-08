@@ -1,6 +1,6 @@
 name=tyrmel
-version=0.1
-rel=1
+version=0.1.1
+rel=0
 desc="Terminal that looks like the console and shows pictures"
 url=https://chamesle.org
 license="MIT AND GPL-2.0-only"
