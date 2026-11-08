@@ -9,6 +9,7 @@ import time
 
 import account
 import disks
+from choices import console_keymap
 from disks import run
 
 SOURCE = "/run/chamesle/rootfs/"
@@ -139,7 +140,7 @@ def install(row, passphrase, language, keyboard, progress, desktop=None, user=No
         f.write('Section "InputClass"\n    Identifier "system-keyboard"\n    MatchIsKeyboard "on"\n'
                 '    Option "XkbLayout" "%s"\n    Option "XkbVariant" "%s"\nEndSection\n' % (layout, variant or ""))
     with open(T + "/etc/vconsole.conf", "w") as f:
-        f.write("KEYMAP=%s\n" % (layout + ("-" + variant if variant else "")))
+        f.write("KEYMAP=%s\n" % console_keymap(layout, variant))
     if user:
         account.make(user["zone"], user["user"], user["name"], user["password"], user["host"], T)
     progress(2, 100)

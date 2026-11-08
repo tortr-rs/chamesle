@@ -15,7 +15,7 @@ sys.path.insert(0, "/usr/lib/jiggity")
 import account
 import disks
 import install
-from choices import LANGUAGES, STEPS, keyboards
+from choices import LANGUAGES, STEPS, console_keymap, keyboards
 
 scr = None
 # the console font has latin letters only: these languages by their english names
@@ -38,15 +38,17 @@ def frame(title, keys):
 
 
 def text(y, s):
+    # a long error message stops at the bottom of the screen instead of crashing it
     h, w = scr.getmaxyx()
     words, line = s.split(), ""
     for word in words:
         if len(line) + len(word) + 1 > w - 10:
-            scr.addstr(y, 4, line)
+            if y < h - 2:
+                scr.addstr(y, 4, line[:w - 8])
             y, line = y + 1, ""
         line = (line + " " + word).strip()
-    if line:
-        scr.addstr(y, 4, line)
+    if line and y < h - 2:
+        scr.addstr(y, 4, line[:w - 8])
     return y + 2
 
 
@@ -130,6 +132,11 @@ def yes(title, note):
             return True
         if k in ("n", "N", "\x1b"):
             return False
+
+
+# the passphrase and password are typed with the keyboard picked, the same one the boot and the desktop use
+def use_keyboard(layout, variant):
+    subprocess.run(["loadkeys", console_keymap(layout, variant)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def netinst():
@@ -235,9 +242,7 @@ def run_netinst():
         if i is None:
             return False
         c["kb"] = i
-        layout, variant = kbds[i][1:]
-        subprocess.run(["loadkeys", layout + ("-" + variant if variant else "")], stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL)
+        use_keyboard(*kbds[i][1:])
         return True
 
     def p_zone():
@@ -303,7 +308,8 @@ def run_netinst():
             c["row"] = rows[i]
             break
         c["passphrase"] = None
-        if yes("Encrypt Chamesle?", "With a passphrase you type every time the computer starts. If you forget it, "
+        # esc at the passphrase goes back to the question, it doesn't quietly install without encryption
+        while c["passphrase"] is None and yes("Encrypt Chamesle?", "With a passphrase you type every time the computer starts. If you forget it, "
                                     "your files can't be recovered."):
             while True:
                 p1 = ask("Encrypt Chamesle", "At least 8 characters.", "Passphrase:", True)
@@ -420,6 +426,7 @@ def run_install():
     kb = choose("Keyboard", "", [k[0] for k in kbds], us)
     if kb is None:
         kb = us
+    use_keyboard(*kbds[kb][1:])
     while True:
         rows = disks.scan()
         if not rows:
@@ -444,7 +451,8 @@ def run_install():
             continue
         break
     passphrase = None
-    if yes("Encrypt Chamesle?", "With a passphrase you type every time the computer starts. If you forget it, your "
+    # esc at the passphrase goes back to the question, it doesn't quietly install without encryption
+    while passphrase is None and yes("Encrypt Chamesle?", "With a passphrase you type every time the computer starts. If you forget it, your "
                                 "files can't be recovered."):
         while True:
             p1 = ask("Encrypt Chamesle", "At least 8 characters.", "Passphrase:", True)
@@ -466,6 +474,14 @@ def run_install():
 
 
 def run_firstboot():
+    while True:
+        try:
+            return firstboot_once()
+        except RuntimeError as e:
+            say("That didn't work", "%s. Press ENTER to try again." % str(e).rstrip("."))
+
+
+def firstboot_once():
     zs = account.zones()
     names = [z.replace("_", " ").replace("/", " / ") for z in zs]
     while True:

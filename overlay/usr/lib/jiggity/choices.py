@@ -1,4 +1,5 @@
 # what both installers offer: languages, keyboards, the install steps
+import glob
 
 
 LANGUAGES = [
@@ -13,6 +14,31 @@ LANGUAGES = [
 ]
 STEPS = ["Getting the drive ready", "Copying files", "Getting files ready for installation",
          "Installing the boot menu", "Finishing up"]
+
+
+# the console's keymaps (kbd) aren't named like the xkb layouts: gb is uk, se is sv-latin1, and so on. one that
+# doesn't exist leaves the console on us while the desktop gets the real layout, and a password with @ or " typed
+# in jiggity doesn't work at the sign-in screen. not by name either: xkb's et is ethiopia, kbd's is estonia
+CONSOLE = {"us": "us", "gb": "uk", "fr": "fr", "de": "de", "at": "de", "es": "es", "latam": "la-latin1",
+           "it": "it", "br": "br-abnt2", "pt": "pt-latin1", "nl": "nl", "be": "be-latin1", "pl": "pl", "tr": "trq",
+           "ru": "ru", "ua": "ua", "by": "by", "se": "sv-latin1", "no": "no-latin1", "dk": "dk-latin1", "fi": "fi",
+           "is": "is-latin1", "ie": "ie", "cz": "cz", "sk": "sk-qwertz", "hu": "hu", "ro": "ro", "gr": "gr",
+           "bg": "bg_bds-utf8", "mk": "mk", "rs": "sr-cy", "hr": "croat", "si": "slovene", "ee": "et", "lv": "lv",
+           "lt": "lt", "il": "il", "ir": "fa", "jp": "jp106", "ch": "sg", "ca": "cf", "kz": "kazakh", "kg": "kyrgyz",
+           "ge": "ge", "tj": "tj_alt-UTF8"}
+CONSOLE_VARIANTS = {("us", "dvorak"): "dvorak", ("gb", "dvorak"): "dvorak-uk", ("es", "dvorak"): "dvorak-es",
+                    ("fr", "dvorak"): "dvorak-fr", ("de", "nodeadkeys"): "de-latin1-nodeadkeys",
+                    ("fr", "bepo"): "fr-bepo", ("ch", "fr"): "fr_CH", ("tr", "f"): "trf",
+                    ("br", "nodeadkeys"): "br-abnt2", ("ru", "phonetic"): "ru"}
+
+
+def console_keymap(layout, variant=""):
+    # the closest console keymap there is here, us when there's none (arabic, hindi, chinese...)
+    for name in (CONSOLE_VARIANTS.get((layout, variant)), CONSOLE.get(layout)):
+        if name and any(glob.glob("%s/**/%s.map*" % (d, name), recursive=True)
+                        for d in ("/usr/share/kbd/keymaps", "/usr/share/keymaps")):
+            return name
+    return "us"
 
 
 def keyboards():
