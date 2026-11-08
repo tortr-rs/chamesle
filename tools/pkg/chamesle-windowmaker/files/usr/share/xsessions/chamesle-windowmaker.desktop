@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Window Maker
+Comment=The NeXTSTEP look: a dock, and the menu where you click
+Exec=chamesle-windowmaker
+DesktopNames=WindowMaker

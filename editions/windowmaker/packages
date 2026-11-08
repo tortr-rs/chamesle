@@ -1,0 +1,6 @@
+# window maker flavor: the dock top right, the menu on a right click, gray and black. onestepback dresses the apps
+WindowMaker wmclock wmix wmsystemtray wmmon onestepback
+pcmanfm xterm mousepad ristretto xarchiver pavucontrol gvfs
+network-manager-applet blueman xfce4-notifyd xfce-polkit xss-lock xlockmore
+xdg-desktop-portal-gtk xdg-user-dirs-gtk adwaita-icon-theme
+chamesle-windowmaker

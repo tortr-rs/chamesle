@@ -6,7 +6,7 @@ color-shading-type='solid'
 primary-color='#0b2552'
 
 [org.mate.interface]
-gtk-theme='Chamesle-Glass'
+gtk-theme='OneStepBack'
 icon-theme='Chamesle-Glass'
 font-name='Inter 10'
 document-font-name='Inter 10'

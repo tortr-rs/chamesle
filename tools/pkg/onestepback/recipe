@@ -1,0 +1,17 @@
+name=onestepback
+version=0.997
+rel=0
+desc="OneStepBack: a GTK 2, 3 and 4 theme with the colors and embossed widgets of NeXTSTEP"
+url=http://www.vide.memoire.free.fr/pages/onestepback/onestepback.php
+license=GPL-3.0-only
+source=http://www.vide.memoire.free.fr/pages/onestepback/OneStepBack-v$version.zip
+sha256=b81ea97e74e430a78fef5ac0be7d6894925e08bf38db6d944f9bb11bbdaccb01
+makedeps=""
+depends=""
+
+# Jean-Pierre Bucciol's theme, as it comes. the same files NetBSD's package installs
+build() {
+    d="$pkgdir/usr/share/themes/OneStepBack"
+    mkdir -p "$d"
+    cp -r LICENSE README index.theme gtk-2.0 gtk-3.0 gtk-4.0 img "$d/"
+}
