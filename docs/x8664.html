@@ -57,8 +57,8 @@ smooth as Wayland, without giving up a single X program.</p>
 </header>
 
 <div class="release">
-<p><b>Where it's at:</b> it builds, and dwm runs on it, in memory. Nothing to download yet, and it doesn't
-drive real screens yet. That's next. Progress goes in the news below as it happens.</p>
+<p><b>Where it's at:</b> it builds, and it draws on a real screen through the kernel, so far in a virtual
+machine. Nothing to download yet. Progress goes in the news below as it happens.</p>
 </div>
 
 <h2>What is it?</h2>
@@ -77,7 +77,21 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, evening <span class="new">NEW</span></dt>
+<dt>November 8, 2026, later still <span class="new">NEW</span></dt>
+<dd>Real screens! Well, a real screen in a virtual machine, but it's the same road a real graphics card takes.
+<p>XFree86 4.8 came with a small server called Xfbdev, which draws on <code>/dev/fb0</code>. We tried it, and found
+out most Linux kernels don't make <code>/dev/fb0</code> any more. So we taught it the way kernels do screens now,
+<b>kernel mode-setting</b>: it opens <code>/dev/dri/card0</code>, finds the monitor, asks for its best mode, and puts
+a buffer on it. Drawing happens in ordinary memory, and only the boxes that changed get copied over and reported to
+the kernel. That's about 300 lines, and it's the first half of step 2.</p>
+<p>The test boots this computer's own kernel in QEMU with nothing in it but our server, dwm and three windows, and
+takes a picture of the screen. Next: input through libinput instead of the old console drivers, then real
+hardware.</p>
+<figure class="shot">
+<img src="img/x8664-kms.png?9" alt="dwm on X8664 on QEMU's virtual screen: amber bar, three tiled windows, the teal wallpaper and a mouse pointer" width="640" height="400">
+<figcaption>X8664 on a screen through the kernel, inside QEMU. Note the mouse pointer: that's the server's own.</figcaption>
+</figure></dd>
+<dt>November 8, 2026, evening</dt>
 <dd>It runs! Xvfb builds on GCC 16, and our dwm runs on it, with the gaps, the bar and the wallpaper, the same
 setup as on our own desktop. Step 1 is done.
 <p>The first bug was a funny one: dwm's amber came out blue. XFree86's Xvfb puts red in the low byte of each pixel
@@ -106,7 +120,8 @@ order:</p>
 happen until it runs. <b>Done</b> November 8.</td></tr>
 <tr><td>2</td><td><b>Real screens through the kernel.</b> Kernel mode-setting (KMS) for every graphics card, and
 libinput for keyboards, mice and touchpads.</td><td>XFree86's drivers program the graphics chip themselves, the 2008
-way. Today the kernel does that, for every card, and does it right. <i>Next.</i></td></tr>
+way. Today the kernel does that, for every card, and does it right. <i>Doing this now:</i> screens work in
+a virtual machine, input is next.</td></tr>
 <tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
 tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
 "smooth" means. Tearing is the thing people notice first.</td></tr>
