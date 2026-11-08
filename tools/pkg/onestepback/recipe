@@ -1,6 +1,6 @@
 name=onestepback
 version=0.997
-rel=0
+rel=1
 desc="OneStepBack: a GTK 2, 3 and 4 theme with the colors and embossed widgets of NeXTSTEP"
 url=http://www.vide.memoire.free.fr/pages/onestepback/onestepback.php
 license=GPL-3.0-only
@@ -14,4 +14,7 @@ build() {
     d="$pkgdir/usr/share/themes/OneStepBack"
     mkdir -p "$d"
     cp -r LICENSE README index.theme gtk-2.0 gtk-3.0 gtk-4.0 img "$d/"
+    # the zip's files are readable by their owner only, so for everyone but root
+    # gtk found no theme there and drew apps in adwaita
+    chmod -R u=rwX,go=rX "$d"
 }
