@@ -85,5 +85,4 @@ if __name__ == '__main__':
 	g.save(os.path.join(REPO, 'tools/pkg/chamesle-artwork/files/usr/share/chamesle/greeter-logo.png'))
 	b = banner()
 	b.save(os.path.join(REPO, 'artwork/banner.png'))
-	b.resize((b.width // 2, b.height // 2), Image.LANCZOS).save(os.path.join(REPO, 'docs/img/banner.png'))
 	print('logo out', b.size)
