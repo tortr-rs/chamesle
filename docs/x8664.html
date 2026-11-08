@@ -57,8 +57,8 @@ smooth as Wayland, without giving up a single X program.</p>
 </header>
 
 <div class="release">
-<p><b>Where it's at:</b> just started. Nothing to download yet, and it doesn't run on real screens yet.
-Progress goes in the news below as it happens.</p>
+<p><b>Where it's at:</b> it builds, and dwm runs on it, in memory. Nothing to download yet, and it doesn't
+drive real screens yet. That's next. Progress goes in the news below as it happens.</p>
 </div>
 
 <h2>What is it?</h2>
@@ -77,7 +77,17 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026 <span class="new">NEW</span></dt>
+<dt>November 8, 2026, evening <span class="new">NEW</span></dt>
+<dd>It runs! Xvfb builds on GCC 16, and our dwm runs on it, with the gaps, the bar and the wallpaper, the same
+setup as on our own desktop. Step 1 is done.
+<p>The first bug was a funny one: dwm's amber came out blue. XFree86's Xvfb puts red in the low byte of each pixel
+and blue in the high one, the opposite of what everything since expects, so every color made from the server's
+masks came out backwards. Three lines to fix, an hour to find.</p>
+<figure class="shot">
+<img src="img/x8664-dwm.png?9" alt="dwm on X8664: the amber bar with tag icons, volume, battery and the time, three windows tiled with gaps over the teal Chamesle wallpaper" width="640" height="400">
+<figcaption>dwm on X8664, three windows tiled. Drawn in memory and saved, since there's no screen yet.</figcaption>
+</figure></dd>
+<dt>November 8, 2026</dt>
 <dd>Day one. XFree86 4.8.0 is in our repo, untouched, as the first commit. The first build on a 2026 compiler is
 running: 2008 C doesn't go through GCC 16 without some convincing. The first goal is small on purpose: build
 <b>Xvfb</b>, the X server that draws into memory instead of a screen, and run dwm on it. Our dwm is in the same
@@ -93,10 +103,10 @@ order:</p>
 <table class="grid">
 <tr><th>Step</th><th>What</th><th>Why it matters</th></tr>
 <tr><td>1</td><td><b>Builds and runs on Linux today.</b> Xvfb first, with dwm on it.</td><td>Nothing else can
-happen until it runs. <i>Doing this now.</i></td></tr>
+happen until it runs. <b>Done</b> November 8.</td></tr>
 <tr><td>2</td><td><b>Real screens through the kernel.</b> Kernel mode-setting (KMS) for every graphics card, and
 libinput for keyboards, mice and touchpads.</td><td>XFree86's drivers program the graphics chip themselves, the 2008
-way. Today the kernel does that, for every card, and does it right.</td></tr>
+way. Today the kernel does that, for every card, and does it right. <i>Next.</i></td></tr>
 <tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
 tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
 "smooth" means. Tearing is the thing people notice first.</td></tr>
