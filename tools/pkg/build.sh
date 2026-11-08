@@ -36,7 +36,8 @@ mkdir -p "$ROOT/etc/apk/keys" "$ROOT/build/src" "$ROOT/build/pkg"
 cp "$TOP"/keys/apk/*.pub "$ROOT/etc/apk/keys/"
 echo "v3 $PULL" > "$ROOT/etc/apk/repositories"
 if [ -n "${source:-}" ]; then
-    tar -xf "$file" -C "$ROOT/build/src"
+    # gnu tar doesn't open zips, some themes only come as one
+    case $file in *.zip) unzip -q "$file" -d "$ROOT/build/src";; *) tar -xf "$file" -C "$ROOT/build/src";; esac
 else
     cp -r "$HERE/$1/files" "$ROOT/build/src/files"
 fi

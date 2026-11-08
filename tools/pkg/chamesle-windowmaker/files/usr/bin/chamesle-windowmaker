@@ -1,0 +1,21 @@
+#!/bin/sh
+# the window maker session. apps get onestepback here and not system-wide, so another desktop on the same
+# computer keeps its own look
+export XDG_CURRENT_DESKTOP=WindowMaker
+export GTK_THEME=OneStepBack
+export GTK2_RC_FILES=/usr/share/themes/OneStepBack/gtk-2.0/gtkrc
+
+xdg-user-dirs-update 2>/dev/null
+[ -x /usr/libexec/xfce-polkit ] && /usr/libexec/xfce-polkit &
+# the tray first, so the network and bluetooth icons have somewhere to go
+wmsystemtray &
+sleep 1
+nm-applet &
+command -v blueman-applet >/dev/null && blueman-applet &
+wmclock &
+wmix &
+# lock with xlock after 10 minutes, and before the lid closes
+xset s 600
+xss-lock -- xlock -mode blank &
+
+exec wmaker

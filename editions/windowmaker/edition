@@ -1,0 +1,3 @@
+name=Window Maker
+# a flavor: the NeXTSTEP look for real. window maker, its dock, and onestepback for the apps
+session=chamesle-windowmaker
