@@ -6,7 +6,7 @@ url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="WindowMaker onestepback wmclock wmix wmsystemtray"
+depends="WindowMaker onestepback wmclock wmix wmsystemtray chamesle-artwork"
 
 build() {
     cp -a . "$pkgdir/"
