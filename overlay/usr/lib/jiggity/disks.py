@@ -19,7 +19,8 @@ def run(*cmd, input=None):
     if r.stdout:
         print(r.stdout.rstrip())
     if r.returncode:
-        raise RuntimeError("%s failed: %s" % (cmd[0], (r.stdout or "").strip().splitlines()[-1:] or ""))
+        last = (r.stdout or "").strip().splitlines()
+        raise RuntimeError("%s failed: %s" % (cmd[0], last[-1] if last else "exit code %d" % r.returncode))
     return r.stdout
 
 

@@ -148,8 +148,17 @@ class FirstBoot(ui.SetupWindow):
         return box, []
 
     def make_account(self):
-        account.make(self.zone, self.user.get_text(), self.name.get_text(), self.pw1.get_text())
+        try:
+            account.make(self.zone, self.user.get_text(), self.name.get_text(), self.pw1.get_text())
+        except Exception as e:
+            print("firstboot:", e)
+            GLib.idle_add(self.account_failed, str(e))
+            return
         GLib.idle_add(Gtk.main_quit)
+
+    def account_failed(self, why):
+        self.show_page(2)
+        self.account_note.set_text("That didn't work (%s). Try another username." % why)
 
     def show_page(self, n):
         super().show_page(n)

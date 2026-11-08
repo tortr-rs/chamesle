@@ -28,11 +28,29 @@ def username_from(name):
     return re.sub(r"[^a-z0-9_-]", "", name.split(" ")[0].lower())
 
 
+# names the system has, and ones the desktops add while jiggity installs them: useradd fails on any of these, and
+# the computer would start with no account to sign in with
+SYSTEM_NAMES = set("""root live daemon bin sys nobody admin adm wheel users user audio video input render kvm disk
+    tty utmp lp mail news uucp man games ftp www http sshd dbus polkitd sddm gdm lightdm colord avahi rtkit pulse
+    pipewire geoclue flatpak usbmux saned scanner optical storage network plugdev bluetooth cups dnsmasq ntp chrony
+    upower tss nm-openvpn nm-openconnect openvpn tor mpd postfix steam gamemode xbuilder _apt""".split())
+
+
+def taken(root="/"):
+    names = set(SYSTEM_NAMES)
+    for f in ("etc/passwd", "etc/group"):
+        try:
+            names |= {line.split(":")[0] for line in open(os.path.join(root, f))}
+        except OSError:
+            pass
+    return names
+
+
 # what's wrong with a username, or ""
 def bad_username(u):
     if u and not re.fullmatch(r"[a-z_][a-z0-9_-]{0,31}", u):
         return "A username is lowercase letters and numbers, starting with a letter."
-    if u in ("root", "live", "daemon", "bin", "nobody"):
+    if u in taken():
         return "That username is taken by the system. Pick another one."
     return ""
 
@@ -42,9 +60,14 @@ def make(zone, user, name, pw, host=None, root="/"):
     r = root.rstrip("/")
     inside = [] if root == "/" else ["chroot", root]
     groups = [g.split(":")[0] for g in open(r + "/etc/group")]
-    subprocess.run(inside + ["useradd", "-m", "-s", "/bin/bash", "-c", name, "-G",
-                             ",".join(g for g in GROUPS if g in groups), user])
-    subprocess.run(inside + ["chpasswd", "-c", "SHA512"], input="%s:%s\n" % (user, pw), text=True)
+    # a name the desktop's packages took after it was picked: say so, rather than finish with nobody to sign in as
+    for cmd, inp in ((["useradd", "-m", "-s", "/bin/bash", "-c", name, "-G",
+                       ",".join(g for g in GROUPS if g in groups), user], None),
+                     (["chpasswd", "-c", "SHA512"], "%s:%s\n" % (user, pw))):
+        p = subprocess.run(inside + cmd, input=inp, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if p.returncode:
+            raise RuntimeError("making the account %s failed: %s" % (user, p.stdout.strip().splitlines()[-1:] and
+                                                                    p.stdout.strip().splitlines()[-1] or cmd[0]))
     subprocess.run(["ln", "-sf", "/usr/share/zoneinfo/" + zone, r + "/etc/localtime"])
     with open(r + "/etc/timezone", "w") as f:
         f.write(zone + "\n")
