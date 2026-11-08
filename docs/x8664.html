@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X8664 - Chamesle Linux</title>
+<meta name="description" content="X8664 is our X server: a fork of XFree86 4.8, brought up to date so X is as smooth as Wayland.">
+<link rel="canonical" href="https://chamesle.org/x8664.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle Linux">
+<meta property="og:title" content="X8664 - Chamesle Linux">
+<meta property="og:description" content="X8664 is our X server: a fork of XFree86 4.8, brought up to date so X is as smooth as Wayland.">
+<meta property="og:url" content="https://chamesle.org/x8664.html">
+<meta property="og:image" content="https://chamesle.org/img/kde.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="layout">
+<nav class="side">
+<a class="brand" href="./"><img src="img/logo.png" alt="Chamesle" width="64" height="64"></a>
+<p class="name">Chamesle <br>Linux</p>
+<ul>
+  <li><a href="./">Home</a></li>
+  <li><a href="new.html">What's new</a></li>
+  <li><a href="download.html">Download</a></li>
+  <li><a href="editions.html">Desktops</a></li>
+  <li><a href="docs.html">Docs</a></li>
+  <li><a href="packages.html">Packages</a></li>
+  <li><a href="board.html">Board</a></li>
+  <li><a href="chat.html">Chat</a></li>
+  <li><a href="about.html">About &amp; roadmap</a></li>
+  <li><a href="source.html">Chamesle Source</a></li>
+  <li><b>X8664</b></li>
+  <li><a href="chess.html">Play chess</a></li>
+</ul>
+<p class="head">Elsewhere</p>
+<ul>
+  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
+  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
+  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
+  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
+</nav>
+<div class="content">
+
+<main>
+
+<header class="dochead">
+<img class="xlogo" src="img/x11.svg" alt="" width="80" height="80">
+<h1>X8664</h1>
+<p class="lead">Our X server. A fork of XFree86, brought up to date for today's computers, with one goal: X that's as
+smooth as Wayland, without giving up a single X program.</p>
+</header>
+
+<div class="release">
+<p><b>Where it's at:</b> just started. Nothing to download yet, and it doesn't run on real screens yet.
+Progress goes in the news below as it happens.</p>
+</div>
+
+<h2>What is it?</h2>
+
+<p>X8664 is an X server, the program that draws your windows and passes them your keyboard and mouse. Every
+Chamesle desktop runs on one (we <a href="about.html#x">believe in X</a>). Right now that's X.Org's. X8664 is
+going to be ours.</p>
+
+<p>It starts from <b>XFree86 4.8.0</b>, the last XFree86 release, from December 2008. XFree86 was the X server on
+nearly every Linux and BSD PC through the 90s and into the 2000s, and this whole website is dressed like its old
+homepage. We took its source as it was released, checked against XFree86's own signatures, and we're carrying it
+on.</p>
+
+<p>The name: XFree86 was free X for the 386 PCs of its day. X8664 is X for the PCs of ours, x86-64.</p>
+
+<h2>News</h2>
+
+<dl class="news">
+<dt>November 8, 2026 <span class="new">NEW</span></dt>
+<dd>Day one. XFree86 4.8.0 is in our repo, untouched, as the first commit. The first build on a 2026 compiler is
+running: 2008 C doesn't go through GCC 16 without some convincing. The first goal is small on purpose: build
+<b>Xvfb</b>, the X server that draws into memory instead of a screen, and run dwm on it. Our dwm is in the same
+repo.</dd>
+</dl>
+
+<h2>Making X smooth</h2>
+
+<p>When people say Wayland is smoother, they're mostly right about today's X servers, and very right about
+XFree86, which is older than all of it. Here's what's missing and what we're going to do about it, roughly in
+order:</p>
+
+<table class="grid">
+<tr><th>Step</th><th>What</th><th>Why it matters</th></tr>
+<tr><td>1</td><td><b>Builds and runs on Linux today.</b> Xvfb first, with dwm on it.</td><td>Nothing else can
+happen until it runs. <i>Doing this now.</i></td></tr>
+<tr><td>2</td><td><b>Real screens through the kernel.</b> Kernel mode-setting (KMS) for every graphics card, and
+libinput for keyboards, mice and touchpads.</td><td>XFree86's drivers program the graphics chip themselves, the 2008
+way. Today the kernel does that, for every card, and does it right.</td></tr>
+<tr><td>3</td><td><b>Every frame on time.</b> Page flips that wait for the screen's refresh, so nothing ever
+tears, and the Present extension so programs know when their frame was shown.</td><td>This is most of what
+"smooth" means. Tearing is the thing people notice first.</td></tr>
+<tr><td>4</td><td><b>Compositing.</b> The Composite and Damage extensions.</td><td>XFree86 4.8 has neither.
+Without them there are no compositors, no shadows, no smooth window effects.</td></tr>
+<tr><td>5</td><td><b>Drawing on the GPU.</b> OpenGL-backed 2D drawing and DRI3, so programs and games render
+straight on the graphics card.</td><td>Faster drawing, and the same path games and browsers expect.</td></tr>
+<tr><td>6</td><td><b>Today's screens.</b> Plugging monitors in and out, several monitors, HiDPI, 144&nbsp;Hz and
+up, variable refresh.</td><td>All newer than XFree86.</td></tr>
+<tr><td>7</td><td><b>Security.</b> Going through every X security fix since 2008 and applying the ones that
+apply to us.</td><td>X has had a lot of them. A server can't be shipped until this is done.</td></tr>
+<tr><td>8</td><td><b>Proof.</b> Frame timing and input latency, measured against X.Org and Wayland on the same
+computer, published here.</td><td>"As smooth as Wayland" is a claim. We'll show the numbers, good or bad.</td></tr>
+</table>
+
+<h2>Questions</h2>
+
+<h3>Why fork XFree86 and not X.Org?</h3>
+<p>X.Org is XFree86 continued, with eighteen years of work on top, and it's what Chamesle runs today. We wanted
+to start from the X we remember and build it back up ourselves, knowing every piece we add and why. It's the
+harder way. It's also the way you learn how all of it works.</p>
+
+<h3>Will my programs work on it?</h3>
+<p>That's the whole idea. Anything that runs on X should run on X8664, back to programs from the 80s. Programs
+that only speak Wayland won't, the same as on any X server.</p>
+
+<h3>When can I use it?</h3>
+<p>No date. When it's good enough to replace X.Org on your computer, it becomes an option in
+<a href="docs.html">Jiggity</a>, and after that, maybe the default. Not before it's passed step 7.</p>
+
+<h3>Where's the code?</h3>
+<p>On our computer for now. It goes up on GitHub, under the <a href="https://github.com/tortr-rs">same account</a>
+as Chamesle, once it builds.</p>
+
+<h3>What license?</h3>
+<p>XFree86's code keeps the license it came with, the XFree86 License 1.1, and the other X licenses on the
+parts that have them.</p>
+
+<p class="small">XFree86 is a trademark of The XFree86 Project, Inc. X8664 is our own project and isn't made or
+endorsed by them. The X logo is the X Window System's, in the public domain.</p>
+
+</main>
+
+<hr>
+<address>
+Last updated November 8, 2026.<br>
+Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
+<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
+Chamesle Linux is free software. Source code for every package is available on request.
+</address>
+<p class="buttons">
+<a class="plain" href="https://chamesle.org/"><img src="img/buttons/chamesle.png" alt="Chamesle Linux" width="88" height="31"></a>
+<img src="img/buttons/anybrowser.png" alt="Best viewed with any browser" width="88" height="31">
+<a class="plain" href="https://voidlinux.org"><img src="img/buttons/void.png" alt="Built on Void Linux" width="88" height="31"></a>
+<img src="img/buttons/notrackers.png" alt="This site has no trackers" width="88" height="31">
+</p>
+</div>
+</div>
+
+<script src="egg.js?4"></script>
+</body>
+</html>
