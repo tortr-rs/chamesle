@@ -6,22 +6,20 @@ export GTK_THEME=OneStepBack
 export GTK2_RC_FILES=/usr/share/themes/OneStepBack/gtk-2.0/gtkrc
 
 xdg-user-dirs-update 2>/dev/null
-[ -x /usr/libexec/xfce-polkit ] && /usr/libexec/xfce-polkit &
-# the tray first, so the network and bluetooth icons have somewhere to go
-wmsystemtray &
-sleep 1
-nm-applet &
-command -v blueman-applet >/dev/null && blueman-applet &
-wmclock &
-wmix &
-# lock with xlock after 10 minutes, and before the lid closes
-xset s 600
-xss-lock -- xlock -mode blank &
 
-# the chamesle wallpaper the first time only. after that it's whatever you set in WPrefs
-if [ ! -e "$HOME/GNUstep/.chamesle-wallpaper" ]; then
-    mkdir -p "$HOME/GNUstep"
-    wmsetbg -u -S -f -b '#246070' /usr/share/backgrounds/chamesle/teal.jpg && touch "$HOME/GNUstep/.chamesle-wallpaper"
+# the first time: our dock (tray, clock, volume) and the wallpaper. window maker starts the dock apps itself,
+# started by hand they float about instead of sitting in the dock. after that it's yours, change it in WPrefs.
+# 0.1 set the wallpaper with wmsetbg before window maker had made its files, which didn't take, so
+# .chamesle-dock is new and those get it once too
+G=$HOME/GNUstep
+if [ ! -e "$G/.chamesle-dock" ]; then
+    mkdir -p "$G/Defaults" "$G/Library/WindowMaker"
+    cp /usr/share/chamesle/windowmaker/WMState "$G/Defaults/WMState"
+    [ -s "$G/Defaults/WindowMaker" ] && grep -q "^ *WorkspaceBack" "$G/Defaults/WindowMaker" ||
+        cp /usr/share/chamesle/windowmaker/WindowMaker "$G/Defaults/WindowMaker"
+    touch "$G/.chamesle-dock"
 fi
+A=$G/Library/WindowMaker/autostart
+[ -e "$A" ] || { mkdir -p "${A%/*}"; printf '#!/bin/sh\n/usr/libexec/chamesle-windowmaker-autostart\n' > "$A"; chmod +x "$A"; }
 
 exec wmaker

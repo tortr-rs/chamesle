@@ -1,0 +1,10 @@
+#!/bin/sh
+# window maker runs this once it's up and the dock has started the tray, so the network and bluetooth
+# icons have somewhere to go
+[ -x /usr/libexec/xfce-polkit ] && /usr/libexec/xfce-polkit &
+sleep 1
+nm-applet &
+command -v blueman-applet >/dev/null && blueman-applet &
+# lock with xlock after 10 minutes, and before the lid closes
+xset s 600
+xss-lock -- xlock -mode blank &
