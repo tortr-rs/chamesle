@@ -7,7 +7,7 @@ Rectangle {
     id: root
     width: 1920
     height: 1080
-    color: "#0b1a33"
+    color: "#246070"
 
     readonly property string fontName: config.font || "Inter"
     // everything is drawn for 1080p and scaled to the screen
@@ -57,19 +57,11 @@ Rectangle {
         function onLoginSucceeded() { busy.running = false }
     }
 
-    // both backgrounds stay loaded: the blurred one fades in under the sign-in box
     Image {
         anchors.fill: parent
         source: config.background || "assets/background.jpg"
         fillMode: Image.PreserveAspectCrop
         asynchronous: false
-    }
-    Image {
-        anchors.fill: parent
-        source: config.backgroundBlur || "assets/background-blur.jpg"
-        fillMode: Image.PreserveAspectCrop
-        opacity: root.locked ? 0 : 1
-        Behavior on opacity { NumberAnimation { duration: 350; easing.type: Easing.OutCubic } }
     }
 
     // dark at the top and bottom so the white clock and labels read on bright photos
@@ -141,309 +133,203 @@ Rectangle {
         anchors.fill: parent
         opacity: root.locked ? 0 : 1
         visible: opacity > 0
-        Behavior on opacity { NumberAnimation { duration: 300 } }
+        Behavior on opacity { NumberAnimation { duration: 200 } }
 
-        // the glass: a drop shadow, the tint, a shine on the top half, two streaks and the edges
-        Repeater {
-            model: 4
-            Rectangle {
-                x: pane.x - (index + 1) * 4 * root.s
-                y: pane.y + 10 * root.s - (index + 1) * 3 * root.s
-                width: pane.width + (index + 1) * 8 * root.s
-                height: pane.height + (index + 1) * 8 * root.s
-                radius: pane.radius + (index + 1) * 4 * root.s
-                color: "#14000000"
-            }
-        }
+        // a grey panel with a black title bar, like a NeXT login window
         Rectangle {
             id: pane
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 20 * root.s
-            width: 520 * root.s
-            height: box.implicitHeight + 104 * root.s
-            radius: 14 * root.s
-            color: "#75208cd0"
-            border.color: "#8c000000"
-            border.width: 1
-            clip: true
+            width: 560 * root.s
+            height: title.height + box.implicitHeight + 56 * root.s
+            color: "black"
+            // the shadow it throws on the wallpaper, hard edged
             Rectangle {
-                width: 70 * root.s; height: parent.height * 2
-                x: parent.width * .18; y: -parent.height / 2
-                rotation: 25
-                color: "#14ffffff"
+                z: -1
+                x: 8 * root.s; y: 8 * root.s
+                width: parent.width; height: parent.height
+                color: "#60000000"
             }
-            Rectangle {
-                width: 30 * root.s; height: parent.height * 2
-                x: parent.width * .62; y: -parent.height / 2
-                rotation: 25
-                color: "#10ffffff"
-            }
-            Rectangle {
+            Bevel {
                 anchors.fill: parent
                 anchors.margins: 1
-                radius: parent.radius - 1
-                border.color: "#73ffffff"
-                border.width: 1
-                gradient: Gradient {
-                    GradientStop { position: 0; color: "#6bffffff" }
-                    GradientStop { position: 0.46; color: "#24ffffff" }
-                    GradientStop { position: 0.5; color: "#00ffffff" }
-                    GradientStop { position: 1; color: "#14ffffff" }
-                }
             }
-        }
-
-        Column {
-            id: box
-            anchors.horizontalCenter: pane.horizontalCenter
-            anchors.top: pane.top
-            anchors.topMargin: 82 * root.s
-            spacing: 16 * root.s
-
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "white"
-                font.family: root.fontName
-                font.pixelSize: 30 * root.s
-                font.weight: Font.DemiBold
-                text: root.shownName
-                style: Text.Raised
-                styleColor: "#99000000"
-            }
-
-            // the password box, with the arrow inside it like windows
-            Item {
-                id: field
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: 300 * root.s
-                height: 38 * root.s
-                anchors.horizontalCenterOffset: -27 * root.s
-                visible: !root.user || root.user.needsPassword
-                SequentialAnimation {
-                    id: shake
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -39 * root.s; duration: 50 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -15 * root.s; duration: 70 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -33 * root.s; duration: 60 }
-                    NumberAnimation { target: field; property: "anchors.horizontalCenterOffset"; to: -27 * root.s; duration: 50 }
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    anchors.margins: -1
-                    radius: 5 * root.s
-                    color: "#66ffffff"
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 4 * root.s
-                    color: "#f2ffffff"
-                    border.color: "#99000000"
-                    border.width: 1
-                    Rectangle {  // inset shadow along the top
-                        anchors.top: parent.top; anchors.topMargin: 1
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width - 2; height: 3 * root.s
-                        gradient: Gradient {
-                            GradientStop { position: 0; color: "#30000000" }
-                            GradientStop { position: 1; color: "#00000000" }
-                        }
-                    }
-                    Rectangle {  // the accent line under the box when it's active
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width - 2 * parent.radius
-                        height: 2
-                        color: "#4f9dff"
-                        visible: password.activeFocus
-                    }
-                }
-                TextInput {
-                    id: password
-                    anchors.left: parent.left
-                    anchors.right: reveal.left
-                    anchors.leftMargin: 12 * root.s
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "#10161e"
-                    font.family: root.fontName
-                    font.pixelSize: 17 * root.s
-                    echoMode: reveal.pressed ? TextInput.Normal : TextInput.Password
-                    passwordCharacter: "•"
-                    clip: true
-                    selectByMouse: true
-                    selectionColor: "#4f9dff"
-                    onAccepted: root.signIn()
-                    onTextChanged: if (text.length) root.error = ""
-                    Keys.onEscapePressed: { text = ""; root.locked = true }
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: "Password"
-                        color: "#7a8794"
-                        font: password.font
-                        visible: !password.text && !password.preeditText
-                    }
-                }
-                MouseArea {
-                    id: reveal
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32 * root.s
-                    height: parent.height
-                    visible: password.text.length > 0
-                    cursorShape: Qt.PointingHandCursor
-                    Image {
-                        anchors.centerIn: parent
-                        source: "assets/eye-dark.svg"
-                        width: 18 * root.s
-                        height: width
-                        sourceSize: Qt.size(width * 2, height * 2)
-                        opacity: reveal.pressed ? 1 : 0.7
-                    }
-                }
-                MouseArea {
-                    id: go
-                    anchors.left: parent.right
-                    anchors.leftMargin: 10 * root.s
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 44 * root.s
-                    height: 44 * root.s
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.signIn()
-                    // a glossy blue bead that glows
-                    Rectangle {
-                        anchors.fill: parent
-                        anchors.margins: -5 * root.s
-                        radius: width / 2
-                        color: go.containsMouse ? "#706ec8ff" : "#406ec8ff"
-                    }
-                    Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        border.color: "#0d3a66"
-                        border.width: 1
-                        gradient: Gradient {
-                            GradientStop { position: 0; color: go.pressed ? "#1d6cc4" : "#6cc0f5" }
-                            GradientStop { position: 0.49; color: go.pressed ? "#1a5aa8" : "#2f8de4" }
-                            GradientStop { position: 0.5; color: "#17579f" }
-                            GradientStop { position: 1; color: go.containsMouse ? "#8fdcff" : "#4aa8ee" }
-                        }
-                        Rectangle {
-                            anchors.fill: parent; anchors.margins: 1
-                            radius: width / 2
-                            color: "transparent"
-                            border.color: "#66ffffff"; border.width: 1
-                        }
-                    }
-                    hoverEnabled: true
-                    Image {
-                        anchors.centerIn: parent
-                        source: "assets/arrow.svg"
-                        width: 20 * root.s
-                        height: width
-                        sourceSize: Qt.size(width * 2, height * 2)
-                        visible: !busy.running
-                    }
-                    BusyIndicator {
-                        id: busy
-                        anchors.centerIn: parent
-                        width: 22 * root.s
-                        height: width
-                        running: false
-                        visible: running
-                    }
-                }
-            }
-
-            // no password on this account (autologin users): just a button
             Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: root.user && !root.user.needsPassword
-                width: 160 * root.s
-                height: 40 * root.s
-                radius: 5 * root.s
-                border.color: "#0d3a66"
-                gradient: Gradient {
-                    GradientStop { position: 0; color: plain.pressed ? "#1d6cc4" : "#6cc0f5" }
-                    GradientStop { position: 0.49; color: "#2f8de4" }
-                    GradientStop { position: 0.5; color: "#17579f" }
-                    GradientStop { position: 1; color: "#4aa8ee" }
-                }
+                id: title
+                x: 1; y: 1
+                width: parent.width - 2
+                height: 30 * root.s
+                color: "black"
                 Text {
                     anchors.centerIn: parent
-                    text: "Sign in"
+                    text: "Sign in to " + (sddm.hostName || "Chamesle")
                     color: "white"
                     font.family: root.fontName
-                    font.pixelSize: 17 * root.s
-                    font.weight: Font.Medium
+                    font.pixelSize: 15 * root.s
+                    font.weight: Font.DemiBold
                 }
-                MouseArea { id: plain; anchors.fill: parent; onClicked: root.signIn() }
             }
+            Rectangle { x: 1; y: title.height + 1; width: parent.width - 2; height: 1; color: "#555555" }
 
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "white"
-                font.family: root.fontName
-                font.pixelSize: 15 * root.s
-                style: Text.Raised
-                styleColor: "#99000000"
-                text: root.error || (keyboard.capsLock ? "Caps Lock is on" : " ")
-                opacity: text.trim() ? 1 : 0
+            Row {
+                id: box
+                x: 28 * root.s
+                anchors.top: title.bottom
+                anchors.topMargin: 28 * root.s
+                spacing: 24 * root.s
+
+                // the picture people set, or the plain one, sunk into the panel
+                Bevel {
+                    width: 112 * root.s
+                    height: width
+                    sunk: true
+                    face: "#ffffff"
+                    Image {
+                        id: face
+                        anchors.fill: parent
+                        anchors.margins: 3 * root.s
+                        source: root.user && root.user.icon ? root.user.icon : "assets/user.svg"
+                        sourceSize: Qt.size(width * 2, height * 2)
+                        fillMode: Image.PreserveAspectCrop
+                        onStatusChanged: if (status === Image.Error) source = "assets/user.svg"
+                    }
+                }
+
+                Column {
+                    spacing: 12 * root.s
+                    width: pane.width - 112 * root.s - 80 * root.s
+
+                    Text {
+                        color: "black"
+                        font.family: root.fontName
+                        font.pixelSize: 24 * root.s
+                        font.weight: Font.DemiBold
+                        text: root.shownName
+                        elide: Text.ElideRight
+                        width: parent.width
+                    }
+
+                    // the password box, sunk in, with a button that has the arrow on it
+                    Item {
+                        id: field
+                        width: parent.width
+                        height: 34 * root.s
+                        visible: !root.user || root.user.needsPassword
+                        property real shakeX: 0
+                        transform: Translate { x: field.shakeX }
+                        SequentialAnimation {
+                            id: shake
+                            NumberAnimation { target: field; property: "shakeX"; to: -12 * root.s; duration: 50 }
+                            NumberAnimation { target: field; property: "shakeX"; to: 12 * root.s; duration: 70 }
+                            NumberAnimation { target: field; property: "shakeX"; to: -6 * root.s; duration: 60 }
+                            NumberAnimation { target: field; property: "shakeX"; to: 0; duration: 50 }
+                        }
+                        Bevel {
+                            id: well
+                            anchors.left: parent.left
+                            anchors.right: go.left
+                            anchors.rightMargin: 8 * root.s
+                            height: parent.height
+                            sunk: true
+                            face: "#ffffff"
+                        }
+                        TextInput {
+                            id: password
+                            anchors.left: well.left
+                            anchors.right: reveal.left
+                            anchors.leftMargin: 10 * root.s
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "black"
+                            font.family: root.fontName
+                            font.pixelSize: 17 * root.s
+                            echoMode: reveal.pressed ? TextInput.Normal : TextInput.Password
+                            passwordCharacter: "•"
+                            clip: true
+                            selectByMouse: true
+                            selectionColor: "#246070"
+                            onAccepted: root.signIn()
+                            onTextChanged: if (text.length) root.error = ""
+                            Keys.onEscapePressed: { text = ""; root.locked = true }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: "Password"
+                                color: "#888888"
+                                font: password.font
+                                visible: !password.text && !password.preeditText
+                            }
+                        }
+                        MouseArea {
+                            id: reveal
+                            anchors.right: well.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 32 * root.s
+                            height: parent.height
+                            visible: password.text.length > 0
+                            Image {
+                                anchors.centerIn: parent
+                                source: "assets/eye-dark.svg"
+                                width: 18 * root.s
+                                height: width
+                                sourceSize: Qt.size(width * 2, height * 2)
+                                opacity: reveal.pressed ? 1 : 0.6
+                            }
+                        }
+                        MouseArea {
+                            id: go
+                            anchors.right: parent.right
+                            width: 46 * root.s
+                            height: parent.height
+                            onClicked: root.signIn()
+                            Bevel { anchors.fill: parent; sunk: go.pressed }
+                            Image {
+                                anchors.centerIn: parent
+                                anchors.horizontalCenterOffset: go.pressed ? 1 : 0
+                                anchors.verticalCenterOffset: go.pressed ? 1 : 0
+                                source: "assets/arrow-dark.svg"
+                                width: 20 * root.s
+                                height: width
+                                sourceSize: Qt.size(width * 2, height * 2)
+                                visible: !busy.running
+                            }
+                            BusyIndicator {
+                                id: busy
+                                anchors.centerIn: parent
+                                width: 22 * root.s
+                                height: width
+                                running: false
+                                visible: running
+                            }
+                        }
+                    }
+
+                    // no password on this account (autologin users): just a button
+                    MouseArea {
+                        id: plain
+                        visible: root.user && !root.user.needsPassword
+                        width: 140 * root.s
+                        height: 34 * root.s
+                        onClicked: root.signIn()
+                        Bevel { anchors.fill: parent; sunk: plain.pressed }
+                        Text {
+                            anchors.centerIn: parent
+                            text: "Sign in"
+                            color: "black"
+                            font.family: root.fontName
+                            font.pixelSize: 16 * root.s
+                        }
+                    }
+
+                    Text {
+                        color: "#800000"
+                        font.family: root.fontName
+                        font.pixelSize: 14 * root.s
+                        width: parent.width
+                        wrapMode: Text.WordWrap
+                        text: root.error || (keyboard.capsLock ? "Caps Lock is on" : " ")
+                    }
+                }
             }
         }
-
-        // the picture people set, or the plain one
-        Item {
-            anchors.horizontalCenter: pane.horizontalCenter
-            y: pane.y - height / 2
-            width: 128 * root.s
-            height: width
-            // white frame with a blue glow, like a photo on the glass
-            Rectangle {
-                anchors.fill: parent
-                anchors.margins: -6 * root.s
-                radius: 22 * root.s
-                color: "#308cd2ff"
-            }
-            Rectangle {
-                anchors.fill: parent
-                radius: 16 * root.s
-                border.color: "#8c000000"
-                border.width: 1
-                gradient: Gradient {
-                    GradientStop { position: 0; color: "#ffffff" }
-                    GradientStop { position: 1; color: "#dce6f0" }
-                }
-            }
-            Image {
-                id: face
-                anchors.fill: parent
-                source: root.user && root.user.icon ? root.user.icon : "assets/user.svg"
-                sourceSize: Qt.size(width * 2, height * 2)
-                fillMode: Image.PreserveAspectCrop
-                visible: false
-                onStatusChanged: if (status === Image.Error) source = "assets/user.svg"
-            }
-            // rounded crop without shaders: works on machines with no 3d acceleration too
-            Canvas {
-                id: round
-                anchors.fill: parent
-                anchors.margins: 8 * root.s
-                property var img: face.source
-                onImgChanged: { loadImage(img); requestPaint() }
-                onImageLoaded: requestPaint()
-                onPaint: {
-                    var c = getContext("2d")
-                    c.reset()
-                    var r = 10 * root.s
-                    c.beginPath()
-                    c.roundedRect(0, 0, width, height, r, r)
-                    c.closePath()
-                    c.clip()
-                    if (isImageLoaded(img)) c.drawImage(img, 0, 0, width, height)
-                    else { c.fillStyle = "#e6e9ee"; c.fill() }
-                }
-            }
-        }
-
 
         // other people on this computer, bottom left
         Column {
@@ -516,8 +402,6 @@ Rectangle {
             font.family: root.fontName
             font.pixelSize: 26 * root.s
             font.weight: Font.DemiBold
-            style: Text.Raised
-            styleColor: "#99000000"
         }
         Text {
             anchors.verticalCenter: parent.verticalCenter
@@ -579,42 +463,20 @@ Rectangle {
         property string label: ""
         property bool red: false
         width: label ? labelText.implicitWidth + 56 * root.s : 44 * root.s
-        height: 44 * root.s
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
+        height: 40 * root.s
         Rectangle {
             anchors.fill: parent
-            radius: 6 * root.s
-            visible: !corner.red
-            color: corner.pressed ? "#40ffffff" : (corner.containsMouse ? "#28ffffff" : "transparent")
-        }
-        // shut down: glossy red, like the close button
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -4 * root.s
-            radius: 10 * root.s
-            visible: corner.red
-            color: corner.containsMouse ? "#70ff7850" : "#40ff7850"
-        }
-        Rectangle {
-            anchors.fill: parent
-            radius: 6 * root.s
-            visible: corner.red
-            border.color: "#99000000"
-            gradient: Gradient {
-                GradientStop { position: 0; color: corner.containsMouse ? "#ffb49c" : "#f5a48c" }
-                GradientStop { position: 0.48; color: "#e0583e" }
-                GradientStop { position: 0.51; color: corner.pressed ? "#9e2510" : "#c2341b" }
-                GradientStop { position: 1; color: "#db4d30" }
-            }
+            color: "black"
+            Bevel { anchors.fill: parent; anchors.margins: 1; sunk: corner.pressed }
         }
         Row {
             anchors.centerIn: parent
             spacing: 8 * root.s
             Image {
                 anchors.verticalCenter: parent.verticalCenter
-                source: corner.icon
-                width: 24 * root.s
+                // the black copy of the icon, for the grey button
+                source: corner.icon.replace(".svg", "-dark.svg")
+                width: 22 * root.s
                 height: width
                 sourceSize: Qt.size(width * 2, height * 2)
             }
@@ -623,11 +485,21 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: corner.label !== ""
                 text: corner.label
-                color: "white"
+                color: "black"
                 font.family: root.fontName
                 font.pixelSize: 15 * root.s
             }
         }
+    }
+
+    // grey with a light top-left edge and a dark bottom-right one, or the other way round when sunk in
+    component Bevel: Item {
+        property bool sunk: false
+        property color face: "#aaaaaa"
+        readonly property int b: Math.max(1, Math.round(2 * root.s))
+        Rectangle { anchors.fill: parent; color: sunk ? "#ffffff" : "#555555" }
+        Rectangle { width: parent.width - b; height: parent.height - b; color: sunk ? "#555555" : "#ffffff" }
+        Rectangle { x: b; y: b; width: parent.width - 2 * b; height: parent.height - 2 * b; color: face }
     }
 
     // the lock screen goes on any key or click
