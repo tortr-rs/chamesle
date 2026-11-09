@@ -1,0 +1,14 @@
+name=chamesle-gray
+version=0.8
+rel=3
+desc="Chamesle Gray: black title bars, gray raised buttons and gray panels for Xfce, MATE, Cinnamon and KDE"
+url=https://chamesle.org
+license=GPL-3.0-or-later
+source=
+makedeps="python3 python3-Pillow"
+depends="onestepback"
+
+# make.py draws the frames and buttons and writes every desktop's theme
+build() {
+    python3 make.py "$pkgdir/usr/share"
+}

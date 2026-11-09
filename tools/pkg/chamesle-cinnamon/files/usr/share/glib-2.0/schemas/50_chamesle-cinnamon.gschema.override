@@ -4,7 +4,7 @@ picture-uri='file:///usr/share/backgrounds/chamesle/teal.jpg'
 picture-options='zoom'
 
 [org.cinnamon.desktop.interface]
-gtk-theme='OneStepBack'
+gtk-theme='Chamesle-Gray'
 icon-theme='Chamesle-Glass'
 cursor-theme='Adwaita'
 font-name='Inter 10'
@@ -16,18 +16,18 @@ monospace-font-name='Noto Sans Mono 10'
 document-font-name='Inter 10'
 
 [org.cinnamon.desktop.wm.preferences]
-theme='Chamesle-Glass'
-titlebar-font='Inter Semi-Bold 10'
+theme='Chamesle-Gray'
+titlebar-font='Inter Bold 9'
 
 [org.cinnamon.theme]
-name='Chamesle-Glass'
+name='Chamesle-Gray'
 
 [org.cinnamon.settings-daemon.plugins.xsettings]
 antialiasing='grayscale'
 hinting='slight'
 
 [org.cinnamon]
-panels-height=['1:44']
+panels-height=['1:32']
 
 [org.nemo.desktop]
 home-icon-visible=true

@@ -1,14 +1,14 @@
 [kdeglobals][General]
-ColorScheme=ChamesleGlass
+ColorScheme=ChamesleGray
 
 [kdeglobals][Icons]
 Theme=Chamesle-Glass
 
 [kdeglobals][KDE]
-widgetStyle=Breeze
+widgetStyle=Windows
 
 [plasmarc][Theme]
-name=chamesle-glass
+name=chamesle-gray
 
 [Wallpaper]
 Image=Chamesle

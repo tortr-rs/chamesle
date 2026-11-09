@@ -1,5 +1,5 @@
 [org.kde.kdecoration2]
 library=org.kde.kwin.aurorae
-theme=__aurorae__svg__ChamesleGlass
+theme=__aurorae__svg__ChamesleGray
 ButtonsOnLeft=
 ButtonsOnRight=IAX

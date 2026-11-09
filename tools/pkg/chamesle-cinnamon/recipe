@@ -1,6 +1,6 @@
 name=chamesle-cinnamon
 version=0.7.0
-rel=3
+rel=5
 desc="The Chamesle look for Cinnamon: wallpaper, theme settings, login screen, and fixes for its settings"
 url=https://chamesle.org
 license=GPL-3.0-or-later
@@ -8,7 +8,7 @@ source=
 makedeps=""
 # gnome-keyring: cinnamon looks for saved wi-fi passwords there before asking for one, and without it the
 # lookup fails, no password box shows up and the network says the password is wrong
-depends="onestepback chamesle-glass chamesle-glass-icons chamesle-artwork gnome-keyring"
+depends="onestepback chamesle-gray chamesle-glass-icons chamesle-artwork gnome-keyring"
 
 build() {
     cp -a . "$pkgdir/"
