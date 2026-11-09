@@ -492,7 +492,7 @@ Name=Chamesle Gray
 Comment=Black title bars, gray raised buttons, a resize bar along the bottom
 X-KDE-PluginInfo-Author=Chamesle
 X-KDE-PluginInfo-Name=ChamesleGray
-X-KDE-PluginInfo-Version=0.8.0
+X-KDE-PluginInfo-Version=0.8
 X-KDE-PluginInfo-License=GPL-3.0-or-later
 ''', d, 'metadata.desktop')
 
@@ -562,7 +562,7 @@ def plasma(out):
         "Id": "chamesle-gray",
         "License": "GPL-3.0-or-later",
         "Name": "Chamesle Gray",
-        "Version": "0.8.0"
+        "Version": "0.8"
     },
     "X-Plasma-API": "5.0"
 }
