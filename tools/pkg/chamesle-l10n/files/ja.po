@@ -7,12 +7,294 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"POT-Creation-Date: 2026-11-09 16:27+0000\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: overlay/usr/lib/jiggity/account.py:56
+msgid "A username is lowercase letters and numbers, starting with a letter."
+msgstr "ユーザー名は小文字の英字と数字で、英字で始まります。"
+
+#: overlay/usr/lib/jiggity/account.py:58
+msgid "That username is taken by the system. Pick another one."
+msgstr "そのユーザー名はシステムが使っています。別の名前を選んでください。"
+
+#: overlay/usr/lib/jiggity/account.py:97
+msgid "A computer name is lowercase letters, numbers and dashes."
+msgstr "コンピューター名は小文字の英字、数字、ハイフンでできています。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:32
+msgid "Let's start with your time zone. Is this the right one?"
+msgstr "まずはタイムゾーンから。これで合っていますか？"
+
+#: overlay/usr/lib/jiggity/firstboot.py:33
+msgid "It sets your clock. Type a city to find yours."
+msgstr "時計を合わせるのに使います。都市名を入力すると見つかります。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:50
+msgid "Yes"
+msgstr "はい"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "Let's connect you to a network"
+msgstr "ネットワークにつなぎましょう"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "You need the internet for updates and the app store."
+msgstr "アップデートとアプリストアにはインターネットが必要です。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:71
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Password:"
+msgstr "パスワード:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Connect"
+msgstr "接続"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Skip for now"
+msgstr "今はスキップ"
+
+#: overlay/usr/lib/jiggity/firstboot.py:91
+msgid "No Wi-Fi networks found. You can skip this and connect later."
+msgstr "Wi-Fi ネットワークが見つかりません。スキップして後で接続できます。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:103
+#, python-format
+msgid "Connecting to %s..."
+msgstr "%s に接続しています..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:108
+#, python-format
+msgid "Couldn't connect to %s. Check the password and try again."
+msgstr "%s に接続できませんでした。パスワードを確認して、もう一度お試しください。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:113
+msgid "Who's going to use this PC?"
+msgstr "この PC を使うのは誰ですか？"
+
+#: overlay/usr/lib/jiggity/firstboot.py:115
+msgid "Your name"
+msgstr "あなたの名前"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Name:"
+msgstr "名前:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Username:"
+msgstr "ユーザー名:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:120
+msgid "Confirm password:"
+msgstr "パスワードの確認:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Back"
+msgstr "戻る"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Next"
+msgstr "次へ"
+
+#: overlay/usr/lib/jiggity/firstboot.py:139
+msgid "The passwords don't match."
+msgstr "パスワードが一致しません。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:149
+msgid "Just a moment..."
+msgstr "少々お待ちください..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:167
+#, python-format
+msgid "That didn't work (%s). Try another username."
+msgstr "うまくいきませんでした (%s)。別のユーザー名をお試しください。"
+
+#: overlay/usr/lib/jiggity/ui.py:150
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: overlay/usr/lib/jiggity/ui.py:150 overlay/usr/lib/jiggity/ui.py:154
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:180
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
+msgid "GeForce 400 and 500 series"
+msgstr "GeForce 400 / 500 シリーズ"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:19
+msgid "GeForce 600 and 700 series"
+msgstr "GeForce 600 / 700 シリーズ"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:20
+msgid "GeForce 900 and 1000 series"
+msgstr "GeForce 900 / 1000 シリーズ"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:21
+msgid "GeForce 16, RTX and newer"
+msgstr "GeForce 16、RTX 以降"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:73
+#, python-format
+msgid "The NVIDIA driver is faster and needed for most games (%s)."
+msgstr "NVIDIA のドライバーは速く、ほとんどのゲームに必要です (%s)。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#, python-format
+msgid "NVIDIA driver (%s)"
+msgstr "NVIDIA ドライバー (%s)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:77
+msgid "Open source driver (nouveau)"
+msgstr "オープンソースのドライバー (nouveau)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:76
+msgid "This card is too old for the NVIDIA driver, the open source one is used."
+msgstr "このカードは NVIDIA のドライバーには古すぎるため、オープンソースのドライバーを使います。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:79
+msgid "This Wi-Fi chip needs Broadcom's driver to work."
+msgstr "この Wi-Fi チップを動かすには Broadcom のドライバーが必要です。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:80
+msgid "Broadcom STA driver (wl)"
+msgstr "Broadcom STA ドライバー (wl)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:81
+msgid "Don't install it"
+msgstr "インストールしない"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:84
+msgid "Shared clipboard, window resizing and shared folders with your PC."
+msgstr "クリップボードの共有、ウィンドウサイズの自動調整、PC とのフォルダー共有。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "None"
+msgstr "なし"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+msgid "VirtualBox guest additions"
+msgstr "VirtualBox Guest Additions"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:87
+msgid "Shared clipboard, window resizing and better graphics."
+msgstr "クリップボードの共有、ウィンドウサイズの自動調整、グラフィックスの向上。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+msgid "VMware tools"
+msgstr "VMware Tools"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP printer or scanner"
+msgstr "HP のプリンターまたはスキャナー"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP's own drivers support more printers and scanners."
+msgstr "HP 自身のドライバーは、より多くのプリンターとスキャナーに対応しています。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "HP drivers (hplip)"
+msgstr "HP ドライバー (hplip)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+msgid "Driver Manager"
+msgstr "ドライバーマネージャー"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:107
+msgid "Apply changes"
+msgstr "変更を適用"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:119
+msgid "Looking at your hardware"
+msgstr "ハードウェアを調べています"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:130
+msgid "Nothing to do"
+msgstr "することはありません"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:131
+msgid "Your hardware works with the drivers that are already installed."
+msgstr "お使いのハードウェアは、インストール済みのドライバーで動作します。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "Recommended"
+msgstr "おすすめ"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "installed"
+msgstr "インストール済み"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:149
+msgid "Installing a driver needs your password, and usually a restart after."
+msgstr "ドライバーのインストールにはパスワードが必要で、たいていは後で再起動も必要です。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:159
+msgid "Working on it, this can take a few minutes"
+msgstr "作業中です。数分かかることがあります"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Done"
+msgstr "完了"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+msgid "Restart the computer to start using the new driver."
+msgstr "新しいドライバーを使うには、コンピューターを再起動してください。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:174
+msgid "Later"
+msgstr "後で"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:175
+msgid "Restart now"
+msgstr "今すぐ再起動"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:179
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "うまくいきませんでした"
+
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+msgid "Install drivers for your graphics card, Wi-Fi and printer"
+msgstr "グラフィックカード、Wi-Fi、プリンターのドライバーをインストール"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
+msgid "Started from before an update"
+msgstr "アップデート前の状態で起動しました"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:148
+msgid "This is Chamesle as it was before the update of %s.\\n\\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way."
+msgstr "これは %s のアップデート前の状態の Chamesle です。\\n\\nそのアップデートで何かが壊れたなら、こちらを残してください。次の再起動からこれがあなたのシステムになります。どちらにしてもファイルはそのままです。"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Keep this one"
+msgstr "こちらを残す"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Not now"
+msgstr "今はしない"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Restart, and Chamesle starts as it is now."
+msgstr "再起動すると、Chamesle は今の状態で起動します。"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+msgid "Nothing was changed. Try again, or ask on the board."
+msgstr "何も変更されていません。もう一度試すか、掲示板で質問してください。"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
 msgid "Games"
@@ -56,6 +338,7 @@ msgstr "デバイス"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
 msgid "Store"
 msgstr "ストア"
 
@@ -68,6 +351,7 @@ msgid "Installed"
 msgstr "インストール済み"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:28
 msgid "Updates"
 msgstr "アップデート"
 
@@ -180,6 +464,7 @@ msgstr "ファームウェアは最新です"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:49
 msgid "Update"
 msgstr "アップデート"
 
@@ -191,11 +476,6 @@ msgstr "%s のファームウェアをアップデートしますか？"
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
 msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
 msgstr "コンピューターを電源に接続したままにしてください。再起動中にインストールされるファームウェアもあります。戻るまで電源を切らないでください。"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
-msgid "Cancel"
-msgstr "キャンセル"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
 #, python-format
@@ -226,6 +506,7 @@ msgid_plural "%d ratings"
 msgstr[0] "%d 件の評価"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
 msgid "Install"
 msgstr "インストール"
 
@@ -297,17 +578,9 @@ msgid "Cancelled"
 msgstr "キャンセルしました"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
-msgid "That didn't work"
-msgstr "うまくいきませんでした"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
 #, python-format
 msgid "The full error is also saved in %s"
 msgstr "エラーの全文は %s にも保存されています"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
-msgid "OK"
-msgstr "OK"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
 #, python-format
@@ -364,3 +637,81 @@ msgstr ".deb または .rpm ファイルをインストール"
 #, python-format
 msgid "%s is installed"
 msgstr "%s をインストールしました"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+msgid "App Store"
+msgstr "アプリストア"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+msgid "Find, install and update apps"
+msgstr "アプリを探して、インストールして、アップデート"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:43
+#, python-format
+msgid "%d update available"
+msgid_plural "%d updates available"
+msgstr[0] "%d 件のアップデートがあります"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:46
+msgid "Updates available"
+msgstr "アップデートがあります"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:47
+#, python-format
+msgid "%d update ready to install."
+msgid_plural "%d updates ready to install."
+msgstr[0] "%d 件のアップデートをインストールできます。"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:65
+msgid "Chamesle updated itself"
+msgstr "Chamesle が自動でアップデートされました"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:66
+#, python-format
+msgid "%d update installed. Some start working after a restart."
+msgid_plural "%d updates installed. Some start working after a restart."
+msgstr[0] "%d 件のアップデートをインストールしました。一部は再起動後に有効になります。"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Check now"
+msgstr "今すぐ確認"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Show updates"
+msgstr "アップデートを表示"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:6
+msgid "Windows program"
+msgstr "Windows プログラム"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:13
+msgid "Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\\n\\nInstall Chamesle first, then open the program again."
+msgstr "Windows のプログラムには約 3 GB の空きが必要ですが、このライブセッションにはそれだけの空きメモリがありません。\\n\\n先に Chamesle をインストールしてから、プログラムをもう一度開いてください。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:15
+msgid "Windows programs need about %s GB of free space. Make some room and try again."
+msgstr "Windows のプログラムには約 %s GB の空き容量が必要です。空きを作ってから、もう一度お試しください。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:23
+msgid "To open %s, Chamesle needs Windows support (Wine).\\n\\nIt's a 650 MB download and takes about 3 GB on disk.\\n\\nInstall it now?"
+msgstr "%s を開くには、Chamesle に Windows サポート (Wine) が必要です。\\n\\nダウンロードは 650 MB で、ディスクを約 3 GB 使います。\\n\\n今すぐインストールしますか？"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:26
+msgid "Installing Windows support..."
+msgstr "Windows サポートをインストールしています..."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:28
+msgid "Windows support couldn't be installed. Check that you're online and try again."
+msgstr "Windows サポートをインストールできませんでした。オンラインか確認して、もう一度お試しください。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:61
+msgid "Setting up Windows support. This only happens once..."
+msgstr "Windows サポートを準備しています。これは最初の一回だけです..."
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+msgid "Windows Program"
+msgstr "Windows プログラム"
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+msgid "Run Windows programs"
+msgstr "Windows のプログラムを実行"

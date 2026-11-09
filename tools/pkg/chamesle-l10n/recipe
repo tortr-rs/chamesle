@@ -1,11 +1,12 @@
 name=chamesle-l10n
 version=0.8.0
-rel=0
+rel=2
 desc="Chamesle's own apps in every language"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
-makedeps="gettext"
+# gettext-stub calls itself gettext 1 and wins over the real 0.22, and its msgfmt makes nothing
+makedeps="gettext<1"
 depends=""
 
 build() {
@@ -13,5 +14,6 @@ build() {
         l=${f%.po}
         mkdir -p "$pkgdir/usr/share/locale/$l/LC_MESSAGES"
         msgfmt --check-format -o "$pkgdir/usr/share/locale/$l/LC_MESSAGES/chamesle.mo" "$f"
+        [ -s "$pkgdir/usr/share/locale/$l/LC_MESSAGES/chamesle.mo" ] || { echo "no chamesle.mo for $l" >&2; exit 1; }
     done
 }

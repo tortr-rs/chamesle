@@ -1,12 +1,12 @@
 name=chamesle-snapshots
 version=0.4.0
-rel=2
+rel=3
 desc="A snapshot of the system before every update, bootable from the boot menu"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="btrfs-progs grub util-linux coreutils zenity"
+depends="btrfs-progs grub util-linux coreutils zenity python3 chamesle-l10n"
 
 build() {
     cp -a . "$pkgdir/"

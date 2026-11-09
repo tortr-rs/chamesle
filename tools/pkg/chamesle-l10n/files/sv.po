@@ -7,12 +7,294 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"POT-Creation-Date: 2026-11-09 16:27+0000\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: overlay/usr/lib/jiggity/account.py:56
+msgid "A username is lowercase letters and numbers, starting with a letter."
+msgstr "Ett användarnamn består av gemener och siffror och börjar med en bokstav."
+
+#: overlay/usr/lib/jiggity/account.py:58
+msgid "That username is taken by the system. Pick another one."
+msgstr "Det användarnamnet används redan av systemet. Välj ett annat."
+
+#: overlay/usr/lib/jiggity/account.py:97
+msgid "A computer name is lowercase letters, numbers and dashes."
+msgstr "Ett datornamn består av gemener, siffror och bindestreck."
+
+#: overlay/usr/lib/jiggity/firstboot.py:32
+msgid "Let's start with your time zone. Is this the right one?"
+msgstr "Vi börjar med din tidszon. Är det här rätt?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:33
+msgid "It sets your clock. Type a city to find yours."
+msgstr "Den ställer klockan. Skriv en stad för att hitta din."
+
+#: overlay/usr/lib/jiggity/firstboot.py:50
+msgid "Yes"
+msgstr "Ja"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "Let's connect you to a network"
+msgstr "Nu ansluter vi dig till ett nätverk"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "You need the internet for updates and the app store."
+msgstr "Du behöver internet för uppdateringar och appbutiken."
+
+#: overlay/usr/lib/jiggity/firstboot.py:71
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Connect"
+msgstr "Anslut"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Skip for now"
+msgstr "Hoppa över nu"
+
+#: overlay/usr/lib/jiggity/firstboot.py:91
+msgid "No Wi-Fi networks found. You can skip this and connect later."
+msgstr "Inga wifi-nätverk hittades. Du kan hoppa över det här och ansluta senare."
+
+#: overlay/usr/lib/jiggity/firstboot.py:103
+#, python-format
+msgid "Connecting to %s..."
+msgstr "Ansluter till %s..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:108
+#, python-format
+msgid "Couldn't connect to %s. Check the password and try again."
+msgstr "Kunde inte ansluta till %s. Kontrollera lösenordet och försök igen."
+
+#: overlay/usr/lib/jiggity/firstboot.py:113
+msgid "Who's going to use this PC?"
+msgstr "Vem ska använda den här datorn?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:115
+msgid "Your name"
+msgstr "Ditt namn"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Name:"
+msgstr "Namn:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Username:"
+msgstr "Användarnamn:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:120
+msgid "Confirm password:"
+msgstr "Bekräfta lösenord:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Back"
+msgstr "Tillbaka"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Next"
+msgstr "Nästa"
+
+#: overlay/usr/lib/jiggity/firstboot.py:139
+msgid "The passwords don't match."
+msgstr "Lösenorden stämmer inte överens."
+
+#: overlay/usr/lib/jiggity/firstboot.py:149
+msgid "Just a moment..."
+msgstr "Ett ögonblick..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:167
+#, python-format
+msgid "That didn't work (%s). Try another username."
+msgstr "Det fungerade inte (%s). Prova ett annat användarnamn."
+
+#: overlay/usr/lib/jiggity/ui.py:150
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: overlay/usr/lib/jiggity/ui.py:150 overlay/usr/lib/jiggity/ui.py:154
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:180
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
+msgid "GeForce 400 and 500 series"
+msgstr "GeForce 400- och 500-serien"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:19
+msgid "GeForce 600 and 700 series"
+msgstr "GeForce 600- och 700-serien"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:20
+msgid "GeForce 900 and 1000 series"
+msgstr "GeForce 900- och 1000-serien"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:21
+msgid "GeForce 16, RTX and newer"
+msgstr "GeForce 16, RTX och nyare"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:73
+#, python-format
+msgid "The NVIDIA driver is faster and needed for most games (%s)."
+msgstr "NVIDIA-drivrutinen är snabbare och behövs för de flesta spel (%s)."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#, python-format
+msgid "NVIDIA driver (%s)"
+msgstr "NVIDIA-drivrutin (%s)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:77
+msgid "Open source driver (nouveau)"
+msgstr "Drivrutin med öppen källkod (nouveau)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:76
+msgid "This card is too old for the NVIDIA driver, the open source one is used."
+msgstr "Det här kortet är för gammalt för NVIDIA-drivrutinen, den med öppen källkod används."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:79
+msgid "This Wi-Fi chip needs Broadcom's driver to work."
+msgstr "Det här wifi-chippet behöver Broadcoms drivrutin för att fungera."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:80
+msgid "Broadcom STA driver (wl)"
+msgstr "Broadcom STA-drivrutin (wl)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:81
+msgid "Don't install it"
+msgstr "Installera inte"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:84
+msgid "Shared clipboard, window resizing and shared folders with your PC."
+msgstr "Delat urklipp, fönstret anpassar sig och delade mappar med din dator."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "None"
+msgstr "Ingen"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+msgid "VirtualBox guest additions"
+msgstr "VirtualBox gästtillägg"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:87
+msgid "Shared clipboard, window resizing and better graphics."
+msgstr "Delat urklipp, fönstret anpassar sig och bättre grafik."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+msgid "VMware tools"
+msgstr "VMware Tools"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP printer or scanner"
+msgstr "HP-skrivare eller -skanner"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP's own drivers support more printers and scanners."
+msgstr "HP:s egna drivrutiner stöder fler skrivare och skannrar."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "HP drivers (hplip)"
+msgstr "HP-drivrutiner (hplip)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+msgid "Driver Manager"
+msgstr "Drivrutinshanterare"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:107
+msgid "Apply changes"
+msgstr "Verkställ ändringar"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:119
+msgid "Looking at your hardware"
+msgstr "Tittar på din hårdvara"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:130
+msgid "Nothing to do"
+msgstr "Inget att göra"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:131
+msgid "Your hardware works with the drivers that are already installed."
+msgstr "Din hårdvara fungerar med drivrutinerna som redan är installerade."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "Recommended"
+msgstr "Rekommenderas"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "installed"
+msgstr "installerad"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:149
+msgid "Installing a driver needs your password, and usually a restart after."
+msgstr "Att installera en drivrutin kräver ditt lösenord, och oftast en omstart efteråt."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:159
+msgid "Working on it, this can take a few minutes"
+msgstr "Arbetar på det, det kan ta några minuter"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Done"
+msgstr "Klart"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+msgid "Restart the computer to start using the new driver."
+msgstr "Starta om datorn för att börja använda den nya drivrutinen."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:174
+msgid "Later"
+msgstr "Senare"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:175
+msgid "Restart now"
+msgstr "Starta om nu"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:179
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Det fungerade inte"
+
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+msgid "Install drivers for your graphics card, Wi-Fi and printer"
+msgstr "Installera drivrutiner för grafikkort, wifi och skrivare"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
+msgid "Started from before an update"
+msgstr "Startad från före en uppdatering"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:148
+msgid "This is Chamesle as it was before the update of %s.\\n\\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way."
+msgstr "Det här är Chamesle som det var före uppdateringen %s.\\n\\nOm uppdateringen förstörde något, behåll den här så blir den ditt system från nästa omstart. Dina filer förblir som de är i vilket fall som helst."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Keep this one"
+msgstr "Behåll den här"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Not now"
+msgstr "Inte nu"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Restart, and Chamesle starts as it is now."
+msgstr "Starta om, så startar Chamesle som det är nu."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+msgid "Nothing was changed. Try again, or ask on the board."
+msgstr "Ingenting ändrades. Försök igen, eller fråga på forumet."
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
 msgid "Games"
@@ -56,6 +338,7 @@ msgstr "Enhet"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
 msgid "Store"
 msgstr "Butik"
 
@@ -68,6 +351,7 @@ msgid "Installed"
 msgstr "Installerade"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:28
 msgid "Updates"
 msgstr "Uppdateringar"
 
@@ -183,6 +467,7 @@ msgstr "Din fasta programvara är uppdaterad"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:49
 msgid "Update"
 msgstr "Uppdatera"
 
@@ -194,11 +479,6 @@ msgstr "Uppdatera den fasta programvaran för %s?"
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
 msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
 msgstr "Håll datorn ansluten till ström. En del fast programvara installeras vid omstart: stäng inte av den förrän den är tillbaka."
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
-msgid "Cancel"
-msgstr "Avbryt"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
 #, python-format
@@ -230,6 +510,7 @@ msgstr[0] "%d betyg"
 msgstr[1] "%d betyg"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
 msgid "Install"
 msgstr "Installera"
 
@@ -301,17 +582,9 @@ msgid "Cancelled"
 msgstr "Avbrutet"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
-msgid "That didn't work"
-msgstr "Det fungerade inte"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
 #, python-format
 msgid "The full error is also saved in %s"
 msgstr "Hela felet finns också sparat i %s"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
-msgid "OK"
-msgstr "OK"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
 #, python-format
@@ -368,3 +641,84 @@ msgstr "Installera en .deb- eller .rpm-fil"
 #, python-format
 msgid "%s is installed"
 msgstr "%s är installerat"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+msgid "App Store"
+msgstr "Appbutik"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+msgid "Find, install and update apps"
+msgstr "Hitta, installera och uppdatera appar"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:43
+#, python-format
+msgid "%d update available"
+msgid_plural "%d updates available"
+msgstr[0] "%d uppdatering tillgänglig"
+msgstr[1] "%d uppdateringar tillgängliga"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:46
+msgid "Updates available"
+msgstr "Uppdateringar tillgängliga"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:47
+#, python-format
+msgid "%d update ready to install."
+msgid_plural "%d updates ready to install."
+msgstr[0] "%d uppdatering redo att installeras."
+msgstr[1] "%d uppdateringar redo att installeras."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:65
+msgid "Chamesle updated itself"
+msgstr "Chamesle uppdaterade sig själv"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:66
+#, python-format
+msgid "%d update installed. Some start working after a restart."
+msgid_plural "%d updates installed. Some start working after a restart."
+msgstr[0] "%d uppdatering installerad. Vissa börjar fungera efter en omstart."
+msgstr[1] "%d uppdateringar installerade. Vissa börjar fungera efter en omstart."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Check now"
+msgstr "Kontrollera nu"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Show updates"
+msgstr "Visa uppdateringar"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:6
+msgid "Windows program"
+msgstr "Windows-program"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:13
+msgid "Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\\n\\nInstall Chamesle first, then open the program again."
+msgstr "Windows-program behöver ungefär 3 GB utrymme, och så mycket minne har den här live-sessionen inte över.\\n\\nInstallera Chamesle först och öppna sedan programmet igen."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:15
+msgid "Windows programs need about %s GB of free space. Make some room and try again."
+msgstr "Windows-program behöver ungefär %s GB ledigt utrymme. Frigör lite plats och försök igen."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:23
+msgid "To open %s, Chamesle needs Windows support (Wine).\\n\\nIt's a 650 MB download and takes about 3 GB on disk.\\n\\nInstall it now?"
+msgstr "För att öppna %s behöver Chamesle Windows-stöd (Wine).\\n\\nDet är en nedladdning på 650 MB och tar ungefär 3 GB på disken.\\n\\nInstallera nu?"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:26
+msgid "Installing Windows support..."
+msgstr "Installerar Windows-stöd..."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:28
+msgid "Windows support couldn't be installed. Check that you're online and try again."
+msgstr "Windows-stöd kunde inte installeras. Kontrollera att du är online och försök igen."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:61
+msgid "Setting up Windows support. This only happens once..."
+msgstr "Ställer in Windows-stöd. Det här händer bara en gång..."
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+msgid "Windows Program"
+msgstr "Windows-program"
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+msgid "Run Windows programs"
+msgstr "Kör Windows-program"

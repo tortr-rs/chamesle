@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 # tray icon that shows up when there are updates (system and flathub), click to open the store's updates tab
-import os, re, subprocess, threading
+import gettext, os, re, subprocess, threading
 
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Notify", "0.7")
 from gi.repository import GLib, Gtk, Notify
+
+gettext.textdomain("chamesle")
+_, ngettext = gettext.gettext, gettext.ngettext
 
 FIRST, EVERY = 3 * 60, 6 * 60 * 60
 AUTO_STATE = "/var/lib/chamesle/auto-update"
@@ -22,7 +25,7 @@ def count():
 
 class Notifier:
     def __init__(self):
-        Notify.init("Updates")
+        Notify.init(_("Updates"))
         self.icon = Gtk.StatusIcon(icon_name="software-update-available", visible=False)
         self.icon.connect("activate", lambda *a: self.open())
         self.icon.connect("popup-menu", self.menu)
@@ -37,13 +40,13 @@ class Notifier:
 
     def show(self, n):
         self.icon.set_visible(n > 0)
-        self.icon.set_tooltip_text("%d update%s available" % (n, "" if n == 1 else "s"))
+        self.icon.set_tooltip_text(ngettext("%d update available", "%d updates available", n) % n)
         # one notification per new batch, not every 6 hours
         if n > self.told:
-            note = Notify.Notification.new("Updates available",
-                                           "%d update%s ready to install." % (n, "" if n == 1 else "s"),
+            note = Notify.Notification.new(_("Updates available"),
+                                           ngettext("%d update ready to install.", "%d updates ready to install.", n) % n,
                                            "software-update-available")
-            note.add_action("open", "Update", lambda *a: self.open())
+            note.add_action("open", _("Update"), lambda *a: self.open())
             note.show()
         self.told = n
 
@@ -59,8 +62,9 @@ class Notifier:
         with open(SEEN, "w") as f:
             f.write(when)
         if seen and int(n) > 0:
-            Notify.Notification.new("Chamesle updated itself",
-                                    "%s update%s installed. Some start working after a restart." % (n, "" if n == "1" else "s"),
+            Notify.Notification.new(_("Chamesle updated itself"),
+                                    ngettext("%d update installed. Some start working after a restart.",
+                                             "%d updates installed. Some start working after a restart.", int(n)) % int(n),
                                     "software-update-available").show()
 
     def open(self):
@@ -68,7 +72,7 @@ class Notifier:
 
     def menu(self, icon, button, time):
         m = Gtk.Menu()
-        for label, cb in (("Show updates", lambda *a: self.open()), ("Check now", lambda *a: self.check())):
+        for label, cb in ((_("Show updates"), lambda *a: self.open()), (_("Check now"), lambda *a: self.check())):
             item = Gtk.MenuItem(label=label)
             item.connect("activate", cb)
             m.append(item)

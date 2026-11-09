@@ -7,12 +7,294 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"POT-Creation-Date: 2026-11-09 16:27+0000\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+
+#: overlay/usr/lib/jiggity/account.py:56
+msgid "A username is lowercase letters and numbers, starting with a letter."
+msgstr "Un nume de utilizator are litere mici și cifre și începe cu o literă."
+
+#: overlay/usr/lib/jiggity/account.py:58
+msgid "That username is taken by the system. Pick another one."
+msgstr "Acest nume de utilizator e deja folosit de sistem. Alege altul."
+
+#: overlay/usr/lib/jiggity/account.py:97
+msgid "A computer name is lowercase letters, numbers and dashes."
+msgstr "Un nume de calculator are litere mici, cifre și cratime."
+
+#: overlay/usr/lib/jiggity/firstboot.py:32
+msgid "Let's start with your time zone. Is this the right one?"
+msgstr "Să începem cu fusul orar. Acesta e cel corect?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:33
+msgid "It sets your clock. Type a city to find yours."
+msgstr "Îți potrivește ceasul. Scrie un oraș ca să-l găsești pe al tău."
+
+#: overlay/usr/lib/jiggity/firstboot.py:50
+msgid "Yes"
+msgstr "Da"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "Let's connect you to a network"
+msgstr "Hai să te conectăm la o rețea"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "You need the internet for updates and the app store."
+msgstr "Ai nevoie de internet pentru actualizări și magazinul de aplicații."
+
+#: overlay/usr/lib/jiggity/firstboot.py:71
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Password:"
+msgstr "Parolă:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Connect"
+msgstr "Conectează"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Skip for now"
+msgstr "Sari peste acum"
+
+#: overlay/usr/lib/jiggity/firstboot.py:91
+msgid "No Wi-Fi networks found. You can skip this and connect later."
+msgstr "Nu s-au găsit rețele Wi-Fi. Poți sări peste acest pas și te poți conecta mai târziu."
+
+#: overlay/usr/lib/jiggity/firstboot.py:103
+#, python-format
+msgid "Connecting to %s..."
+msgstr "Se conectează la %s..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:108
+#, python-format
+msgid "Couldn't connect to %s. Check the password and try again."
+msgstr "Nu s-a putut conecta la %s. Verifică parola și încearcă din nou."
+
+#: overlay/usr/lib/jiggity/firstboot.py:113
+msgid "Who's going to use this PC?"
+msgstr "Cine va folosi acest PC?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:115
+msgid "Your name"
+msgstr "Numele tău"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Name:"
+msgstr "Nume:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Username:"
+msgstr "Nume de utilizator:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:120
+msgid "Confirm password:"
+msgstr "Confirmă parola:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Back"
+msgstr "Înapoi"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Next"
+msgstr "Înainte"
+
+#: overlay/usr/lib/jiggity/firstboot.py:139
+msgid "The passwords don't match."
+msgstr "Parolele nu se potrivesc."
+
+#: overlay/usr/lib/jiggity/firstboot.py:149
+msgid "Just a moment..."
+msgstr "Un moment..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:167
+#, python-format
+msgid "That didn't work (%s). Try another username."
+msgstr "Nu a mers (%s). Încearcă alt nume de utilizator."
+
+#: overlay/usr/lib/jiggity/ui.py:150
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
+msgid "Cancel"
+msgstr "Anulează"
+
+#: overlay/usr/lib/jiggity/ui.py:150 overlay/usr/lib/jiggity/ui.py:154
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:180
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
+msgid "GeForce 400 and 500 series"
+msgstr "GeForce seriile 400 și 500"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:19
+msgid "GeForce 600 and 700 series"
+msgstr "GeForce seriile 600 și 700"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:20
+msgid "GeForce 900 and 1000 series"
+msgstr "GeForce seriile 900 și 1000"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:21
+msgid "GeForce 16, RTX and newer"
+msgstr "GeForce 16, RTX și mai noi"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:73
+#, python-format
+msgid "The NVIDIA driver is faster and needed for most games (%s)."
+msgstr "Driverul NVIDIA e mai rapid și e necesar pentru majoritatea jocurilor (%s)."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#, python-format
+msgid "NVIDIA driver (%s)"
+msgstr "Driver NVIDIA (%s)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:77
+msgid "Open source driver (nouveau)"
+msgstr "Driver open source (nouveau)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:76
+msgid "This card is too old for the NVIDIA driver, the open source one is used."
+msgstr "Placa aceasta e prea veche pentru driverul NVIDIA, se folosește cel open source."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:79
+msgid "This Wi-Fi chip needs Broadcom's driver to work."
+msgstr "Acest cip Wi-Fi are nevoie de driverul Broadcom ca să funcționeze."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:80
+msgid "Broadcom STA driver (wl)"
+msgstr "Driver Broadcom STA (wl)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:81
+msgid "Don't install it"
+msgstr "Nu-l instala"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:84
+msgid "Shared clipboard, window resizing and shared folders with your PC."
+msgstr "Clipboard comun, fereastră care se adaptează și dosare partajate cu PC-ul tău."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "None"
+msgstr "Niciunul"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+msgid "VirtualBox guest additions"
+msgstr "VirtualBox Guest Additions"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:87
+msgid "Shared clipboard, window resizing and better graphics."
+msgstr "Clipboard comun, fereastră care se adaptează și grafică mai bună."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+msgid "VMware tools"
+msgstr "VMware Tools"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP printer or scanner"
+msgstr "Imprimantă sau scaner HP"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP's own drivers support more printers and scanners."
+msgstr "Driverele proprii HP suportă mai multe imprimante și scanere."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "HP drivers (hplip)"
+msgstr "Drivere HP (hplip)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+msgid "Driver Manager"
+msgstr "Manager de drivere"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:107
+msgid "Apply changes"
+msgstr "Aplică modificările"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:119
+msgid "Looking at your hardware"
+msgstr "Se verifică hardware-ul tău"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:130
+msgid "Nothing to do"
+msgstr "Nimic de făcut"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:131
+msgid "Your hardware works with the drivers that are already installed."
+msgstr "Hardware-ul tău funcționează cu driverele deja instalate."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "Recommended"
+msgstr "Recomandat"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "installed"
+msgstr "instalat"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:149
+msgid "Installing a driver needs your password, and usually a restart after."
+msgstr "Instalarea unui driver cere parola ta și, de obicei, o repornire după."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:159
+msgid "Working on it, this can take a few minutes"
+msgstr "Se lucrează, poate dura câteva minute"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Done"
+msgstr "Gata"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+msgid "Restart the computer to start using the new driver."
+msgstr "Repornește calculatorul ca să începi să folosești noul driver."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:174
+msgid "Later"
+msgstr "Mai târziu"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:175
+msgid "Restart now"
+msgstr "Repornește acum"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:179
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Nu a funcționat"
+
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+msgid "Install drivers for your graphics card, Wi-Fi and printer"
+msgstr "Instalează drivere pentru placa video, Wi-Fi și imprimantă"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
+msgid "Started from before an update"
+msgstr "Pornit de dinaintea unei actualizări"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:148
+msgid "This is Chamesle as it was before the update of %s.\\n\\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way."
+msgstr "Acesta e Chamesle așa cum era înainte de actualizarea din %s.\\n\\nDacă acea actualizare a stricat ceva, păstrează-l pe acesta și de la următoarea repornire e sistemul tău. Fișierele tale rămân așa cum sunt oricum."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Keep this one"
+msgstr "Păstrează-l pe acesta"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Not now"
+msgstr "Nu acum"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Restart, and Chamesle starts as it is now."
+msgstr "Repornește, iar Chamesle pornește așa cum e acum."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+msgid "Nothing was changed. Try again, or ask on the board."
+msgstr "Nu s-a schimbat nimic. Încearcă din nou sau întreabă pe forum."
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
 msgid "Games"
@@ -56,6 +338,7 @@ msgstr "Dispozitiv"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
 msgid "Store"
 msgstr "Magazin"
 
@@ -68,6 +351,7 @@ msgid "Installed"
 msgstr "Instalate"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:28
 msgid "Updates"
 msgstr "Actualizări"
 
@@ -186,6 +470,7 @@ msgstr "Firmware-ul tău este la zi"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:49
 msgid "Update"
 msgstr "Actualizează"
 
@@ -197,11 +482,6 @@ msgstr "Actualizezi firmware-ul pentru %s?"
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
 msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
 msgstr "Ține calculatorul conectat la priză. Unele firmware-uri se instalează la repornire: nu-l opri până nu revine."
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
-msgid "Cancel"
-msgstr "Anulează"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
 #, python-format
@@ -234,6 +514,7 @@ msgstr[1] "%d evaluări"
 msgstr[2] "%d de evaluări"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
 msgid "Install"
 msgstr "Instalează"
 
@@ -305,17 +586,9 @@ msgid "Cancelled"
 msgstr "Anulat"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
-msgid "That didn't work"
-msgstr "Nu a funcționat"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
 #, python-format
 msgid "The full error is also saved in %s"
 msgstr "Eroarea completă este salvată și în %s"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
-msgid "OK"
-msgstr "OK"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
 #, python-format
@@ -372,3 +645,87 @@ msgstr "Instalează un fișier .deb sau .rpm"
 #, python-format
 msgid "%s is installed"
 msgstr "%s este instalat"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+msgid "App Store"
+msgstr "Magazin de aplicații"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+msgid "Find, install and update apps"
+msgstr "Găsește, instalează și actualizează aplicații"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:43
+#, python-format
+msgid "%d update available"
+msgid_plural "%d updates available"
+msgstr[0] "%d actualizare disponibilă"
+msgstr[1] "%d actualizări disponibile"
+msgstr[2] "%d de actualizări disponibile"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:46
+msgid "Updates available"
+msgstr "Actualizări disponibile"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:47
+#, python-format
+msgid "%d update ready to install."
+msgid_plural "%d updates ready to install."
+msgstr[0] "%d actualizare gata de instalat."
+msgstr[1] "%d actualizări gata de instalat."
+msgstr[2] "%d de actualizări gata de instalat."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:65
+msgid "Chamesle updated itself"
+msgstr "Chamesle s-a actualizat singur"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:66
+#, python-format
+msgid "%d update installed. Some start working after a restart."
+msgid_plural "%d updates installed. Some start working after a restart."
+msgstr[0] "%d actualizare instalată. Unele încep să funcționeze după o repornire."
+msgstr[1] "%d actualizări instalate. Unele încep să funcționeze după o repornire."
+msgstr[2] "%d de actualizări instalate. Unele încep să funcționeze după o repornire."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Check now"
+msgstr "Verifică acum"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Show updates"
+msgstr "Arată actualizările"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:6
+msgid "Windows program"
+msgstr "Program Windows"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:13
+msgid "Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\\n\\nInstall Chamesle first, then open the program again."
+msgstr "Programele Windows au nevoie de aproximativ 3 GB de spațiu, iar această sesiune live nu are atâta memorie liberă.\\n\\nInstalează întâi Chamesle, apoi deschide programul din nou."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:15
+msgid "Windows programs need about %s GB of free space. Make some room and try again."
+msgstr "Programele Windows au nevoie de aproximativ %s GB de spațiu liber. Fă puțin loc și încearcă din nou."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:23
+msgid "To open %s, Chamesle needs Windows support (Wine).\\n\\nIt's a 650 MB download and takes about 3 GB on disk.\\n\\nInstall it now?"
+msgstr "Ca să deschidă %s, Chamesle are nevoie de suport pentru Windows (Wine).\\n\\nSunt 650 MB de descărcat și ocupă aproximativ 3 GB pe disc.\\n\\nÎl instalezi acum?"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:26
+msgid "Installing Windows support..."
+msgstr "Se instalează suportul pentru Windows..."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:28
+msgid "Windows support couldn't be installed. Check that you're online and try again."
+msgstr "Suportul pentru Windows nu a putut fi instalat. Verifică dacă ești online și încearcă din nou."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:61
+msgid "Setting up Windows support. This only happens once..."
+msgstr "Se pregătește suportul pentru Windows. Asta se întâmplă o singură dată..."
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+msgid "Windows Program"
+msgstr "Program Windows"
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+msgid "Run Windows programs"
+msgstr "Rulează programe Windows"

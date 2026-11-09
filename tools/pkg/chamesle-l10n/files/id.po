@@ -7,12 +7,294 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"POT-Creation-Date: 2026-11-09 16:27+0000\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: overlay/usr/lib/jiggity/account.py:56
+msgid "A username is lowercase letters and numbers, starting with a letter."
+msgstr "Nama pengguna terdiri dari huruf kecil dan angka, dan diawali huruf."
+
+#: overlay/usr/lib/jiggity/account.py:58
+msgid "That username is taken by the system. Pick another one."
+msgstr "Nama pengguna itu sudah dipakai sistem. Pilih yang lain."
+
+#: overlay/usr/lib/jiggity/account.py:97
+msgid "A computer name is lowercase letters, numbers and dashes."
+msgstr "Nama komputer terdiri dari huruf kecil, angka, dan tanda hubung."
+
+#: overlay/usr/lib/jiggity/firstboot.py:32
+msgid "Let's start with your time zone. Is this the right one?"
+msgstr "Kita mulai dari zona waktu Anda. Apakah ini sudah benar?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:33
+msgid "It sets your clock. Type a city to find yours."
+msgstr "Ini mengatur jam Anda. Ketik nama kota untuk menemukan zona Anda."
+
+#: overlay/usr/lib/jiggity/firstboot.py:50
+msgid "Yes"
+msgstr "Ya"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "Let's connect you to a network"
+msgstr "Mari sambungkan Anda ke jaringan"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "You need the internet for updates and the app store."
+msgstr "Anda perlu internet untuk pembaruan dan toko aplikasi."
+
+#: overlay/usr/lib/jiggity/firstboot.py:71
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Password:"
+msgstr "Kata sandi:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Connect"
+msgstr "Sambungkan"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Skip for now"
+msgstr "Lewati dulu"
+
+#: overlay/usr/lib/jiggity/firstboot.py:91
+msgid "No Wi-Fi networks found. You can skip this and connect later."
+msgstr "Tidak ada jaringan Wi-Fi. Anda bisa melewati ini dan menyambung nanti."
+
+#: overlay/usr/lib/jiggity/firstboot.py:103
+#, python-format
+msgid "Connecting to %s..."
+msgstr "Menyambung ke %s..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:108
+#, python-format
+msgid "Couldn't connect to %s. Check the password and try again."
+msgstr "Tidak bisa menyambung ke %s. Periksa kata sandi dan coba lagi."
+
+#: overlay/usr/lib/jiggity/firstboot.py:113
+msgid "Who's going to use this PC?"
+msgstr "Siapa yang akan memakai PC ini?"
+
+#: overlay/usr/lib/jiggity/firstboot.py:115
+msgid "Your name"
+msgstr "Nama Anda"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Name:"
+msgstr "Nama:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Username:"
+msgstr "Nama pengguna:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:120
+msgid "Confirm password:"
+msgstr "Konfirmasi kata sandi:"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Back"
+msgstr "Kembali"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Next"
+msgstr "Berikutnya"
+
+#: overlay/usr/lib/jiggity/firstboot.py:139
+msgid "The passwords don't match."
+msgstr "Kata sandinya tidak sama."
+
+#: overlay/usr/lib/jiggity/firstboot.py:149
+msgid "Just a moment..."
+msgstr "Sebentar..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:167
+#, python-format
+msgid "That didn't work (%s). Try another username."
+msgstr "Tidak berhasil (%s). Coba nama pengguna lain."
+
+#: overlay/usr/lib/jiggity/ui.py:150
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
+msgid "Cancel"
+msgstr "Batal"
+
+#: overlay/usr/lib/jiggity/ui.py:150 overlay/usr/lib/jiggity/ui.py:154
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:180
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "OK"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
+msgid "GeForce 400 and 500 series"
+msgstr "GeForce seri 400 dan 500"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:19
+msgid "GeForce 600 and 700 series"
+msgstr "GeForce seri 600 dan 700"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:20
+msgid "GeForce 900 and 1000 series"
+msgstr "GeForce seri 900 dan 1000"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:21
+msgid "GeForce 16, RTX and newer"
+msgstr "GeForce 16, RTX, dan yang lebih baru"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:73
+#, python-format
+msgid "The NVIDIA driver is faster and needed for most games (%s)."
+msgstr "Driver NVIDIA lebih cepat dan dibutuhkan sebagian besar game (%s)."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#, python-format
+msgid "NVIDIA driver (%s)"
+msgstr "Driver NVIDIA (%s)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:77
+msgid "Open source driver (nouveau)"
+msgstr "Driver sumber terbuka (nouveau)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:76
+msgid "This card is too old for the NVIDIA driver, the open source one is used."
+msgstr "Kartu ini terlalu tua untuk driver NVIDIA, driver sumber terbuka yang dipakai."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:79
+msgid "This Wi-Fi chip needs Broadcom's driver to work."
+msgstr "Chip Wi-Fi ini butuh driver Broadcom agar bisa bekerja."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:80
+msgid "Broadcom STA driver (wl)"
+msgstr "Driver Broadcom STA (wl)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:81
+msgid "Don't install it"
+msgstr "Jangan pasang"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:84
+msgid "Shared clipboard, window resizing and shared folders with your PC."
+msgstr "Papan klip bersama, ukuran jendela menyesuaikan, dan folder bersama dengan PC Anda."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "None"
+msgstr "Tidak ada"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+msgid "VirtualBox guest additions"
+msgstr "VirtualBox Guest Additions"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:87
+msgid "Shared clipboard, window resizing and better graphics."
+msgstr "Papan klip bersama, ukuran jendela menyesuaikan, dan grafis lebih baik."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+msgid "VMware tools"
+msgstr "VMware Tools"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP printer or scanner"
+msgstr "Printer atau pemindai HP"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP's own drivers support more printers and scanners."
+msgstr "Driver buatan HP sendiri mendukung lebih banyak printer dan pemindai."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "HP drivers (hplip)"
+msgstr "Driver HP (hplip)"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+msgid "Driver Manager"
+msgstr "Pengelola Driver"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:107
+msgid "Apply changes"
+msgstr "Terapkan perubahan"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:119
+msgid "Looking at your hardware"
+msgstr "Memeriksa perangkat keras Anda"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:130
+msgid "Nothing to do"
+msgstr "Tidak ada yang perlu dilakukan"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:131
+msgid "Your hardware works with the drivers that are already installed."
+msgstr "Perangkat keras Anda bekerja dengan driver yang sudah terpasang."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "Recommended"
+msgstr "Disarankan"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "installed"
+msgstr "terpasang"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:149
+msgid "Installing a driver needs your password, and usually a restart after."
+msgstr "Memasang driver butuh kata sandi Anda, dan biasanya mulai ulang setelahnya."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:159
+msgid "Working on it, this can take a few minutes"
+msgstr "Sedang dikerjakan, ini bisa makan beberapa menit"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Done"
+msgstr "Selesai"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+msgid "Restart the computer to start using the new driver."
+msgstr "Mulai ulang komputer untuk mulai memakai driver baru."
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:174
+msgid "Later"
+msgstr "Nanti"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:175
+msgid "Restart now"
+msgstr "Mulai ulang sekarang"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:179
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "Itu tidak berhasil"
+
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+msgid "Install drivers for your graphics card, Wi-Fi and printer"
+msgstr "Pasang driver untuk kartu grafis, Wi-Fi, dan printer"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
+msgid "Started from before an update"
+msgstr "Dimulai dari sebelum pembaruan"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:148
+msgid "This is Chamesle as it was before the update of %s.\\n\\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way."
+msgstr "Ini Chamesle seperti sebelum pembaruan %s.\\n\\nKalau pembaruan itu merusak sesuatu, pertahankan yang ini dan mulai dari mulai ulang berikutnya inilah sistem Anda. Berkas Anda tetap seperti apa adanya."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Keep this one"
+msgstr "Pertahankan yang ini"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Not now"
+msgstr "Jangan sekarang"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Restart, and Chamesle starts as it is now."
+msgstr "Mulai ulang, dan Chamesle akan berjalan seperti sekarang."
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+msgid "Nothing was changed. Try again, or ask on the board."
+msgstr "Tidak ada yang diubah. Coba lagi, atau tanya di forum."
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
 msgid "Games"
@@ -56,6 +338,7 @@ msgstr "Perangkat"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
 msgid "Store"
 msgstr "Toko"
 
@@ -68,6 +351,7 @@ msgid "Installed"
 msgstr "Terpasang"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:28
 msgid "Updates"
 msgstr "Pembaruan"
 
@@ -180,6 +464,7 @@ msgstr "Firmware Anda sudah mutakhir"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:49
 msgid "Update"
 msgstr "Perbarui"
 
@@ -191,11 +476,6 @@ msgstr "Perbarui firmware %s?"
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
 msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
 msgstr "Biarkan komputer tetap tersambung ke listrik. Sebagian firmware dipasang saat komputer dimulai ulang: jangan matikan sampai komputer menyala kembali."
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
-msgid "Cancel"
-msgstr "Batal"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
 #, python-format
@@ -226,6 +506,7 @@ msgid_plural "%d ratings"
 msgstr[0] "%d penilaian"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
 msgid "Install"
 msgstr "Pasang"
 
@@ -297,17 +578,9 @@ msgid "Cancelled"
 msgstr "Dibatalkan"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
-msgid "That didn't work"
-msgstr "Itu tidak berhasil"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
 #, python-format
 msgid "The full error is also saved in %s"
 msgstr "Galat lengkap juga disimpan di %s"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
-msgid "OK"
-msgstr "OK"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
 #, python-format
@@ -364,3 +637,81 @@ msgstr "Pasang berkas .deb atau .rpm"
 #, python-format
 msgid "%s is installed"
 msgstr "%s sudah terpasang"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+msgid "App Store"
+msgstr "Toko Aplikasi"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+msgid "Find, install and update apps"
+msgstr "Cari, pasang, dan perbarui aplikasi"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:43
+#, python-format
+msgid "%d update available"
+msgid_plural "%d updates available"
+msgstr[0] "%d pembaruan tersedia"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:46
+msgid "Updates available"
+msgstr "Pembaruan tersedia"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:47
+#, python-format
+msgid "%d update ready to install."
+msgid_plural "%d updates ready to install."
+msgstr[0] "%d pembaruan siap dipasang."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:65
+msgid "Chamesle updated itself"
+msgstr "Chamesle memperbarui dirinya sendiri"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:66
+#, python-format
+msgid "%d update installed. Some start working after a restart."
+msgid_plural "%d updates installed. Some start working after a restart."
+msgstr[0] "%d pembaruan terpasang. Sebagian baru bekerja setelah mulai ulang."
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Check now"
+msgstr "Periksa sekarang"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Show updates"
+msgstr "Tampilkan pembaruan"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:6
+msgid "Windows program"
+msgstr "Program Windows"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:13
+msgid "Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\\n\\nInstall Chamesle first, then open the program again."
+msgstr "Program Windows butuh sekitar 3 GB ruang, dan sesi live ini tidak punya memori kosong sebanyak itu.\\n\\nPasang Chamesle dulu, lalu buka programnya lagi."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:15
+msgid "Windows programs need about %s GB of free space. Make some room and try again."
+msgstr "Program Windows butuh sekitar %s GB ruang kosong. Kosongkan sedikit ruang dan coba lagi."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:23
+msgid "To open %s, Chamesle needs Windows support (Wine).\\n\\nIt's a 650 MB download and takes about 3 GB on disk.\\n\\nInstall it now?"
+msgstr "Untuk membuka %s, Chamesle butuh dukungan Windows (Wine).\\n\\nUnduhannya 650 MB dan memakai sekitar 3 GB di disk.\\n\\nPasang sekarang?"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:26
+msgid "Installing Windows support..."
+msgstr "Memasang dukungan Windows..."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:28
+msgid "Windows support couldn't be installed. Check that you're online and try again."
+msgstr "Dukungan Windows tidak bisa dipasang. Periksa apakah Anda terhubung ke internet dan coba lagi."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:61
+msgid "Setting up Windows support. This only happens once..."
+msgstr "Menyiapkan dukungan Windows. Ini hanya terjadi sekali..."
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+msgid "Windows Program"
+msgstr "Program Windows"
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+msgid "Run Windows programs"
+msgstr "Jalankan program Windows"

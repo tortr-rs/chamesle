@@ -7,12 +7,294 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-10-31 13:29-0400\n"
+"POT-Creation-Date: 2026-11-09 16:27+0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: overlay/usr/lib/jiggity/account.py:56
+msgid "A username is lowercase letters and numbers, starting with a letter."
+msgstr "用户名由小写字母和数字组成，以字母开头。"
+
+#: overlay/usr/lib/jiggity/account.py:58
+msgid "That username is taken by the system. Pick another one."
+msgstr "这个用户名已被系统占用。请换一个。"
+
+#: overlay/usr/lib/jiggity/account.py:97
+msgid "A computer name is lowercase letters, numbers and dashes."
+msgstr "计算机名由小写字母、数字和连字符组成。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:32
+msgid "Let's start with your time zone. Is this the right one?"
+msgstr "先从时区开始。这个对吗？"
+
+#: overlay/usr/lib/jiggity/firstboot.py:33
+msgid "It sets your clock. Type a city to find yours."
+msgstr "它用来设置时钟。输入一个城市名来找到你的时区。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:50
+msgid "Yes"
+msgstr "是"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "Let's connect you to a network"
+msgstr "连接到网络吧"
+
+#: overlay/usr/lib/jiggity/firstboot.py:59
+msgid "You need the internet for updates and the app store."
+msgstr "更新和应用商店都需要联网。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:71
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Password:"
+msgstr "密码："
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Connect"
+msgstr "连接"
+
+#: overlay/usr/lib/jiggity/firstboot.py:78
+msgid "Skip for now"
+msgstr "暂时跳过"
+
+#: overlay/usr/lib/jiggity/firstboot.py:91
+msgid "No Wi-Fi networks found. You can skip this and connect later."
+msgstr "没有找到 Wi-Fi 网络。你可以跳过这一步，以后再连接。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:103
+#, python-format
+msgid "Connecting to %s..."
+msgstr "正在连接 %s..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:108
+#, python-format
+msgid "Couldn't connect to %s. Check the password and try again."
+msgstr "无法连接到 %s。请检查密码后再试一次。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:113
+msgid "Who's going to use this PC?"
+msgstr "谁会使用这台电脑？"
+
+#: overlay/usr/lib/jiggity/firstboot.py:115
+msgid "Your name"
+msgstr "你的名字"
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Name:"
+msgstr "名字："
+
+#: overlay/usr/lib/jiggity/firstboot.py:119
+msgid "Username:"
+msgstr "用户名："
+
+#: overlay/usr/lib/jiggity/firstboot.py:120
+msgid "Confirm password:"
+msgstr "确认密码："
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Back"
+msgstr "返回"
+
+#: overlay/usr/lib/jiggity/firstboot.py:130
+msgid "Next"
+msgstr "下一步"
+
+#: overlay/usr/lib/jiggity/firstboot.py:139
+msgid "The passwords don't match."
+msgstr "两次输入的密码不一致。"
+
+#: overlay/usr/lib/jiggity/firstboot.py:149
+msgid "Just a moment..."
+msgstr "请稍候..."
+
+#: overlay/usr/lib/jiggity/firstboot.py:167
+#, python-format
+msgid "That didn't work (%s). Try another username."
+msgstr "没有成功（%s）。请换一个用户名试试。"
+
+#: overlay/usr/lib/jiggity/ui.py:150
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
+msgid "Cancel"
+msgstr "取消"
+
+#: overlay/usr/lib/jiggity/ui.py:150 overlay/usr/lib/jiggity/ui.py:154
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:180
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
+msgid "OK"
+msgstr "确定"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
+msgid "GeForce 400 and 500 series"
+msgstr "GeForce 400 和 500 系列"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:19
+msgid "GeForce 600 and 700 series"
+msgstr "GeForce 600 和 700 系列"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:20
+msgid "GeForce 900 and 1000 series"
+msgstr "GeForce 900 和 1000 系列"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:21
+msgid "GeForce 16, RTX and newer"
+msgstr "GeForce 16、RTX 及更新型号"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:73
+#, python-format
+msgid "The NVIDIA driver is faster and needed for most games (%s)."
+msgstr "NVIDIA 驱动更快，大多数游戏都需要它（%s）。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#, python-format
+msgid "NVIDIA driver (%s)"
+msgstr "NVIDIA 驱动（%s）"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:74
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:77
+msgid "Open source driver (nouveau)"
+msgstr "开源驱动（nouveau）"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:76
+msgid "This card is too old for the NVIDIA driver, the open source one is used."
+msgstr "这块显卡太旧，不支持 NVIDIA 驱动，使用的是开源驱动。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:79
+msgid "This Wi-Fi chip needs Broadcom's driver to work."
+msgstr "这块 Wi-Fi 芯片需要 Broadcom 的驱动才能工作。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:80
+msgid "Broadcom STA driver (wl)"
+msgstr "Broadcom STA 驱动（wl）"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:81
+msgid "Don't install it"
+msgstr "不安装"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:84
+msgid "Shared clipboard, window resizing and shared folders with your PC."
+msgstr "共享剪贴板、窗口自动调整大小，以及与你的电脑共享文件夹。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "None"
+msgstr "无"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:85
+msgid "VirtualBox guest additions"
+msgstr "VirtualBox 增强功能"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:87
+msgid "Shared clipboard, window resizing and better graphics."
+msgstr "共享剪贴板、窗口自动调整大小，以及更好的图形性能。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:88
+msgid "VMware tools"
+msgstr "VMware Tools"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP printer or scanner"
+msgstr "HP 打印机或扫描仪"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:90
+msgid "HP's own drivers support more printers and scanners."
+msgstr "HP 自己的驱动支持更多打印机和扫描仪。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:91
+msgid "HP drivers (hplip)"
+msgstr "HP 驱动（hplip）"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+msgid "Driver Manager"
+msgstr "驱动管理器"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:107
+msgid "Apply changes"
+msgstr "应用更改"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:119
+msgid "Looking at your hardware"
+msgstr "正在检查你的硬件"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:130
+msgid "Nothing to do"
+msgstr "无需操作"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:131
+msgid "Your hardware works with the drivers that are already installed."
+msgstr "你的硬件用已安装的驱动就能正常工作。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "Recommended"
+msgstr "推荐"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:143
+msgid "installed"
+msgstr "已安装"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:149
+msgid "Installing a driver needs your password, and usually a restart after."
+msgstr "安装驱动需要输入密码，通常之后还要重启。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:159
+msgid "Working on it, this can take a few minutes"
+msgstr "正在处理，可能需要几分钟"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Done"
+msgstr "完成"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:173
+msgid "Restart the computer to start using the new driver."
+msgstr "重启电脑即可开始使用新驱动。"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:174
+msgid "Later"
+msgstr "以后"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:175
+msgid "Restart now"
+msgstr "立即重启"
+
+#: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:179
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
+msgid "That didn't work"
+msgstr "操作失败"
+
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+msgid "Install drivers for your graphics card, Wi-Fi and printer"
+msgstr "为显卡、Wi-Fi 和打印机安装驱动"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
+msgid "Started from before an update"
+msgstr "从更新之前的状态启动"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:148
+msgid "This is Chamesle as it was before the update of %s.\\n\\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way."
+msgstr "这是 %s 那次更新之前的 Chamesle。\\n\\n如果那次更新弄坏了什么，就保留这个，下次重启后它就是你的系统。无论怎样，你的文件都保持不变。"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Keep this one"
+msgstr "保留这个"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:149
+msgid "Not now"
+msgstr "暂不"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:151
+msgid "Restart, and Chamesle starts as it is now."
+msgstr "重启后，Chamesle 会以现在的状态启动。"
+
+#: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:153
+msgid "Nothing was changed. Try again, or ask on the board."
+msgstr "什么都没有改变。请再试一次，或者到论坛提问。"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:39
 msgid "Games"
@@ -56,6 +338,7 @@ msgstr "设备"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
 msgid "Store"
 msgstr "商店"
 
@@ -68,6 +351,7 @@ msgid "Installed"
 msgstr "已安装"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:362
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:28
 msgid "Updates"
 msgstr "更新"
 
@@ -180,6 +464,7 @@ msgstr "您的固件是最新的"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:620
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:631
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:49
 msgid "Update"
 msgstr "更新"
 
@@ -191,11 +476,6 @@ msgstr "要更新 %s 的固件吗？"
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:628
 msgid "Keep the computer plugged in. Some firmware is installed while the computer restarts: don't turn it off until it's back."
 msgstr "请保持电脑接通电源。部分固件会在重启时安装：在它恢复之前请勿关机。"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:630
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:818
-msgid "Cancel"
-msgstr "取消"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:637
 #, python-format
@@ -226,6 +506,7 @@ msgid_plural "%d ratings"
 msgstr[0] "%d 个评分"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:688
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:22
 msgid "Install"
 msgstr "安装"
 
@@ -297,17 +578,9 @@ msgid "Cancelled"
 msgstr "已取消"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
-msgid "That didn't work"
-msgstr "操作失败"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:893
 #, python-format
 msgid "The full error is also saved in %s"
 msgstr "完整的错误信息也保存在 %s"
-
-#: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:895
-msgid "OK"
-msgstr "确定"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:919
 #, python-format
@@ -364,3 +637,81 @@ msgstr "安装 .deb 或 .rpm 文件"
 #, python-format
 msgid "%s is installed"
 msgstr "%s 已安装"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+msgid "App Store"
+msgstr "应用商店"
+
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+msgid "Find, install and update apps"
+msgstr "查找、安装和更新应用"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:43
+#, python-format
+msgid "%d update available"
+msgid_plural "%d updates available"
+msgstr[0] "有 %d 个更新"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:46
+msgid "Updates available"
+msgstr "有可用更新"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:47
+#, python-format
+msgid "%d update ready to install."
+msgid_plural "%d updates ready to install."
+msgstr[0] "%d 个更新可以安装。"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:65
+msgid "Chamesle updated itself"
+msgstr "Chamesle 已自动更新"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:66
+#, python-format
+msgid "%d update installed. Some start working after a restart."
+msgid_plural "%d updates installed. Some start working after a restart."
+msgstr[0] "已安装 %d 个更新。有些需要重启后才生效。"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Check now"
+msgstr "立即检查"
+
+#: tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater:75
+msgid "Show updates"
+msgstr "查看更新"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:6
+msgid "Windows program"
+msgstr "Windows 程序"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:13
+msgid "Windows programs need about 3 GB of space, and this live session doesn't have that much memory to spare.\\n\\nInstall Chamesle first, then open the program again."
+msgstr "Windows 程序需要大约 3 GB 空间，而这个 Live 会话没有那么多空闲内存。\\n\\n请先安装 Chamesle，然后再打开这个程序。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:15
+msgid "Windows programs need about %s GB of free space. Make some room and try again."
+msgstr "Windows 程序需要大约 %s GB 可用空间。请腾出一些空间后再试一次。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:23
+msgid "To open %s, Chamesle needs Windows support (Wine).\\n\\nIt's a 650 MB download and takes about 3 GB on disk.\\n\\nInstall it now?"
+msgstr "要打开 %s，Chamesle 需要 Windows 支持（Wine）。\\n\\n需要下载 650 MB，在磁盘上约占 3 GB。\\n\\n现在安装吗？"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:26
+msgid "Installing Windows support..."
+msgstr "正在安装 Windows 支持..."
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:28
+msgid "Windows support couldn't be installed. Check that you're online and try again."
+msgstr "无法安装 Windows 支持。请确认已联网后再试一次。"
+
+#: tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe:61
+msgid "Setting up Windows support. This only happens once..."
+msgstr "正在设置 Windows 支持。只需要这一次..."
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+msgid "Windows Program"
+msgstr "Windows 程序"
+
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+msgid "Run Windows programs"
+msgstr "运行 Windows 程序"

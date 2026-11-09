@@ -1,7 +1,11 @@
 # first start without gtk: the time zones, the network, making the account
+import gettext
 import os
 import re
 import subprocess
+
+gettext.textdomain("chamesle")
+_ = gettext.gettext
 
 MARK = "/etc/chamesle/firstboot"
 GROUPS = "wheel audio video input network storage optical scanner lp plugdev bluetooth users kvm".split()
@@ -49,9 +53,9 @@ def taken(root="/"):
 # what's wrong with a username, or ""
 def bad_username(u):
     if u and not re.fullmatch(r"[a-z_][a-z0-9_-]{0,31}", u):
-        return "A username is lowercase letters and numbers, starting with a letter."
+        return _("A username is lowercase letters and numbers, starting with a letter.")
     if u in taken():
-        return "That username is taken by the system. Pick another one."
+        return _("That username is taken by the system. Pick another one.")
     return ""
 
 
@@ -90,7 +94,7 @@ def hostname_from(user):
 # what's wrong with a computer name, or ""
 def bad_hostname(h):
     if not re.fullmatch(r"[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?", h or ""):
-        return "A computer name is lowercase letters, numbers and dashes."
+        return _("A computer name is lowercase letters, numbers and dashes.")
     return ""
 
 

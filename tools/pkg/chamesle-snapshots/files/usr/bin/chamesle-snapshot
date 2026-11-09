@@ -133,18 +133,24 @@ settle() {
     menu
 }
 
+# the dialogs at login are in the user's language, from chamesle-l10n
+# python looks it up: the gettext program isn't on every system, python is
+_() { python3 -c 'import gettext, sys; gettext.textdomain("chamesle"); sys.stdout.write(gettext.gettext(sys.argv[1]))' "$1" 2>/dev/null || printf %s "$1"; }
+
 # at login, when started from a snapshot from the boot menu
 notice() {
-    local id
+    local id when
     id=$(started_from)
     [ -n "$id" ] || exit 0
-    zenity --question --width 420 --title "Started from before an update" \
-        --text "This is Chamesle as it was before the update of $(val $id date).\n\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way." \
-        --ok-label "Keep this one" --cancel-label "Not now" || exit 0
+    # the date written the user's way: the id is when it was taken
+    when=$(date -d "${id:0:8} ${id:9:2}:${id:11:2}" '+%x, %H:%M' 2>/dev/null || val $id date)
+    zenity --question --width 420 --title "$(_ "Started from before an update")" \
+        --text "$(printf "$(_ "This is Chamesle as it was before the update of %s.\n\nIf that update broke something, keep this one and it's your system from the next restart. Your files stay as they are either way.")" "$when")" \
+        --ok-label "$(_ "Keep this one")" --cancel-label "$(_ "Not now")" || exit 0
     if pkexec /usr/bin/chamesle-snapshot restore $id; then
-        zenity --info --width 380 --title "Done" --text "Restart, and Chamesle starts as it is now."
+        zenity --info --width 380 --title "$(_ "Done")" --text "$(_ "Restart, and Chamesle starts as it is now.")"
     else
-        zenity --error --width 380 --title "That didn't work" --text "Nothing was changed. Try again, or ask on the board."
+        zenity --error --width 380 --title "$(_ "That didn't work")" --text "$(_ "Nothing was changed. Try again, or ask on the board.")"
     fi
 }
 

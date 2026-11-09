@@ -8,6 +8,9 @@ if grep -qw chamesle.install=1 /proc/cmdline; then
     exit 1
 fi
 if [ -f /etc/chamesle/firstboot ]; then
+    # in the language picked at install
+    LANG=$(sed -n 's/^LANG=//p' /etc/locale.conf 2>/dev/null)
+    export LANG=${LANG:-C.UTF-8}
     alone /usr/bin/python3 /usr/lib/jiggity/firstboot.py
     [ -f /etc/chamesle/firstboot ] && exit 1
 fi
