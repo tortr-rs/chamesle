@@ -1,5 +1,5 @@
 [General]
-ColorScheme=ChamesleGlass
+ColorScheme=ChamesleGray
 font=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 menuFont=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 toolBarFont=Inter,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
@@ -11,4 +11,4 @@ Theme=Chamesle-Glass
 
 [KDE]
 LookAndFeelPackage=org.chamesle.desktop
-widgetStyle=Breeze
+widgetStyle=Windows
