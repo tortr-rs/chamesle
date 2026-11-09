@@ -1,6 +1,6 @@
 name=chamesle-gray
-version=0.8.0
-rel=0
+version=0.8
+rel=3
 desc="Chamesle Gray: black title bars, gray raised buttons and gray panels for Xfce, MATE, Cinnamon and KDE"
 url=https://chamesle.org
 license=GPL-3.0-or-later
