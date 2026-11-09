@@ -1,7 +1,12 @@
 # shared by jiggity and firstboot. runs without a window manager
+import gettext
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
+
+# chamesle-l10n's translations. on the console (LANG=C.UTF-8) it all stays english
+gettext.textdomain("chamesle")
+_ = gettext.gettext
 
 CSS = b"""
 * { font-family: Inter, "Noto Sans", sans-serif; }
@@ -50,7 +55,8 @@ def logo_line(name):
 
 
 class SetupWindow(Gtk.Window):
-    # pages: [(box, [(label, callback), ...])], first button is the default
+    # pages: [(box, [(label, callback), ...])], first button is the default.
+    # buttons are known by their english label, and shown translated
     def __init__(self, title):
         super().__init__()
         provider = Gtk.CssProvider()
@@ -104,7 +110,7 @@ class SetupWindow(Gtk.Window):
             self.buttons.remove(child)
         self.button_widgets = {}
         for i, (label, callback) in reversed(list(enumerate(buttons))):
-            b = Gtk.Button(label=label)
+            b = Gtk.Button(label=_(label))
             b.connect("clicked", callback)
             if i == 0:
                 b.get_style_context().add_class("suggested-action")
@@ -141,8 +147,8 @@ def _dialog(parent, title, text, buttons):
 
 
 def confirm(parent, title, text):
-    return _dialog(parent, title, text, [("Cancel", Gtk.ResponseType.CANCEL), ("OK", Gtk.ResponseType.OK)]) == Gtk.ResponseType.OK
+    return _dialog(parent, title, text, [(_("Cancel"), Gtk.ResponseType.CANCEL), (_("OK"), Gtk.ResponseType.OK)]) == Gtk.ResponseType.OK
 
 
 def message(parent, title, text):
-    _dialog(parent, title, text, [("OK", Gtk.ResponseType.OK)])
+    _dialog(parent, title, text, [(_("OK"), Gtk.ResponseType.OK)])
