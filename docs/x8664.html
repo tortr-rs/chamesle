@@ -57,8 +57,11 @@ smooth as Wayland, without giving up a single X program.</p>
 </header>
 
 <div class="release">
-<p><b>Where it's at:</b> it builds, draws on a real screen through the kernel without tearing, and takes
-keyboards and mice, so far in a virtual machine. Nothing to download yet. Progress goes in the news below as it happens.</p>
+<p><b>Where it's at:</b> it builds, draws on a real screen through the kernel without tearing, takes
+keyboards and mice, and has the X security fixes since 2008, so far in a virtual machine. Nothing to download
+yet. Progress goes in the news below as it happens.</p>
+<p><b>This is all we're working on now.</b> Chamesle itself is on hold for a while, so every hour goes here.
+<a href="index.html#hold">More about that</a>.</p>
 </div>
 
 <h2>What is it?</h2>
@@ -77,7 +80,22 @@ on.</p>
 <h2>News</h2>
 
 <dl class="news">
-<dt>November 8, 2026, 8 pm <span class="new">NEW</span></dt>
+<dt>November 10, 2026 <span class="new">NEW</span></dt>
+<dd>X8664 is what we work on now, full time. Chamesle is on hold for a while (more on the
+<a href="index.html#hold">home page</a>), and all of that time goes here instead.</dd>
+<dd>Security, which is step 7. X.Org has put out a lot of security fixes since 2008, and most of them are for
+code we have too, so we went through every advisory about the X server since January 2008, one by one. That's
+117 entries: 52 we fixed here by hand (the code has moved too far for X.Org's patches to just apply), 9 that
+XFree86 4.8 had already fixed its own way, and 49 for code we don't have, like XInput 2, GLX and Xwayland. Six
+are left, nearly all in the font library, which is next. The whole list, with what we did about each one, is in
+<a href="https://github.com/tortr-rs/x8664/blob/main/SECURITY">SECURITY</a>.</dd>
+<dd>One fix covers a lot of them at once: the code that reads requests from clients with the other byte order
+now checks a request is long enough before it touches it. That was 382 places in 38 files.</dd>
+<dd>Testing the SYNC fixes turned up a bug XFree86 had all along: one bad request about an alarm and the
+server would spin forever the next time that alarm went off, so any program could freeze your screen. Two more
+in the same code freed an alarm twice, or while something still pointed at it. All three are fixed, and
+<code>test/sync</code> checks for them now.</dd>
+<dt>November 8, 2026, 8 pm</dt>
 <dd>Mice and touchpads go through libinput now, like keyboards already did through the kernel. Before, the server
 read <code>/dev/input/mice</code>, where the kernel makes every pointer look like a PS/2 mouse from the nineties:
 a touchpad moved the pointer and that was all. With libinput you get tap to click, two finger scrolling, palm
@@ -183,7 +201,8 @@ straight on the graphics card.</td><td>Faster drawing, and the same path games a
 <tr><td>6</td><td><b>Today's screens.</b> Plugging monitors in and out, several monitors, HiDPI, 144&nbsp;Hz and
 up, variable refresh.</td><td>All newer than XFree86.</td></tr>
 <tr><td>7</td><td><b>Security.</b> Going through every X security fix since 2008 and applying the ones that
-apply to us.</td><td>X has had a lot of them. A server can't be shipped until this is done.</td></tr>
+apply to us.</td><td>X has had a lot of them. A server can't be shipped until this is done. <b>Done for the
+server November 10. The font library is left.</b></td></tr>
 <tr><td>8</td><td><b>Proof.</b> Frame timing and input latency, measured against X.Org and Wayland on the same
 computer, published here.</td><td>"As smooth as Wayland" is a claim. We'll show the numbers, good or bad.</td></tr>
 </table>
@@ -220,7 +239,7 @@ endorsed by them. The X logo is the X Window System's, in the public domain.</p>
 
 <hr>
 <address>
-Last updated November 8, 2026.<br>
+Last updated November 10, 2026.<br>
 Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
 <a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
 Chamesle Linux is free software. Source code for every package is available on request.
