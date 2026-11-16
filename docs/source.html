@@ -3,63 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chamesle Source - Chamesle Linux</title>
-<meta name="description" content="Chamesle Source: a kernel that boots into vi. You write everything else.">
+<title>Chamesle Source - Chamesle</title>
+<meta name="description" content="Chamesle Source: a Linux kernel that starts straight into vi, and nothing else.">
 <link rel="canonical" href="https://chamesle.org/source.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="Chamesle Source - Chamesle Linux">
-<meta property="og:description" content="Chamesle Source: a kernel that boots into vi. You write everything else.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Chamesle Source - Chamesle">
+<meta property="og:description" content="Chamesle Source: a Linux kernel that starts straight into vi, and nothing else.">
 <meta property="og:url" content="https://chamesle.org/source.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?9">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
-<div class="layout">
-<nav class="side">
-<a class="brand" href="./"><img src="img/logo.png?9" alt="Chamesle" width="64" height="64"></a>
-<p class="name">Chamesle <br>Linux</p>
-<ul>
-  <li><a href="./">Home</a></li>
-  <li><a href="new.html">What's new</a></li>
-  <li><a href="download.html">Download</a></li>
-  <li><a href="editions.html">Desktops</a></li>
-  <li><a href="docs.html">Docs</a></li>
-  <li><a href="packages.html">Packages</a></li>
-  <li><a href="board.html">Board</a></li>
-  <li><a href="chat.html">Chat</a></li>
-  <li><a href="about.html">About &amp; roadmap</a></li>
-  <li><b>Chamesle Source</b></li>
-  <li><a href="https://x22.chamesle.org/">X22</a></li>
-  <li><a href="chess.html">Play chess</a></li>
-</ul>
-<p class="head">Elsewhere</p>
-<ul>
-  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
-  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
-  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
-  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
-</ul>
-<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
-</nav>
-<div class="content">
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<b>Source</b> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
 
 <main>
-<header class="dochead">
-    <h1>Chamesle Source</h1>
-    <p class="lead">A side project: the hardest Linux distro I could think of, made by the same person who
-makes the easy one.</p>
-</header>
+<h2>Chamesle Source</h2>
+<p><i>A side project by the same person who makes Chamesle.</i></p>
 
-<p>Chamesle Linux tries to do everything for you. Chamesle Source does nothing for you. It's a kernel and an
+<p>The old Chamesle tried to do everything for you. Chamesle Source does nothing for you. It's a kernel and an
 editor, and everything else you write yourself.</p>
 
 <h2>What you get</h2>
 <ul>
-  <li><b>A Linux kernel.</b> The same one Chamesle Linux ships.</li>
+  <li><b>A Linux kernel.</b></li>
   <li><b>vi, as the first and only program.</b> Not a vi clone: Bill Joy's own ex 1.1 from 1977, the first
   vi there was, brought over to today's C. It runs as PID 1, where an init system would normally be.</li>
   <li><b>A C compiler behind it.</b> tcc is built into vi. Save with <code>wq</code> and what you wrote is
@@ -76,16 +60,14 @@ downloaded. With those two you can fetch a real compiler, gcc, and from there bu
 <p>Every program on the system is one you typed in, in a 1977 editor, on top of a libc that fits on a few pages.</p>
 
 <h2>fbttywm</h2>
-<p><a href="docs.html#ttywm">ttywm</a> is the window manager Chamesle Linux uses for its TTY Flavor: the console,
+<p>ttywm was the window manager of the old Chamesle's TTY flavor: the console,
 with floating windows on top. fbttywm is the same idea without Xorg underneath. It draws straight to the screen
 and reads the keyboard and mouse itself, and every window is one of its own terminals.</p>
 <p>It ships with Chamesle Source, but only as source code. To get windows you need gcc, so first you need
 <code>wget</code> and <code>tar</code>, and before those a shell and the basic commands. You have to earn it.</p>
 
 <h2>Why</h2>
-<p>Making a distro easy is mostly about hiding work: drivers sorted, apps found, settings that already make
-sense. Chamesle Source is that work with nothing hidden. Knowing every layer from the kernel up is what makes it
-possible to build the easy version properly, and having done it the hard way is the proof.</p>
+<p>A normal distro hides work. Chamesle Source hides none of it. Knowing every layer from the kernel up helps when you build the real system.</p>
 <p>It also answers a question people sometimes ask about small distros: is this just someone else's system with a
 new wallpaper? Chamesle Source has nothing of anyone else's in it except the kernel, the compiler and a 1977
 editor.</p>
@@ -96,26 +78,20 @@ script.</p>
 
 <h2>Should I use it?</h2>
 <p>No. Nobody should use it for anything real. It's a side project for fun and for learning. If you want a
-computer that works, <a href="download.html">get Chamesle Linux</a>.</p>
-
+computer that works, <a href="about.html">read about Chamesle</a>.</p>
 </main>
 
 <hr>
-<address>
-Last updated November 8, 2026.<br>
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.
-</address>
-<p class="buttons">
-<a class="plain" href="https://chamesle.org/"><img src="img/buttons/chamesle.png?9" alt="Chamesle Linux" width="88" height="31"></a>
-<img src="img/buttons/anybrowser.png?9" alt="Best viewed with any browser" width="88" height="31">
-<a class="plain" href="https://voidlinux.org"><img src="img/buttons/void.png?9" alt="Built on Void Linux" width="88" height="31"></a>
-<img src="img/buttons/notrackers.png?9" alt="This site has no trackers" width="88" height="31">
-</p>
-</div>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
 
-<script src="egg.js?9"></script>
+</div>
+
+<script src="edit.js"></script>
 </body>
 </html>

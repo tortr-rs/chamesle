@@ -3,47 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>New post - Chamesle Linux</title>
+<title>New post - Chamesle</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?9">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
-<div class="layout">
-<nav class="side">
-<a class="brand" href="./"><img src="img/logo.png?9" alt="Chamesle" width="64" height="64"></a>
-<p class="name">Chamesle <br>Linux</p>
-<ul>
-  <li><a href="./">Home</a></li>
-  <li><a href="new.html">What's new</a></li>
-  <li><a href="download.html">Download</a></li>
-  <li><a href="editions.html">Desktops</a></li>
-  <li><a href="docs.html">Docs</a></li>
-  <li><a href="packages.html">Packages</a></li>
-  <li><b>Board</b></li>
-  <li><a href="chat.html">Chat</a></li>
-  <li><a href="about.html">About &amp; roadmap</a></li>
-  <li><a href="source.html">Chamesle Source</a></li>
-  <li><a href="https://x22.chamesle.org/">X22</a></li>
-  <li><a href="chess.html">Play chess</a></li>
-</ul>
-<p class="head">Elsewhere</p>
-<ul>
-  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
-  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
-  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
-  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
-</ul>
-<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
-</nav>
-<div class="content">
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<b>Board</b> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
 
 <main>
-<header class="dochead">
-    <p class="small"><a href="board.html">&larr; Board</a></p>
-    <h1>New post</h1>
-</header>
+<p class="small"><a href="board.html">&larr; Board</a></p>
+<h2>New post</h2>
 
 <form class="form" id="form">
   <label for="cat">Where does it go?</label>
@@ -62,24 +49,20 @@
   <p class="small">Write your post in the box below and send it. Log in with GitHub first if you haven't.</p>
   <div class="giscus" id="box"></div>
 </div>
-
 </main>
 
 <hr>
-<address>
-Last updated November 8, 2026.<br>
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.
-</address>
-<p class="buttons">
-<a class="plain" href="https://chamesle.org/"><img src="img/buttons/chamesle.png?9" alt="Chamesle Linux" width="88" height="31"></a>
-<img src="img/buttons/anybrowser.png?9" alt="Best viewed with any browser" width="88" height="31">
-<a class="plain" href="https://voidlinux.org"><img src="img/buttons/void.png?9" alt="Built on Void Linux" width="88" height="31"></a>
-<img src="img/buttons/notrackers.png?9" alt="This site has no trackers" width="88" height="31">
-</p>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
+
 </div>
+
+</main>
 
 <script>
 var CATS = {
@@ -118,7 +101,6 @@ document.getElementById('form').addEventListener('submit', function (e) {
   giscus(document.getElementById('box'), cat, 'specific', title);
 });
 </script>
-
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>

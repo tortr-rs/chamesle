@@ -3,55 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Board - Chamesle Linux</title>
-<meta name="description" content="The Chamesle Linux community board.">
+<title>Board - Chamesle</title>
+<meta name="description" content="The Chamesle community board.">
 <link rel="canonical" href="https://chamesle.org/board.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="Board - Chamesle Linux">
-<meta property="og:description" content="The Chamesle Linux community board.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Board - Chamesle">
+<meta property="og:description" content="The Chamesle community board.">
 <meta property="og:url" content="https://chamesle.org/board.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?9">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
-<div class="layout">
-<nav class="side">
-<a class="brand" href="./"><img src="img/logo.png?9" alt="Chamesle" width="64" height="64"></a>
-<p class="name">Chamesle <br>Linux</p>
-<ul>
-  <li><a href="./">Home</a></li>
-  <li><a href="new.html">What's new</a></li>
-  <li><a href="download.html">Download</a></li>
-  <li><a href="editions.html">Desktops</a></li>
-  <li><a href="docs.html">Docs</a></li>
-  <li><a href="packages.html">Packages</a></li>
-  <li><b>Board</b></li>
-  <li><a href="chat.html">Chat</a></li>
-  <li><a href="about.html">About &amp; roadmap</a></li>
-  <li><a href="source.html">Chamesle Source</a></li>
-  <li><a href="https://x22.chamesle.org/">X22</a></li>
-  <li><a href="chess.html">Play chess</a></li>
-</ul>
-<p class="head">Elsewhere</p>
-<ul>
-  <li><a href="https://github.com/tortr-rs/chamesle">GitHub</a></li>
-  <li><a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a></li>
-  <li><a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a></li>
-  <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
-</ul>
-<p class="now">Current release:<br><a href="new.html">0.7 "Be Kool"</a></p>
-</nav>
-<div class="content">
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<b>Board</b> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
 
 <main>
-<header class="dochead">
-    <h1>Board</h1>
-    <p class="lead">Ask for help, show off your desktop, share ideas. You log in with your GitHub account, right here.</p>
-</header>
+<h2>Board</h2>
+<p><i>Ask for help, show off your desktop, share ideas. You log in with your GitHub account, right here.</i></p>
 
 
 <div class="bar" id="sort">
@@ -63,23 +48,17 @@
 <div class="bar" id="cats"><button data-c="" class="on">Everything</button></div>
 <ul class="posts" id="posts"></ul>
 <p id="empty" class="small"></p>
-
 </main>
 
 <hr>
-<address>
-Last updated November 8, 2026.<br>
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.
-</address>
-<p class="buttons">
-<a class="plain" href="https://chamesle.org/"><img src="img/buttons/chamesle.png?9" alt="Chamesle Linux" width="88" height="31"></a>
-<img src="img/buttons/anybrowser.png?9" alt="Best viewed with any browser" width="88" height="31">
-<a class="plain" href="https://voidlinux.org"><img src="img/buttons/void.png?9" alt="Built on Void Linux" width="88" height="31"></a>
-<img src="img/buttons/notrackers.png?9" alt="This site has no trackers" width="88" height="31">
-</p>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
+
 </div>
 
 <script>
@@ -146,7 +125,6 @@ pick(cats, 'c', function (v) { cat = v; });
 fetch('board.json?' + Date.now()).then(function (r) { return r.json(); }).then(function (d) { all = d; show(); })
   .catch(function () { document.getElementById('empty').textContent = "Couldn't load the board. Try reloading."; });
 </script>
-
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>
