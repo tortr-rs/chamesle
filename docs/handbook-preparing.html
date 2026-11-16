@@ -49,10 +49,10 @@
 <li><code>blkid</code> to read UUIDs</li>
 </ul>
 <p>Plan for about 20 GB of free disk space for the sources and build directories of a first install, and a network connection.</p>
-<h2 id="s2-2">2.2 Building hoard and rifle</h2>
+<h2 id="s2-2">2.2 Building SPAS and rifle</h2>
 <p>rifle is a single C file with no libc under it:</p>
 <pre>cd $HOME/src/rifle &amp;&amp; ./build.sh</pre>
-<p><code>rifle/build.sh</code> leaves <code>./rifle</code> and a <code>bin/</code> directory with a link for every tool. hoard is a Rust program. For a system on musl it is built for the musl target, as a static binary:</p>
+<p><code>rifle/build.sh</code> leaves <code>./rifle</code> and a <code>bin/</code> directory with a link for every tool. SPAS is a Rust program, and builds the <code>hoard</code> command. For a system on musl it is built for the musl target, as a static binary:</p>
 <pre>cd $HOME/src/SimplePackagemAnagingSystem
 cargo build --release --target x86_64-unknown-linux-musl
 install -m755 target/x86_64-unknown-linux-musl/release/hoard /usr/local/bin/hoard</pre>

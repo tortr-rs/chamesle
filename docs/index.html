@@ -49,7 +49,7 @@ Scratch. The kernel is Linux. Nothing else in it is GNU. It is text mode: there 
 <tr><td>kernel</td><td>Linux 6.18 LTS, a prebuilt distribution kernel, boots on BIOS and UEFI</td></tr>
 <tr><td>musl</td><td>the C library</td></tr>
 <tr><td>rifle</td><td>the coreutils, one C file. 113 tools, more than 1700 test cases against GNU's</td></tr>
-<tr><td>hoard</td><td>the package manager, from SPAS. Builds from source, runs Gentoo's ebuilds</td></tr>
+<tr><td>SPAS</td><td>the package manager, its command is <code>hoard</code>. Builds from source, runs Gentoo's ebuilds</td></tr>
 <tr><td>ebuilds</td><td>the package repo, Gentoo's, on the musl profile</td></tr>
 <tr><td>mksh</td><td>the shell, also <code>/bin/sh</code></td></tr>
 <tr><td>Winchester</td><td>the init, a shell script in the FreeBSD style, set up in <code>/etc/init.conf</code></td></tr>
@@ -85,8 +85,8 @@ own. The <a href="new.html">news page</a> has the history of the old releases.</
 
 <ol>
 <li>rifle, the coreutils. Done.</li>
-<li>Packages: hoard running Gentoo's ebuilds on musl. Under way.</li>
-<li>The full image, a root built entirely with hoard.</li>
+<li>Packages: SPAS running Gentoo's ebuilds on musl. Under way.</li>
+<li>The full image, a root built entirely with SPAS.</li>
 <li>The handbook: every step of installing by hand, on BIOS and on UEFI.</li>
 <li>Publish the source.</li>
 </ol>
@@ -105,7 +105,7 @@ not this system.</dd>
 <a href="https://github.com/tortr-rs/chamesle">GitHub</a>, and none of it is in the new system.
 <a href="source.html">Chamesle Source</a> is a side project with its own repo.</dd>
 <dt>What license?</dt>
-<dd>Not decided. The packages hoard builds keep their own licenses.</dd>
+<dd>Not decided. The packages SPAS builds keep their own licenses.</dd>
 <dt>No GNU at all?</dt>
 <dd>Nothing GNU is installed. A few GNU build tools (gmake, bison, flex, m4) are used while some packages are
 built, and they are not part of the system.</dd>
