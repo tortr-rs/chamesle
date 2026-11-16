@@ -57,13 +57,13 @@
 <pre>dd if=chamesle.iso of=/dev/sdX bs=4M status=progress conv=fsync</pre>
 
 <h2>What is on it</h2>
-<p>A live system with mksh, vim, hoard and the Gentoo tree, <code>chamesle-chroot</code>, <code>chamesle-disk</code>
+<p>A live system with mksh, vim, SPAS and the Gentoo tree, <code>chamesle-chroot</code>, <code>chamesle-disk</code>
 (cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and the
 handbook in <code>/usr/share/doc/chamesle/</code>. It boots with limine and logs in as root with no password.</p>
 
 <h2>What you need</h2>
 <p>An x86-64 machine with 2 GB of RAM and a disk to install on. The network comes up with DHCP on a wired card; wifi
-firmware is added with hoard after the install, as the handbook says.</p>
+firmware is added with SPAS after the install, as the handbook says.</p>
 
 <h2>Try it in QEMU first</h2>
 <pre>qemu-system-x86_64 -cpu max -m 2G -cdrom chamesle.iso -boot d

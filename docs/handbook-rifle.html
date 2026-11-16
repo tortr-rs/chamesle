@@ -35,7 +35,7 @@
 </div>
 
 <main>
-<p><a href="handbook-hoard.html">&larr; Using hoard</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
+<p><a href="handbook-spas.html">&larr; Using SPAS</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
 <h2>5. rifle</h2>
 <h2 id="s5-1">5.1 What it is</h2>
 <p>rifle is the coreutils of Chamesle in one C file, <code>rifle.c</code>, on <code>c.h</code>, a one-file libc. It has no GNU code in it and no libc under it. It sorts and compares by bytes, always; there are no locales.</p>
@@ -70,9 +70,9 @@ rifle --list                   the names it knows</pre>
 <pre>tests/run.sh                   all the cases
 tests/run.sh sort              the cases that have `sort` in them</pre>
 <p>Each case in <code>tests/cases</code> runs once under GNU coreutils and once under rifle, and what they print and how they exit are compared. The machine that runs the tests therefore has GNU coreutils for the comparison; the installed system does not. <code>./build.sh</code> has to have run first. A case that starts with <code>@ro</code> runs with the whole file system read-only under <code>bwrap</code>, and is skipped when <code>bwrap</code> is missing.</p>
-<p>hoard has tests of its own, in the SPAS sources (<code>cargo test</code>).</p>
+<p>SPAS has tests of its own, in its sources (<code>cargo test</code>).</p>
 <hr>
-<p><a href="handbook-hoard.html">&larr; Using hoard</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
+<p><a href="handbook-spas.html">&larr; Using SPAS</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
 </main>
 
 <hr>

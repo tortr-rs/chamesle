@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Using hoard - Chamesle</title>
-<meta name="description" content="hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
-<link rel="canonical" href="https://chamesle.org/handbook-hoard.html">
+<title>Using SPAS - Chamesle</title>
+<meta name="description" content="SPAS is the package manager, and its command is hoard. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
+<link rel="canonical" href="https://chamesle.org/handbook-spas.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
-<meta property="og:title" content="Using hoard - Chamesle">
-<meta property="og:description" content="hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
-<meta property="og:url" content="https://chamesle.org/handbook-hoard.html">
+<meta property="og:title" content="Using SPAS - Chamesle">
+<meta property="og:description" content="SPAS is the package manager, and its command is hoard. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
+<meta property="og:url" content="https://chamesle.org/handbook-spas.html">
 <link rel="stylesheet" href="style.css?16">
 </head>
 <body>
@@ -36,8 +36,8 @@
 
 <main>
 <p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
-<h2>4. Using hoard</h2>
-<p>hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo's ebuilds. Chamesle uses Gentoo's repository on the musl profile, so a package is an ebuild in <code>/var/db/repos/gentoo</code>, and everything is built on the machine that installs it, unless a binary package matches.</p>
+<h2>4. Using SPAS</h2>
+<p>SPAS is the package manager, and its command is <code>hoard</code>. It is a replacement for Portage written in Rust, and it runs Gentoo's ebuilds. Chamesle uses Gentoo's repository on the musl profile, so a package is an ebuild in <code>/var/db/repos/gentoo</code>, and everything is built on the machine that installs it, unless a binary package matches.</p>
 <h2 id="s4-1">4.1 The commands</h2>
 <pre>hoard install PKG...       install, dependencies first (-p pretend, -1 do not add to world, -u -D -N, -jN parallel builds)
 hoard upgrade              update everything (install -uDN @world)

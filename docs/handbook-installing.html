@@ -35,7 +35,7 @@
 </div>
 
 <main>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-hoard.html">Using hoard &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-spas.html">Using SPAS &rarr;</a></p>
 <h2>3. Installing by hand</h2>
 <p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the machine you install from, usually the live ISO, and it erases the disk.</p>
 <p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
@@ -84,7 +84,7 @@ chamesle-chroot /mnt passwd root</pre>
 <p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/usr/bin/mksh -l</code>.</p>
 <p>Then go on with 3.6 (fstab) and the rest. rifle (3.5) is on the ISO already, skip it. The kernel is in <code>/mnt/boot</code> already.</p>
 <h2 id="s3-4">3.4 Building the system from source, instead</h2>
-<p>Have hoard and the tree ready (sections 2.2 to 2.4) and run chamesle-bootstrap:</p>
+<p>Have SPAS and the tree ready (sections 2.2 to 2.4) and run chamesle-bootstrap:</p>
 <pre>$HOME/src/system/tools/chamesle-bootstrap -n yourhostname /mnt</pre>
 <p>Its usage:</p>
 <pre>chamesle-bootstrap [-s PACKAGES] [-n HOSTNAME] TARGET</pre>
@@ -158,7 +158,7 @@ reboot</pre>
 <li><code>hoard list</code> shows what the bootstrap put on the machine.</li>
 </ol>
 <hr>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-hoard.html">Using hoard &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-spas.html">Using SPAS &rarr;</a></p>
 </main>
 
 <hr>
