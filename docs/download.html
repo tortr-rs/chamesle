@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Install - Chamesle</title>
-<meta name="description" content="How to install Chamesle by hand: chamesle-bootstrap into a mounted disk, or build the live ISO with iso/mkiso.">
+<title>Download - Chamesle</title>
+<meta name="description" content="Download the Chamesle ISO: one image for x86-64 machines, BIOS and UEFI, with its checksum and how to write it to a stick.">
 <link rel="canonical" href="https://chamesle.org/download.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
-<meta property="og:title" content="Install - Chamesle">
-<meta property="og:description" content="How to install Chamesle by hand: chamesle-bootstrap into a mounted disk, or build the live ISO with iso/mkiso.">
+<meta property="og:title" content="Download - Chamesle">
+<meta property="og:description" content="Download the Chamesle ISO: one image for x86-64 machines, BIOS and UEFI, with its checksum and how to write it to a stick.">
 <meta property="og:url" content="https://chamesle.org/download.html">
-<link rel="stylesheet" href="style.css?14">
+<link rel="stylesheet" href="style.css?16">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
 <div id="nav">
 <a href="./">Home</a> |
-<b>Install</b> |
+<b>Download</b> |
 <a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
 <a href="new.html">News</a> |
@@ -35,41 +35,48 @@
 </div>
 
 <main>
-<h2>Install</h2>
+<h2>Download</h2>
+<p>Chamesle is one ISO for x86-64 machines. Write it to a stick, boot it, and install from it by hand with the
+<a href="handbook-installing.html">handbook</a>.</p>
 
-<p>Chamesle is installed by hand. That is the design: like Gentoo or Linux From Scratch, you partition the disk,
-build the base system into it and set up the boot loader yourself. The <a href="docs.html#disk">handbook</a> has
-every step. There are two ways to start.</p>
+<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Download chamesle.iso (447 MB)</a></p>
 
-<h2>From a running Linux</h2>
-<p>On any Linux system with mag and <code>chamesle-bootstrap</code>, mount the target disk and run the bootstrap
-into it. This is chapter 5 of the handbook, <a href="docs.html#disk">Installing by hand</a>.</p>
-<pre>mag sync
-export MAG_REPO=/path/to/repo:/usr/pkgsrc
-chamesle-bootstrap -n yourhostname /mnt</pre>
-<p>It builds the base system from source into <code>/mnt</code>, kernel included, and takes a while. Then you set
-up fstab, the root password and limine, as the handbook says.</p>
+<table>
+<tr><td>File</td><td>chamesle.iso</td></tr>
+<tr><td>Size</td><td>447 MB</td></tr>
+<tr><td>SHA-256</td><td><code>ac10b4c41f66790004f8d05c76f2229523667e014ce108de392825788e10f232</code></td></tr>
+<tr><td>Machines</td><td>x86-64, BIOS and UEFI</td></tr>
+<tr><td>Kernel</td><td>Linux 6.18 LTS</td></tr>
+</table>
 
-<h2>From the live ISO</h2>
-<p>You build the ISO yourself with <code>iso/mkiso</code> (handbook chapter 4) and boot it.</p>
-<pre>iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
-<p>The ISO is a live system with mksh, vim, mag with our recipes, <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>,
-<code>chamesle-disk</code> (cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat,
-zpool, zfs) and the handbook in <code>/usr/share/doc/chamesle/</code>. It boots on BIOS and on UEFI
-machines with limine, from a CD or a stick. Install from it with chapter 5.</p>
-<p>The machine that builds needs <code>mksquashfs</code>, <code>xorriso</code>, <code>zstd</code>,
-<code>bsdcpio</code>, <code>limine</code> and <code>mag</code>. Building everything from source takes a while, and
-LLVM is the long part. <code>mkiso</code> builds a root with <code>chamesle-bootstrap</code>, copies the overlay
-over it, makes the initrd, packs the root into a zstd squashfs and writes the ISO with <code>xorriso</code>.</p>
+<p>Check the download before you use it:</p>
+<pre>sha256sum chamesle.iso</pre>
 
-<h2>Trying it in QEMU</h2>
-<pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d
-qemu-system-x86_64 -cpu max -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
+<h2>Write it to a stick</h2>
+<p>Find the stick with <code>lsblk</code> and use its name, not a partition. This erases everything on it.</p>
+<pre>dd if=chamesle.iso of=/dev/sdX bs=4M status=progress conv=fsync</pre>
+
+<h2>What is on it</h2>
+<p>A live system with mksh, vim, mag and its recipes, <code>chamesle-chroot</code>, <code>chamesle-disk</code>
+(cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and the
+handbook in <code>/usr/share/doc/chamesle/</code>. It boots with limine and logs in as root with no password.</p>
+
+<h2>What you need</h2>
+<p>An x86-64 machine with 2 GB of RAM and a disk to install on. The network comes up with DHCP on a wired card; wifi
+firmware is added with mag after the install, as the handbook says.</p>
+
+<h2>Try it in QEMU first</h2>
+<pre>qemu-system-x86_64 -cpu max -m 2G -cdrom chamesle.iso -boot d
+qemu-system-x86_64 -cpu max -m 2G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
 <p>The first boots it as BIOS, the second as UEFI.</p>
 
+<h2>Then</h2>
+<p>Install it with <a href="handbook-installing.html">chapter 3 of the handbook</a>: partition the disk, copy the
+system, write the boot entry, reboot.</p>
+
 <h2>Older Chamesle ISOs</h2>
-<p>Anything older with Chamesle's name on it, such as the 0.7 ISO, is the old Debian-based distro. It is a
-different system and gets no updates.</p>
+<p>Anything older with Chamesle's name on it, such as the 0.7 ISO, is the old Debian-based distro. It is a different
+system and gets no updates.</p>
 
 </main>
 

@@ -11,7 +11,7 @@
 <meta property="og:title" content="File reference - Chamesle">
 <meta property="og:description" content="File reference">
 <meta property="og:url" content="https://chamesle.org/handbook-files.html">
-<link rel="stylesheet" href="style.css?14">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="download.html">Install</a> |
+<a href="download.html">Download</a> |
 <b>Handbook</b> |
 <a href="packages.html">Packages</a> |
 <a href="new.html">News</a> |
@@ -69,7 +69,6 @@
 <tr><td><code>system/tools/chamesle-chroot</code></td><td>chroot with the pseudo file systems mounted</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
 <tr><td><code>system/files/</code></td><td>init, rc, <code>service</code>, <code>init.conf</code> and the service scripts that go into every root</td></tr>
-<tr><td><code>system/iso/mkiso</code></td><td>builds the live ISO</td></tr>
 <tr><td><code>system/iso/mkinitramfs</code></td><td>builds an initramfs</td></tr>
 <tr><td><code>system/iso/init</code></td><td>the first process in the initramfs</td></tr>
 <tr><td><code>system/iso/profile/packages</code></td><td>what is in the live root</td></tr>
@@ -93,7 +92,6 @@
 </table>
 <h2 id="s10-3">10.3 Commands in short</h2>
 <pre>chamesle-bootstrap [-r REPOS] [-s PACKAGES] [-n HOSTNAME] TARGET
-mkiso [-p profile] [-r repos] [-R rootfs] [-w workdir] [-o out.iso]
 mkinitramfs [-m modules] ROOTFS KVER OUT
 mag [-nfk] install|remove|upgrade|autoremove|list|info|search|files|owns|deps|rdeps|fetch|build|sync|relocate|hash
 rifle --install DIR | --list
