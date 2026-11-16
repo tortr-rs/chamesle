@@ -26,7 +26,7 @@ rm -rf $tmp
 
 # text logo for fastfetch
 mkdir -p $out/chamesle
-python3 ascii.py banner.png 78 8 > $out/chamesle/logo.txt
+python3 ascii.py logo.png 34 > $out/chamesle/logo.txt
 
 # login screen logo: the mark and the name, white text (FONTS=dir with Inter in it)
 mkdir -p $look/chamesle
