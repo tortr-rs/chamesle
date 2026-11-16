@@ -3,51 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Play chess - Chamesle Linux</title>
+<title>Play chess - Chamesle</title>
 <meta name="description" content="Play chess against Stockfish, right here in your browser. Five levels, from beginner to the full engine.">
 <link rel="canonical" href="https://chamesle.org/chess.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="Play chess - Chamesle Linux">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Play chess - Chamesle">
 <meta property="og:description" content="Play chess against Stockfish, right here in your browser. Five levels, from beginner to the full engine.">
 <meta property="og:url" content="https://chamesle.org/chess.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?10">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a class="brand" href="./"><img src="img/logo.png?9" alt="" width="36" height="36"></a> <a href="./">Chamesle Linux</a></h1>
-<div class="sub">a Linux for the computer you already have &mdash; current release <a href="new.html">0.7 "Be Kool"</a></div>
+<h1><a href="./">Chamesle</a></h1>
 </div>
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="new.html">What's new</a> |
-<a href="download.html">Download</a> |
-<a href="editions.html">Desktops</a> |
-<a href="docs.html">Docs</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
 <a href="board.html">Board</a> |
 <a href="chat.html">Chat</a> |
-<a href="about.html">About</a> |
-<a href="source.html">Chamesle Source</a> |
+<a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<b>Chess</b> |
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+<a href="about.html">About</a>
 </div>
 
 <main>
-
-<header class="dochead">
-<h1>Play chess</h1>
-<p class="lead">You against Stockfish, the strongest chess program there is. It runs in your browser, on your
-computer, so nothing about your game leaves it.</p>
-</header>
+<h2>Play chess</h2>
+<p><i>You against Stockfish, the strongest chess program there is. It runs in your browser, on your computer, so nothing about your game leaves it.</i></p>
 
 <form class="chessbar" onsubmit="return false">
 <label>Level
@@ -91,9 +80,39 @@ computer, so nothing about your game leaves it.</p>
 under "Promote to".</p>
 
 <h2>On your own computer</h2>
-<p>Chamesle has the same engine, and a board to play it on:</p>
-<pre>$ sudo apk add gnome-chess stockfish</pre>
-<p>GNOME Chess finds Stockfish on its own. It also plays against another person on the same computer.</p>
+<p>Stockfish is free software and runs anywhere. The new Chamesle has no chess program in it yet.</p>
+
+<h2>Who made what</h2>
+<p><a href="https://stockfishchess.org/">Stockfish</a> is by the Stockfish developers, under the
+<a href="chess/COPYING-stockfish.txt">GPL, version 3</a>. The version here is
+<a href="https://github.com/nmrugg/stockfish.js">Stockfish.js</a> 19.0.1, Nathan Rugg's build for browsers,
+the lite one with the small network; its source is on that page and in
+<a href="https://github.com/official-stockfish/Stockfish">Stockfish's own repo</a>. The rules of chess come from
+<a href="https://github.com/jhlywa/chess.js">chess.js</a> 1.4.0 by Jeff Hlywa
+(<a href="chess/LICENSE-chess.js.txt">BSD license</a>). The pieces are
+<a href="https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces">Cburnett's</a>, the ones on Wikipedia, under
+<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. The board is ours, in
+<a href="chess/play.js">play.js</a>.</p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
+</div>
+
+</div>
+
+<noscript><p><b>The board needs JavaScript.</b> Everything else on this site works without it.</p></noscript>
+
+<p class="small">Click a piece, then the square it goes to. Pawns that reach the end become whatever's picked
+under "Promote to".</p>
+
+<h2>On your own computer</h2>
+<p>Stockfish is free software and runs anywhere. The new Chamesle has no chess program in it yet.</p>
 
 <h2>Who made what</h2>
 <p><a href="https://stockfishchess.org/">Stockfish</a> is by the Stockfish developers, under the
@@ -109,18 +128,7 @@ the lite one with the small network; its source is on that page and in
 
 </main>
 
-<hr>
-<div id="foot">
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.<br>
-<a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a> | <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a> | <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
-$Date: 2026-11-08 $
-</div>
-
-</div>
-
 <script type="module" src="chess/play.js?9"></script>
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>
