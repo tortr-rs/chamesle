@@ -3,151 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Download Chamesle Linux 0.7</title>
-<meta name="description" content="Download Chamesle Linux 0.7: one ISO for KDE Plasma, Xfce, MATE, Cinnamon, GNOME and every flavor. Installs next to Windows.">
+<title>Install - Chamesle</title>
+<meta name="description" content="How to install Chamesle by hand: chamesle-bootstrap into a mounted disk, or build the live ISO with iso/mkiso.">
 <link rel="canonical" href="https://chamesle.org/download.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="Download Chamesle Linux 0.7">
-<meta property="og:description" content="Download Chamesle Linux 0.7: one ISO for KDE Plasma, Xfce, MATE, Cinnamon, GNOME and every flavor. Installs next to Windows.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Install - Chamesle">
+<meta property="og:description" content="How to install Chamesle by hand: chamesle-bootstrap into a mounted disk, or build the live ISO with iso/mkiso.">
 <meta property="og:url" content="https://chamesle.org/download.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?10">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a class="brand" href="./"><img src="img/logo.png?9" alt="" width="36" height="36"></a> <a href="./">Chamesle Linux</a></h1>
-<div class="sub">a Linux for the computer you already have &mdash; current release <a href="new.html">0.7 "Be Kool"</a></div>
+<h1><a href="./">Chamesle</a></h1>
 </div>
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="new.html">What's new</a> |
-<b>Download</b> |
-<a href="editions.html">Desktops</a> |
-<a href="docs.html">Docs</a> |
+<b>Install</b> |
+<a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
 <a href="board.html">Board</a> |
 <a href="chat.html">Chat</a> |
-<a href="about.html">About</a> |
-<a href="source.html">Chamesle Source</a> |
+<a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="chess.html">Chess</a> |
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+<a href="about.html">About</a>
 </div>
 
 <main>
-<header class="dochead">
-    <h1>Download</h1>
-    <p class="lead">Free, 64-bit, about 620&nbsp;MB. One download for every desktop: you pick yours while you install.</p>
-    <p><b>Before you download:</b> Chamesle is <a href="index.html#hold">on hold</a> for a while and gets no
-    updates, security fixes included. It works, but it won't get any safer until we're back.</p>
-</header>
-  <div>
-<div class="dl-grid">
-  <div class="dl">
-    <img src="img/hero-kde.jpg?9" alt="Chamesle 0.7 with KDE Plasma" width="1280" height="800">
-    <div>
-      <h3>Chamesle 0.7</h3>
-      <p>Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Window Maker, TTY or Server. You choose in the installer.</p>
-      <p class="small">Chamesle 0.7.0 "Be Kool" &middot; 64-bit &middot; 618&nbsp;MB</p>
-      <a class="button go" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-x86_64.iso/download">Download Chamesle</a>
-      <a class="plain" href="https://sourceforge.net/projects/chameslerepos/files/iso/chamesle-x86_64.iso.sha256/download">SHA-256</a>
-    </div>
-  </div>
-</div>
-  </div>
+<h2>Install</h2>
 
+<p>Chamesle is installed by hand. That is the design: like Gentoo or Linux From Scratch, you partition the disk,
+build the base system into it and set up the boot loader yourself. The <a href="docs.html#disk">handbook</a> has
+every step. There are two ways to start.</p>
 
+<h2>From a running Linux</h2>
+<p>On any Linux system with mag and <code>chamesle-bootstrap</code>, mount the target disk and run the bootstrap
+into it. This is chapter 5 of the handbook, <a href="docs.html#disk">Installing by hand</a>.</p>
+<pre>mag sync
+export MAG_REPO=/path/to/repo:/usr/pkgsrc
+chamesle-bootstrap -n yourhostname /mnt</pre>
+<p>It builds the base system from source into <code>/mnt</code>, kernel included, and takes a while. Then you set
+up fstab, the root password and limine, as the handbook says.</p>
 
-<p class="small">Not sure which desktop? <a href="editions.html">Compare them</a>. They're all the same system underneath.</p>
+<h2>From the live ISO</h2>
+<p>You build the ISO yourself with <code>iso/mkiso</code> (handbook chapter 4) and boot it.</p>
+<pre>iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
+<p>The ISO is a live system with mksh, vim, mag with our recipes, <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>,
+<code>chamesle-disk</code> (cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat,
+zpool, zfs) and the handbook in <code>/usr/share/doc/chamesle/</code>. It boots on BIOS and on UEFI
+machines with limine, from a CD or a stick. Install from it with chapter 5.</p>
+<p>The machine that builds needs <code>mksquashfs</code>, <code>xorriso</code>, <code>zstd</code>,
+<code>bsdcpio</code>, <code>limine</code> and <code>mag</code>. Building everything from source takes a while, and
+LLVM is the long part. <code>mkiso</code> builds a root with <code>chamesle-bootstrap</code>, copies the overlay
+over it, makes the initrd, packs the root into a zstd squashfs and writes the ISO with <code>xorriso</code>.</p>
 
-<p>Start your computer from the USB stick and Jiggity, the installer, asks you everything up front: language,
-keyboard, network, time zone, your account, which disk, and which desktop. Then it installs, and you restart
-into your new system. Read <a href="#before">Before you start</a> first. <a href="new.html">What's new</a>.</p>
+<h2>Trying it in QEMU</h2>
+<pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d
+qemu-system-x86_64 -cpu max -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
+<p>The first boots it as BIOS, the second as UEFI.</p>
 
-<h2>What you need</h2>
-<ul>
-  <li>a 64-bit PC from roughly the last 12 years (BIOS or UEFI both work)</li>
-  <li>2&nbsp;GB of RAM, 4 for GNOME, KDE Plasma and Cinnamon</li>
-  <li>a USB stick of 2&nbsp;GB or more</li>
-  <li><b>an internet connection while you install</b>, by cable or Wi-Fi. Jiggity downloads the desktop you
-  pick, so how long it takes depends on your connection.</li>
-</ul>
-<p>Secure Boot has to be turned off for now.</p>
-
-<h2 id="before">Before you start</h2>
-<p>Jiggity doesn't touch your disk until the last step, when you've seen what it's going to do and said yes.
-Still, before you install:</p>
-<ul>
-  <li><b>Back up your files</b> to an external drive or a cloud service. Chamesle is still an early release.</li>
-  <li><b>Keeping Windows?</b> If it uses BitLocker (most new laptops do), get your recovery key first, from
-  <a href="https://aka.ms/myrecoverykey">aka.ms/myrecoverykey</a> or a printout, or turn BitLocker off.</li>
-  <li>If you're not sure about any of this, ask on the <a href="board.html">board</a> first.</li>
-</ul>
-
-<h2 id="usb">Making the USB stick</h2>
-<p>This wipes the stick, so copy anything you need off it first.</p>
-
-<h3>On Windows or macOS</h3>
-<p>Get <a href="https://etcher.balena.io/">balenaEtcher</a>, pick the ISO, pick the stick, click Flash.</p>
-<p class="small">We haven't been able to test this on Windows ourselves yet. If something looks different or doesn't work, tell us on the <a href="board.html">board</a>.</p>
-
-<h3>On Linux</h3>
-<p>Etcher works here too. Or from a terminal (check the device name with <code>lsblk</code> first,
-getting it wrong will wipe the wrong disk):</p>
-<pre><code>sudo dd if=chamesle-x86_64.iso of=/dev/sdX bs=4M status=progress conv=fsync</code></pre>
-
-<h3>Ventoy</h3>
-<p>If you already use <a href="https://www.ventoy.net/">Ventoy</a>, just copy the ISO onto the stick.</p>
-
-<h2>Installing</h2>
-<p>Plug the stick in, restart, and open the boot menu. It's usually F12, F11, F8 or Esc right after you power on,
-depending on the computer. Pick the USB stick, then <b>Install Chamesle</b> (or <b>safe graphics</b> if the
-screen stays black). Jiggity asks, in this order:</p>
-<ol>
-  <li><b>Language</b> and <b>keyboard</b></li>
-  <li><b>Network:</b> a cable just works, for Wi-Fi pick yours and type the password</li>
-  <li><b>Time zone</b></li>
-  <li><b>You:</b> your name, a username, a password and a name for the computer</li>
-  <li><b>Disk:</b> a whole drive, or the free space next to Windows, and encryption if you want it</li>
-  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Window Maker, TTY, or Server with no
-  desktop</li>
-  <li><b>Summary:</b> check it, then Install</li>
-</ol>
-<p>From there it needs nothing from you. When it's done, take the stick out and restart, and you're signed in
-to your new desktop. Changed your mind about the desktop later? Add another one any time, for example
-<code>sudo chamesle-desktop kde</code>, and pick it on the sign-in screen.</p>
-
-<h2>Checking the download</h2>
-<p>If you want to be sure the file isn't broken, compare its checksum with the one next to the download:</p>
-<pre><code>sha256sum -c chamesle-x86_64.iso.sha256</code></pre>
-<p>On Windows, <code>certutil -hashfile chamesle-x86_64.iso SHA256</code> in a command prompt does the same.</p>
-<p class="small">We haven't been able to test this on Windows ourselves yet. If something looks different or doesn't work, tell us on the <a href="board.html">board</a>.</p>
-
-<h2>In a virtual machine</h2>
-<p>VirtualBox, VMware, GNOME Boxes and QEMU all work. Give it 2 CPUs, 3&nbsp;GB of RAM and a 20&nbsp;GB disk. With QEMU:</p>
-<pre><code>qemu-img create -f qcow2 chamesle.qcow2 20G
-qemu-system-x86_64 -enable-kvm -m 3G -smp 2 -drive file=chamesle.qcow2 -cdrom chamesle-x86_64.iso</code></pre>
+<h2>Older Chamesle ISOs</h2>
+<p>Anything older with Chamesle's name on it, such as the 0.7 ISO, is the old Debian-based distro. It is a
+different system and gets no updates.</p>
 
 </main>
 
 <hr>
 <div id="foot">
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.<br>
-<a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a> | <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a> | <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
-$Date: 2026-11-10 $
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
 
 </div>
 
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>

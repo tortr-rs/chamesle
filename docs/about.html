@@ -3,158 +3,90 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About - Chamesle Linux</title>
-<meta name="description" content="What Chamesle Linux is, who makes it, and what comes in 0.8, 0.9 and 1.0.">
+<title>About - Chamesle</title>
+<meta name="description" content="About Chamesle: who makes it, what changed, the mascot and how to help.">
 <link rel="canonical" href="https://chamesle.org/about.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="About - Chamesle Linux">
-<meta property="og:description" content="What Chamesle Linux is, who makes it, and what comes in 0.8, 0.9 and 1.0.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="About - Chamesle">
+<meta property="og:description" content="About Chamesle: who makes it, what changed, the mascot and how to help.">
 <meta property="og:url" content="https://chamesle.org/about.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?10">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a class="brand" href="./"><img src="img/logo.png?9" alt="" width="36" height="36"></a> <a href="./">Chamesle Linux</a></h1>
-<div class="sub">a Linux for the computer you already have &mdash; current release <a href="new.html">0.7 "Be Kool"</a></div>
+<h1><a href="./">Chamesle</a></h1>
 </div>
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="new.html">What's new</a> |
-<a href="download.html">Download</a> |
-<a href="editions.html">Desktops</a> |
-<a href="docs.html">Docs</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
 <a href="board.html">Board</a> |
 <a href="chat.html">Chat</a> |
-<b>About</b> |
-<a href="source.html">Chamesle Source</a> |
+<a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="chess.html">Chess</a> |
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+<b>About</b>
 </div>
 
 <main>
-<header class="dochead">
-    <h1>About</h1>
-    <p class="lead">People usually don't leave Linux because of anything big. It's something small: a driver, an app they can't
-find, a menu that isn't where they expected. So the idea is simple. Make a system that looks like what people
-know, has the drivers and apps already sorted, and stays out of the way.</p>
-</header>
+<h2>About</h2>
+<p><i>Chamesle is written by one person.</i></p>
 
 <p>Chamesle is pronounced <b>/tʃa.mes.le/</b>. It's a small project, so things move at that speed.</p>
 
+<h2>Chamesle used to be something else</h2>
+<p>Until this month, Chamesle was a desktop distro for people leaving Windows, put together from other
+systems' packages. It had eight desktops, a glass look, a setup program called Jiggity and releases up to 0.7. We
+dropped all of it on November 14, 2026. It was a lot of work to keep up and not much of it was ours.</p>
+<p>The old releases are no longer supported. Nothing from them carries over, and the new system shares no code
+with them. The old code is still on <a href="https://github.com/tortr-rs/chamesle">GitHub</a> if you want to look.</p>
+
+<h2>The new one</h2>
+<p>It starts from the other end: write the small things ourselves and take as little as possible from anyone else.</p>
+<ul>
+<li><b>rifle</b>, the coreutils, from scratch, in one C file. It is tested against GNU's tools: 810 cases pass.<br>
+The Rifle Shoots down the GNU<br>
+Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down. gmake, to build musl, and the kernel's build tools are still GNU.</li>
+<li><b>mag</b>, the package manager, one C file. It reads NetBSD pkgsrc directly and has a few recipes of our own for
+what pkgsrc doesn't have. <code>mag sync</code> fetches the pkgsrc tree.</li>
+<li><b>chamesle-disk</b> and <b>chamesle-chroot</b>, two small helpers for installing: the first runs cfdisk and makes a vfat boot partition and a ZFS root, the second chroots with <code>/proc</code>, <code>/dev</code> and the rest mounted. The install itself stays by hand.</li>
+<li><b>musl</b> for the C library, <b>mksh</b> for the login shell and <code>/bin/sh</code>, a shell script init in the FreeBSD style (<code>/etc/init.conf</code>, services in <code>/etc/rc.d</code>),
+<b>limine</b> to boot.</li>
+<li><b>Linux 6.18 LTS</b> as the kernel, prebuilt. Nobody here builds a kernel.</li>
+</ul>
+<p>No GNU software goes in the system. The exceptions are build tools: gmake, bison, flex and m4, which
+some packages need while they are being built. They are not part of what gets installed.</p>
+
 <h2 id="roadmap">Roadmap</h2>
-<p><b>On hold since November 10, 2026.</b> All our time goes into <a href="https://x22.chamesle.org/">X22</a>, our X
-server, for a while. Nothing below moves until we're back, and there's no date for that. The
-<a href="index.html#hold">news</a> has the details.</p>
-<ol class="timeline">
-  <li class="done"><span class="ver">0.1</span><div>Xfce live ISO, Windows-like layout, Flathub, firmware and drivers.</div></li>
-  <li class="done"><span class="ver">0.2</span><div>Installer (dual boot, encryption), the system on apk and the Chamesle repo, .deb and .rpm support.</div></li>
-  <li class="done"><span class="ver">0.3</span><div>A GNOME edition. (The update notifier and driver manager came early, in 0.2.)</div></li>
-  <li class="done"><span class="ver">0.4</span><div><b>Updates can't break your computer.</b> Before every update Chamesle takes a snapshot of the system,
-  and if something goes wrong you pick "before the update" in the boot menu and you're back. Only the system is
-  snapshotted, never your files, and only the last 3 are kept, so they don't eat your disk. Plus the first
-  Flavor: Chamesle Astro, for astronomy.</div></li>
-  <li class="done"><span class="ver">0.5</span><div>A KDE Plasma edition, and a friendlier start: our own
-  login screen on every edition, a boot menu that's easy to read, and a blue screen that says what went wrong
-  if the system ever crashes, instead of a wall of text.</div></li>
-  <li class="done"><span class="ver">0.6</span><div><b>Jiggity, our own installer.</b> One 620&nbsp;MB download for every desktop,
-  like Debian's netinst: Jiggity asks everything up front, your language, network, account, disk and which
-  desktop you want, then downloads and installs it, and you restart into it. A new server edition is one of
-  the choices. Chamesle also gets lighter: faster to start and less memory used. Plus three
-  Flavors: a gaming one with Steam, Proton and controllers ready to go, <b>Ranni</b>, KDE Plasma set up to
-  feel like a Mac: a menu bar at the top, a dock at the bottom and Spotlight-style search, and <b>TTY</b>, the
-  console with floating windows on top, on ttywm, our own window manager. And a faster kernel:
-  CachyOS's LTS kernel, tuned for desktops, with a QR code on the crash screen that turns into a readable
-  crash report.</div></li>
-  <li class="done"><span class="ver">0.7</span><div><b>Be Kool: a look of our own.</b> Chamesle Glass on every
-  edition except GNOME: glass frames and taskbar, glossy buttons, Oxygen icons and a new logo. A glass sign-in screen, and a better
-  store: screenshots, ratings and reviews, updates in the background and firmware updates for your BIOS and SSD.</div></li>
-  <li class="next"><span class="ver">0.8</span><div><b>Back to 2001.</b> The glass is gone: Xfce, MATE, Cinnamon and KDE get
-  black title bars, gray raised buttons and gray panels and menus, like the workstations of the time, and the sign-in
-  screen goes with them. Chamesle's own apps in every language, and a pass on accessibility: screen reader, high
-  contrast and large text from the first boot.</div></li>
-  <li class="next"><span class="ver">0.9</span><div>Release candidate: no new features, just fixes. Try it on your computer and tell us on the <a href="board.html">board</a> what breaks, so 1.0 works on as many machines as possible.</div></li>
-  <li class="next"><span class="ver">1.0</span><div>Godrick, with <b>Serp</b>: a desktop of our own, made for
-  Chamesle from the ground up, and on X like the rest. Serp gets a public beta before 1.0, so you can try it and tell us what to fix.
-  Jiggity gets an <b>expert page</b>, for building your own install the way Debian and Fedora let you: untick the
-  apps you don't want, start from the bare base, lay out the disk yourself. App groups (office, games,
-  development) become packages you can add or drop later with one command. And a <b>free software only</b>
-  install: the <a href="https://www.fsfla.org/ikiwiki/selibre/linux-libre/">Linux-libre</a> kernel, no closed drivers or firmware, no Steam, and Flathub
-  limited to free apps. It follows the FSF's guidelines for free distributions. Some Wi-Fi and graphics cards
-  won't work with it, and Jiggity tells you which of yours before you pick it.</div></li>
-</ol>
-<p class="small">No dates for these. Once 1.0 is out, there's a new ISO every 6 months, and the version
-names follow Elden Ring's bosses: Margit until 1.0, then Godrick, Rennala and Radahn.</p>
-
-<h2>Updates every six months</h2>
-<p>The package repo moves forward twice a year. In between it stays put, so what works on Monday still works
-on Friday. Security fixes don't wait for that, they go out as soon as they're ready, and so do fixes to
-Chamesle's own apps. Every update has to install and boot in a test machine before it goes out. The kernel
-stays on the long-term support line.</p>
-
-<h2 id="x">We run on X</h2>
-<img class="xlogo" src="img/x11.svg?9" alt="The X Window System logo" width="96" height="96">
-<p>Chamesle believes in X. Every desktop we ship runs on Xorg, GNOME and KDE Plasma included, even though both of
-them would rather you used Wayland now. We keep Wayland out wherever we can.</p>
-<p>Why: X works. Screen sharing, screen readers, remote desktop, global hotkeys, color pickers, xdotool, old games,
-the program you wrote in 2004: all of it just works, on every graphics card, without anyone having to write a new
-protocol for it first. Thirty years of software expects X, and we'd rather spend our time on the desktop than on
-finding out what broke this week.</p>
-<p>For a lot of us, X on Linux meant <b>XFree86</b>. Through the 90s and into the 2000s it was the X server on
-nearly every Linux and BSD PC, and this website is dressed like its old homepage on purpose. In 2004 the X.Org
-Foundation took XFree86's code and carried it on, and that X.Org server is what every Chamesle desktop runs today.
-So when you sign in to Chamesle, it's XFree86's code, still going.</p>
-<h3>Coming: X22</h3>
-<p>X's weak spot is the thing Wayland people always bring up: tearing, stutter, frames that arrive late. We think
-that's fixable without throwing X away. <b><a href="https://x22.chamesle.org/">X22</a></b> is our own X server, a fork of
-XFree86 4.8, and the goal is X that's as smooth as Wayland while every X program keeps working. It's only just
-started. <a href="https://x22.chamesle.org/">Here's the plan</a>.</p>
-<p>If you want Wayland anyway, it's your computer: the Wayland sessions are in the repo and the sign-in screen
-lists whatever you install.</p>
-
-<h2>How it's built</h2>
-<p>Each ISO is made by one script, <code>build.sh</code>, from a list of packages per edition. The init system is dinit,
-the boot is GRUB with a small initramfs of our own, and the desktop look is Chamesle Glass, our own theme, with the Oxygen icons.
-All of it is in the <a href="https://github.com/tortr-rs/chamesle">GitHub repo</a> if you want to build your own.</p>
-<p>The package repo is built by our own tools: every package is converted to apk, signed with the Chamesle
-key and indexed. The tools are in <code>tools/repo/</code>.</p>
+<p>The plan is on the <a href="./#plan">home page</a>. There are no dates.</p>
+<p>A desktop is not planned yet. X22, our X server, is a separate project and has
+<a href="https://x22.chamesle.org/">its own site</a>.</p>
 
 <h2>Side project</h2>
-<p><a href="source.html">Chamesle Source</a> is the opposite of Chamesle Linux: a kernel that starts straight into
+<p><a href="source.html">Chamesle Source</a> is the other end of the same idea: a kernel that starts straight into
 vi, and nothing else. You write the shell and everything after it.</p>
 
 <h2 id="help">Help out</h2>
 <ul>
-  <li>Try it and <a href="https://github.com/tortr-rs/chamesle/issues">report what breaks</a>.</li>
-  <li>Test it on your hardware, especially laptops and anything with NVIDIA.</li>
-  <li>Pull requests are welcome. Small ones are easier to review. The <a href="https://github.com/tortr-rs/chamesle">code is on GitHub</a>.</li>
-  <li>Chip in on <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a>. It pays for the mirrors and test hardware.</li>
-  <li>Tell a friend who's thinking about leaving Windows.</li>
+  <li>Say hello and ask things on the <a href="board.html">board</a> or in the <a href="chat.html">chat</a>.</li>
+  <li>When the source is out, build it and tell us what breaks.</li>
+  <li>Chip in on <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a>. It pays for hosting and test machines.</li>
 </ul>
 <p>cheers @tortr-rs</p>
-<p><a href="https://ko-fi.com/L6N725GI1V"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi" height="36"></a></p>
 
 <h2>License</h2>
-<p>Chamesle's own code is open source on GitHub. The packages keep their own licenses; source code for every
-package is available on request (<a href="https://github.com/tortr-rs/chamesle/issues">open an issue</a>).
-Some packages, like firmware and the NVIDIA driver, are not open source.</p>
-
-<h2>Contact</h2>
-<p>Issues and questions go on <a href="https://github.com/tortr-rs/chamesle/issues">GitHub</a>.</p>
+<p>Not decided. The packages mag builds keep their own licenses.</p>
 
 <h2 id="chum">Meet Chum</h2>
 <p><img src="img/chum.png?9" alt="Chum, a grey, lumpy and very round sunfish" width="220" height="220"
   style="float:right;margin:0 0 12px 18px"></p>
-<p>Chum is a sunfish. He is the mascot of Chamesle Linux, mostly because nobody else wanted the job.</p>
+<p>Chum is a sunfish. He is the mascot of Chamesle, mostly because nobody else wanted the job.</p>
 <p>He can't see. He doesn't have a tail fin, so he mostly drifts. He has never once been asked for his opinion,
 and he has one about everything.</p>
 <p>You won't find him on the front page. That's on purpose. If you're reading this, you looked around, and Chum
@@ -162,20 +94,19 @@ respects that.</p>
 <p class="small">Favourite food: jellyfish, and whatever drifts past his mouth. Favourite package: <code>sl</code>.
 Least favourite: the Konami code. Don't ask.</p>
 <div style="clear:both"></div>
-
 </main>
 
 <hr>
 <div id="foot">
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.<br>
-<a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a> | <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a> | <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
-$Date: 2026-11-10 $
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
 
 </div>
 
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>

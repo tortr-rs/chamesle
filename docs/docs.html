@@ -3,292 +3,209 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Docs - Chamesle Linux</title>
-<meta name="description" content="How to install Chamesle Linux, update it, undo a bad update, install apps and drivers.">
+<title>Handbook - Chamesle</title>
+<meta name="description" content="The Chamesle handbook: getting a root file system, mag, the kernel, the live ISO and the files of the system.">
 <link rel="canonical" href="https://chamesle.org/docs.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="Docs - Chamesle Linux">
-<meta property="og:description" content="How to install Chamesle Linux, update it, undo a bad update, install apps and drivers.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Handbook - Chamesle">
+<meta property="og:description" content="The Chamesle handbook: getting a root file system, mag, the kernel, the live ISO and the files of the system.">
 <meta property="og:url" content="https://chamesle.org/docs.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?10">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a class="brand" href="./"><img src="img/logo.png?9" alt="" width="36" height="36"></a> <a href="./">Chamesle Linux</a></h1>
-<div class="sub">a Linux for the computer you already have &mdash; current release <a href="new.html">0.7 "Be Kool"</a></div>
+<h1><a href="./">Chamesle</a></h1>
 </div>
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="new.html">What's new</a> |
-<a href="download.html">Download</a> |
-<a href="editions.html">Desktops</a> |
-<b>Docs</b> |
+<a href="download.html">Install</a> |
+<b>Handbook</b> |
 <a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
 <a href="board.html">Board</a> |
 <a href="chat.html">Chat</a> |
-<a href="about.html">About</a> |
-<a href="source.html">Chamesle Source</a> |
+<a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="chess.html">Chess</a> |
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+<a href="about.html">About</a>
 </div>
 
-<main class="docs">
-<header class="dochead">
-    <h1>Docs</h1>
-    <p class="lead">Installing Chamesle, getting apps, keeping it updated, and fixing things.</p>
-</header>
-<nav class="toc">
-  <h4>On this page</h4>
-  <a href="#first">First steps</a>
-  <a href="#install">Installing Chamesle</a>
-  <a href="#apps">Installing apps</a>
-  <a href="#updates">Updates</a>
-  <a href="#services">Services</a>
-  <a href="#windows">Windows programs</a>
-  <a href="#ttywm">ttywm</a>
-  <a href="#hardware">Hardware</a>
-  <a href="#faq">FAQ</a>
-</nav>
-<article>
+<main>
+<h2>The handbook</h2>
+<p><i>How to build and install Chamesle.</i></p>
 
+<p>The kernel is the only thing in it that comes from outside the Unix family. The C library is musl, the shell is
+mksh, the packages come from NetBSD's pkgsrc and the package manager is <code>mag</code>.</p>
+<p>You put Chamesle on a disk yourself, by hand, in <a href="#disk">chapter 5</a>. These pages describe the code as it is today. It changes.</p>
+<div class="toc">
+<h4>Contents</h4>
+<a href="#parts">What is in it</a> <a href="#root">1. Root file system</a> <a href="#mag">2. mag</a>
+<a href="#kernel">3. The kernel</a> <a href="#iso">4. The live ISO</a> <a href="#disk">5. Installing by hand</a>
+<a href="#files">6. Files</a>
+</div>
 
-<h2 id="first">First steps</h2>
-<p>After installing, you restart straight into your desktop. Some things worth knowing:</p>
+<h2 id="parts">What is in it</h2>
+<table class="grid">
+<tr><th>part</th><th>what it is</th></tr>
+<tr><td>kernel</td><td>Linux 6.18 LTS, prebuilt</td></tr>
+<tr><td>musl</td><td>the C library</td></tr>
+<tr><td>rifle</td><td>the coreutils, one C file</td></tr>
+<tr><td>mag</td><td>the package manager, reads pkgsrc packages as they are</td></tr>
+<tr><td>init</td><td>a shell script in the FreeBSD style, <code>/sbin/init</code> and <code>/etc/rc</code>, set up in <code>/etc/init.conf</code> (<code>boot-services</code>, scripts in <code>/etc/rc.d</code>, run with <code>service</code>)</td></tr>
+<tr><td>mksh</td><td>the shell: login shell and <code>/bin/sh</code> (the MirBSD Korn shell)</td></tr>
+<tr><td>vim</td><td>the editor, installed on the ISO</td></tr>
+<tr><td>limine</td><td>the boot loader</td></tr>
+<tr><td>ZFS</td><td>the root file system of an installed system, or ext4 if you prefer</td></tr>
+</table>
+
+<h2 id="root">1. Getting a root file system</h2>
+<p><code>tools/chamesle-bootstrap</code> is to Chamesle what debootstrap is to Debian. It makes the directories and the
+files in <code>/etc</code>, then builds and installs the base packages into the directory you give it, with mag:</p>
+<pre>MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc chamesle-bootstrap /mnt/root</pre>
+<p>Building everything from source takes a while. LLVM is the long one. Packages are not built twice: the sources are
+kept in <code>var/cache/mag</code> inside the target.</p>
+<p><code>-s "shells/mksh editors/vim"</code> installs your own list. <code>-n name</code> sets the host name.</p>
+<p>The base set has a compiler, <code>lang/clang</code> with <code>devel/lld</code>, <code>lang/compiler-rt</code> and
+<code>lang/libunwind</code>, so a fresh install builds what you ask of mag by itself. It also has ZFS (<code>sys-fs/zfs</code>
+and <code>sys-kernel/zfs-module</code>), and gets Chamesle's recipes in <code>/usr/share/mag/repo</code>.</p>
+
+<h2 id="mag">2. mag</h2>
+<pre>mag install editors/vim     fetch, check the checksum, build, install, dependencies first
+mag remove vim
+mag upgrade                 rebuild what has a newer version
+mag search word | info pkg | files pkg | owns /path | deps pkg | list</pre>
+<pre>mag sync                    fetch the pkgsrc tree into /usr/pkgsrc, again to bring it up to date</pre>
+<p><code>MAG_REPO</code> is a list of repos split by colons, <code>/usr/share/mag/repo:/usr/pkgsrc</code> if you do not set it. Two kinds of package live in them and can be mixed:</p>
 <ul>
-  <li>The Windows key opens the start menu. Type to search.</li>
-  <li>Wi-Fi is the network icon in the bottom right.</li>
-  <li>The terminal is in the menu under System, or right-click the desktop.</li>
-  <li>Your user can use <code>sudo</code> with the password you picked in Jiggity.</li>
+<li>our own recipes, <code>category/name</code>, a file with <code>url</code>, <code>sha256</code>, <code>deps</code> and plain sh <code>steps</code></li>
+<li>NetBSD pkgsrc packages: a directory with a <code>Makefile</code>, a <code>distinfo</code> and <code>patches/</code>, read without bmake</li>
 </ul>
+<p>A file called <code>PROVIDES</code> in a repo says which of our packages stands in for a pkgsrc one, so a pkgsrc package
+gets our zlib and not a second one. It also lists the dependencies a pkgsrc Makefile forgets (<code>needs</code>).
+Everything lands in <code>$MAG_ROOT</code>. Nothing is ever installed over a file another package owns, and
+<code>/etc</code> files you changed stay.</p>
 
-<h2 id="install">Installing Chamesle</h2>
-<p><b>Before you install, back up anything important.</b> Shrinking Windows works fine almost always, but
-&ldquo;almost&rdquo; isn't &ldquo;always&rdquo;. If Windows uses BitLocker, get the recovery key
-(<a href="https://aka.ms/myrecoverykey">aka.ms/myrecoverykey</a>) or turn BitLocker off before you start.</p>
-<p>Boot the USB stick and pick <b>Install Chamesle</b>. Jiggity, the installer, asks everything first and
-installs after, so you can walk away once you've answered. It needs the internet, by cable or Wi-Fi, to
-download your desktop.</p>
+<h3 id="magconf">/etc/mag.conf</h3>
+<p>pkgsrc's <code>mk.conf</code> syntax: plain <code>VAR=value</code> lines, read from <code>$MAG_ROOT/etc/mag.conf</code>.</p>
+<pre>JOBS=8                          # $JOBS in the steps, make -j
+CFLAGS=-O2 -pipe                # also CXXFLAGS, CPPFLAGS, LDFLAGS, for every build
+PKG_DEFAULT_OPTIONS=-http2 idn  # options for every pkgsrc package that has them, a minus turns one off
+PKG_OPTIONS.vim=python          # the options of one package</pre>
+<p><code>mag info net/tnftp</code> shows the options a package ends up with, and its dependencies change with them.
+Packages of our own repo have no options. They only see <code>JOBS</code> and the flags. Environment wins over the
+file (<code>MAG_JOBS</code>, <code>CFLAGS</code>).</p>
+
+<h2 id="kernel">3. The kernel</h2>
+<p>Nobody here builds a kernel. <code>sys-kernel/linux</code> is a prebuilt Linux 6.18 LTS kernel and its modules
+(a generic config, so it runs on nearly any machine). mag fetches it from
+the binary mirror named in the recipe, checks the checksum and puts <code>vmlinuz</code>, <code>config</code>, <code>System.map</code> and the
+modules into <code>/boot</code> and <code>/lib/modules</code>.</p>
+<p>The mirror drops a package when a newer one comes out, so a new kernel is a new <code>version</code> and
+<code>sha256</code> in <code>repo/sys-kernel/linux</code>. The firmware is <code>sys-kernel/linux-firmware</code>.</p>
+
+<h2 id="iso">4. The ISO</h2>
+<p>The ISO is a live system to install from, nothing more. Chamesle is put on a disk by hand
+(<a href="#disk">chapter 5</a>). It boots on BIOS and UEFI machines with limine, from a CD or a stick, and has mksh,
+vim, mag with our recipes (<code>mag search</code> works before <code>mag sync</code>), <code>chamesle-bootstrap</code>,
+<code>chamesle-chroot</code>, <code>chamesle-disk</code>, the disk tools (cfdisk, sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and this handbook in
+<code>/usr/share/doc/chamesle/</code>.</p>
+<pre>iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
+<p>What it does, in order:</p>
 <ol>
-  <li><b>Language</b> and <b>keyboard:</b> pick yours from the lists.</li>
-  <li><b>Network:</b> a cable just works. For Wi-Fi, pick your network and type the password.</li>
-  <li><b>Time zone:</b> your region, then your city.</li>
-  <li><b>You:</b> your name, a username, a password and a name for the computer.</li>
-  <li><b>Disk:</b> a whole drive, or the free space next to Windows. To keep Windows, shrink it from Windows
-  first (Disk Management, &ldquo;Shrink Volume&rdquo;) so there's free space to pick. Tick encryption if you
-  want it.</li>
-  <li><b>Desktop:</b> Xfce, MATE, Cinnamon, GNOME, KDE Plasma, Astro, Window Maker, TTY, or Server with no desktop.</li>
-  <li><b>Summary:</b> check it and pick Install. Nothing on your disk changes before this. Restart when it's
-  done and take the stick out.</li>
+<li><code>chamesle-bootstrap</code> builds a root from <code>iso/profile/packages</code>.</li>
+<li>The files of <code>iso/profile/overlay</code>, the handbook, <code>mag</code> with its recipes, <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code> and <code>chamesle-disk</code> are copied over it.</li>
+<li><code>mkinitramfs</code> makes the initrd: a few static tools, the modules in <code>iso/profile/modules</code> with what they depend on, and <code>iso/init</code>.</li>
+<li>The root becomes a zstd squashfs.</li>
+<li><code>xorriso</code> writes the ISO with limine's BIOS and UEFI boot images.</li>
 </ol>
+<p><code>-R dir</code> uses a root you already have instead of building one. It is copied, not changed.</p>
+<p>At boot, <code>init</code> looks for the medium that has <code>LiveOS/rootfs.sfs</code>, mounts it read-only, puts a tmpfs
+overlay over it and switches into the result. The medium and the squashfs stay mounted under <code>/run/live/</code>.</p>
+<p>Try an ISO without a machine:</p>
+<pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d
+qemu-system-x86_64 -cpu max -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso   # uefi</pre>
+<p>mkiso needs <code>mksquashfs</code> (filesystems/squashfs), <code>xorriso</code> (sysutils/libisoburn), <code>zstd</code>,
+<code>bsdcpio</code>, <code>limine</code> and <code>mag</code> on the machine that builds. <code>LIMINE</code> says where
+limine's files are (default <code>/usr/share/limine</code>), <code>MAG</code> where mag is.</p>
 
-<h2 id="apps">Installing apps</h2>
-<p>The easiest way is the <b>Store</b> in the menu: search, click Install. It has Flathub apps and the
-Chamesle repo in one place.</p>
-<p>From a terminal, desktop apps come from Flathub. You can browse it at <a href="https://flathub.org/">flathub.org</a>,
-click Install there, and it opens on your computer. Or in a terminal:</p>
-<pre><code>flatpak search obs
-flatpak install flathub com.obsproject.Studio</code></pre>
-<p>For everything else there's the system package manager. See the <a href="packages.html">packages page</a>.
-Got a <code>.deb</code> or <code>.rpm</code>? From 0.2 you can double-click it.</p>
-
-<h2 id="updates">Updates</h2>
-<p>Flathub apps:</p>
-<pre><code>flatpak update</code></pre>
-<p>The system, from 0.2:</p>
-<pre><code>sudo apk upgrade</code></pre>
-<p>The repo moves forward every six months, and security fixes come in between. You don't have to remember:
-when there are updates, an icon shows up next to the clock. Click it to update everything, system and Flathub apps. On 0.1 it's <code>sudo xbps-install -Su</code>.</p>
-<h3 id="undo">Undoing an update</h3>
-<p>From 0.4, Chamesle takes a snapshot of the system before every update and keeps the last 3. If an update
-breaks something:</p>
+<h2 id="disk">5. Installing by hand</h2>
+<p>Boot the ISO, log in as root, bring the network up (<code>dhcpcd</code>) and do this. <code>sda</code> is the
+disk, change it. <code>chamesle-disk</code> only prepares the disk; the install itself stays by hand.</p>
 <ol>
-  <li>Restart, and in the boot menu pick <b>Chamesle Linux, from before an update</b>, then the update you
-  want to go back before.</li>
-  <li>Chamesle starts as it was then, and asks if you want to keep it. Click <b>Keep this one</b>, and it's
-  your system from the next restart.</li>
+<li>Partition and format with <code>chamesle-disk /dev/sda</code>. It asks you to type the disk name before it erases
+anything, then starts <code>cfdisk</code>: make a GPT with a 1M BIOS boot partition, a 512M EFI partition and the rest
+for <code>/</code>. Then say which partition is the boot partition and which is the root. The boot partition becomes
+vfat, the root a ZFS pool <code>rpool</code> with the datasets <code>rpool/root</code>, <code>rpool/home</code> and
+<code>rpool/var</code>. Everything is mounted under <code>/mnt</code> and <code>/mnt/etc/fstab</code> is written: the boot
+partition by UUID, <code>proc</code>, <code>sysfs</code>, <code>tmpfs</code>, and nothing for ZFS, which mounts its own
+datasets. limine cannot read ZFS, so the kernel, the initrd and <code>limine.conf</code> are on the vfat partition.</li>
+<li>Or do it yourself, for a root on ext4:
+<pre>sfdisk /dev/sda &lt;&lt;P
+label: gpt
+size=1M, type=21686148-6449-6E6F-744E-656564454649
+size=512M, type=U
+type=L
+P
+mkfs.fat -F32 /dev/sda2
+mkfs.ext4 /dev/sda3
+mount /dev/sda3 /mnt
+mkdir /mnt/boot
+mount /dev/sda2 /mnt/boot</pre></li>
+<li>Put the system in <code>/mnt</code>. Copy the live one, which is quick:
+<pre>tar -C /run/live/rootfs --exclude ./etc/fstab -cf - . | tar -C /mnt -xpf -
+[ -e /mnt/etc/fstab ] || cp /run/live/rootfs/etc/fstab /mnt/etc/fstab
+cp /run/live/medium/boot/initrd /mnt/boot/initrd</pre>
+Or build it from source on a machine with a compiler, with <code>chamesle-bootstrap -n yourhostname /mnt</code>
+(<code>MAG_REPO</code> set), which takes a while.</li>
+<li>Work in the new root with <code>chamesle-chroot /mnt</code>, or run one command there:
+<code>chamesle-chroot /mnt mag install ...</code>. It mounts <code>proc</code>, <code>sys</code>, <code>dev</code> and
+<code>run</code>, and unmounts them when it ends.</li>
+<li>Set the password and the boot entry by hand. <code>blkid</code> gives the UUIDs. With a ZFS root fstab has
+only the boot line already; with ext4 add the root line.
+<pre>echo 'root:x:0:0:root:/root:/usr/bin/mksh' &gt; /mnt/etc/passwd   # then put a hash in the second field
+vim /mnt/etc/fstab
+cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/
+vim /mnt/boot/limine.conf</pre>
+limine.conf:
+<pre>timeout: 3
+/Chamesle
+    protocol: linux
+    path: boot():/vmlinuz-6.18.63-0-lts
+    module_path: boot():/initrd
+    cmdline: root=UUID=THE-ROOT-UUID rw</pre>
+On ZFS the command line is <code>root=ZFS=rpool/root rw</code>.</li>
+<li>Install limine for BIOS, unmount and reboot: <code>limine bios-install /dev/sda</code>, <code>umount -R /mnt</code>,
+and on ZFS <code>zpool export rpool</code>.</li>
+<li>On the new system run <code>mag sync</code>, and <code>mag install</code> builds anything from pkgsrc.</li>
 </ol>
-<p>Your files aren't in the snapshots, so they never go back in time. To see the snapshots:
-<code>chamesle-snapshot list</code>. This works on systems installed from 0.4 on, which use btrfs; older
-installs don't have snapshots.</p>
+<p>The initrd from the ISO finds a root by <code>root=UUID=</code>, <code>root=ZFS=</code> or a device. For anything else,
+RAID or an encrypted disk, build your own with <code>iso/mkinitramfs</code>.</p>
 
-<h2 id="services">Services</h2>
-<p>Chamesle uses dinit instead of systemd. Services are small text files in <code>/etc/dinit.d/</code>.
-You control them with <code>dinitctl</code>:</p>
-<table>
-  <tr><td><code>dinitctl list</code></td><td>what's running</td></tr>
-  <tr><td><code>sudo dinitctl start sshd</code></td><td>start a service now</td></tr>
-  <tr><td><code>sudo dinitctl stop sshd</code></td><td>stop it</td></tr>
-  <tr><td><code>sudo dinitctl enable sshd</code></td><td>start it on every boot</td></tr>
-  <tr><td><code>sudo dinitctl disable sshd</code></td><td>don't</td></tr>
+<h2 id="files">6. Files</h2>
+<table class="grid">
+<tr><td><code>/etc/profile</code></td><td>PATH, EDITOR=vim</td></tr>
+<tr><td><code>/etc/ksh.kshrc</code></td><td>prompt and aliases of every ksh</td></tr>
+<tr><td><code>/etc/fstab</code>, <code>hostname</code>, <code>passwd</code>, <code>group</code>, <code>shells</code></td><td>the usual</td></tr>
+<tr><td><code>/var/lib/mag</code></td><td>what is installed, per package</td></tr>
+<tr><td><code>/var/cache/mag</code></td><td>downloaded sources</td></tr>
 </table>
-<p>A service file looks like this:</p>
-<pre><code>type = process
-command = /usr/bin/sshd -D
-depends-on = network</code></pre>
-
-<h2 id="windows">Windows programs</h2>
-<p>Double-click a <code>.exe</code> or <code>.msi</code>. The first time, Chamesle offers to install Windows
-support (Wine). It needs about 3&nbsp;GB. Programs
-you install this way show up in your menu like any other app. Not every Windows program works; the
-<a href="https://appdb.winehq.org/">Wine app database</a> says how well a given one does.</p>
-<p>For Steam games, use Steam (it's on Flathub) and turn on Proton in its settings.</p>
-
-<h2 id="ttywm">ttywm</h2>
-<p>ttywm is our window manager that looks like the console: a full screen shell on every screen, and windows
-floating on top in frames drawn with box characters. Install it on any Chamesle:</p>
-<pre><code>sudo apk add ttywm</code></pre>
-<p>Then log out and pick <b>ttywm</b> on the sign-in screen.</p>
-
-<h3 id="ttywm-keys">Keys and clicks</h3>
-<p>Super is the Windows key.</p>
-<table>
-  <tr><td>Super+Enter</td><td>a new terminal window</td></tr>
-  <tr><td>Super+D</td><td>the apps menu</td></tr>
-  <tr><td>Super+Q</td><td>close the window</td></tr>
-  <tr><td>Super+Tab</td><td>the next window, then back to the shell</td></tr>
-  <tr><td>Super+F</td><td>full screen</td></tr>
-  <tr><td>Super+1 to 9</td><td>go to tty1 to tty9, each has its own shell</td></tr>
-  <tr><td>Super+Shift+1 to 9</td><td>send the window to that tty</td></tr>
-  <tr><td>Super+Shift+E</td><td>log out</td></tr>
-  <tr><td>volume keys</td><td>volume</td></tr>
-</table>
-<p>With the mouse: click <code>[x]</code> to close a window, drag its title to move it, drag its bottom right
-corner to resize it. Super+drag moves a window from anywhere, Super+right drag resizes it. Click the shell to
-type in it again. On the bottom line, click the volume to mute, scroll on it to change it, and click the network
-to connect to Wi-Fi.</p>
-
-<h3 id="ttywm-settings">Settings</h3>
-<p>All the settings are in one file, <code>~/.config/ttywm/config</code>. ttywm makes it the first time it
-starts. Open it in any text editor:</p>
-<pre><code>nano ~/.config/ttywm/config</code></pre>
-<p>Each line is a setting, then <code>=</code>, then what you want. Change what's after the <code>=</code> and
-save: ttywm sees it within a second, no restart. Lines that start with <code>#</code> are notes, ttywm skips
-them.</p>
-<table>
-  <tr><td><code>window colour = white</code></td><td>the frame of the window you're in</td></tr>
-  <tr><td><code>other windows colour = grey</code></td><td>the frames of the other windows</td></tr>
-  <tr><td><code>title colour = white</code></td><td>the window titles</td></tr>
-  <tr><td><code>bottom line colour = grey</code></td><td>the bottom line</td></tr>
-  <tr><td><code>text size = normal</code></td><td><code>normal</code>, or <code>big</code> for small sharp screens. Changes when you log in again</td></tr>
-  <tr><td><code>network = on</code></td><td>show the network on the bottom line, <code>on</code> or <code>off</code></td></tr>
-  <tr><td><code>volume = on</code></td><td>the same for the volume</td></tr>
-  <tr><td><code>battery = on</code></td><td>the battery. A <code>+</code> after it means it's charging</td></tr>
-  <tr><td><code>date = on</code></td><td>the date</td></tr>
-  <tr><td><code>clock = 24 hour</code></td><td><code>24 hour</code>, <code>12 hour</code> or <code>off</code></td></tr>
-  <tr><td><code>terminal = ttywm-term</code></td><td>the terminal Super+Enter opens</td></tr>
-  <tr><td><code>apps menu = rofi -show drun</code></td><td>what Super+D opens</td></tr>
-</table>
-<p>The colours are the console's sixteen: black, blue, green, cyan, red, magenta, brown, grey, dark grey,
-light blue, light green, light cyan, light red, pink, yellow and white.</p>
-
-<h3 id="ttywm-keys-settings">Your own keys</h3>
-<p>A key is the keys joined with <code>+</code>, then <code>=</code>, then what it does. It can open any
-program:</p>
-<pre><code>super+w = firefox
-super+e = thunar
-ctrl+alt+t = ttywm-term</code></pre>
-<p>Or do one of these: <code>terminal</code>, <code>apps menu</code>, <code>close window</code>,
-<code>next window</code>, <code>full screen</code>, <code>log out</code>.</p>
-<pre><code>super+x = close window</code></pre>
-<p>You can use <code>super</code>, <code>shift</code>, <code>ctrl</code> and <code>alt</code>, with a letter,
-a number, <code>f1</code> to <code>f12</code>, <code>enter</code>, <code>tab</code>, <code>space</code>,
-<code>esc</code>, <code>backspace</code>, <code>delete</code>, the arrows (<code>up</code>, <code>down</code>,
-<code>left</code>, <code>right</code>), <code>home</code>, <code>end</code> or <code>print</code>. Super+1 to 9 and the volume keys are always there.
-Delete a key's line and the key does nothing.</p>
-
-<h3 id="ttywm-start">Starting programs when you log in</h3>
-<p>One <code>start</code> line per program:</p>
-<pre><code>start = firefox
-start = nm-applet</code></pre>
-<p>These run when you log in, not when you save the file.</p>
-<p>Made a mess of the file? Delete it and log in again: ttywm writes a fresh one.</p>
-<pre><code>rm ~/.config/ttywm/config</code></pre>
-
-<h2 id="hardware">Hardware</h2>
-<p>Firmware for most Wi-Fi cards, graphics cards and Bluetooth adapters is already included, and Intel
-and AMD graphics work out of the box. Printers are handled by CUPS: open Printers from the menu or go to
-<code>http://localhost:631</code>.</p>
-<p>NVIDIA cards work with the open-source driver out of the box. For games you want NVIDIA's own driver: open
-<b>Driver Manager</b> from the menu, it finds the right one for your card. It also handles some Broadcom Wi-Fi
-chips, HP printers and scanners, and the extras for VirtualBox and VMware.</p>
-
-<h2 id="faq">FAQ</h2>
-
-<details>
-  <summary>Is it free?</summary>
-  <p>Yes. No cost, no ads, no account, no tracking.</p>
-</details>
-
-<details>
-  <summary>Can I install it next to Windows?</summary>
-  <p>Yes, from 0.2. The installer finds Windows, makes room next to it, and you pick which one to start at boot.
-  See <a href="#install">Installing Chamesle</a>.</p>
-</details>
-
-<details>
-  <summary>Will my games work?</summary>
-  <p>Most Steam games do, through Proton. Install Steam from Flathub, then turn on Steam Play in its settings.
-  Games with kernel-level anti-cheat (Valorant, some battle royales) won't.</p>
-</details>
-
-<details>
-  <summary>Can I run Windows programs?</summary>
-  <p>A lot of them, with Wine or Bottles (on Flathub). Check <a href="https://appdb.winehq.org/">WineHQ's app database</a>
-  for how well a specific program works.</p>
-</details>
-
-<details>
-  <summary>Why dinit and not systemd?</summary>
-  <p>It's small, fast, and easy to understand. A service is a five line text file. For a desktop you won't
-  notice the difference, except maybe that it boots quicker.</p>
-</details>
-
-<details>
-  <summary>Is it based on another distro?</summary>
-  <p>Yes, on <a href="https://voidlinux.org/">Void Linux</a>. Chamesle's packages start from Void's, converted to
-  apk and signed with our own key. On top of that it's Chamesle's own: dinit instead of runit, its own repo and
-  update schedule, the installer setup, look and defaults, and tools like pkgimport, the Store and the Driver
-  Manager. The installer is based on Linux Mint's.</p>
-</details>
-
-<details>
-  <summary>Cinnamon: downloading themes or applets says "int() argument must be ... not 'NoneType'".</summary>
-  <p>The Cinnamon version Chamesle ships expects the download server to say how big each file is, and it doesn't
-  always. Newer Cinnamon already handles this. Until the fix is in an update, open a terminal and run:</p>
-  <pre><code>sudo sed -i "s/int(response.headers.get('content-length'))/int(response.headers.get('content-length') or 0)/" /usr/share/cinnamon/cinnamon-settings/bin/Spices.py</code></pre>
-  <p>Then close System Settings and open it again. Downloads work; the progress bar may fill up early, that's all.
-  Thanks to BeepBeep2026 for reporting it.</p>
-</details>
-
-<details>
-  <summary>I found a bug.</summary>
-  <p>Great, sort of. Please <a href="https://github.com/tortr-rs/chamesle/issues">open an issue</a> with what you did,
-  what you expected, and what happened instead. A photo of the screen helps if it's a boot problem.</p>
-</details>
-
-</article>
 </main>
 
 <hr>
 <div id="foot">
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.<br>
-<a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a> | <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a> | <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
-$Date: 2026-11-08 $
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
 
 </div>
 
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>

@@ -3,266 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>What's new - Chamesle Linux</title>
-<meta name="description" content="What's new in Chamesle Linux: 0.7 &quot;Be Kool&quot; with Chamesle Glass, and every release before it.">
+<title>News - Chamesle</title>
+<meta name="description" content="News about Chamesle, newest first, and the history of the old releases.">
 <link rel="canonical" href="https://chamesle.org/new.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Chamesle Linux">
-<meta property="og:title" content="What's new - Chamesle Linux">
-<meta property="og:description" content="What's new in Chamesle Linux: 0.7 &quot;Be Kool&quot; with Chamesle Glass, and every release before it.">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="News - Chamesle">
+<meta property="og:description" content="News about Chamesle, newest first, and the history of the old releases.">
 <meta property="og:url" content="https://chamesle.org/new.html">
-<meta property="og:image" content="https://chamesle.org/img/kde.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="img/logo.png?9">
-<link rel="stylesheet" href="style.css?10">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a class="brand" href="./"><img src="img/logo.png?9" alt="" width="36" height="36"></a> <a href="./">Chamesle Linux</a></h1>
-<div class="sub">a Linux for the computer you already have &mdash; current release <a href="new.html">0.7 "Be Kool"</a></div>
+<h1><a href="./">Chamesle</a></h1>
 </div>
 
 <div id="nav">
 <a href="./">Home</a> |
-<b>What's new</b> |
-<a href="download.html">Download</a> |
-<a href="editions.html">Desktops</a> |
-<a href="docs.html">Docs</a> |
+<a href="download.html">Install</a> |
+<a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
+<b>News</b> |
 <a href="board.html">Board</a> |
 <a href="chat.html">Chat</a> |
-<a href="about.html">About</a> |
-<a href="source.html">Chamesle Source</a> |
+<a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="chess.html">Chess</a> |
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>
+<a href="about.html">About</a>
 </div>
 
-<main class="news">
-<header class="dochead">
-    <h1>What's new</h1>
-    <p class="lead">0.7 "Be Kool" is out. Already on Chamesle? Run <code>sudo apk upgrade</code>. New installs from the <a href="download.html">download page</a> get it straight away.</p>
-    <p>0.7 is the last release for a while: Chamesle is <a href="index.html#hold">on hold</a> while we work on
-    <a href="https://x22.chamesle.org/">X22</a>.</p>
-</header>
+<main>
+<h2>News</h2>
+<p><i>Newest first. The home page has the latest.</i></p>
 
-<h2>0.7 "Be Kool": glass</h2>
-<p><b>A look of our own.</b> Every desktop except GNOME and Astro now wears Chamesle Glass: window frames you
-can see the wallpaper through, a glass taskbar, glossy buttons and the minimise, maximise and close buttons
-hanging from the top edge, with close in red. On KDE Plasma and Play the glass is real, the desktop shows
-blurred through it. Xfce, MATE and Cinnamon get the same look drawn on, because their window managers can't
-blur. Ranni keeps its Mac buttons on the left.</p>
-<p><b>Oxygen icons</b>, the glossy KDE 4 set, with our own on top for the start button, the Store, updates,
-drivers, Windows programs and the installer.</p>
-<p><b>A new logo.</b> The same three-piece ring, now in glass. It's on the start menu, the boot screen, the
-login screen and this site.</p>
-<p><b>A glass sign-in screen.</b> Your picture on a glass panel over the blurred wallpaper, a round blue
-button to sign in, and the shut down button in red.</p>
-<p><b>A new wallpaper:</b> the bay at Komos, on Crete (Jebulon, CC0). The Matterhorn is still there to pick.</p>
-<p><b>A better Store.</b></p>
+<h2 id="2026-11-14">November 14, 2026: starting over</h2>
+<p>Chamesle is a new system now. The old one was a Debian-style desktop distro with eight desktops. It was
+mostly other people's software with our paint on it, and we didn't like where that went. So we stopped, and
+we're writing the system itself.</p>
+<p>What exists today:</p>
 <ul>
-  <li>Screenshots of every app from Flathub, to flip through before you install.</li>
-  <li>Star ratings and reviews, the same ones GNOME Software shows. Once an app is installed you can rate it
-  and write your own.</li>
-  <li>Updates install in the background, once a day while the computer is plugged in. A snapshot is taken
-  first as always, so a bad update can still be undone from the boot menu. There's a switch to turn it off
-  in the Updates tab.</li>
-  <li>Firmware updates: the BIOS, the SSD and other parts, from the people who made them (through LVFS).
-  They're in the Updates tab too.</li>
+<li><b>rifle</b>, the coreutils, in one C file. 87 tools. 810 tests pass against GNU's.</li>
+<li><b>mag</b>, the package manager, in one C file. It reads NetBSD pkgsrc natively.</li>
+<li>An ISO that boots in QEMU on BIOS and UEFI, with musl, mksh, a shell script for init, limine and vim on it.</li>
+<li>The start of the handbook, which is how you install it, which is how you put it on a disk: by hand.</li>
 </ul>
+<p>There is no desktop. The plan is on the <a href="./#plan">home page</a>.</p>
+<p>The site changed to match. The desktops, the glass look, the apk repo and the package search are gone from it, because
+none of that is true any more. The 0.8 release will not happen.</p>
+<p>X22 is not affected. It has <a href="https://x22.chamesle.org/">its own site</a>.</p>
 
-<h2>0.6.0: Jiggity, one ISO for everything and a faster kernel</h2>
-<p><b>Jiggity, our own installer, and one ISO for everything.</b> Instead of an ISO per desktop there's now
-one, about 620&nbsp;MB, like Debian's netinst. Jiggity asks everything up front: language, keyboard, network,
-time zone, your account, the disk (a whole drive or the free space next to Windows, encrypted if you want)
-and which desktop. Then it downloads and installs it, and you restart into your new system. It needs an
-internet connection while it installs.</p>
-<p><b>Four new desktops to pick from.</b></p>
-<ul>
-  <li><a href="editions.html#ranni"><b>Ranni</b></a>: KDE Plasma set up to feel like a Mac, with a menu bar at
-  the top, a dock at the bottom and Super+Space to search. The Khongoryn Els dunes on the desktop.</li>
-  <li><a href="editions.html#play"><b>Play</b></a>: KDE Plasma with Steam installed, GameMode,
-  and controllers that work when you plug them in. The northern lights over Lofoten on the desktop.</li>
-  <li><a href="editions.html#tty"><b>TTY</b></a>: the console with floating windows, on ttywm.</li>
-  <li><a href="editions.html#server"><b>Server</b></a>: no desktop, SSH on from the
-  start.</li>
-</ul>
-<p><b>A faster kernel.</b> Chamesle now runs CachyOS's long-term kernel, tuned for desktops, so the system
-stays quick while something heavy runs in the background. If it ever crashes, the blue screen shows a QR
-code: scan it with your phone and it opens the crash report in a readable form, ready to send to us.</p>
-<p>Also in 0.6:</p>
-<ul>
-  <li><b>Lighter.</b> Bluetooth's tray icon only starts on computers that have Bluetooth, and services for
-  programs an edition doesn't have stay off.</li>
-  <li><b>ttywm 0.5.</b> Brightness keys, notifications in a frame in the top right, Super+arrows to put windows
-  side by side, and Super+L to lock with a login prompt.</li>
-  <li><b>fbttywm.</b> ttywm without X, straight on the screen: <code>sudo apk add fbttywm</code> and run it
-  from a text console.</li>
-</ul>
-<p>Already on Chamesle? <code>sudo apk upgrade</code> brings the new kernel, and a restart starts it.</p>
-
-<h2>ttywm: the console, with windows</h2>
-<p>Our own window manager is out. Every screen is a full screen shell in the real console font and colours, and
-windows float on top in frames drawn with box characters. Super+1 to Super+9 switch between tty1 and tty9, and
-the bottom line shows the network, volume, battery and the time. The settings are one file in plain words, and
-saving it changes things right away. <code>sudo apk add ttywm</code>, then pick ttywm on the sign-in screen.
-It's the base of the TTY Flavor. <a href="editions.html#tty">Have a look</a>.</p>
-
-<h2>0.5.0: KDE Plasma, and a friendlier start</h2>
-<p><b>A KDE Plasma edition.</b> A start menu and a taskbar like you're used to, light windows with the Inter
-font, and the Matterhorn at sunset on the desktop. Underneath, it's KDE: change anything you like.
-<a href="editions.html#kde">Have a look</a>.</p>
-<p><b>A friendlier start.</b> A new boot menu that's easy to read, and the splash goes straight into your
-desktop. Xfce, MATE, Cinnamon and KDE Plasma get our own sign-in screen too; GNOME and Astro keep GNOME's,
-which their lock screen needs.</p>
-<p><b>A blue screen instead of a wall of text.</b> If the system ever crashes, you get a blue screen with the
-error on it, not a frozen picture. And if something fails while starting up, Chamesle says which part failed
-and gives you a repair console, instead of hanging on a black screen.</p>
-<p>Also in 0.5:</p>
-<ul>
-  <li><b>A new wallpaper</b> on every edition: the Matterhorn at sunset, a real photo (Sam Ferrara, CC0).</li>
-  <li><b>A new kernel</b>, Linux 6.18 LTS.</li>
-  <li><b>Installer fixes.</b> It no longer offers the live USB's memory swap as a place to install, it doesn't
-  ask about a blank disk when you chose to install next to Windows, and the summary shows your keyboard layout
-  properly.</li>
-</ul>
-<p><code>sudo apk upgrade</code> brings the new kernel, the boot menu and the blue screen to systems already
-installed. The sign-in screen and KDE Plasma come with the new ISOs.</p>
-
-<h2>0.4.0: updates you can undo, and Chamesle Astro</h2>
-<p><b>Updates can't break your computer.</b> Before every update, Chamesle takes a snapshot of the system. If
-an update breaks something, restart and pick <b>Chamesle Linux, from before an update</b> in the boot menu:
-you're back to how things were, and one click keeps it that way. Only the system goes back in time, never your
-files, and only the last 3 snapshots are kept, so they don't eat your disk. This needs a fresh 0.4 install
-(it uses btrfs, which the installer sets up now); older installs keep working as before.</p>
-<p><b>Chamesle Astro</b>, the first Flavor: the GNOME edition with Stellarium, KStars, Siril and Gpredict
-ready to go, a dark desktop that turns warm at night to keep your night vision, and the Webb telescope's
-&ldquo;Cosmic Cliffs&rdquo; as the wallpaper. <a href="editions.html#astro">Have a look</a>.</p>
-<p>Also in 0.4:</p>
-<ul>
-  <li><b>Cinnamon: Wi-Fi passwords.</b> Clicking a network didn't ask for the password and then said it was
-  wrong. It asks now. <code>sudo apk upgrade</code> fixes existing installs.</li>
-  <li><b>Safer installs.</b> The installer kept your password and disk encryption passphrase where other
-  programs on the live USB could read them while it ran. They stay private now.</li>
-</ul>
-
-<h2>Already running Chamesle? Run this once</h2>
-<p>The key that signs the Chamesle repo has changed. If <code>sudo apk update</code> says
-<b>UNTRUSTED signature</b>, your system doesn't know the new key yet. This adds it:</p>
-<pre><code>sudo curl -o /etc/apk/keys/chamesle-20261108.rsa.pub https://raw.githubusercontent.com/tortr-rs/chamesle/main/keys/apk/chamesle-20261108.rsa.pub</code></pre>
-<p>Then <code>sudo apk upgrade</code> works again. You only need to do this once, and new ISOs know the key
-already.</p>
-<p>The upgrade fixes two things worth having:</p>
-<ul>
-  <li><b>Sound.</b> Nothing started the sound server, so there was no sound and apps that wait for it (like
-  PulseEffects) never opened. Log out and back in after upgrading.</li>
-  <li><b>htop, nano and other terminal programs</b> stopped with "Error opening terminal". They work now.</li>
-</ul>
-
-<h2>0.3.0: a GNOME edition</h2>
-<p>The first edition of 0.3, and the first one that isn't set up like Windows: GNOME's top bar, an overview with
-all your windows, and a dock at the bottom that gets out of the way when a window needs the room. Tray icons
-work, windows have minimise and maximise buttons, and the touchpad clicks with a tap. Same Chamesle wallpaper,
-icons, store and apps. <a href="editions.html">See it</a> or <a href="download.html">get it</a>.</p>
-
-<h2>0.2.1: Windows programs</h2>
-<p>Double-click a <code>.exe</code> and it runs. The first time, Chamesle offers to install Windows support
-(Wine, a 650&nbsp;MB download) and sets it up, with DXVK switched on when your graphics card can use it, so
-games run fast too. After that it's just a double-click. <code>.msi</code> installers work the same way, and
-whatever they install shows up in your menu.</p>
-<p>Also in 0.2.1:</p>
-<ul>
-  <li>The Store, Driver Manager and updates work in the live session. Before, they asked for a password the live
-  session doesn't have.</li>
-  <li>The installer fits on small laptop screens. Its pages scroll instead of pushing the buttons off the bottom.</li>
-  <li>MATE: no more little grab handles on the panel.</li>
-  <li>Cinnamon: the terminal uses a proper monospace font.</li>
-</ul>
-<p>Already running 0.2? <code>sudo apk upgrade</code> gets you all of it.</p>
-
-<h2>Since the release</h2>
-<p>Being rolling means 0.2 keeps getting better without a new ISO. Since it came out:</p>
-<ul>
-  <li><b>A Cinnamon edition.</b> Linux Mint's own desktop, next to Xfce and MATE. <a href="editions.html">Have a look</a>.</li>
-  <li><b>An update notifier.</b> A small icon shows up next to the clock when there are updates. Click it, type your
-  password, done. It covers system packages and Flathub apps.</li>
-  <li><b>Driver Manager.</b> It looks at your hardware and tells you if something works better with another
-  driver: NVIDIA cards (it picks the right driver for how old the card is), some Broadcom Wi-Fi chips, HP printers,
-  VirtualBox and VMware. One click, then a restart.</li>
-  <li><b>The store shows a progress bar</b> while it downloads, so big apps don't look stuck.</li>
-  <li><b>Fixed:</b> some Flathub apps wouldn't install and showed a long error about a kernel module.</li>
-</ul>
-<p>All of this is in the 0.2.1 ISOs, and <code>sudo apk upgrade</code> brings it to an existing 0.2 install.</p>
-
-<h2>pkgimport: .deb and .rpm, just double-click</h2>
-<p>Most Linux apps on the web come as a <code>.deb</code> (Ubuntu, Debian) or an <code>.rpm</code> (Fedora, openSUSE).
-On Chamesle you don't have to care which. Double-click either one and <b>pkgimport</b> installs it: it converts
-the package, pulls in the libraries it needs from the Chamesle repo, and adds it to your menu. Updating and
-removing works like any other package.</p>
-<pre><code>sudo pkgimport install ~/Downloads/app.deb
-sudo pkgimport install ~/Downloads/app.rpm</code></pre>
-
-<h2>The Chamesle Store</h2>
-<p>One window for all your apps: Flathub and the Chamesle repo together, with categories, search and an Updates
-tab that updates everything with one button. If an app is on both, you choose which one you want. It installs
-<code>.deb</code> and <code>.rpm</code> files too. It's the first version, so tell us what's missing on the
-<a href="board.html">board</a>.</p>
-
-<h2>A MATE edition</h2>
-<p>Next to Xfce there's now a MATE edition, with the same Chamesle look and Linux Mint's MATE start menu.
-<a href="editions.html">Compare them</a>.</p>
-
-<h2>An installer</h2>
-<p>0.1 was live-only. 0.2 puts Chamesle on your disk. Double-click <b>Install Chamesle</b> on the desktop and
-answer a few questions: language, keyboard, where it goes, your name and password. Then it does the rest.</p>
-<ul>
-  <li><b>Next to Windows.</b> The installer can shrink a Windows partition to make room, and you choose Windows or
-  Chamesle every time the computer starts.</li>
-  <li><b>Or the whole disk</b>, if you're done with what's on it.</li>
-  <li><b>Encryption</b> with one tick box. Your files stay locked if the laptop gets stolen.</li>
-  <li>Manual partitioning for people who want it, with ext4, btrfs or xfs.</li>
-  <li>Works on both old BIOS machines and UEFI.</li>
-</ul>
-
-<h2>The Chamesle repo</h2>
-<p>The system now uses <b>apk</b> and the Chamesle repo: almost 15,000 packages, each one signed with the
-Chamesle key. Updating everything is one command:</p>
-<pre><code>sudo apk upgrade</code></pre>
-<p> <a href="packages.html">Search the packages</a>.</p>
-
-<h2>Stable rolling</h2>
-<p>From 0.2 Chamesle is a rolling release that's careful about it: updates every week, new versions held back
-for a while before they go out, and a test install that has to boot before anything ships. The kernel is
-pinned to the long-term support line (6.18 now). New ISOs come every 6 months.</p>
-
-<h2>Smaller things</h2>
-<ul>
-  <li>A new 4K wallpaper, the Inter font and Papirus icons.</li>
-  <li>The login screen is Mint's, with the Chamesle logo.</li>
-  <li>Qt apps use the same theme as everything else.</li>
-  <li>fastfetch shows the Chamesle logo.</li>
-  <li>The boot menu of an installed system finds Windows and other systems on its own.</li>
-</ul>
-
-<h2>Still to come</h2>
-<p>0.6: Jiggity, our own installer, and two Flavors: gaming and Ranni. See the <a href="about.html#roadmap">roadmap</a>.</p>
-
+<h2 id="history">History: the old Chamesle</h2>
+<p>These are the releases of the old system. They are listed so the record is straight. None of this is in the new
+Chamesle, and none of it is supported.</p>
+<dl class="news">
+<dt>November 10, 2026</dt>
+<dd>The old Chamesle went on hold, with no 0.8 and no updates.</dd>
+<dt>October 28, 2026</dt>
+<dd>0.7 "Be Kool", with the glass look and the Oxygen icons.</dd>
+<dt>October 26, 2026</dt>
+<dd>0.6, with Jiggity, the old setup program, and one download for every desktop.</dd>
+<dt>Before that</dt>
+<dd>0.1 to 0.5: Xfce first, then apk, then GNOME, snapshots before updates and KDE.</dd>
+</dl>
 </main>
 
 <hr>
 <div id="foot">
-Something wrong on this page? Tell us on the <a href="board.html">board</a> or open an
-<a href="https://github.com/tortr-rs/chamesle/issues">issue</a>.<br>
-Chamesle Linux is free software. Source code for every package is available on request.<br>
-<a href="https://sourceforge.net/projects/chameslerepos/">SourceForge</a> | <a href="https://github.com/tortr-rs/chamesle/issues">Report a bug</a> | <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
-$Date: 2026-11-10 $
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-14 $
 </div>
 
 </div>
 
-<script src="egg.js?9"></script>
+<script src="edit.js"></script>
 </body>
 </html>
