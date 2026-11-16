@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installing by hand - Chamesle</title>
+<meta name="description" content="Follow the BIOS or the UEFI variant where they differ. The disk here is /dev/sda; change it to yours. Everything below">
+<link rel="canonical" href="https://chamesle.org/handbook-installing.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Installing by hand - Chamesle">
+<meta property="og:description" content="Follow the BIOS or the UEFI variant where they differ. The disk here is /dev/sda; change it to yours. Everything below">
+<meta property="og:url" content="https://chamesle.org/handbook-installing.html">
+<link rel="stylesheet" href="style.css?13">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">Using mag &rarr;</a></p>
+<h2>3. Installing by hand</h2>
+<p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the machine you install from, usually the live ISO, and it erases the disk.</p>
+<p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
+<h2 id="s3-1">3.1 chamesle-disk</h2>
+<pre>chamesle-disk /dev/sda</pre>
+<p>It lists the disk and asks you to type its name before it touches anything. Then it starts <code>cfdisk</code> so you lay out the partitions. Three of them work for BIOS and UEFI both:</p>
+<table>
+<tr><th>partition</th><th>size</th><th>type</th><th>use</th></tr>
+<tr><td>1</td><td>1M</td><td>BIOS boot</td><td>limine's BIOS code, not used on UEFI</td></tr>
+<tr><td>2</td><td>512M</td><td>EFI System</td><td><code>/boot</code>, FAT32</td></tr>
+<tr><td>3</td><td>the rest</td><td>Linux filesystem</td><td><code>/</code>, ZFS</td></tr>
+</table>
+<p>Write the table and quit cfdisk. chamesle-disk lists the partitions and asks which one is the boot partition and which is the root. Then it does, in this order:</p>
+<pre>mkfs.fat -F32 BOOT
+zpool create -f -o ashift=12 -O compression=zstd -O acltype=posixacl -O xattr=sa -O mountpoint=none -R /mnt rpool ROOT
+zfs create -o mountpoint=/ -o canmount=noauto rpool/root
+zfs create -o mountpoint=/home rpool/home
+zfs create -o mountpoint=/var rpool/var
+zpool set bootfs=rpool/root rpool</pre>
+<p>and mounts <code>rpool/root</code>, <code>rpool/home</code> and <code>rpool/var</code> under <code>/mnt</code> and the boot partition on <code>/mnt/boot</code>. It also writes <code>/mnt/etc/fstab</code> with the boot partition by UUID and the <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code> lines (an existing one is left alone). It writes nothing else: no <code>limine.conf</code>, no host name, no password. Those are 3.7 and 3.8.</p>
+<p>ZFS mounts its own datasets, so the fstab does not list them. limine cannot read ZFS: the kernel, the initrd and <code>limine.conf</code> live on the FAT partition, which is <code>/boot</code>, and the initramfs imports the pool (3.8).</p>
+<h2 id="s3-2">3.2 Partitioning and file systems by hand</h2>
+<p>For a root on ext4. The layout is the one in 3.1, <code>sda1</code> to <code>sda3</code>:</p>
+<pre>sfdisk /dev/sda &lt;&lt;P
+label: gpt
+size=1M, type=21686148-6449-6E6F-744E-656564454649
+size=512M, type=U
+type=L
+P</pre>
+<p>On an NVMe disk the partitions are <code>/dev/nvme0n1p1</code> and so on. Replace <code>sda1</code>, <code>sda2</code> and <code>sda3</code> throughout.</p>
+<pre>mkfs.fat -F32 /dev/sda2
+mkfs.ext4 /dev/sda3
+mount /dev/sda3 /mnt
+mkdir /mnt/boot
+mount /dev/sda2 /mnt/boot</pre>
+<p>The FAT partition is <code>/boot</code>. The kernel and <code>limine.conf</code> end up there, where limine looks for them on both BIOS and UEFI. The root can be ZFS by hand as well: the <code>zpool</code> and <code>zfs</code> lines of 3.1 are all there is to it.</p>
+<h2 id="s3-3">3.3 Copying the live system</h2>
+<p>The live ISO has no compiler, so on a machine booted from it the system is not built, it is copied. The read-only root of the ISO is mounted on <code>/run/live/rootfs</code> and the ISO itself on <code>/run/live/medium</code>:</p>
+<pre>tar -C /run/live/rootfs --exclude ./etc/fstab -cf - . | tar -C /mnt -xpf -
+[ -e /mnt/etc/fstab ] || cp /run/live/rootfs/etc/fstab /mnt/etc/fstab
+cp /run/live/medium/boot/initrd /mnt/boot/initrd</pre>
+<p>That is the whole base system, kernel, modules and ZFS included, as it was when the ISO was made. The copy keeps the fstab chamesle-disk wrote. The firmware for wifi and some network cards is not on the ISO. Add it with mag once the new system runs (section 4), or build everything instead (3.4), which needs a machine with a compiler.</p>
+<p>Work inside the new root with <code>chamesle-chroot</code>:</p>
+<pre>chamesle-chroot /mnt
+chamesle-chroot /mnt passwd root</pre>
+<p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/usr/bin/mksh -l</code>.</p>
+<p>Then go on with 3.6 (fstab) and the rest. rifle (3.5) is on the ISO already, skip it. The kernel is in <code>/mnt/boot</code> already.</p>
+<h2 id="s3-4">3.4 Building the system from source, instead</h2>
+<p>Point mag at the repositories (section 2.4) and run chamesle-bootstrap:</p>
+<pre>export MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc
+$HOME/src/system/tools/chamesle-bootstrap -n yourhostname /mnt</pre>
+<p>Its usage:</p>
+<pre>chamesle-bootstrap [-r REPOS] [-s PACKAGES] [-n HOSTNAME] TARGET</pre>
+<ul>
+<li><code>-r</code> sets the repositories, instead of <code>MAG_REPO</code></li>
+<li><code>-s</code> is the list of packages to install instead of the base set</li>
+<li><code>-n</code> is the host name, <code>chamesle</code> if not given</li>
+</ul>
+<p>It makes the directories (<code>bin boot dev etc/skel home lib lib/firmware mnt proc root run sbin srv sys tmp usr/bin usr/lib usr/sbin usr/share usr/local/bin var/cache var/lib var/log var/tmp</code>, with <code>tmp</code> and <code>var/tmp</code> mode 1777 and <code>root</code> mode 700), installs everything in <code>files/</code> (init, rc, the services, <code>init.conf</code>), writes the first <code>/etc</code> files (<code>passwd</code>, <code>group</code>, <code>shells</code>, <code>fstab</code>, <code>profile</code>, <code>os-release</code>, <code>mag.conf</code>), and builds the base set into the target with <code>mag</code>:</p>
+<pre>sys-libs/musl devel/gmake archivers/libarchive app-arch/bsdtar archivers/pigz shells/mksh sys-apps/util-linux
+sys-apps/kmod sys-apps/eudev net/dhcpcd net/tnftp sysutils/e2fsprogs sysutils/dosfstools sys-boot/limine
+sys-kernel/linux sys-kernel/linux-firmware sys-firmware/sof-firmware sys-firmware/wireless-regdb editors/vim
+sys-fs/zfs sys-kernel/zfs-module lang/clang devel/lld lang/compiler-rt lang/libunwind</pre>
+<p><code>lang/clang</code> (with <code>lang/llvm</code> under it), <code>devel/lld</code>, <code>lang/compiler-rt</code> and <code>lang/libunwind</code> are the compiler of the new system: it builds what <code>mag install</code> asks for after <code>mag sync</code>, so no other machine is needed. They are the longest part of the bootstrap. It also copies the recipes of the first repo that has a <code>PROVIDES</code> file into <code>/usr/share/mag/repo</code>, installs <code>chamesle-chroot</code> and <code>chamesle-disk</code>, and runs <code>depmod</code>.</p>
+<p>The sources go in <code>/mnt/var/cache/mag</code> and are not fetched twice. An existing file in <code>/etc</code> is never overwritten, so the script can be run again after a failure. A build that fails stops and names the directory it left behind.</p>
+<p>Once musl is in the new root, every later package is built with clang aimed at it, with the loader and library paths pointing into <code>/mnt</code>. That lets the programs run on the host while they are built. They need their real paths before you boot the new system:</p>
+<pre>MAG_ROOT=/mnt mag relocate</pre>
+<p>Run <code>mag relocate</code> again after every <code>MAG_ROOT=/mnt mag install</code> that adds programs (section 9.4).</p>
+<h2 id="s3-5">3.5 rifle</h2>
+<p>The base set has no coreutils: they come from rifle. Install it into the new root:</p>
+<pre>install -m755 $HOME/src/rifle/rifle /mnt/usr/bin/rifle
+$HOME/src/rifle/rifle --install /mnt/usr/bin</pre>
+<p><code>rifle --install DIR</code> makes a link for each of its tools in <code>DIR</code>. rifle is built static, so it runs from the host as it is.</p>
+<p>Add the packages you want now, or after the first boot:</p>
+<pre>MAG_ROOT=/mnt mag install editors/vim
+MAG_ROOT=/mnt mag relocate</pre>
+<h2 id="s3-6">3.6 fstab</h2>
+<p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
+<p>By hand, <code>blkid</code> prints the UUIDs:</p>
+<pre>blkid /dev/sda2 /dev/sda3</pre>
+<p>Open <code>/mnt/etc/fstab</code> and add the root and boot lines under the <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code> lines already there:</p>
+<pre>UUID=ROOT-UUID  /      ext4  defaults  0 1
+UUID=BOOT-UUID  /boot  vfat  defaults  0 2</pre>
+<p>A root on ZFS gets only the boot line. Check that the UUID is the one <code>blkid</code> shows for the boot partition.</p>
+<h2 id="s3-7">3.7 Host name, users, password</h2>
+<p>The host name is already in <code>/mnt/etc/init.conf</code> from <code>-n</code>. The root account is in <code>/mnt/etc/passwd</code> with an <code>x</code> in the password field, and there is no shadow file, so the hash goes into that field. Make one on any machine that has openssl, SHA-512:</p>
+<pre>openssl passwd -6</pre>
+<p>Put the output in the second field of the root line:</p>
+<pre>root:$6$salt$hash:0:0:root:/root:/usr/bin/mksh</pre>
+<p>musl's <code>crypt</code> reads <code>$6$</code> hashes. An empty field means no password at all.</p>
+<p>The groups are <code>root</code>, <code>wheel</code> (10) and <code>users</code> (100). More accounts are lines in <code>passwd</code> and <code>group</code> and a home directory you make (section 6.5).</p>
+<h2 id="s3-8">3.8 The kernel and the boot entry</h2>
+<p>The kernel package put these in <code>/mnt/boot</code> (the version number is whatever the recipe carries):</p>
+<pre>ls /mnt/boot
+config-6.18.63-0-lts   System.map-6.18.63-0-lts   vmlinuz-6.18.63-0-lts</pre>
+<p>Write <code>/mnt/boot/limine.conf</code> with the file name you see and the UUID of the root partition:</p>
+<pre>timeout: 3
+
+/Chamesle
+    protocol: linux
+    path: boot():/vmlinuz-6.18.63-0-lts
+    module_path: boot():/initrd
+    cmdline: root=UUID=ROOT-UUID rw console=tty0</pre>
+<p>For a root on ZFS the command line names the dataset, there is no UUID:</p>
+<pre>    cmdline: root=ZFS=rpool/root rw console=tty0</pre>
+<p><code>boot()</code> is the partition <code>limine.conf</code> is on, which is <code>/boot</code>; with ZFS it is the FAT partition, since limine cannot read ZFS. The kernel has ext4 and the disk drivers as modules, so the system needs the initramfs. The one from the ISO (<code>/mnt/boot/initrd</code>, copied in 3.3) finds the root by <code>root=UUID=</code> or <code>root=ZFS=</code> and loads the modules in <code>iso/profile/modules</code>. Section 7.5 says how to make your own.</p>
+<p>limine's files are in <code>/mnt/usr/share/limine</code>.</p>
+<h3 id="bios">BIOS</h3>
+<pre>cp /mnt/usr/share/limine/limine-bios.sys /mnt/boot/
+limine bios-install /dev/sda</pre>
+<p><code>limine bios-install</code> writes the loader to the start of the disk and into the BIOS boot partition. <code>limine-bios.sys</code> on the FAT partition is the part it loads.</p>
+<h3 id="uefi">UEFI</h3>
+<pre>mkdir -p /mnt/boot/EFI/BOOT
+cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/</pre>
+<p>The firmware starts <code>EFI/BOOT/BOOTX64.EFI</code> of the EFI System partition by itself.</p>
+<p>Do both and the disk boots either way.</p>
+<h2 id="s3-9">3.9 First boot</h2>
+<pre>umount -R /mnt
+zpool export rpool
+reboot</pre>
+<p>Leave out <code>zpool export</code> if the root is not on ZFS.</p>
+<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. <code>init</code> runs <code>/etc/rc</code>, which mounts the file systems and starts the services of <code>init.conf</code>, and puts a login on the ttys. Log in as root.</p>
+<p>Then:</p>
+<ol>
+<li>Bring the network up (section 6.7).</li>
+<li><code>mag sync</code> fetches the pkgsrc tree (section 2.3). Mag's own recipes are in <code>/usr/share/mag/repo</code> already and the default <code>MAG_REPO</code> covers both, so <code>mag install name</code> works from then on, and the compiler is in the base set.</li>
+<li><code>mag list</code> shows what the bootstrap put on the machine.</li>
+</ol>
+<hr>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">Using mag &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-16 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>
