@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packages - Chamesle</title>
-<meta name="description" content="Chamesle packages come from NetBSD pkgsrc, built from source with mag.">
+<meta name="description" content="Chamesle packages are Gentoo ebuilds, built from source with hoard.">
 <link rel="canonical" href="https://chamesle.org/packages.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Packages - Chamesle">
-<meta property="og:description" content="Chamesle packages come from NetBSD pkgsrc, built from source with mag.">
+<meta property="og:description" content="Chamesle packages are Gentoo ebuilds, built from source with hoard.">
 <meta property="og:url" content="https://chamesle.org/packages.html">
 <link rel="stylesheet" href="style.css?16">
 </head>
@@ -36,30 +36,22 @@
 
 <main>
 <h2>Packages</h2>
-<p><i>Packages come from NetBSD's pkgsrc, built from source with mag.</i></p>
+<p><i>Packages are Gentoo's ebuilds, built from source with hoard.</i></p>
 
-<p>The repo is pkgsrc, read as it is, plus a small set of our own recipes for things pkgsrc doesn't have.
-There are no binary packages yet: <code>mag install</code> downloads the source, checks the checksum, builds
-it and installs it, dependencies first.</p>
-<pre>mag install editors/vim
-mag remove vim
-mag upgrade
-mag search word</pre>
+<p>The repo is Gentoo's, on the musl profile. hoard is the package manager from SPAS: it reads the ebuilds,
+resolves the dependencies, runs them in bash and merges the result. There are no binary packages yet.</p>
+<pre>hoard sync
+hoard install app-misc/fastfetch
+hoard remove fastfetch
+hoard upgrade
+hoard search word</pre>
 
-<p>There's no web search for the repo yet. The old one listed the old apk packages, which don't exist in the new
-system, so it's gone. The rest is in the <a href="docs.html#mag">handbook</a>.</p>
-
-<h2>Two kinds of package</h2>
-<ul>
-<li>Our own recipes: a file with a <code>url</code>, a <code>sha256</code>, <code>deps</code> and plain sh steps.</li>
-<li>pkgsrc packages: a directory with a <code>Makefile</code>, a <code>distinfo</code> and <code>patches/</code>.
-mag reads them without bmake.</li>
-</ul>
-<p>Both can be mixed in the same repo path. Nothing is installed over a file that another package owns, and files in
-<code>/etc</code> you changed stay as they are.</p>
+<p>We started on pkgsrc with our own package manager, mag. It kept breaking on small things, one package after
+another, so we're moving to ebuilds. This is still being set up: a first dry run on Chamesle reads the tree and resolves
+dependencies, and the builds are what's being worked on.</p>
 
 <h2>Missing something?</h2>
-<p>If pkgsrc has it, mag can usually build it. If it doesn't build, tell us on the <a href="board.html">board</a>.</p>
+<p>If Gentoo has it, hoard can usually build it. If it doesn't build, tell us on the <a href="board.html">board</a>.</p>
 </main>
 
 <hr>

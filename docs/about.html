@@ -53,8 +53,9 @@ with them. The old code is still on <a href="https://github.com/tortr-rs/chamesl
 <li><b>rifle</b>, the coreutils, from scratch, in one C file. It is tested against GNU's tools: 810 cases pass.<br>
 The Rifle Shoots down the GNU<br>
 Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down. gmake, to build musl, and the kernel's build tools are still GNU.</li>
-<li><b>mag</b>, the package manager, one C file. It reads NetBSD pkgsrc directly and has a few recipes of our own for
-what pkgsrc doesn't have. <code>mag sync</code> fetches the pkgsrc tree.</li>
+<li><b>Winchester</b>, the init. A shell script that runs <code>/etc/rc</code> and keeps the gettys alive.</li>
+<li><b>hoard</b>, the package manager, from SPAS. It reads Gentoo's repository and runs the ebuilds, on the musl profile.
+<code>hoard sync</code> fetches the tree.</li>
 <li><b>chamesle-disk</b> and <b>chamesle-chroot</b>, two small helpers for installing: the first runs cfdisk and makes a vfat boot partition and a ZFS root, the second chroots with <code>/proc</code>, <code>/dev</code> and the rest mounted. The install itself stays by hand.</li>
 <li><b>musl</b> for the C library, <b>mksh</b> for the login shell and <code>/bin/sh</code>, a shell script init in the FreeBSD style (<code>/etc/init.conf</code>, services in <code>/etc/rc.d</code>),
 <b>limine</b> to boot.</li>
@@ -81,7 +82,7 @@ vi, and nothing else. You write the shell and everything after it.</p>
 <p>cheers @tortr-rs</p>
 
 <h2>License</h2>
-<p>Not decided. The packages mag builds keep their own licenses.</p>
+<p>Not decided. The packages hoard builds keep their own licenses.</p>
 
 <h2 id="chum">Meet Chum</h2>
 <p><img src="img/chum.png?9" alt="Chum, a grey, lumpy and very round sunfish" width="220" height="220"
