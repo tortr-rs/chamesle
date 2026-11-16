@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The base system - Chamesle</title>
-<meta name="description" content="/sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<meta name="description" content="The init is called Winchester. /sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
 <link rel="canonical" href="https://chamesle.org/handbook-base.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="The base system - Chamesle">
-<meta property="og:description" content="/sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<meta property="og:description" content="The init is called Winchester. /sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
 <meta property="og:url" content="https://chamesle.org/handbook-base.html">
 <link rel="stylesheet" href="style.css?13">
 </head>
@@ -38,7 +38,7 @@
 <p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
 <h2>6. The base system</h2>
 <h2 id="s6-1">6.1 init</h2>
-<p><code>/sbin/init</code> is a mksh script, and it works the way FreeBSD's init does: the kernel starts it as process 1, it runs <code>/etc/rc</code>, then it keeps a getty on every tty and waits for a signal. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root. Step by step:</p>
+<p>The init is called Winchester. <code>/sbin/init</code> is a mksh script, and it works the way FreeBSD's init does: the kernel starts it as process 1, it runs <code>/etc/rc</code>, then it keeps a getty on every tty and waits for a signal. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root. Step by step:</p>
 <ol>
 <li><code>PATH</code> is set to <code>/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin</code>. <code>proc</code>, <code>sysfs</code> and <code>devtmpfs</code> are mounted if they are not yet, and what init prints goes to <code>/dev/console</code>.</li>
 <li>If <code>single</code> is on the kernel command line, init runs <code>sulogin</code> first.</li>
@@ -103,7 +103,7 @@ shutdown -p +10 back in ten minutes</pre>
 <tr><td><code>fstab</code></td><td><code>proc</code>, <code>sysfs</code>, <code>tmpfs</code> on <code>/tmp</code>, plus the lines you add</td></tr>
 <tr><td><code>profile</code></td><td><code>PATH</code>, <code>EDITOR=vim</code>, <code>PAGER=less</code>, <code>umask 022</code></td></tr>
 <tr><td><code>os-release</code></td><td><code>NAME=Chamesle</code>, <code>ID=chamesle</code></td></tr>
-<tr><td><code>mag.conf</code></td><td><code>JOBS</code> and <code>CFLAGS</code> for mag</td></tr>
+<tr><td><code>make.conf</code></td><td><code>MAKEOPTS</code> and <code>CFLAGS</code> for hoard</td></tr>
 <tr><td><code>skel/</code></td><td>empty directory for the files new homes start from</td></tr>
 </table>
 <p>The login shell is mksh and <code>/etc/profile</code> is read by login shells. For a prompt and aliases make <code>~/.mkshrc</code> and set <code>ENV=$HOME/.mkshrc</code> in <code>/etc/profile</code>.</p>
@@ -120,21 +120,21 @@ chown 1000:1000 /home/alice</pre>
 <h2 id="s6-7">6.7 Networking</h2>
 <p><code>dhcpcd</code> is the DHCP client and is in the base set. For a wired interface:</p>
 <pre>dhcpcd eth0</pre>
-<p><code>dhcpcd</code> without arguments takes every interface. It is the <code>network</code> service, in <code>boot-services</code> by default, so it is up at boot. <code>/sys/class/net/</code> lists the interfaces. For <code>ip</code>, install iproute2 from Chamesle's repo:</p>
-<pre>mag install net-misc/iproute2</pre>
+<p><code>dhcpcd</code> without arguments takes every interface. It is the <code>network</code> service, in <code>boot-services</code> by default, so it is up at boot. <code>/sys/class/net/</code> lists the interfaces. For <code>ip</code>, install iproute2:</p>
+<pre>hoard install sys-apps/iproute2</pre>
 <p>A static address:</p>
 <pre>ip addr add 192.168.1.10/24 dev eth0
 ip link set eth0 up
 ip route add default via 192.168.1.1
 echo &#x27;nameserver 192.168.1.1&#x27; &gt; /etc/resolv.conf</pre>
 <h2 id="s6-8">6.8 Wireless</h2>
-<p><code>iw</code> talks to the kernel's nl80211. It is in Chamesle's repo, with libnl:</p>
-<pre>mag install net-wireless/iw
+<p><code>iw</code> talks to the kernel's nl80211. It is in Gentoo's tree, with libnl:</p>
+<pre>hoard install net-wireless/iw
 iw dev                                       the wireless interfaces
 ip link set wlan0 up
 iw dev wlan0 scan | grep SSID</pre>
 <p><code>sys-firmware/wireless-regdb</code> (in the base set) has the regulatory database, and the card's firmware is in <code>/lib/firmware</code> from <code>sys-kernel/linux-firmware</code>. If <code>dmesg</code> says a firmware file failed to load, check that it is there.</p>
-<p>For an open network <code>iw dev wlan0 connect NAME</code> is enough. For WPA the connection needs <code>wpa_supplicant</code>; if your pkgsrc tree has it (<code>mag search wpa</code>), install it, give it a configuration file with the <code>ssid</code> and the <code>psk</code>, and run it on the interface. Then <code>dhcpcd wlan0</code>.</p>
+<p>For an open network <code>iw dev wlan0 connect NAME</code> is enough. For WPA the connection needs <code>wpa_supplicant</code>; it is <code>net-wireless/wpa_supplicant</code> (<code>hoard search wpa</code>). Install it, give it a configuration file with the <code>ssid</code> and the <code>psk</code>, and run it on the interface. Then <code>dhcpcd wlan0</code>.</p>
 <h2 id="s6-9">6.9 Mounting and disks</h2>
 <pre>mount /dev/sdb1 /mnt/usb
 mount -t vfat -o ro /dev/sdb1 /mnt/usb

@@ -48,19 +48,18 @@
 <tr><td><code>/etc/passwd</code>, <code>/etc/group</code>, <code>/etc/shells</code></td><td>accounts, groups, login shells</td></tr>
 <tr><td><code>/etc/fstab</code></td><td>file systems</td></tr>
 <tr><td><code>/etc/os-release</code></td><td><code>NAME=Chamesle</code>, <code>ID=chamesle</code></td></tr>
-<tr><td><code>/etc/mag.conf</code></td><td>mag's build settings: <code>JOBS</code>, <code>CFLAGS</code>, <code>PKG_DEFAULT_OPTIONS</code>, <code>PKG_OPTIONS.name</code></td></tr>
+<tr><td><code>/etc/spas/</code></td><td>hoard's configuration: <code>make.conf</code>, <code>make.profile</code>, <code>repos.conf/</code>, <code>package.use</code> and the rest (section 4.3)</td></tr>
 <tr><td><code>/boot/limine.conf</code></td><td>the boot entries</td></tr>
 <tr><td><code>/boot/limine-bios.sys</code></td><td>limine's BIOS stage</td></tr>
 <tr><td><code>/boot/EFI/BOOT/BOOTX64.EFI</code></td><td>limine for UEFI</td></tr>
 <tr><td><code>/boot/vmlinuz-V</code>, <code>config-V</code>, <code>System.map-V</code></td><td>the kernel</td></tr>
 <tr><td><code>/lib/modules/V/</code></td><td>its modules</td></tr>
 <tr><td><code>/lib/firmware/</code></td><td>firmware</td></tr>
-<tr><td><code>/var/lib/mag/</code></td><td>the file list of each installed package</td></tr>
-<tr><td><code>/var/cache/mag/</code></td><td>downloaded sources</td></tr>
+<tr><td><code>/var/db/pkg/</code></td><td>the file list of each installed package</td></tr>
+<tr><td><code>/var/cache/distfiles/</code></td><td>downloaded sources</td></tr>
 <tr><td><code>/usr/share/limine/</code></td><td>limine's boot files, for installing it</td></tr>
 <tr><td><code>/usr/share/doc/chamesle/handbook.md</code></td><td>this book, on the live ISO</td></tr>
-<tr><td><code>/usr/share/mag/repo/</code></td><td>Chamesle's recipes</td></tr>
-<tr><td><code>/usr/pkgsrc/</code></td><td>the pkgsrc tree, from <code>mag sync</code></td></tr>
+<tr><td><code>/var/db/repos/gentoo/</code></td><td>the Gentoo tree, from <code>hoard sync</code></td></tr>
 </table>
 <h2 id="s10-2">10.2 In the sources</h2>
 <table>
@@ -76,24 +75,14 @@
 <tr><td><code>system/iso/profile/limine.conf</code></td><td>the live boot menu</td></tr>
 <tr><td><code>system/iso/profile/overlay/</code></td><td>files copied over the live root</td></tr>
 <tr><td><code>system/handbook/handbook.md</code></td><td>this book</td></tr>
-<tr><td><code>mag/mag.c</code>, <code>mag/build.sh</code>, <code>mag/c.h</code></td><td>the package manager and its libc</td></tr>
-<tr><td><code>mag/tests/run.sh</code></td><td>tests on a fake repo: install, upgrade, remove in a scratch root</td></tr>
-<tr><td><code>mag/repo/PROVIDES</code></td><td>pkgsrc packages replaced or skipped, and dependencies added</td></tr>
-<tr><td><code>mag/repo/sys-libs/musl</code></td><td>the libc</td></tr>
-<tr><td><code>mag/repo/sys-kernel/{linux,linux-headers,linux-firmware,zfs-module}</code></td><td>kernel, headers, firmware, the ZFS module</td></tr>
-<tr><td><code>mag/repo/sys-fs/zfs</code></td><td>ZFS userland: <code>zpool</code>, <code>zfs</code></td></tr>
-<tr><td><code>mag/repo/sys-boot/limine</code></td><td>the boot loader</td></tr>
-<tr><td><code>mag/repo/sys-apps/{eudev,kmod,util-linux,usbutils}</code></td><td>udev, module tools, the basics, usb tools</td></tr>
-<tr><td><code>mag/repo/net-libs/libnl</code>, <code>net-wireless/iw</code>, <code>net-misc/iproute2</code></td><td>network tools</td></tr>
-<tr><td><code>mag/repo/sys-firmware/{sof-firmware,wireless-regdb}</code></td><td>firmware extras</td></tr>
-<tr><td><code>mag/repo/dev-libs/netbsd-curses</code>, <code>dev-build/libtool</code></td><td>curses and libtool</td></tr>
+<tr><td><code>SimplePackagemAnagingSystem/src/</code></td><td>hoard, in Rust, and <code>ebuild.sh</code>, the environment ebuilds run in</td></tr>
 <tr><td><code>rifle/rifle.c</code>, <code>rifle/c.h</code>, <code>rifle/build.sh</code></td><td>the coreutils</td></tr>
 <tr><td><code>rifle/tests/run.sh</code>, <code>rifle/tests/cases</code></td><td>the comparison tests</td></tr>
 </table>
 <h2 id="s10-3">10.3 Commands in short</h2>
-<pre>chamesle-bootstrap [-r REPOS] [-s PACKAGES] [-n HOSTNAME] TARGET
+<pre>chamesle-bootstrap [-s PACKAGES] [-n HOSTNAME] TARGET
 mkinitramfs [-m modules] ROOTFS KVER OUT
-mag [-nfk] install|remove|upgrade|autoremove|list|info|search|files|owns|deps|rdeps|fetch|build|sync|relocate|hash
+hoard [--root DIR] install|upgrade|remove|autoremove|sync|search|info|list|files|owns|env-update|manifest|self-update
 rifle --install DIR | --list
 limine bios-install DEVICE</pre>
 <hr>

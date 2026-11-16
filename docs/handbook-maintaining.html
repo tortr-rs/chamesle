@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maintaining - Chamesle</title>
-<meta name="description" content="The first says what would be rebuilt, the second reinstalls whatever the repos have a newer version of. pkgsrc itself is">
+<meta name="description" content="sync brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever">
 <link rel="canonical" href="https://chamesle.org/handbook-maintaining.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Maintaining - Chamesle">
-<meta property="og:description" content="The first says what would be rebuilt, the second reinstalls whatever the repos have a newer version of. pkgsrc itself is">
+<meta property="og:description" content="sync brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever">
 <meta property="og:url" content="https://chamesle.org/handbook-maintaining.html">
 <link rel="stylesheet" href="style.css?13">
 </head>
@@ -38,29 +38,27 @@
 <p><a href="handbook-iso.html">&larr; The live ISO</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
 <h2>9. Maintaining</h2>
 <h2 id="s9-1">9.1 Updating packages</h2>
-<pre>mag -n upgrade
-mag upgrade</pre>
-<p>The first says what would be rebuilt, the second reinstalls whatever the repos have a newer version of. pkgsrc itself is updated with <code>mag sync</code> (section 2.3). One package: <code>mag install name</code>. When you work with <code>MAG_ROOT</code> set, run <code>mag relocate</code> afterwards.</p>
+<pre>hoard sync
+hoard upgrade -p
+hoard upgrade</pre>
+<p><code>sync</code> brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever the tree has a newer version of. One package: <code>hoard install name</code>.</p>
 <h2 id="s9-2">9.2 Cleaning up</h2>
-<pre>mag autoremove                  dependencies nothing needs any more
-rm -rf /var/cache/mag/*         downloaded sources; they are fetched again when needed</pre>
+<pre>hoard autoremove                dependencies nothing needs any more
+rm -rf /var/cache/distfiles/*   downloaded sources; they are fetched again when needed</pre>
 <h2 id="s9-3">9.3 C23 and CFLAGS</h2>
-<p>clang compiles C as C23 by default. Older programs written for C89 or C99 stop with errors about <code>bool</code>, <code>true</code> or <code>false</code> used as names, or about functions declared as <code>int f()</code> and called with arguments. <code>CFLAGS=-O2 -std=gnu17</code> in <code>mag.conf</code> makes the compiler use C17 for every build. It is in the file chamesle-bootstrap writes; if you wrote your own <code>mag.conf</code> without it, add it.</p>
-<p>To see the error of a failed build, run <code>mag -k install name</code>: the build directory is kept, and the error is above the line that says <code>the steps failed, left in ...</code>.</p>
-<h2 id="s9-4">9.4 The root's compiler and mag relocate</h2>
-<p>When <code>MAG_ROOT</code> has musl in it (<code>usr/lib/crt1.o</code> and <code>usr/lib/libc.so</code>), mag makes a <code>cc</code> script in the build directory and puts it first in <code>PATH</code>, with <code>gcc</code>, <code>clang</code> and <code>c99</code> as links to it. It runs the clang of the host with <code>--target=x86_64-linux-musl</code>, <code>--sysroot</code> and <code>-isystem</code> pointed at the root, lld, compiler-rt, and the loader and library paths set to the ones in the root, so that what was built runs on the host. <code>-lgcc</code>, <code>-lgcc_s</code> and <code>-lgcc_eh</code> are dropped from the command line because compiler-rt replaces them.</p>
-<p>A program built that way names <code>/mnt/usr/lib/libc.so</code> as its loader and <code>/mnt/usr/lib</code> as its library path. On the real system neither exists, and running the program says "not found" although the file is there. <code>mag relocate</code> goes through <code>usr</code>, <code>bin</code>, <code>sbin</code> and <code>lib</code> in the root and puts back <code>/lib/ld-musl-x86_64.so.1</code> and <code>/usr/lib</code>. Run it before the first boot and after every install into a <code>MAG_ROOT</code>.</p>
-<p>If there is no <code>clang</code> in <code>PATH</code> outside the root, mag stops with "no clang in PATH: it is the compiler for a musl root".</p>
-<h2 id="s9-5">9.5 libtool</h2>
-<p>pkgsrc packages that use libtool expect a <code>libtool</code> script. <code>dev-build/libtool</code> is a small one of Chamesle's that compiles, links and installs shared and static libraries; kmod, for example, is built with <code>LIBTOOL=libtool</code>. If a package fails at a libtool step, read <code>repo/dev-build/libtool/libtool</code>, and for a package that insists on its own libtool pass <code>LIBTOOL=libtool</code> to its <code>make</code>.</p>
+<p>clang compiles C as C23 by default. Older programs written for C89 or C99 stop with errors about <code>bool</code>, <code>true</code> or <code>false</code> used as names, or about functions declared as <code>int f()</code> and called with arguments. <code>CFLAGS="-O2 -std=gnu17"</code> in <code>/etc/spas/make.conf</code> makes the compiler use C17 for every build. It is in the file chamesle-bootstrap writes; if you wrote your own <code>make.conf</code> without it, add it.</p>
+<p>To see the error of a failed build, read the log hoard names: the build directory is kept, and <code>hoard install --resume</code> goes on from the phase that stopped.</p>
+<h2 id="s9-4">9.4 Installing into a root</h2>
+<p><code>hoard --root /mnt install name</code> builds and merges into <code>/mnt</code>, with the configuration of <code>/mnt/etc/spas</code>. Once the root has musl in it, the builds use the clang of the new root, so a package is built for the system it goes into.</p>
+<h2 id="s9-5">9.5 Build tools</h2>
+<p>Ebuilds call the usual tools by name: <code>make</code>, <code>awk</code>, <code>sed</code>, <code>grep</code>, <code>diff</code>, <code>cmp</code>, <code>install</code>, <code>python3</code>, <code>perl</code>, <code>m4</code>. The coreutils ones are rifle's, and the rest are packages like any other. A name an ebuild asks for that is missing is a package to install, and <code>hoard install -p</code> says which one.</p>
 <h2 id="s9-6">9.6 Failures you will see</h2>
 <table>
 <tr><th>what you see</th><th>why, and what to do</th></tr>
-<tr><td><code>no recipe for NAME</code></td><td>the name is in no repo of <code>MAG_REPO</code>; try <code>mag search</code>, and check the pkgsrc path is in <code>MAG_REPO</code></td></tr>
-<tr><td>a checksum mismatch</td><td>the download is not the one the recipe names; for the kernel see section 7.2</td></tr>
+<tr><td><code>no ebuilds match NAME</code></td><td>the name is in no repository of <code>repos.conf</code>; try <code>hoard search</code>, and run <code>hoard sync</code></td></tr>
+<tr><td>a checksum mismatch</td><td>the download is not the one the Manifest names; hoard fetches it again</td></tr>
 <tr><td><code>no clang in PATH</code></td><td>the build host has no clang outside the new root; install one</td></tr>
-<tr><td>a program says <code>not found</code> though the file is there</td><td>its loader path is the one of the build: <code>MAG_ROOT=... mag relocate</code></td></tr>
-<tr><td>files clash, or a package cannot be removed</td><td>another package owns the file or needs the package; read what mag says, <code>-f</code> goes on</td></tr>
+<tr><td>files clash, or a package cannot be removed</td><td>another package owns the file or needs the package; read what hoard says</td></tr>
 <tr><td>errors on <code>bool</code>, <code>true</code>, <code>false</code> or on old declarations</td><td>C23; <code>CFLAGS=-O2 -std=gnu17</code> (section 9.3)</td></tr>
 <tr><td>musl's build fails</td><td><code>gmake</code> is missing on the host</td></tr>
 <tr><td>"root device not found" at boot</td><td>the kernel cannot see the disk or the file system: it needs a module, use an initramfs (section 7.5)</td></tr>
@@ -68,11 +66,10 @@ rm -rf /var/cache/mag/*         downloaded sources; they are fetched again when 
 <tr><td>a BIOS machine does not boot</td><td><code>limine bios-install /dev/sda</code> was not run, or <code>limine-bios.sys</code> is not in <code>/boot</code></td></tr>
 <tr><td>a UEFI machine does not boot</td><td><code>EFI/BOOT/BOOTX64.EFI</code> is not on the EFI partition, or the partition is not of type EFI System</td></tr>
 <tr><td>a login without a password</td><td>the password field of <code>passwd</code> is empty</td></tr>
-<tr><td>no devices in <code>/dev</code></td><td>udev did not start; check that <code>udevd</code> is installed with <code>mag list</code></td></tr>
+<tr><td>no devices in <code>/dev</code></td><td>udev did not start; check that <code>udevd</code> is installed with <code>hoard list</code></td></tr>
 </table>
 <h2 id="s9-7">9.7 Keeping a build</h2>
-<pre>mag -k install name</pre>
-<p>keeps the build directory. <code>mag fetch name</code> downloads and checks the sources without building, and <code>mag build name</code> builds into a staging directory and prints where the files are.</p>
+<p>hoard keeps the build directory of a failed build, in <code>/var/tmp/portage</code>. <code>hoard install -f name</code> only downloads and checks the sources, and <code>hoard install --resume</code> carries on from the phase that stopped.</p>
 <hr>
 <p><a href="handbook-iso.html">&larr; The live ISO</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
 </main>

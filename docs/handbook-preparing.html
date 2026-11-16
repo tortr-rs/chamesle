@@ -40,48 +40,37 @@
 <h2 id="s2-1">2.1 What the build host needs</h2>
 <p>Chamesle is built from a running Linux machine: any distribution, or the live ISO of chapter 8. The host needs:</p>
 <ul>
-<li><code>clang</code> and <code>lld</code>: <code>mag</code> and <code>rifle</code> are built with them, and so is everything in the new system</li>
+<li><code>clang</code> and <code>lld</code>: <code>rifle</code> is built with them, and so is everything in the new system</li>
+<li><code>cargo</code> and <code>rustc</code>, for <code>hoard</code>, with the musl standard library for <code>x86_64-unknown-linux-musl</code></li>
+<li><code>bash</code>, which ebuilds run in</li>
 <li><code>gmake</code>, for musl</li>
-<li><code>ftp</code> (tnftp), which mag uses for downloads (<code>MAG_FETCH</code>)</li>
 <li><code>tar</code> and a POSIX <code>sh</code></li>
 <li><code>sfdisk</code>, <code>mkfs.ext4</code> and <code>mkfs.fat</code> to prepare the disk</li>
 <li><code>blkid</code> to read UUIDs</li>
 </ul>
 <p>Plan for about 20 GB of free disk space for the sources and build directories of a first install, and a network connection.</p>
-<h2 id="s2-2">2.2 Building mag and rifle</h2>
-<p>Both are a single C file with no libc under it:</p>
-<pre>cd $HOME/src/mag &amp;&amp; ./build.sh
-cd $HOME/src/rifle &amp;&amp; ./build.sh</pre>
-<p><code>mag/build.sh</code> leaves <code>./mag</code>. <code>rifle/build.sh</code> leaves <code>./rifle</code> and a <code>bin/</code> directory with a link for every tool. Put <code>mag</code> in your PATH:</p>
-<pre>install -m755 $HOME/src/mag/mag /usr/local/bin/mag</pre>
-<h2 id="s2-3">2.3 Getting the pkgsrc tree</h2>
-<p>Let mag fetch a pkgsrc tree from NetBSD and unpack it into <code>/usr/pkgsrc</code>:</p>
-<pre>mag sync</pre>
-<p><code>sync</code> downloads <code>https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc.tar.xz</code> and replaces the tree with it, so it is also how the tree is brought up to date. <code>MAG_SYNC_URL</code> names another file, and under <code>MAG_ROOT</code> the tree goes into <code>$MAG_ROOT/usr/pkgsrc</code>. By hand it is the same thing:</p>
-<pre>cd /usr
-ftp -o pkgsrc.tar.xz https://ftp.netbsd.org/pub/pkgsrc/current/pkgsrc.tar.xz
-tar -xf pkgsrc.tar.xz</pre>
-<p>pkgsrc has a directory per category (<code>shells</code>, <code>editors</code>, <code>www</code>, ...) and a directory per package inside it (<code>shells/mksh</code>). <code>mag</code> reads the package's <code>Makefile</code>, <code>distinfo</code> and <code>patches/</code> itself.</p>
-<h2 id="s2-4">2.4 MAG_REPO</h2>
-<p><code>MAG_REPO</code> is a list of repositories separated by colons. Chamesle's own recipes come first, so they win over pkgsrc when both have a package of the same name:</p>
-<pre>export MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc</pre>
-<p>If <code>MAG_REPO</code> is not set, mag looks in <code>/usr/share/mag/repo</code> (Chamesle's own recipes, which the live ISO and every bootstrapped root carry) and then in <code>/usr/pkgsrc</code>, where <code>mag sync</code> puts the tree. <code>MAG_ROOT</code> says where to install; it is the new root during an installation (chapter 3) and unset on a running system.</p>
-<p>A file called <code>PROVIDES</code> in a repo tells mag how our recipes meet pkgsrc's. Its lines are:</p>
-<pre>pkgsrc/package  our/package      our package stands in for the pkgsrc one
-pkgsrc/package  -                nothing is needed, the dependency is dropped
-needs pkgsrc/package  dep        a dependency the pkgsrc Makefile forgets</pre>
-<p>For example <code>converters/libiconv -</code> (musl has iconv) and <code>needs editors/vim dev-libs/netbsd-curses</code>.</p>
-<h2 id="s2-5">2.5 mag.conf</h2>
-<p><code>$MAG_ROOT/etc/mag.conf</code> holds the build settings. It uses the syntax of pkgsrc's <code>mk.conf</code>: plain <code>VAR=value</code> lines. <code>chamesle-bootstrap</code> writes a first one for the new system. For the host you build from, make one yourself:</p>
-<pre>JOBS=8
-CFLAGS=-O2 -std=gnu17</pre>
-<ul>
-<li><code>JOBS</code> is <code>$JOBS</code> in the build steps, the number to give <code>make -j</code>. Without it mag uses 4</li>
-<li><code>CFLAGS</code>, <code>CXXFLAGS</code>, <code>CPPFLAGS</code> and <code>LDFLAGS</code> are set for every build</li>
-<li><code>PKG_DEFAULT_OPTIONS</code> and <code>PKG_OPTIONS.name</code> set pkgsrc options (section 4.6)</li>
-<li><code>CONFIGURE_ARGS.name</code> adds arguments to the <code>configure</code> of one pkgsrc package, such as <code>CONFIGURE_ARGS.libtirpc=--disable-gssapi</code></li>
-</ul>
-<p>The environment wins over the file: <code>MAG_JOBS</code>, <code>CFLAGS</code> and the others, when set, are used as they are.</p>
+<h2 id="s2-2">2.2 Building hoard and rifle</h2>
+<p>rifle is a single C file with no libc under it:</p>
+<pre>cd $HOME/src/rifle &amp;&amp; ./build.sh</pre>
+<p><code>rifle/build.sh</code> leaves <code>./rifle</code> and a <code>bin/</code> directory with a link for every tool. hoard is a Rust program. For a system on musl it is built for the musl target, as a static binary:</p>
+<pre>cd $HOME/src/SimplePackagemAnagingSystem
+cargo build --release --target x86_64-unknown-linux-musl
+install -m755 target/x86_64-unknown-linux-musl/release/hoard /usr/local/bin/hoard</pre>
+<p>The releases of SPAS have a binary for glibc machines, which is what a Gentoo host uses to start with.</p>
+<h2 id="s2-3">2.3 Getting the Gentoo tree</h2>
+<pre>mkdir -p /var/db/repos /etc/spas/repos.conf
+printf &#x27;[gentoo]\nlocation = /var/db/repos/gentoo\nsync-type = git\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n&#x27; &gt; /etc/spas/repos.conf/gentoo.conf
+hoard sync</pre>
+<p><code>sync</code> clones the tree the first time and pulls it after that, so it is also how the tree is brought up to date. Gentoo has a directory per category (<code>app-editors</code>, <code>sys-apps</code>, ...) and a directory per package inside it (<code>app-editors/vim</code>) with the ebuilds, a <code>Manifest</code> and the files they carry.</p>
+<h2 id="s2-4">2.4 The profile</h2>
+<p>The profile says what a package is built for. Chamesle uses the musl one, and <code>make.profile</code> is a link to it:</p>
+<pre>ln -sfn /var/db/repos/gentoo/profiles/default/linux/amd64/23.0/musl /etc/spas/make.profile</pre>
+<p><code>--root DIR</code> says where to install; it is the new root during an installation (chapter 3) and left out on a running system. Its own <code>etc/spas</code> is the one used.</p>
+<h2 id="s2-5">2.5 make.conf</h2>
+<p><code>/etc/spas/make.conf</code> holds the build settings, and section 4.4 has what goes in it. <code>chamesle-bootstrap</code> writes a first one for the new system. For the host you build from, make one yourself:</p>
+<pre>CFLAGS=&quot;-O2 -pipe -std=gnu17&quot;
+CXXFLAGS=&quot;${CFLAGS}&quot;
+MAKEOPTS=&quot;-j8&quot;</pre>
 <p><code>-std=gnu17</code> matters. clang defaults to C23 now, and a lot of older source does not compile under it (section 9.3).</p>
 <hr>
 <p><a href="handbook-about.html">&larr; About Chamesle</a> | <a href="docs.html">Contents</a> | <a href="handbook-installing.html">Installing by hand &rarr;</a></p>

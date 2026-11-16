@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using hoard - Chamesle</title>
+<meta name="description" content="hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
+<link rel="canonical" href="https://chamesle.org/handbook-hoard.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="Using hoard - Chamesle">
+<meta property="og:description" content="hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo&#x27;s ebuilds. Chamesle">
+<meta property="og:url" content="https://chamesle.org/handbook-hoard.html">
+<link rel="stylesheet" href="style.css?13">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Download</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+<h2>4. Using hoard</h2>
+<p>hoard is the package manager of SPAS. It is a replacement for Portage written in Rust, and it runs Gentoo's ebuilds. Chamesle uses Gentoo's repository on the musl profile, so a package is an ebuild in <code>/var/db/repos/gentoo</code>, and everything is built on the machine that installs it, unless a binary package matches.</p>
+<h2 id="s4-1">4.1 The commands</h2>
+<pre>hoard install PKG...       install, dependencies first (-p pretend, -1 do not add to world, -u -D -N, -jN parallel builds)
+hoard upgrade              update everything (install -uDN @world)
+hoard remove PKG...        uninstall
+hoard autoremove           uninstall what @world and @system no longer need
+hoard sync                 sync the repositories
+hoard search REGEX         names (-d: descriptions too)
+hoard info PKG             versions, masks, keywords, USE
+hoard list                 what is installed
+hoard files PKG            the files a package put on the system
+hoard owns PATH            which package a file came from
+hoard env-update           regenerate /etc/profile.env and ld.so.conf
+hoard manifest PKG|DIR     write the DIST lines of an overlay package&#x27;s Manifest
+hoard self-update          replace a hand-installed hoard with the newest release</pre>
+<p>A package name works without its category (<code>hoard install tree</code>); hoard asks if two categories have it. <code>hoard --root DIR</code> does any of this in another root, which is how a new system is built (chapter 3).</p>
+<h2 id="s4-2">4.2 Installing and removing</h2>
+<pre>hoard install app-editors/vim
+hoard install -p app-misc/fastfetch      what would be built, nothing is done
+hoard remove vim</pre>
+<p><code>install</code> takes the dependencies first, downloads the sources, checks their size, BLAKE2B and SHA512 against the Manifest, builds in a private directory as the <code>portage</code> user without network, and merges the result. Before it touches anything it checks every file against what other packages own, a file under <code>/etc</code> that you changed stays and the new one is written next to it as <code>._cfg0000_name</code>, and each file is replaced atomically, so a running program is never half written.</p>
+<p>If a build fails, hoard keeps the build directory. <code>hoard install --resume</code> goes on from the phase that stopped, <code>--skipfirst</code> leaves the failed package out and <code>--keep-going</code> builds everything that does not depend on it.</p>
+<h2 id="s4-3">4.3 Where it keeps things</h2>
+<table>
+<tr><th>what</th><th>where</th></tr>
+<tr><td>configuration</td><td><code>/etc/spas</code>: <code>make.conf</code>, <code>make.profile</code>, <code>repos.conf/</code>, <code>package.use</code>, <code>package.accept_keywords</code>, <code>package.mask</code>, <code>package.license</code>, <code>package.env</code> and <code>env/</code></td></tr>
+<tr><td>the repositories</td><td><code>/var/db/repos/gentoo</code>, and any overlay you add</td></tr>
+<tr><td>installed packages</td><td><code>/var/db/pkg</code>, one directory per package, with its <code>CONTENTS</code></td></tr>
+<tr><td>the world file</td><td><code>/var/lib/portage/world</code></td></tr>
+<tr><td>downloaded sources</td><td><code>/var/cache/distfiles</code></td></tr>
+<tr><td>binary packages</td><td><code>PKGDIR</code>, from <code>/etc/spas/make.conf</code></td></tr>
+</table>
+<p>If there is no <code>/etc/spas</code>, hoard reads <code>/etc/portage</code> instead, so a machine that has Portage's files is understood as it is.</p>
+<h2 id="s4-4">4.4 make.conf</h2>
+<p><code>/etc/spas/make.conf</code> holds the build settings, in the shell syntax of Portage's:</p>
+<pre>COMMON_FLAGS=&quot;-O2 -pipe -std=gnu17&quot;
+CFLAGS=&quot;${COMMON_FLAGS}&quot;
+CXXFLAGS=&quot;${COMMON_FLAGS}&quot;
+CHOST=&quot;x86_64-pc-linux-musl&quot;
+MAKEOPTS=&quot;-j8&quot;
+ACCEPT_KEYWORDS=&quot;amd64&quot;
+USE=&quot;-systemd&quot;</pre>
+<ul>
+<li><code>MAKEOPTS</code> is the number of jobs for <code>make</code>, and <code>-jN</code> on the hoard command line is how many packages build at once</li>
+<li><code>USE</code> turns features on and off for every package; one package gets its own line in <code>package.use</code></li>
+<li><code>ACCEPT_KEYWORDS</code> says how new the packages may be: <code>amd64</code> is stable, <code>~amd64</code> is testing</li>
+<li><code>/etc/spas/make.profile</code> is a link to a profile of the tree. Chamesle uses the musl one: <code>ln -sfn /var/db/repos/gentoo/profiles/default/linux/amd64/23.0/musl /etc/spas/make.profile</code></li>
+</ul>
+<p><code>-std=gnu17</code> matters. clang defaults to C23 now, and a lot of older source does not compile under it (section 9.3).</p>
+<h2 id="s4-5">4.5 Repositories</h2>
+<p><code>/etc/spas/repos.conf/gentoo.conf</code> names the tree and where it comes from:</p>
+<pre>[gentoo]
+location = /var/db/repos/gentoo
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/gentoo.git</pre>
+<p><code>hoard sync</code> brings every repository up to date. A git repository whose newest commit is not validly signed is rolled back, and a tree from rsync is checked against its signed Manifests.</p>
+<h2 id="s4-6">4.6 USE flags and keywords</h2>
+<p>When nothing satisfies a dependency, hoard works out the smallest change that would (a <code>package.use</code> line, a <code>~amd64</code> keyword or a license), shows it, and writes it to <code>zz-hoard-autounmask</code> in the config directory after you say yes.</p>
+<pre>hoard info net-misc/curl                 the versions, the USE flags and what they are now
+echo &quot;net-misc/curl http2 -idn&quot; &gt;&gt; /etc/spas/package.use</pre>
+<h2 id="s4-7">4.7 Binary packages</h2>
+<p><code>hoard install -g</code> uses prebuilt packages from Gentoo's binary host when the version, slot and every USE flag match, and otherwise builds the ebuild. They are checked against the index and the release key before they are unpacked. <code>-b</code> (or <code>FEATURES=buildpkg</code>) saves everything you build as a <code>.gpkg.tar</code> in <code>PKGDIR</code>, and hoard installs from those the next time the version and USE match.</p>
+<h2 id="s4-8">4.8 Writing an ebuild</h2>
+<p>If the tree does not have what you want, write an ebuild in an overlay. An overlay is a repository with <code>profiles/repo_name</code>, <code>metadata/layout.conf</code> and <code>category/name/name-VERSION.ebuild</code>:</p>
+<pre>EAPI=8
+DESCRIPTION=&quot;nl80211 wireless configuration tool&quot;
+HOMEPAGE=&quot;https://wireless.docs.kernel.org/en/latest/en/users/documentation/iw.html&quot;
+SRC_URI=&quot;https://cdn.kernel.org/pub/software/network/iw/${P}.tar.xz&quot;
+LICENSE=&quot;ISC&quot;
+SLOT=&quot;0&quot;
+KEYWORDS=&quot;amd64&quot;
+DEPEND=&quot;dev-libs/libnl&quot;
+RDEPEND=&quot;${DEPEND}&quot;
+BDEPEND=&quot;virtual/pkgconfig&quot;
+
+src_install() {
+	emake PREFIX=&quot;${EPREFIX}/usr&quot; DESTDIR=&quot;${D}&quot; install
+}</pre>
+<p><code>hoard manifest net-wireless/iw</code> writes the checksums of the sources into the package's <code>Manifest</code>. Add the overlay to <code>/etc/spas/repos.conf/</code>, run <code>hoard sync</code>, and <code>hoard install net-wireless/iw</code> builds it.</p>
+<hr>
+<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-16 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>
