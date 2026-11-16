@@ -35,7 +35,7 @@
 </div>
 
 <main>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">Using mag &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-hoard.html">Using hoard &rarr;</a></p>
 <h2>3. Installing by hand</h2>
 <p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the machine you install from, usually the live ISO, and it erases the disk.</p>
 <p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
@@ -77,41 +77,34 @@ mount /dev/sda2 /mnt/boot</pre>
 <pre>tar -C /run/live/rootfs --exclude ./etc/fstab -cf - . | tar -C /mnt -xpf -
 [ -e /mnt/etc/fstab ] || cp /run/live/rootfs/etc/fstab /mnt/etc/fstab
 cp /run/live/medium/boot/initrd /mnt/boot/initrd</pre>
-<p>That is the whole base system, kernel, modules and ZFS included, as it was when the ISO was made. The copy keeps the fstab chamesle-disk wrote. The firmware for wifi and some network cards is not on the ISO. Add it with mag once the new system runs (section 4), or build everything instead (3.4), which needs a machine with a compiler.</p>
+<p>That is the whole base system, kernel, modules and ZFS included, as it was when the ISO was made. The copy keeps the fstab chamesle-disk wrote. The firmware for wifi and some network cards is not on the ISO. Add it with hoard once the new system runs (section 4), or build everything instead (3.4), which needs a machine with a compiler.</p>
 <p>Work inside the new root with <code>chamesle-chroot</code>:</p>
 <pre>chamesle-chroot /mnt
 chamesle-chroot /mnt passwd root</pre>
 <p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/usr/bin/mksh -l</code>.</p>
 <p>Then go on with 3.6 (fstab) and the rest. rifle (3.5) is on the ISO already, skip it. The kernel is in <code>/mnt/boot</code> already.</p>
 <h2 id="s3-4">3.4 Building the system from source, instead</h2>
-<p>Point mag at the repositories (section 2.4) and run chamesle-bootstrap:</p>
-<pre>export MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc
-$HOME/src/system/tools/chamesle-bootstrap -n yourhostname /mnt</pre>
+<p>Have hoard and the tree ready (sections 2.2 to 2.4) and run chamesle-bootstrap:</p>
+<pre>$HOME/src/system/tools/chamesle-bootstrap -n yourhostname /mnt</pre>
 <p>Its usage:</p>
-<pre>chamesle-bootstrap [-r REPOS] [-s PACKAGES] [-n HOSTNAME] TARGET</pre>
+<pre>chamesle-bootstrap [-s PACKAGES] [-n HOSTNAME] TARGET</pre>
 <ul>
-<li><code>-r</code> sets the repositories, instead of <code>MAG_REPO</code></li>
 <li><code>-s</code> is the list of packages to install instead of the base set</li>
 <li><code>-n</code> is the host name, <code>chamesle</code> if not given</li>
 </ul>
-<p>It makes the directories (<code>bin boot dev etc/skel home lib lib/firmware mnt proc root run sbin srv sys tmp usr/bin usr/lib usr/sbin usr/share usr/local/bin var/cache var/lib var/log var/tmp</code>, with <code>tmp</code> and <code>var/tmp</code> mode 1777 and <code>root</code> mode 700), installs everything in <code>files/</code> (init, rc, the services, <code>init.conf</code>), writes the first <code>/etc</code> files (<code>passwd</code>, <code>group</code>, <code>shells</code>, <code>fstab</code>, <code>profile</code>, <code>os-release</code>, <code>mag.conf</code>), and builds the base set into the target with <code>mag</code>:</p>
-<pre>sys-libs/musl devel/gmake archivers/libarchive app-arch/bsdtar archivers/pigz shells/mksh sys-apps/util-linux
-sys-apps/kmod sys-apps/eudev net/dhcpcd net/tnftp sysutils/e2fsprogs sysutils/dosfstools sys-boot/limine
-sys-kernel/linux sys-kernel/linux-firmware sys-firmware/sof-firmware sys-firmware/wireless-regdb editors/vim
-sys-fs/zfs sys-kernel/zfs-module lang/clang devel/lld lang/compiler-rt lang/libunwind</pre>
-<p><code>lang/clang</code> (with <code>lang/llvm</code> under it), <code>devel/lld</code>, <code>lang/compiler-rt</code> and <code>lang/libunwind</code> are the compiler of the new system: it builds what <code>mag install</code> asks for after <code>mag sync</code>, so no other machine is needed. They are the longest part of the bootstrap. It also copies the recipes of the first repo that has a <code>PROVIDES</code> file into <code>/usr/share/mag/repo</code>, installs <code>chamesle-chroot</code> and <code>chamesle-disk</code>, and runs <code>depmod</code>.</p>
-<p>The sources go in <code>/mnt/var/cache/mag</code> and are not fetched twice. An existing file in <code>/etc</code> is never overwritten, so the script can be run again after a failure. A build that fails stops and names the directory it left behind.</p>
-<p>Once musl is in the new root, every later package is built with clang aimed at it, with the loader and library paths pointing into <code>/mnt</code>. That lets the programs run on the host while they are built. They need their real paths before you boot the new system:</p>
-<pre>MAG_ROOT=/mnt mag relocate</pre>
-<p>Run <code>mag relocate</code> again after every <code>MAG_ROOT=/mnt mag install</code> that adds programs (section 9.4).</p>
+<p>It makes the directories (<code>bin boot dev etc/skel home lib lib/firmware mnt proc root run sbin srv sys tmp usr/bin usr/lib usr/sbin usr/share usr/local/bin var/cache var/lib var/log var/tmp</code>, with <code>tmp</code> and <code>var/tmp</code> mode 1777 and <code>root</code> mode 700), installs everything in <code>files/</code> (init, rc, the services, <code>init.conf</code>), writes the first <code>/etc</code> files (<code>passwd</code>, <code>group</code>, <code>shells</code>, <code>fstab</code>, <code>profile</code>, <code>os-release</code>, and <code>spas/make.conf</code> with the musl profile), copies the tree into the new root, and builds the base set into the target with <code>hoard --root</code>:</p>
+<pre>sys-libs/musl app-shells/bash app-shells/mksh sys-apps/util-linux sys-apps/kmod sys-fs/eudev net-misc/dhcpcd
+sys-fs/e2fsprogs sys-fs/dosfstools sys-boot/limine sys-kernel/gentoo-sources sys-kernel/linux-firmware
+sys-fs/zfs sys-fs/zfs-kmod app-editors/vim llvm-core/clang llvm-core/lld llvm-runtimes/compiler-rt llvm-runtimes/libunwind</pre>
+<p><code>llvm-core/clang</code> (with LLVM under it), <code>lld</code>, <code>compiler-rt</code> and <code>libunwind</code> are the compiler of the new system: it builds what <code>hoard install</code> asks for after <code>hoard sync</code>, so no other machine is needed. They are the longest part of the bootstrap. It also installs <code>chamesle-chroot</code> and <code>chamesle-disk</code>, and runs <code>depmod</code>.</p>
+<p>The sources go in <code>/mnt/var/cache/distfiles</code> and are not fetched twice. An existing file in <code>/etc</code> is never overwritten, so the script can be run again after a failure. A build that fails stops and names the directory it left behind, and <code>hoard --root /mnt install --resume</code> goes on from where it stopped.</p>
 <h2 id="s3-5">3.5 rifle</h2>
 <p>The base set has no coreutils: they come from rifle. Install it into the new root:</p>
 <pre>install -m755 $HOME/src/rifle/rifle /mnt/usr/bin/rifle
 $HOME/src/rifle/rifle --install /mnt/usr/bin</pre>
 <p><code>rifle --install DIR</code> makes a link for each of its tools in <code>DIR</code>. rifle is built static, so it runs from the host as it is.</p>
 <p>Add the packages you want now, or after the first boot:</p>
-<pre>MAG_ROOT=/mnt mag install editors/vim
-MAG_ROOT=/mnt mag relocate</pre>
+<pre>hoard --root /mnt install app-editors/vim</pre>
 <h2 id="s3-6">3.6 fstab</h2>
 <p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
 <p>By hand, <code>blkid</code> prints the UUIDs:</p>
@@ -161,11 +154,11 @@ reboot</pre>
 <p>Then:</p>
 <ol>
 <li>Bring the network up (section 6.7).</li>
-<li><code>mag sync</code> fetches the pkgsrc tree (section 2.3). Mag's own recipes are in <code>/usr/share/mag/repo</code> already and the default <code>MAG_REPO</code> covers both, so <code>mag install name</code> works from then on, and the compiler is in the base set.</li>
-<li><code>mag list</code> shows what the bootstrap put on the machine.</li>
+<li><code>hoard sync</code> brings the Gentoo tree up to date (section 2.3), so <code>hoard install name</code> works from then on, and the compiler is in the base set.</li>
+<li><code>hoard list</code> shows what the bootstrap put on the machine.</li>
 </ol>
 <hr>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">Using mag &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-hoard.html">Using hoard &rarr;</a></p>
 </main>
 
 <hr>

@@ -48,11 +48,8 @@
 <p>The mirror drops a package when a newer one comes out, so a new kernel is a new <code>version</code> and <code>sha256</code> in the recipe. Edit <code>repo/sys-kernel/linux</code>:</p>
 <pre>version: 6.18.64
 sha256: the new one</pre>
-<p>Download the file the <code>url</code> names with the new version filled in, and take the checksum:</p>
-<pre>ftp -o FILE URL
-mag hash FILE</pre>
-<p>Then:</p>
-<pre>mag install sys-kernel/linux</pre>
+<p>The kernel comes from <code>sys-kernel/gentoo-sources</code>, or from <code>sys-kernel/vanilla-sources</code> for the plain one. Install it, which puts the source in <code>/usr/src</code>:</p>
+<pre>hoard install sys-kernel/gentoo-sources</pre>
 <p>and add an entry in <code>/boot/limine.conf</code> for the new <code>vmlinuz-VERSION</code>. Keep the old one until the new one has booted:</p>
 <pre>/Chamesle
     protocol: linux
@@ -67,7 +64,7 @@ mag hash FILE</pre>
 <h2 id="s7-3">7.3 Modules</h2>
 <p>Modules are <code>.ko</code> files in <code>/lib/modules/VERSION</code>. <code>lsmod</code> shows what is loaded, <code>modprobe name</code> loads a module with what it needs, <code>modinfo name</code> describes it. udev loads the ones the hardware asks for. Modules belong to one kernel build: after installing a new kernel, reboot before loading any.</p>
 <h2 id="s7-4">7.4 Firmware</h2>
-<pre>mag install sys-kernel/linux-firmware</pre>
+<pre>hoard install sys-kernel/linux-firmware</pre>
 <p>puts the firmware for wifi, graphics, ethernet and the rest, compressed with zstd, into <code>/lib/firmware</code>. <code>sys-firmware/sof-firmware</code> has the sound firmware of newer Intel machines. Both are in the base set. A new firmware release is a new <code>version</code> and <code>sha256</code> in <code>repo/sys-kernel/linux-firmware</code>, the same way as the kernel's.</p>
 <h2 id="s7-5">7.5 An initramfs</h2>
 <p>A root on ext4 on a common disk (SATA, NVMe, virtio, USB storage) needs none. A root on ZFS needs one: the pool has to be imported before the root can be mounted. A root that needs a module to be reached, or RAID, LVM or an encrypted disk, does.</p>
