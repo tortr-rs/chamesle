@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The kernel and firmware - Chamesle</title>
+<meta name="description" content="Nobody builds a kernel in Chamesle. sys-kernel/linux is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a">
+<link rel="canonical" href="https://chamesle.org/handbook-kernel.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="The kernel and firmware - Chamesle">
+<meta property="og:description" content="Nobody builds a kernel in Chamesle. sys-kernel/linux is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a">
+<meta property="og:url" content="https://chamesle.org/handbook-kernel.html">
+<link rel="stylesheet" href="style.css?13">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-base.html">&larr; The base system</a> | <a href="docs.html">Contents</a> | <a href="handbook-iso.html">The live ISO &rarr;</a></p>
+<h2>7. The kernel and firmware</h2>
+<h2 id="s7-1">7.1 The kernel package</h2>
+<p>Nobody builds a kernel in Chamesle. <code>sys-kernel/linux</code> is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a binary mirror, with a generic configuration that runs on most machines. The recipe unpacks the package and installs</p>
+<pre>/boot/vmlinuz-VERSION
+/boot/config-VERSION
+/boot/System.map-VERSION
+/lib/modules/VERSION/</pre>
+<p><code>VERSION</code> is the one the package carries, such as <code>6.18.63-0-lts</code>. <code>sys-kernel/linux-headers</code> has the headers the libc and util-linux build against.</p>
+<h2 id="s7-2">7.2 Updating</h2>
+<p>The mirror drops a package when a newer one comes out, so a new kernel is a new <code>version</code> and <code>sha256</code> in the recipe. Edit <code>repo/sys-kernel/linux</code>:</p>
+<pre>version: 6.18.64
+sha256: the new one</pre>
+<p>Download the file the <code>url</code> names with the new version filled in, and take the checksum:</p>
+<pre>ftp -o FILE URL
+mag hash FILE</pre>
+<p>Then:</p>
+<pre>mag install sys-kernel/linux</pre>
+<p>and add an entry in <code>/boot/limine.conf</code> for the new <code>vmlinuz-VERSION</code>. Keep the old one until the new one has booted:</p>
+<pre>/Chamesle
+    protocol: linux
+    path: boot():/vmlinuz-NEW
+    cmdline: root=UUID=ROOT-UUID rw
+
+/Chamesle (old)
+    protocol: linux
+    path: boot():/vmlinuz-OLD
+    cmdline: root=UUID=ROOT-UUID rw</pre>
+<p>After a reboot, <code>uname -r</code> says what runs.</p>
+<h2 id="s7-3">7.3 Modules</h2>
+<p>Modules are <code>.ko</code> files in <code>/lib/modules/VERSION</code>. <code>lsmod</code> shows what is loaded, <code>modprobe name</code> loads a module with what it needs, <code>modinfo name</code> describes it. udev loads the ones the hardware asks for. Modules belong to one kernel build: after installing a new kernel, reboot before loading any.</p>
+<h2 id="s7-4">7.4 Firmware</h2>
+<pre>mag install sys-kernel/linux-firmware</pre>
+<p>puts the firmware for wifi, graphics, ethernet and the rest, compressed with zstd, into <code>/lib/firmware</code>. <code>sys-firmware/sof-firmware</code> has the sound firmware of newer Intel machines. Both are in the base set. A new firmware release is a new <code>version</code> and <code>sha256</code> in <code>repo/sys-kernel/linux-firmware</code>, the same way as the kernel's.</p>
+<h2 id="s7-5">7.5 An initramfs</h2>
+<p>A root on ext4 on a common disk (SATA, NVMe, virtio, USB storage) needs none. A root on ZFS needs one: the pool has to be imported before the root can be mounted. A root that needs a module to be reached, or RAID, LVM or an encrypted disk, does.</p>
+<p><code>iso/mkinitramfs</code> makes one, and the live ISO uses it:</p>
+<pre>mkinitramfs [-m modules-file] ROOTFS KVER OUT</pre>
+<p><code>ROOTFS</code> is the root whose <code>/lib/modules</code> and programs are used, <code>KVER</code> the name of the kernel's directory in <code>/lib/modules</code>, <code>OUT</code> the file to write. It puts in a few tools (<code>sh mount umount switch_root insmod mkdir sleep blkid</code>, and <code>zpool</code> when the root has it, with the libraries they need), the modules named in the modules file together with what they depend on, and <code>iso/init</code>. The names after a <code>[zfs]</code> line of the modules file go into a second list, which <code>iso/init</code> loads only for <code>root=ZFS=</code>. The result is a zstd compressed cpio.</p>
+<pre>$HOME/src/system/iso/mkinitramfs -m modules /mnt 6.18.63-0-lts /mnt/boot/initrd</pre>
+<p><code>iso/init</code> mounts <code>proc</code>, <code>sysfs</code> and <code>devtmpfs</code>, loads the modules, reads <code>root=</code> from the command line (<code>root=UUID=...</code> or a device), waits up to 15 seconds for the device, mounts it read-only at <code>/mnt/root</code>, and runs <code>switch_root /mnt/root /sbin/init</code>. With <code>root=ZFS=rpool/root</code> it loads the zfs modules, runs <code>zpool import -N -d /dev rpool</code> (until it works, 15 seconds at most) and mounts the dataset with <code>mount -o zfsutil -t zfs</code>. If anything fails it prints why and drops into a shell.</p>
+<p>Name the initrd in <code>limine.conf</code>:</p>
+<pre>/Chamesle
+    protocol: linux
+    path: boot():/vmlinuz-6.18.63-0-lts
+    module_path: boot():/initrd
+    cmdline: root=UUID=ROOT-UUID rw</pre>
+<p>On ZFS the command line is <code>root=ZFS=rpool/root rw</code>. The ZFS module is <code>sys-kernel/zfs-module</code>, for the kernel of <code>sys-kernel/linux</code>: when one is updated the other has to be too, and <code>depmod</code> has to run after installing it.</p>
+<hr>
+<p><a href="handbook-base.html">&larr; The base system</a> | <a href="docs.html">Contents</a> | <a href="handbook-iso.html">The live ISO &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-16 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>

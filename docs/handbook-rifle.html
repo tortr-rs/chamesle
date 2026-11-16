@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rifle - Chamesle</title>
+<meta name="description" content="rifle is the coreutils of Chamesle in one C file, rifle.c, on c.h, a one-file libc. It has no GNU code in it and no">
+<link rel="canonical" href="https://chamesle.org/handbook-rifle.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="rifle - Chamesle">
+<meta property="og:description" content="rifle is the coreutils of Chamesle in one C file, rifle.c, on c.h, a one-file libc. It has no GNU code in it and no">
+<meta property="og:url" content="https://chamesle.org/handbook-rifle.html">
+<link rel="stylesheet" href="style.css?13">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-mag.html">&larr; Using mag</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
+<h2>5. rifle</h2>
+<h2 id="s5-1">5.1 What it is</h2>
+<p>rifle is the coreutils of Chamesle in one C file, <code>rifle.c</code>, on <code>c.h</code>, a one-file libc. It has no GNU code in it and no libc under it. It sorts and compares by bytes, always; there are no locales.</p>
+<p>There is one program. <code>cat</code>, <code>ls</code>, <code>cp</code> and the other commands are links to it, and it runs whichever name it was called by. You type <code>cat</code>, not <code>rifle cat</code>.</p>
+<h2 id="s5-2">5.2 The tools</h2>
+<pre>[ arch base32 base64 basename cat chgrp chmod chown chroot cksum comm cp cut date dd df dirname du echo env
+expand expr factor false fold groups head hostid hostname id install join link ln logname ls md5sum mkdir
+mkfifo mknod mktemp mv nice nl nohup nproc od paste printenv printf pwd readlink realpath rm rmdir seq
+sha1sum sha224sum sha256sum sha384sum sha512sum shuf sleep sort split stat sum sync tac tail tee test
+timeout touch tr true truncate tsort tty uname unexpand uniq unlink wc whoami yes</pre>
+<p>By what they do:</p>
+<table>
+<tr><th>group</th><th>tools</th></tr>
+<tr><td>files and directories</td><td><code>cp mv rm ln link unlink mkdir rmdir mkfifo mknod mktemp touch install truncate dd sync</code></td></tr>
+<tr><td>permissions and owners</td><td><code>chmod chown chgrp</code></td></tr>
+<tr><td>looking at files</td><td><code>ls stat du df cat tac head tail od nl wc cksum sum</code></td></tr>
+<tr><td>text</td><td><code>cut paste join comm sort uniq tr fold expand unexpand split shuf tsort tee</code></td></tr>
+<tr><td>checksums and encodings</td><td><code>md5sum sha1sum sha224sum sha256sum sha384sum sha512sum base32 base64</code></td></tr>
+<tr><td>names and paths</td><td><code>basename dirname pwd readlink realpath</code></td></tr>
+<tr><td>scripts and processes</td><td><code>echo printf printenv env test [ expr seq true false yes sleep nice nohup timeout chroot</code></td></tr>
+<tr><td>system and users</td><td><code>arch uname hostname hostid id groups whoami logname date nproc tty</code></td></tr>
+<tr><td>numbers</td><td><code>factor</code> (up to 64 bits)</td></tr>
+</table>
+<p>Not there yet: <code>stty</code>, <code>who</code> and friends, <code>fmt</code>, <code>pr</code>, <code>csplit</code>, <code>numfmt</code>, <code>shred</code>, <code>stdbuf</code>, <code>ptx</code>, <code>pathchk</code>, <code>dircolors</code>.</p>
+<h2 id="s5-3">5.3 Building</h2>
+<pre>cd $HOME/src/rifle
+./build.sh</pre>
+<p>builds <code>rifle</code> with clang and lld (<code>CC</code> overrides <code>cc</code>) and makes the links in <code>bin/</code>. To put the links anywhere:</p>
+<pre>rifle --install /usr/bin
+rifle --list                   the names it knows</pre>
+<h2 id="s5-4">5.4 Tests</h2>
+<pre>tests/run.sh                   all the cases
+tests/run.sh sort              the cases that have `sort` in them</pre>
+<p>Each case in <code>tests/cases</code> runs once under GNU coreutils and once under rifle, and what they print and how they exit are compared. The machine that runs the tests therefore has GNU coreutils for the comparison; the installed system does not. <code>./build.sh</code> has to have run first. A case that starts with <code>@ro</code> runs with the whole file system read-only under <code>bwrap</code>, and is skipped when <code>bwrap</code> is missing.</p>
+<p>mag has a test of its own: <code>mag/tests/run.sh</code> builds a fake repo with local tarballs and goes through install, upgrade and remove in a scratch root. It needs ftp, tar and the rifle tools in PATH.</p>
+<hr>
+<p><a href="handbook-mag.html">&larr; Using mag</a> | <a href="docs.html">Contents</a> | <a href="handbook-base.html">The base system &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-16 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>

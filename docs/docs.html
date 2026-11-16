@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Handbook - Chamesle</title>
-<meta name="description" content="The Chamesle handbook: getting a root file system, mag, the kernel, the live ISO and the files of the system.">
+<meta name="description" content="The Chamesle handbook, chapter by chapter: preparing, installing by hand, mag, rifle, the base system, the kernel, the live ISO and the files of the system.">
 <link rel="canonical" href="https://chamesle.org/docs.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Handbook - Chamesle">
-<meta property="og:description" content="The Chamesle handbook: getting a root file system, mag, the kernel, the live ISO and the files of the system.">
+<meta property="og:description" content="The Chamesle handbook, chapter by chapter: preparing, installing by hand, mag, rifle, the base system, the kernel, the live ISO and the files of the system.">
 <meta property="og:url" content="https://chamesle.org/docs.html">
 <link rel="stylesheet" href="style.css?13">
 </head>
@@ -36,163 +36,39 @@
 
 <main>
 <h2>The handbook</h2>
-<p><i>How to build and install Chamesle.</i></p>
-
-<p>The kernel is the only thing in it that comes from outside the Unix family. The C library is musl, the shell is
-mksh, the packages come from NetBSD's pkgsrc and the package manager is <code>mag</code>.</p>
-<p>You put Chamesle on a disk yourself, by hand, in <a href="#disk">chapter 5</a>. These pages describe the code as it is today. It changes.</p>
-<div class="toc">
-<h4>Contents</h4>
-<a href="#parts">What is in it</a> <a href="#root">1. Root file system</a> <a href="#mag">2. mag</a>
-<a href="#kernel">3. The kernel</a> <a href="#iso">4. The live ISO</a> <a href="#disk">5. Installing by hand</a>
-<a href="#files">6. Files</a>
-</div>
-
-<h2 id="parts">What is in it</h2>
-<table class="grid">
-<tr><th>part</th><th>what it is</th></tr>
-<tr><td>kernel</td><td>Linux 6.18 LTS, prebuilt</td></tr>
-<tr><td>musl</td><td>the C library</td></tr>
-<tr><td>rifle</td><td>the coreutils, one C file</td></tr>
-<tr><td>mag</td><td>the package manager, reads pkgsrc packages as they are</td></tr>
-<tr><td>init</td><td>a shell script in the FreeBSD style, <code>/sbin/init</code> and <code>/etc/rc</code>, set up in <code>/etc/init.conf</code> (<code>boot-services</code>, scripts in <code>/etc/rc.d</code>, run with <code>service</code>)</td></tr>
-<tr><td>mksh</td><td>the shell: login shell and <code>/bin/sh</code> (the MirBSD Korn shell)</td></tr>
-<tr><td>vim</td><td>the editor, installed on the ISO</td></tr>
-<tr><td>limine</td><td>the boot loader</td></tr>
-<tr><td>ZFS</td><td>the root file system of an installed system, or ext4 if you prefer</td></tr>
-</table>
-
-<h2 id="root">1. Getting a root file system</h2>
-<p><code>tools/chamesle-bootstrap</code> is to Chamesle what debootstrap is to Debian. It makes the directories and the
-files in <code>/etc</code>, then builds and installs the base packages into the directory you give it, with mag:</p>
-<pre>MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc chamesle-bootstrap /mnt/root</pre>
-<p>Building everything from source takes a while. LLVM is the long one. Packages are not built twice: the sources are
-kept in <code>var/cache/mag</code> inside the target.</p>
-<p><code>-s "shells/mksh editors/vim"</code> installs your own list. <code>-n name</code> sets the host name.</p>
-<p>The base set has a compiler, <code>lang/clang</code> with <code>devel/lld</code>, <code>lang/compiler-rt</code> and
-<code>lang/libunwind</code>, so a fresh install builds what you ask of mag by itself. It also has ZFS (<code>sys-fs/zfs</code>
-and <code>sys-kernel/zfs-module</code>), and gets Chamesle's recipes in <code>/usr/share/mag/repo</code>.</p>
-
-<h2 id="mag">2. mag</h2>
-<pre>mag install editors/vim     fetch, check the checksum, build, install, dependencies first
-mag remove vim
-mag upgrade                 rebuild what has a newer version
-mag search word | info pkg | files pkg | owns /path | deps pkg | list</pre>
-<pre>mag sync                    fetch the pkgsrc tree into /usr/pkgsrc, again to bring it up to date</pre>
-<p><code>MAG_REPO</code> is a list of repos split by colons, <code>/usr/share/mag/repo:/usr/pkgsrc</code> if you do not set it. Two kinds of package live in them and can be mixed:</p>
-<ul>
-<li>our own recipes, <code>category/name</code>, a file with <code>url</code>, <code>sha256</code>, <code>deps</code> and plain sh <code>steps</code></li>
-<li>NetBSD pkgsrc packages: a directory with a <code>Makefile</code>, a <code>distinfo</code> and <code>patches/</code>, read without bmake</li>
-</ul>
-<p>A file called <code>PROVIDES</code> in a repo says which of our packages stands in for a pkgsrc one, so a pkgsrc package
-gets our zlib and not a second one. It also lists the dependencies a pkgsrc Makefile forgets (<code>needs</code>).
-Everything lands in <code>$MAG_ROOT</code>. Nothing is ever installed over a file another package owns, and
-<code>/etc</code> files you changed stay.</p>
-
-<h3 id="magconf">/etc/mag.conf</h3>
-<p>pkgsrc's <code>mk.conf</code> syntax: plain <code>VAR=value</code> lines, read from <code>$MAG_ROOT/etc/mag.conf</code>.</p>
-<pre>JOBS=8                          # $JOBS in the steps, make -j
-CFLAGS=-O2 -pipe                # also CXXFLAGS, CPPFLAGS, LDFLAGS, for every build
-PKG_DEFAULT_OPTIONS=-http2 idn  # options for every pkgsrc package that has them, a minus turns one off
-PKG_OPTIONS.vim=python          # the options of one package</pre>
-<p><code>mag info net/tnftp</code> shows the options a package ends up with, and its dependencies change with them.
-Packages of our own repo have no options. They only see <code>JOBS</code> and the flags. Environment wins over the
-file (<code>MAG_JOBS</code>, <code>CFLAGS</code>).</p>
-
-<h2 id="kernel">3. The kernel</h2>
-<p>Nobody here builds a kernel. <code>sys-kernel/linux</code> is a prebuilt Linux 6.18 LTS kernel and its modules
-(a generic config, so it runs on nearly any machine). mag fetches it from
-the binary mirror named in the recipe, checks the checksum and puts <code>vmlinuz</code>, <code>config</code>, <code>System.map</code> and the
-modules into <code>/boot</code> and <code>/lib/modules</code>.</p>
-<p>The mirror drops a package when a newer one comes out, so a new kernel is a new <code>version</code> and
-<code>sha256</code> in <code>repo/sys-kernel/linux</code>. The firmware is <code>sys-kernel/linux-firmware</code>.</p>
-
-<h2 id="iso">4. The ISO</h2>
-<p>The ISO is a live system to install from, nothing more. Chamesle is put on a disk by hand
-(<a href="#disk">chapter 5</a>). It boots on BIOS and UEFI machines with limine, from a CD or a stick, and has mksh,
-vim, mag with our recipes (<code>mag search</code> works before <code>mag sync</code>), <code>chamesle-bootstrap</code>,
-<code>chamesle-chroot</code>, <code>chamesle-disk</code>, the disk tools (cfdisk, sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and this handbook in
-<code>/usr/share/doc/chamesle/</code>.</p>
-<pre>iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
-<p>What it does, in order:</p>
+<p><i>How to build, install and run Chamesle.</i></p>
 <ol>
-<li><code>chamesle-bootstrap</code> builds a root from <code>iso/profile/packages</code>.</li>
-<li>The files of <code>iso/profile/overlay</code>, the handbook, <code>mag</code> with its recipes, <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code> and <code>chamesle-disk</code> are copied over it.</li>
-<li><code>mkinitramfs</code> makes the initrd: a few static tools, the modules in <code>iso/profile/modules</code> with what they depend on, and <code>iso/init</code>.</li>
-<li>The root becomes a zstd squashfs.</li>
-<li><code>xorriso</code> writes the ISO with limine's BIOS and UEFI boot images.</li>
+<li><a href="handbook-about.html">About Chamesle</a>
+<ul><li><a href="handbook-about.html#s1-1">1.1 What it is</a></li><li><a href="handbook-about.html#s1-2">1.2 The layout of the system</a></li><li><a href="handbook-about.html#s1-3">1.3 Where the sources are</a></li></ul>
+</li>
+<li><a href="handbook-preparing.html">Preparing</a>
+<ul><li><a href="handbook-preparing.html#s2-1">2.1 What the build host needs</a></li><li><a href="handbook-preparing.html#s2-2">2.2 Building mag and rifle</a></li><li><a href="handbook-preparing.html#s2-3">2.3 Getting the pkgsrc tree</a></li><li><a href="handbook-preparing.html#s2-4">2.4 MAG_REPO</a></li><li><a href="handbook-preparing.html#s2-5">2.5 mag.conf</a></li></ul>
+</li>
+<li><a href="handbook-installing.html">Installing by hand</a>
+<ul><li><a href="handbook-installing.html#s3-1">3.1 chamesle-disk</a></li><li><a href="handbook-installing.html#s3-2">3.2 Partitioning and file systems by hand</a></li><li><a href="handbook-installing.html#s3-3">3.3 Copying the live system</a></li><li><a href="handbook-installing.html#s3-4">3.4 Building the system from source, instead</a></li><li><a href="handbook-installing.html#s3-5">3.5 rifle</a></li><li><a href="handbook-installing.html#s3-6">3.6 fstab</a></li><li><a href="handbook-installing.html#s3-7">3.7 Host name, users, password</a></li><li><a href="handbook-installing.html#s3-8">3.8 The kernel and the boot entry</a></li><li><a href="handbook-installing.html#s3-9">3.9 First boot</a></li></ul>
+</li>
+<li><a href="handbook-mag.html">Using mag</a>
+<ul><li><a href="handbook-mag.html#s4-1">4.1 The commands</a></li><li><a href="handbook-mag.html#s4-2">4.2 Installing and removing</a></li><li><a href="handbook-mag.html#s4-3">4.3 Finding things</a></li><li><a href="handbook-mag.html#s4-4">4.4 Installing somewhere else</a></li><li><a href="handbook-mag.html#s4-5">4.5 Other variables</a></li><li><a href="handbook-mag.html#s4-6">4.6 pkgsrc options</a></li><li><a href="handbook-mag.html#s4-7">4.7 Writing a recipe</a></li></ul>
+</li>
+<li><a href="handbook-rifle.html">rifle</a>
+<ul><li><a href="handbook-rifle.html#s5-1">5.1 What it is</a></li><li><a href="handbook-rifle.html#s5-2">5.2 The tools</a></li><li><a href="handbook-rifle.html#s5-3">5.3 Building</a></li><li><a href="handbook-rifle.html#s5-4">5.4 Tests</a></li></ul>
+</li>
+<li><a href="handbook-base.html">The base system</a>
+<ul><li><a href="handbook-base.html#s6-1">6.1 init</a></li><li><a href="handbook-base.html#s6-2">6.2 rc, init.conf and the services</a></li><li><a href="handbook-base.html#s6-3">6.3 Shutting down</a></li><li><a href="handbook-base.html#s6-4">6.4 The files in /etc</a></li><li><a href="handbook-base.html#s6-5">6.5 Users</a></li><li><a href="handbook-base.html#s6-6">6.6 udev and modules</a></li><li><a href="handbook-base.html#s6-7">6.7 Networking</a></li><li><a href="handbook-base.html#s6-8">6.8 Wireless</a></li><li><a href="handbook-base.html#s6-9">6.9 Mounting and disks</a></li></ul>
+</li>
+<li><a href="handbook-kernel.html">The kernel and firmware</a>
+<ul><li><a href="handbook-kernel.html#s7-1">7.1 The kernel package</a></li><li><a href="handbook-kernel.html#s7-2">7.2 Updating</a></li><li><a href="handbook-kernel.html#s7-3">7.3 Modules</a></li><li><a href="handbook-kernel.html#s7-4">7.4 Firmware</a></li><li><a href="handbook-kernel.html#s7-5">7.5 An initramfs</a></li></ul>
+</li>
+<li><a href="handbook-iso.html">The live ISO</a>
+<ul><li><a href="handbook-iso.html#s8-1">8.1 What it is</a></li><li><a href="handbook-iso.html#s8-2">8.2 Building</a></li><li><a href="handbook-iso.html#s8-3">8.3 The profile</a></li><li><a href="handbook-iso.html#s8-4">8.4 How it boots</a></li><li><a href="handbook-iso.html#s8-5">8.5 Trying it in qemu</a></li></ul>
+</li>
+<li><a href="handbook-maintaining.html">Maintaining</a>
+<ul><li><a href="handbook-maintaining.html#s9-1">9.1 Updating packages</a></li><li><a href="handbook-maintaining.html#s9-2">9.2 Cleaning up</a></li><li><a href="handbook-maintaining.html#s9-3">9.3 C23 and CFLAGS</a></li><li><a href="handbook-maintaining.html#s9-4">9.4 The root&#x27;s compiler and mag relocate</a></li><li><a href="handbook-maintaining.html#s9-5">9.5 libtool</a></li><li><a href="handbook-maintaining.html#s9-6">9.6 Failures you will see</a></li><li><a href="handbook-maintaining.html#s9-7">9.7 Keeping a build</a></li></ul>
+</li>
+<li><a href="handbook-files.html">File reference</a>
+<ul><li><a href="handbook-files.html#s10-1">10.1 On an installed system</a></li><li><a href="handbook-files.html#s10-2">10.2 In the sources</a></li><li><a href="handbook-files.html#s10-3">10.3 Commands in short</a></li></ul>
+</li>
 </ol>
-<p><code>-R dir</code> uses a root you already have instead of building one. It is copied, not changed.</p>
-<p>At boot, <code>init</code> looks for the medium that has <code>LiveOS/rootfs.sfs</code>, mounts it read-only, puts a tmpfs
-overlay over it and switches into the result. The medium and the squashfs stay mounted under <code>/run/live/</code>.</p>
-<p>Try an ISO without a machine:</p>
-<pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d
-qemu-system-x86_64 -cpu max -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso   # uefi</pre>
-<p>mkiso needs <code>mksquashfs</code> (filesystems/squashfs), <code>xorriso</code> (sysutils/libisoburn), <code>zstd</code>,
-<code>bsdcpio</code>, <code>limine</code> and <code>mag</code> on the machine that builds. <code>LIMINE</code> says where
-limine's files are (default <code>/usr/share/limine</code>), <code>MAG</code> where mag is.</p>
-
-<h2 id="disk">5. Installing by hand</h2>
-<p>Boot the ISO, log in as root, bring the network up (<code>dhcpcd</code>) and do this. <code>sda</code> is the
-disk, change it. <code>chamesle-disk</code> only prepares the disk; the install itself stays by hand.</p>
-<ol>
-<li>Partition and format with <code>chamesle-disk /dev/sda</code>. It asks you to type the disk name before it erases
-anything, then starts <code>cfdisk</code>: make a GPT with a 1M BIOS boot partition, a 512M EFI partition and the rest
-for <code>/</code>. Then say which partition is the boot partition and which is the root. The boot partition becomes
-vfat, the root a ZFS pool <code>rpool</code> with the datasets <code>rpool/root</code>, <code>rpool/home</code> and
-<code>rpool/var</code>. Everything is mounted under <code>/mnt</code> and <code>/mnt/etc/fstab</code> is written: the boot
-partition by UUID, <code>proc</code>, <code>sysfs</code>, <code>tmpfs</code>, and nothing for ZFS, which mounts its own
-datasets. limine cannot read ZFS, so the kernel, the initrd and <code>limine.conf</code> are on the vfat partition.</li>
-<li>Or do it yourself, for a root on ext4:
-<pre>sfdisk /dev/sda &lt;&lt;P
-label: gpt
-size=1M, type=21686148-6449-6E6F-744E-656564454649
-size=512M, type=U
-type=L
-P
-mkfs.fat -F32 /dev/sda2
-mkfs.ext4 /dev/sda3
-mount /dev/sda3 /mnt
-mkdir /mnt/boot
-mount /dev/sda2 /mnt/boot</pre></li>
-<li>Put the system in <code>/mnt</code>. Copy the live one, which is quick:
-<pre>tar -C /run/live/rootfs --exclude ./etc/fstab -cf - . | tar -C /mnt -xpf -
-[ -e /mnt/etc/fstab ] || cp /run/live/rootfs/etc/fstab /mnt/etc/fstab
-cp /run/live/medium/boot/initrd /mnt/boot/initrd</pre>
-Or build it from source on a machine with a compiler, with <code>chamesle-bootstrap -n yourhostname /mnt</code>
-(<code>MAG_REPO</code> set), which takes a while.</li>
-<li>Work in the new root with <code>chamesle-chroot /mnt</code>, or run one command there:
-<code>chamesle-chroot /mnt mag install ...</code>. It mounts <code>proc</code>, <code>sys</code>, <code>dev</code> and
-<code>run</code>, and unmounts them when it ends.</li>
-<li>Set the password and the boot entry by hand. <code>blkid</code> gives the UUIDs. With a ZFS root fstab has
-only the boot line already; with ext4 add the root line.
-<pre>echo 'root:x:0:0:root:/root:/usr/bin/mksh' &gt; /mnt/etc/passwd   # then put a hash in the second field
-vim /mnt/etc/fstab
-cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/
-vim /mnt/boot/limine.conf</pre>
-limine.conf:
-<pre>timeout: 3
-/Chamesle
-    protocol: linux
-    path: boot():/vmlinuz-6.18.63-0-lts
-    module_path: boot():/initrd
-    cmdline: root=UUID=THE-ROOT-UUID rw</pre>
-On ZFS the command line is <code>root=ZFS=rpool/root rw</code>.</li>
-<li>Install limine for BIOS, unmount and reboot: <code>limine bios-install /dev/sda</code>, <code>umount -R /mnt</code>,
-and on ZFS <code>zpool export rpool</code>.</li>
-<li>On the new system run <code>mag sync</code>, and <code>mag install</code> builds anything from pkgsrc.</li>
-</ol>
-<p>The initrd from the ISO finds a root by <code>root=UUID=</code>, <code>root=ZFS=</code> or a device. For anything else,
-RAID or an encrypted disk, build your own with <code>iso/mkinitramfs</code>.</p>
-
-<h2 id="files">6. Files</h2>
-<table class="grid">
-<tr><td><code>/etc/profile</code></td><td>PATH, EDITOR=vim</td></tr>
-<tr><td><code>/etc/ksh.kshrc</code></td><td>prompt and aliases of every ksh</td></tr>
-<tr><td><code>/etc/fstab</code>, <code>hostname</code>, <code>passwd</code>, <code>group</code>, <code>shells</code></td><td>the usual</td></tr>
-<tr><td><code>/var/lib/mag</code></td><td>what is installed, per package</td></tr>
-<tr><td><code>/var/cache/mag</code></td><td>downloaded sources</td></tr>
-</table>
 </main>
 
 <hr>
@@ -201,7 +77,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-14 $
+$Date: 2026-11-16 $
 </div>
 
 </div>

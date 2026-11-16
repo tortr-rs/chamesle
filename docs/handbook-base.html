@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The base system - Chamesle</title>
+<meta name="description" content="/sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<link rel="canonical" href="https://chamesle.org/handbook-base.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="The base system - Chamesle">
+<meta property="og:description" content="/sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<meta property="og:url" content="https://chamesle.org/handbook-base.html">
+<link rel="stylesheet" href="style.css?13">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./">Chamesle</a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Install</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
+<h2>6. The base system</h2>
+<h2 id="s6-1">6.1 init</h2>
+<p><code>/sbin/init</code> is a mksh script, and it works the way FreeBSD's init does: the kernel starts it as process 1, it runs <code>/etc/rc</code>, then it keeps a getty on every tty and waits for a signal. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root. Step by step:</p>
+<ol>
+<li><code>PATH</code> is set to <code>/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin</code>. <code>proc</code>, <code>sysfs</code> and <code>devtmpfs</code> are mounted if they are not yet, and what init prints goes to <code>/dev/console</code>.</li>
+<li>If <code>single</code> is on the kernel command line, init runs <code>sulogin</code> first.</li>
+<li><code>/etc/rc autoboot</code> runs (6.2). If it fails, init runs <code>sulogin</code> and goes on when you leave it.</li>
+<li>For every name in <code>ttys</code> of <code>init.conf</code> that has a node in <code>/dev</code>, init starts a loop that runs the getty command again whenever it exits. A getty that dies within five seconds is run again after a pause of five.</li>
+<li>init waits. A signal ends the wait:</li>
+</ol>
+<table>
+<tr><th>signal</th><th>what it does</th></tr>
+<tr><td><code>INT</code>, <code>TERM</code></td><td>reboot</td></tr>
+<tr><td><code>USR1</code></td><td>halt: stop everything and stay stopped</td></tr>
+<tr><td><code>USR2</code></td><td>power off</td></tr>
+</table>
+<ol>
+<li>Then it runs <code>/etc/rc.shutdown</code>, sends <code>TERM</code> to every process, <code>KILL</code> two seconds later, runs <code>sync</code>, <code>umount -a -r</code> and does the last step through <code>/proc/sysrq-trigger</code> (<code>b</code> or <code>o</code>). That needs <code>CONFIG_MAGIC_SYSRQ</code> in the kernel; the base set has no <code>reboot</code> program of its own that calls the kernel.</li>
+</ol>
+<h2 id="s6-2">6.2 rc, init.conf and the services</h2>
+<p><code>/etc/rc</code> mounts the system. In order: <code>/</code> is remounted read-write; with <code>autoboot</code>, <code>fsck -A -R -p</code> checks the other file systems; <code>devpts</code> and <code>/dev/shm</code> are mounted; a tmpfs goes on <code>/run</code> (not on the live ISO, where <code>/run/live</code> is already there); <code>mount -a</code> mounts <code>/etc/fstab</code>; <code>swapon -a</code>; <code>/tmp</code> is emptied if it is not a mount and set to mode 1777; the host name is set; <code>dmesg</code> is saved in <code>/var/log/dmesg.boot</code>. Then every service in <code>boot-services</code> is started, in the order it is written.</p>
+<p><code>/etc/init.conf</code> is the one configuration file. One setting per line, <code>key = value</code>, <code>#</code> starts a comment, blank lines are ignored, spaces around <code>=</code> are free. A list is in braces and may go over several lines:</p>
+<pre>hostname = chamesle
+
+# started in this order at boot, stopped in reverse at shutdown
+#boot-services = {NetworkManager,LightDM,dbus}
+boot-services = {udev,modules,network}
+
+modules = {}
+ttys = {tty1,ttyS0}
+getty = agetty --noclear $tty linux
+getty-ttyS0 = agetty -L $tty 115200 vt100</pre>
+<table>
+<tr><th>key</th><th>meaning</th></tr>
+<tr><td><code>hostname</code></td><td>the host name</td></tr>
+<tr><td><code>boot-services</code></td><td>the services started at boot, in order; shutdown stops them in reverse</td></tr>
+<tr><td><code>modules</code></td><td>kernel modules the <code>modules</code> service loads with <code>modprobe</code></td></tr>
+<tr><td><code>ttys</code></td><td>the ttys that get a getty</td></tr>
+<tr><td><code>getty</code></td><td>the getty command; <code>$tty</code> is the tty name</td></tr>
+<tr><td><code>getty-NAME</code></td><td>the getty command for that tty alone</td></tr>
+</table>
+<p>The parser is <code>conf</code> in <code>/etc/init.sh</code>; <code>conf KEY</code> prints the value, with a list separated by spaces. A change to <code>ttys</code> or <code>getty</code> takes effect at the next boot.</p>
+<p>A service is an executable file in <code>/etc/rc.d</code> (or <code>/usr/local/etc/rc.d</code>, for the ones you add) that takes <code>start</code>, <code>stop</code>, <code>restart</code> or <code>status</code>. The base set has three: <code>udev</code> (starts <code>udevd</code>, replays the devices and waits for them), <code>modules</code> and <code>network</code> (<code>dhcpcd</code>). A name in <code>boot-services</code> without a script is skipped with one line saying so.</p>
+<p><code>service</code> is the way to run them:</p>
+<pre>service -l                 every service
+service -e                 the services of boot-services, as paths
+service network restart
+service udev status</pre>
+<p>To add a service, write the script, make it executable, and put its name in <code>boot-services</code>. With <code>/etc/rc.subr</code> it is short. Set <code>procname</code> to the name the process shows in <code>/proc/PID/comm</code>, write <code>svc_start</code>, and finish with <code>run "$1"</code>; <code>stop</code> then kills that process, <code>status</code> looks for it and <code>start</code> refuses to start it twice. Override <code>svc_stop</code> and <code>svc_status</code> if the defaults do not fit:</p>
+<pre>#!/bin/sh
+. /etc/rc.subr
+procname=chronyd
+svc_start() { chronyd; }
+run &quot;$1&quot;</pre>
+<h2 id="s6-3">6.3 Shutting down</h2>
+<p><code>reboot</code>, <code>halt</code> and <code>poweroff</code> send <code>INT</code>, <code>USR1</code> and <code>USR2</code> to init. <code>shutdown -r</code>, <code>-h</code> or <code>-p</code> does the same, at once (<code>now</code>) or after <code>+minutes</code>, with an optional message sent through <code>wall</code>:</p>
+<pre>shutdown -r now
+shutdown -p +10 back in ten minutes</pre>
+<h2 id="s6-4">6.4 The files in /etc</h2>
+<table>
+<tr><th>file</th><th>what it holds</th></tr>
+<tr><td><code>passwd</code>, <code>group</code></td><td>accounts and groups; no shadow file, the hash is in <code>passwd</code></td></tr>
+<tr><td><code>shells</code></td><td><code>/bin/sh</code>, <code>/usr/bin/mksh</code>, <code>/usr/bin/ksh</code></td></tr>
+<tr><td><code>init.conf</code></td><td>host name, boot services, modules, ttys (6.2)</td></tr>
+<tr><td><code>fstab</code></td><td><code>proc</code>, <code>sysfs</code>, <code>tmpfs</code> on <code>/tmp</code>, plus the lines you add</td></tr>
+<tr><td><code>profile</code></td><td><code>PATH</code>, <code>EDITOR=vim</code>, <code>PAGER=less</code>, <code>umask 022</code></td></tr>
+<tr><td><code>os-release</code></td><td><code>NAME=Chamesle</code>, <code>ID=chamesle</code></td></tr>
+<tr><td><code>mag.conf</code></td><td><code>JOBS</code> and <code>CFLAGS</code> for mag</td></tr>
+<tr><td><code>skel/</code></td><td>empty directory for the files new homes start from</td></tr>
+</table>
+<p>The login shell is mksh and <code>/etc/profile</code> is read by login shells. For a prompt and aliases make <code>~/.mkshrc</code> and set <code>ENV=$HOME/.mkshrc</code> in <code>/etc/profile</code>.</p>
+<h2 id="s6-5">6.5 Users</h2>
+<p>There is no <code>useradd</code>. To add <code>alice</code>:</p>
+<pre>echo &#x27;alice:HASH:1000:1000:alice:/home/alice:/usr/bin/mksh&#x27; &gt;&gt; /etc/passwd
+echo &#x27;alice:x:1000:&#x27; &gt;&gt; /etc/group
+mkdir /home/alice
+chown 1000:1000 /home/alice</pre>
+<p><code>HASH</code> comes from <code>openssl passwd -6</code> on a machine that has it. To put alice in <code>wheel</code>, add her name to the last field of the <code>wheel:x:10:</code> line.</p>
+<h2 id="s6-6">6.6 udev and modules</h2>
+<p>eudev is the udev. <code>udevd</code> gives devices their nodes in <code>/dev</code> and loads the modules the hardware needs. eudev is built without the hardware database (<code>--disable-hwdb</code>).</p>
+<p>kmod provides <code>modprobe</code>, <code>insmod</code>, <code>rmmod</code>, <code>lsmod</code>, <code>modinfo</code> and <code>depmod</code>. A kernel's modules are in <code>/lib/modules/VERSION</code>. To load one by hand: <code>modprobe name</code>. To load one at every boot, put its name in <code>modules</code> of <code>/etc/init.conf</code>. To keep one from loading, put <code>blacklist name</code> in a file in <code>/etc/modprobe.d/</code>.</p>
+<h2 id="s6-7">6.7 Networking</h2>
+<p><code>dhcpcd</code> is the DHCP client and is in the base set. For a wired interface:</p>
+<pre>dhcpcd eth0</pre>
+<p><code>dhcpcd</code> without arguments takes every interface. It is the <code>network</code> service, in <code>boot-services</code> by default, so it is up at boot. <code>/sys/class/net/</code> lists the interfaces. For <code>ip</code>, install iproute2 from Chamesle's repo:</p>
+<pre>mag install net-misc/iproute2</pre>
+<p>A static address:</p>
+<pre>ip addr add 192.168.1.10/24 dev eth0
+ip link set eth0 up
+ip route add default via 192.168.1.1
+echo &#x27;nameserver 192.168.1.1&#x27; &gt; /etc/resolv.conf</pre>
+<h2 id="s6-8">6.8 Wireless</h2>
+<p><code>iw</code> talks to the kernel's nl80211. It is in Chamesle's repo, with libnl:</p>
+<pre>mag install net-wireless/iw
+iw dev                                       the wireless interfaces
+ip link set wlan0 up
+iw dev wlan0 scan | grep SSID</pre>
+<p><code>sys-firmware/wireless-regdb</code> (in the base set) has the regulatory database, and the card's firmware is in <code>/lib/firmware</code> from <code>sys-kernel/linux-firmware</code>. If <code>dmesg</code> says a firmware file failed to load, check that it is there.</p>
+<p>For an open network <code>iw dev wlan0 connect NAME</code> is enough. For WPA the connection needs <code>wpa_supplicant</code>; if your pkgsrc tree has it (<code>mag search wpa</code>), install it, give it a configuration file with the <code>ssid</code> and the <code>psk</code>, and run it on the interface. Then <code>dhcpcd wlan0</code>.</p>
+<h2 id="s6-9">6.9 Mounting and disks</h2>
+<pre>mount /dev/sdb1 /mnt/usb
+mount -t vfat -o ro /dev/sdb1 /mnt/usb
+umount /mnt/usb</pre>
+<p><code>mount</code>, <code>umount</code>, <code>lsblk</code>, <code>blkid</code>, <code>sfdisk</code>, <code>fdisk</code> and <code>cfdisk</code> are util-linux's, <code>zpool</code> and <code>zfs</code> are OpenZFS's, <code>mkfs.ext4</code> and <code>fsck.ext4</code> are e2fsprogs', <code>mkfs.fat</code> is dosfstools'.</p>
+<p>On a ZFS root, <code>/etc/rc</code> runs <code>zfs mount -a</code> right after <code>mount -a</code>, which mounts <code>rpool/home</code> and <code>rpool/var</code>; the root itself was mounted by the initramfs.</p>
+<hr>
+<p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-16 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>
