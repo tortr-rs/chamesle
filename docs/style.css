@@ -48,8 +48,23 @@ pre, code, tt, kbd {
 	font-size: 13px;
 }
 pre {
-	margin: 6px 0 6px 16px;
+	margin: 8px 0;
+	padding: 6px 10px;
+	background: #f0f0f0;
+	border: 1px solid #808080;
+	border-left: 4px solid #000000;
 	overflow-x: auto;
+	white-space: pre;
+}
+code {
+	background: #f0f0f0;
+	border: 1px solid #c0c0c0;
+	padding: 0 3px;
+}
+pre code {
+	background: none;
+	border: 0;
+	padding: 0;
 }
 
 table { border-collapse: collapse; margin: 8px 0; }
