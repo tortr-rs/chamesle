@@ -11,7 +11,7 @@
 <meta property="og:title" content="Chamesle, a Linux distribution built from source">
 <meta property="og:description" content="Chamesle is a Linux distribution you install by hand and build from source, with its own coreutils and package manager.">
 <meta property="og:url" content="https://chamesle.org/">
-<link rel="stylesheet" href="style.css?14">
+<link rel="stylesheet" href="style.css?16">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
 <div id="nav">
 <b>Home</b> |
-<a href="download.html">Install</a> |
+<a href="download.html">Download</a> |
 <a href="docs.html">Handbook</a> |
 <a href="packages.html">Packages</a> |
 <a href="new.html">News</a> |
@@ -59,13 +59,13 @@ Scratch. The kernel is Linux. Nothing else in it is GNU. It is text mode: there 
 
 <h2 id="install">Install</h2>
 
-<p>By hand, from the <a href="docs.html">handbook</a>. From any running Linux, mount a disk and run the bootstrap
-into it, then set up fstab and limine (chapter 5). Or build the live ISO and boot that (chapter 4). There is no
-prebuilt ISO to download: you build it.</p>
+<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Download the ISO</a></p>
+
+<p>Boot it, and install by hand from the
+<a href="docs.html">handbook</a> (chapter 3). Or, from any running Linux, mount a disk and run the bootstrap into it.</p>
 
 <pre>chamesle-disk /dev/sda
-chamesle-bootstrap -n yourhostname /mnt
-iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
+chamesle-bootstrap -n yourhostname /mnt</pre>
 
 <p>The commands, one after the other, are on the <a href="download.html">install page</a>.</p>
 
@@ -98,7 +98,7 @@ own. The <a href="new.html">news page</a> has the history of the old releases.</
 
 <dl>
 <dt>Is there an ISO to download?</dt>
-<dd>No. You build it with <code>iso/mkiso</code>. Anything older with Chamesle's name on it is the old distro,
+<dd>Yes, <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">chamesle.iso</a>. Anything older with Chamesle's name on it is the old distro,
 not this system.</dd>
 <dt>Where is the code?</dt>
 <dd>There is no public source repo yet. The old Chamesle code is on

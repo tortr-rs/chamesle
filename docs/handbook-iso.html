@@ -11,7 +11,7 @@
 <meta property="og:title" content="The live ISO - Chamesle">
 <meta property="og:description" content="The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, and has">
 <meta property="og:url" content="https://chamesle.org/handbook-iso.html">
-<link rel="stylesheet" href="style.css?14">
+<link rel="stylesheet" href="style.css?13">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
 <div id="nav">
 <a href="./">Home</a> |
-<a href="download.html">Install</a> |
+<a href="download.html">Download</a> |
 <b>Handbook</b> |
 <a href="packages.html">Packages</a> |
 <a href="new.html">News</a> |
@@ -39,55 +39,9 @@
 <h2>8. The live ISO</h2>
 <h2 id="s8-1">8.1 What it is</h2>
 <p>The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, and has mksh, vim, mag with Chamesle's recipes (<code>mag search</code> and <code>mag info</code> work before <code>mag sync</code>), <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>, <code>chamesle-disk</code>, the disk tools (<code>cfdisk</code>, <code>sfdisk</code>, <code>mkfs.ext4</code>, <code>mkfs.fat</code>, <code>zpool</code>, <code>zfs</code>) and this handbook in <code>/usr/share/doc/chamesle/handbook.md</code>. It is where you do chapter 3 on a machine that has nothing on it.</p>
-<h2 id="s8-2">8.2 Building</h2>
-<p>The machine that builds needs <code>mksquashfs</code> (filesystems/squashfs), <code>xorriso</code> (sysutils/libisoburn), <code>zstd</code>, <code>bsdcpio</code>, <code>limine</code> and <code>mag</code>, plus what chamesle-bootstrap needs.</p>
-<pre>$HOME/src/system/iso/mkiso -r $HOME/src/mag/repo:/usr/pkgsrc</pre>
-<p>The usage:</p>
-<pre>chamesle-chroot DIR [COMMAND...]
-chamesle-disk DISK
-mkiso [-p profile] [-r repos] [-R rootfs] [-w workdir] [-o out.iso]</pre>
-<ul>
-<li><code>-p</code> is the profile directory (default <code>iso/profile</code>)</li>
-<li><code>-r</code> is <code>MAG_REPO</code></li>
-<li><code>-R</code> uses a root you have already built, copied and not changed, instead of building one</li>
-<li><code>-w</code> is the work directory (default <code>./work</code>)</li>
-<li><code>-o</code> is the file to write (default <code>chamesle.iso</code>)</li>
-</ul>
-<p>Environment: <code>LIMINE</code> is where limine's files are (default <code>/usr/share/limine</code>), <code>MKISOFS</code> is the command that makes the ISO (default <code>xorriso -as mkisofs</code>), <code>MAG</code> is the mag to put into the image, <code>MAGREPO</code> the repo whose recipes it carries in <code>/usr/share/mag/repo</code> (default: the <code>repo</code> next to a mag checkout, else the first <code>MAG_REPO</code> entry with a <code>PROVIDES</code> file).</p>
-<p>In order:</p>
-<ol>
-<li><code>chamesle-bootstrap</code> builds a root from <code>profile/packages</code>, with the host name <code>chamesle-live</code>.</li>
-<li><code>profile/overlay</code> is copied over it.</li>
-<li><code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>, <code>chamesle-disk</code>, the handbook, <code>mag</code> and its recipes are put into it.</li>
-<li>The kernel from <code>boot/vmlinuz-*</code> is copied to the ISO, and <code>depmod</code> runs on the root.</li>
-<li><code>mkinitramfs</code> makes <code>boot/initrd</code> from <code>profile/modules</code>.</li>
-<li>The root is written as a zstd squashfs, <code>LiveOS/rootfs.sfs</code>.</li>
-<li>limine's boot files are copied and <code>profile/limine.conf</code> becomes <code>boot/limine/limine.conf</code>.</li>
-<li><code>xorriso</code> writes the ISO with the BIOS and UEFI boot images and <code>limine bios-install</code> makes it bootable on BIOS.</li>
-</ol>
-<p>A root built that way still has its build-time loader paths (section 4.4). To relocate it, and to put rifle in it, build the root yourself and hand it over:</p>
-<pre>MAG_REPO=$HOME/src/mag/repo:/usr/pkgsrc $HOME/src/system/tools/chamesle-bootstrap \
-    -s &quot;$(grep -v &#x27;^#&#x27; $HOME/src/system/iso/profile/packages | tr &#x27;\n&#x27; &#x27; &#x27;)&quot; -n chamesle-live /srv/rootfs
-MAG_ROOT=/srv/rootfs mag relocate
-install -m755 $HOME/src/rifle/rifle /srv/rootfs/usr/bin/rifle
-$HOME/src/rifle/rifle --install /srv/rootfs/usr/bin
-$HOME/src/system/iso/mkiso -R /srv/rootfs -o chamesle.iso</pre>
-<h2 id="s8-3">8.3 The profile</h2>
-<pre>iso/profile/packages        packages of the live root, one per line, # for comments
-iso/profile/modules         modules the initramfs loads to find the medium
-iso/profile/limine.conf     boot menu
-iso/profile/overlay/        files copied over the root: etc/motd</pre>
-<p><code>packages</code> is the base set of chapter 3. <code>modules</code> lists <code>squashfs overlay loop isofs sr_mod cdrom sd_mod usb_storage uas xhci_pci ehci_pci ahci ata_piix ata_generic pata_acpi virtio_blk nvme virtio_pci virtio_scsi ext4 vfat nls_cp437 nls_iso8859_1</code>, one per line, then a <code>[zfs]</code> line and <code>zfs</code>, which only a root on ZFS loads. The boot entry:</p>
-<pre>timeout: 3
-
-/Chamesle live
-    protocol: linux
-    path: boot():/boot/vmlinuz
-    module_path: boot():/boot/initrd
-    cmdline: quiet</pre>
-<h2 id="s8-4">8.4 How it boots</h2>
+<h2 id="s8-2">8.2 How it boots</h2>
 <p><code>iso/init</code> looks through <code>/dev/sr*</code>, <code>/dev/sd*</code>, <code>/dev/nvme*n*p*</code>, <code>/dev/vd*</code> and <code>/dev/mmcblk*</code> until it finds one that mounts and has <code>LiveOS/rootfs.sfs</code>. It mounts that squashfs read-only, puts a tmpfs overlay over it, moves the medium and the squashfs to <code>/run/live/medium</code> and <code>/run/live/rootfs</code>, and runs <code>switch_root</code> into the result. Whatever you change in the live system is gone at shutdown.</p>
-<h2 id="s8-5">8.5 Trying it in qemu</h2>
+<h2 id="s8-3">8.3 Trying it in qemu</h2>
 <p>BIOS:</p>
 <pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d</pre>
 <p>UEFI, with the firmware of your qemu (<code>edk2-x86_64-code.fd</code>; the path differs between systems):</p>
