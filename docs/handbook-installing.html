@@ -73,39 +73,31 @@ mount /dev/sda3 /mnt
 mkdir /mnt/boot
 mount /dev/sda2 /mnt/boot</pre>
 <p>The FAT partition is <code>/boot</code>. The kernel and <code>limine.conf</code> end up there, where limine looks for them on both BIOS and UEFI. The root can be ZFS by hand as well: the <code>zpool</code> and <code>zfs</code> lines of 3.1 are all there is to it.</p>
-<h2 id="s3-3">3.3 Copying the live system</h2>
-<p>The live ISO has no compiler, so on a machine booted from it the system is not built, it is copied. The read-only root of the ISO is mounted on <code>/run/live/rootfs</code> and the ISO itself on <code>/run/live/medium</code>:</p>
-<pre>tar -C /run/live/rootfs --exclude ./etc/fstab -cf - . | tar -C /mnt -xpf -
-[ -e /mnt/etc/fstab ] || cp /run/live/rootfs/etc/fstab /mnt/etc/fstab
-cp /run/live/medium/boot/initrd /mnt/boot/initrd</pre>
-<p>That is the whole base system, kernel, modules and ZFS included, as it was when the ISO was made. The copy keeps the fstab chamesle-disk wrote. The firmware for wifi and some network cards is not on the ISO. Add it with hoard once the new system runs (section 4), or build everything instead (3.4), which needs a machine with a compiler.</p>
+<h2 id="s3-3">3.3 Unpacking the stage</h2>
+<p>The system comes as a stage tarball, as on Gentoo: a root with the base already in it. rifle, mksh, Winchester, musl, gcc, python, perl, gettext, <code>hoard</code> and its records of what is installed (<code>/var/db/pkg</code>) are all inside. Nothing is compiled until you ask hoard for something. Check the tarball against its <code>.sha256</code> and unpack it:</p>
+<pre>sha256sum -c chamesle-stage.tar.xz.sha256
+    tar -C /mnt --exclude ./etc/fstab -xpf chamesle-stage.tar.xz</pre>
+<p>[ -e /mnt/etc/fstab ] || tar -C /mnt -xpf chamesle-stage.tar.xz ./etc/fstab</p>
+<p>Make the directories the stage leaves out:</p>
+<pre>mkdir -p /mnt/proc /mnt/sys /mnt/dev /mnt/run /mnt/tmp /mnt/var/tmp /mnt/var/log /mnt/var/cache /mnt/home
+chmod 1777 /mnt/tmp /mnt/var/tmp</pre>
+<p>Keep <code>-p</code>: the modes and the owners matter. <code>/boot</code>, <code>/home</code>, <code>/proc</code>, <code>/sys</code>, <code>/dev</code>, <code>/run</code>, <code>/tmp</code>, <code>/var/cache</code>, <code>/var/log</code> and the Gentoo tree are not in the stage: the first are yours, the tree comes from <code>hoard sync</code> (section 2.3). The fstab chamesle-disk wrote is left alone, the stage's own is only used if there is none (3.6). The kernel and the initrd come from the ISO:</p>
+<pre>cp /run/live/medium/boot/initrd /mnt/boot/initrd
+cp /run/live/medium/boot/vmlinuz-* /mnt/boot/</pre>
 <p>Work inside the new root with <code>chamesle-chroot</code>:</p>
 <pre>chamesle-chroot /mnt
 chamesle-chroot /mnt passwd root</pre>
 <p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/usr/bin/mksh -l</code>.</p>
-<p>Then go on with 3.6 (fstab) and the rest. rifle (3.5) is on the ISO already, skip it. The kernel is in <code>/mnt/boot</code> already.</p>
-<h2 id="s3-4">3.4 Building the system from source, instead</h2>
-<p>Have SPAS and the tree ready (sections 2.2 to 2.4) and run chamesle-bootstrap:</p>
-<pre>$HOME/src/system/tools/chamesle-bootstrap -n yourhostname /mnt</pre>
-<p>Its usage:</p>
-<pre>chamesle-bootstrap [-s PACKAGES] [-n HOSTNAME] TARGET</pre>
-<ul>
-<li><code>-s</code> is the list of packages to install instead of the base set</li>
-<li><code>-n</code> is the host name, <code>chamesle</code> if not given</li>
-</ul>
-<p>It makes the directories (<code>bin boot dev etc/skel home lib lib/firmware mnt proc root run sbin srv sys tmp usr/bin usr/lib usr/sbin usr/share usr/local/bin var/cache var/lib var/log var/tmp</code>, with <code>tmp</code> and <code>var/tmp</code> mode 1777 and <code>root</code> mode 700), installs everything in <code>files/</code> (init, rc, the services, <code>init.conf</code>), writes the first <code>/etc</code> files (<code>passwd</code>, <code>group</code>, <code>shells</code>, <code>fstab</code>, <code>profile</code>, <code>os-release</code>, and <code>spas/make.conf</code> with the musl profile), copies the tree into the new root, and builds the base set into the target with <code>hoard --root</code>:</p>
-<pre>sys-libs/musl app-shells/bash app-shells/mksh sys-apps/util-linux sys-apps/kmod sys-fs/eudev net-misc/dhcpcd
-sys-fs/e2fsprogs sys-fs/dosfstools sys-boot/limine sys-kernel/gentoo-sources sys-kernel/linux-firmware
-sys-fs/zfs sys-fs/zfs-kmod app-editors/vim llvm-core/clang llvm-core/lld llvm-runtimes/compiler-rt llvm-runtimes/libunwind</pre>
-<p><code>llvm-core/clang</code> (with LLVM under it), <code>lld</code>, <code>compiler-rt</code> and <code>libunwind</code> are the compiler of the new system: it builds what <code>hoard install</code> asks for after <code>hoard sync</code>, so no other machine is needed. They are the longest part of the bootstrap. It also installs <code>chamesle-chroot</code> and <code>chamesle-disk</code>, and runs <code>depmod</code>.</p>
-<p>The sources go in <code>/mnt/var/cache/distfiles</code> and are not fetched twice. An existing file in <code>/etc</code> is never overwritten, so the script can be run again after a failure. A build that fails stops and names the directory it left behind, and <code>hoard --root /mnt install --resume</code> goes on from where it stopped.</p>
-<h2 id="s3-5">3.5 rifle</h2>
-<p>The base set has no coreutils: they come from rifle. Install it into the new root:</p>
-<pre>install -m755 $HOME/src/rifle/rifle /mnt/usr/bin/rifle
-$HOME/src/rifle/rifle --install /mnt/usr/bin</pre>
-<p><code>rifle --install DIR</code> makes a link for each of its tools in <code>DIR</code>. rifle is built static, so it runs from the host as it is.</p>
-<p>Add the packages you want now, or after the first boot:</p>
-<pre>hoard --root /mnt install app-editors/vim</pre>
+<p>Inside, fetch the tree and install what you want:</p>
+<pre>hoard sync
+hoard install -y -j4 --keep-going app-editors/vim</pre>
+<p>The stage's <code>/etc/spas/make.conf</code> builds with gcc (<code>CC=gcc</code>, <code>CXX=g++</code>) for <code>x86_64-pc-linux-musl</code> and the musl profile. Its <code>/etc/spas/profile/package.provided</code> lists what the stage already has, so hoard does not build those again: <code>musl</code>, <code>baselayout</code>, <code>util-linux</code>, <code>libunistring</code>, <code>make</code>, <code>m4</code>, <code>linux-headers</code>, <code>e2fsprogs</code>, <code>gettext</code> and a few others. <code>--resume</code> goes on after a failed build. Then go on with 3.6 (fstab) and the rest.</p>
+<h2 id="s3-4">3.4 Building the stage</h2>
+<p>You do not need this to install. It is how the stage is made. Start from a Gentoo musl stage3, whose gcc, binutils, python, perl and gettext are binaries, check its digest, and take from it the files each package lists in <code>/var/db/pkg/<i>/</i>/CONTENTS</code>, plus the <code>/var/db/pkg</code> directories themselves so hoard knows they are installed. Put rifle, mksh, Winchester, the files in <code>files/</code> and a <code>hoard</code> built for musl on top, write <code>make.conf</code> and <code>package.provided</code>, build whatever else the base needs with hoard, and pack the root:</p>
+<pre>tar -C ROOT -cpf - --exclude=./proc --exclude=./sys --exclude=./dev --exclude=./run --exclude=./tmp \
+    --exclude=./boot --exclude=./home --exclude=./var/tmp --exclude=./var/cache --exclude=./var/log \
+    --exclude=./var/db/repos . | xz -T0 &gt; chamesle-stage.tar.xz</pre>
+<p>GNU patch is the one thing the stage3 does not give, and it is built from source.</p>
 <h2 id="s3-6">3.6 fstab</h2>
 <p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
 <p>By hand, <code>blkid</code> prints the UUIDs:</p>
@@ -168,7 +160,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-16 $
+$Date: 2026-11-17 $
 </div>
 
 </div>
