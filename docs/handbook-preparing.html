@@ -68,7 +68,7 @@ hoard sync</pre>
 <pre>ln -sfn /var/db/repos/gentoo/profiles/default/linux/amd64/23.0/musl /etc/spas/make.profile</pre>
 <p><code>--root DIR</code> says where to install; it is the new root during an installation (chapter 3) and left out on a running system. Its own <code>etc/spas</code> is the one used.</p>
 <h2 id="s2-5">2.5 make.conf</h2>
-<p><code>/etc/spas/make.conf</code> holds the build settings, and section 4.4 has what goes in it. <code>chamesle-bootstrap</code> writes a first one for the new system. For the host you build from, make one yourself:</p>
+<p><code>/etc/spas/make.conf</code> holds the build settings, and section 4.4 has what goes in it. The stage has one. For the host you build from, make one yourself:</p>
 <pre>CFLAGS=&quot;-O2 -pipe -std=gnu17&quot;
 CXXFLAGS=&quot;${CFLAGS}&quot;
 MAKEOPTS=&quot;-j8&quot;</pre>
@@ -83,7 +83,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-16 $
+$Date: 2026-11-17 $
 </div>
 
 </div>
