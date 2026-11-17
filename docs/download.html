@@ -57,6 +57,10 @@
 <p>Find the stick with <code>lsblk</code> and use its name, not a partition. This erases everything on it.</p>
 <pre>dd if=chamesle.iso of=/dev/sdX bs=4M status=progress conv=fsync</pre>
 
+<h2>The stage</h2>
+<p>The system is also a stage tarball, 940 MB: musl, rifle, mksh, Winchester, gcc, python, perl, SPAS and sam. Unpack it into a new root as in <a href="handbook-installing.html">the handbook</a>. It is on the <a href="https://github.com/tortr-rs/chamesle/releases/tag/stage-20261117">releases page</a>, with its sha256.</p>
+
+
 <h2>What is on it</h2>
 <p>A live system with mksh, vim, SPAS and the Gentoo tree, <code>chamesle-chroot</code>, <code>chamesle-disk</code>
 (cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and the
