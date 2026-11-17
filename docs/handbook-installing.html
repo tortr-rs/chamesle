@@ -53,6 +53,7 @@
 <pre>mkfs.fat -F32 BOOT
 zpool create -f -o ashift=12 -O compression=zstd -O acltype=posixacl -O xattr=sa -O mountpoint=none -R /mnt rpool ROOT
 zfs create -o mountpoint=/ -o canmount=noauto rpool/root
+zfs mount rpool/root
 zfs create -o mountpoint=/home rpool/home
 zfs create -o mountpoint=/var rpool/var
 zpool set bootfs=rpool/root rpool</pre>
@@ -74,10 +75,10 @@ mkdir /mnt/boot
 mount /dev/sda2 /mnt/boot</pre>
 <p>The FAT partition is <code>/boot</code>. The kernel and <code>limine.conf</code> end up there, where limine looks for them on both BIOS and UEFI. The root can be ZFS by hand as well: the <code>zpool</code> and <code>zfs</code> lines of 3.1 are all there is to it.</p>
 <h2 id="s3-3">3.3 Unpacking the stage</h2>
-<p>The system comes as a stage tarball, as on Gentoo: a root with the base already in it. rifle, mksh, Winchester, musl, gcc, python, perl, gettext, <code>hoard</code> and its records of what is installed (<code>/var/db/pkg</code>) are all inside. Nothing is compiled until you ask hoard for something. Check the tarball against its <code>.sha256</code> and unpack it:</p>
-<pre>sha256sum -c chamesle-stage.tar.xz.sha256
-    tar -C /mnt --exclude ./etc/fstab -xpf chamesle-stage.tar.xz</pre>
-<p>[ -e /mnt/etc/fstab ] || tar -C /mnt -xpf chamesle-stage.tar.xz ./etc/fstab</p>
+<p>The system comes as a stage tarball, as on Gentoo: a root with the base already in it. rifle, mksh, Winchester, musl, gcc, python, perl, gettext, <code>hoard</code> and its records of what is installed (<code>/var/db/pkg</code>) are all inside. Nothing is compiled until you ask hoard for something. It is on the releases page of github.com/tortr-rs/chamesle, with its <code>.sha256</code>. Check the tarball against its <code>.sha256</code> and unpack it:</p>
+<pre>sha256sum -c chamesle-stage-20261117.tar.xz.sha256
+    tar -C /mnt --exclude ./etc/fstab -xpf chamesle-stage-20261117.tar.xz</pre>
+<p>[ -e /mnt/etc/fstab ] || tar -C /mnt -xpf chamesle-stage-20261117.tar.xz ./etc/fstab</p>
 <p>Make the directories the stage leaves out:</p>
 <pre>mkdir -p /mnt/proc /mnt/sys /mnt/dev /mnt/run /mnt/tmp /mnt/var/tmp /mnt/var/log /mnt/var/cache /mnt/home
 chmod 1777 /mnt/tmp /mnt/var/tmp</pre>
@@ -96,7 +97,7 @@ hoard install -y -j4 --keep-going app-editors/vim</pre>
 <p>You do not need this to install. It is how the stage is made. Start from a Gentoo musl stage3, whose gcc, binutils, python, perl and gettext are binaries, check its digest, and take from it the files each package lists in <code>/var/db/pkg/<i>/</i>/CONTENTS</code>, plus the <code>/var/db/pkg</code> directories themselves so hoard knows they are installed. Put rifle, mksh, Winchester, the files in <code>files/</code> and a <code>hoard</code> built for musl on top, write <code>make.conf</code> and <code>package.provided</code>, build whatever else the base needs with hoard, and pack the root:</p>
 <pre>tar -C ROOT -cpf - --exclude=./proc --exclude=./sys --exclude=./dev --exclude=./run --exclude=./tmp \
     --exclude=./boot --exclude=./home --exclude=./var/tmp --exclude=./var/cache --exclude=./var/log \
-    --exclude=./var/db/repos . | xz -T0 &gt; chamesle-stage.tar.xz</pre>
+    --exclude=./var/db/repos . | xz -T0 &gt; chamesle-stage-20261117.tar.xz</pre>
 <p>GNU patch is the one thing the stage3 does not give, and it is built from source.</p>
 <h2 id="s3-6">3.6 fstab</h2>
 <p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
