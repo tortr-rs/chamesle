@@ -101,16 +101,13 @@ hoard install -y -j4 --keep-going app-editors/vim</pre>
     --exclude=./var/db/repos . | xz -T0 &gt; chamesle-stage-20261117.tar.xz</pre>
 <p>GNU patch is the one thing the stage3 does not give, and it is built from source.</p>
 <h2 id="s3-5">3.5 The other stages</h2>
-<p>There are four stages. The unpacking in 3.3 is the same for all of them; only the tarball differs.</p>
+<p>There are two stages. The unpacking in 3.3 is the same for both; only the tarball differs.</p>
 <table>
-<tr><th>tarball</th><th>libc</th><th>what is in it</th></tr>
-<tr><td><code>chamesle-stage-DATE</code></td><td>musl</td><td>the base of 3.3: rifle, mksh, Winchester, gcc, SPAS, sam</td></tr>
-<tr><td><code>chamesle-stage-graphical-DATE</code></td><td>musl</td><td>the base, plus X, 9wm, sxhkd, dmenu, and plan9port with 9term and acme</td></tr>
-<tr><td><code>chamesle-stage-glibc-DATE</code></td><td>glibc</td><td>Gentoo's glibc userland (GNU coreutils stay), with Winchester, mksh, SPAS, rifle and sam</td></tr>
-<tr><td><code>chamesle-stage-glibc-graphical-DATE</code></td><td>glibc</td><td>the glibc stage, plus the same graphical set</td></tr>
+<tr><th>tarball</th><th>what is in it</th></tr>
+<tr><td><code>chamesle-stage-DATE</code></td><td>the base of 3.3: musl, rifle, mksh, Winchester, gcc, SPAS, sam</td></tr>
+<tr><td><code>chamesle-stage-graphical-DATE</code></td><td>the base, plus X, 9wm, sxhkd, dmenu, and plan9port with 9term and acme</td></tr>
 </table>
-<p>Pick the libc by what you want to run. musl is Chamesle's own; glibc is for programs that only come as binaries for glibc. SPAS reads the profile in <code>/etc/spas/make.profile</code>, which is the musl profile in the musl stages and the plain one in the glibc stages.</p>
-<h3 id="the-graphical-stages">The graphical stages</h3>
+<h3 id="the-graphical-stage">The graphical stage</h3>
 <p>On the first boot the login on tty1 is <code>chamesle-session</code>, not a shell. It starts X, and X starts <code>9wm</code>, which is the window manager that looks and works like rio: the right button makes windows (New, Reshape, Move, Delete, Hide), and text is selected and cut by chording the mouse buttons. A <code>9term</code> is open when it comes up, with <code>plumber</code> behind it. When X ends you land in <code>mksh</code>. The login is <code>root</code> with no password until you set one (3.7).</p>
 <p><code>sxhkd</code> carries the keys of the dwm setup that make sense without tags (<code>/etc/sxhkd/sxhkdrc</code>):</p>
 <table>
@@ -185,7 +182,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-17 $
+$Date: 2026-11-18 $
 </div>
 
 </div>
