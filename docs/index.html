@@ -11,14 +11,15 @@
 <meta property="og:title" content="Chamesle, a Linux distribution built from source">
 <meta property="og:description" content="Chamesle is a Linux distribution you install by hand and build from source, with its own coreutils and package manager.">
 <meta property="og:url" content="https://chamesle.org/">
-<link rel="stylesheet" href="style.css?16">
+<link rel="stylesheet" href="style.css?19">
+<link rel="icon" href="img/logo.png">
 </head>
 <body>
 
 <div id="page">
 
 <div id="top">
-<h1><a href="./">Chamesle</a></h1>
+<h1><a href="./"><img src="img/banner-dark.png" alt="Chamesle Linux" width="223" height="56"></a></h1>
 </div>
 
 <div id="nav">
@@ -28,14 +29,13 @@
 <a href="packages.html">Packages</a> |
 <a href="new.html">News</a> |
 <a href="board.html">Board</a> |
-<a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
-<a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
+<div class="front">
+<div>
 
 <h2 id="what">What is Chamesle</h2>
 
@@ -43,10 +43,23 @@
 <p>Chamesle is a Linux distribution built from source and installed by hand, like Gentoo or Linux From
 Scratch. The kernel is Linux. Nothing else in it is GNU. It boots to a text login, and the graphical stage starts X with <code>9wm</code>, a window manager like Plan 9's rio, with <code>9term</code>, <code>acme</code> and <code>sam</code>.</p>
 
-<table>
-<tr><td><img src="yaoming.jpg" width="200" height="133" alt="Yao Ming, disappointed"></td>
-<td>Yao Ming, pride of China, was disappointed with the current state of UNIX and Linux distros, until he tried Chamesle.</td></tr>
-</table>
+
+<h2 id="news">News</h2>
+
+<dl class="news">
+<dt>2026-11-17</dt>
+<dd>Stages are out. The <a href="download.html">base stage</a> is the whole system in one tarball: unpack it,
+chroot, and let <code>hoard</code> build the rest. The graphical stage adds Xorg and starts <code>9wm</code> with
+<code>9term</code>, <code>acme</code> and <code>sam</code> on the first login. The <a href="handbook-installing.html">handbook</a>
+covers both.</dd>
+<dt>2026-11-14</dt>
+<dd>Chamesle starts over. The old Debian-style desktop distro is gone, with its desktops and the 0.8 release.
+The new one is written from scratch. The handbook has the install steps: partition, mount,
+<code>chamesle-bootstrap</code>, fstab and limine.</dd>
+<dt>2026-11-10</dt>
+<dd>The old Chamesle went on hold. X8664 became <a href="https://x22.chamesle.org/">X22</a> and got a site of its
+own. The <a href="new.html">news page</a> has the history of the old releases.</dd>
+</dl>
 
 <h2 id="parts">Components</h2>
 
@@ -65,27 +78,13 @@ Scratch. The kernel is Linux. Nothing else in it is GNU. It boots to a text logi
 
 <h2 id="install">Install</h2>
 
-<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Download the ISO</a></p>
-
-<p>Boot it, and install by hand from the
+<p>Boot the <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">ISO</a> or unpack a <a href="download.html">stage</a>, and install by hand from the
 <a href="docs.html">handbook</a> (chapter 3). Or, from any running Linux, mount a disk and run the bootstrap into it.</p>
 
 <pre>chamesle-disk /dev/sda
 chamesle-bootstrap -n yourhostname /mnt</pre>
 
 <p>The commands, one after the other, are on the <a href="download.html">install page</a>.</p>
-
-<h2 id="news">News</h2>
-
-<dl class="news">
-<dt>2026-11-14</dt>
-<dd>Chamesle starts over. The old Debian-style desktop distro is gone, with its desktops and the 0.8 release.
-The new one is written from scratch. The handbook has the install steps: partition, mount,
-<code>chamesle-bootstrap</code>, fstab and limine.</dd>
-<dt>2026-11-10</dt>
-<dd>The old Chamesle went on hold. X8664 became <a href="https://x22.chamesle.org/">X22</a> and got a site of its
-own. The <a href="new.html">news page</a> has the history of the old releases.</dd>
-</dl>
 
 <h2 id="plan">Plan</h2>
 
@@ -123,16 +122,55 @@ more.</dd>
 <h2 id="contact">Contact</h2>
 
 <p>Questions and bug reports go on the <a href="board.html">board</a>. For a quick talk, there is the
-<a href="chat.html">chat</a> (Discord and IRC, <code>#chamesle</code> on Libera.Chat).</p>
+<a href="chat.html">chat</a> (Discord and IRC, <code>#chamesle</code> on Libera.Chat).</p></div>
+
+<div class="side">
+<div class="sbox">
+<h3>Latest stage</h3>
+<div><span class="ver">2026-11-17</span><br>musl, x86_64</div>
+</div>
+<div class="sbox">
+<h3>Download</h3>
+<ul>
+<li><a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-20261117.tar.xz">Base stage</a> (988 MB)</li>
+<li><a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-graphical-20261117.tar.xz">Graphical stage</a> (1.5 GB)</li>
+<li><a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Live ISO</a></li>
+<li><a href="download.html">Checksums and more</a></li>
+</ul>
+</div>
+<div class="sbox">
+<h3>Documentation</h3>
+<ul>
+<li><a href="docs.html">Handbook</a></li>
+<li><a href="handbook-installing.html">Installing</a></li>
+<li><a href="handbook-spas.html">SPAS and hoard</a></li>
+<li><a href="handbook-rifle.html">rifle</a></li>
+</ul>
+</div>
+<div class="sbox">
+<h3>Elsewhere</h3>
+<ul>
+<li><a href="https://spas.chamesle.org/">SPAS</a></li>
+<li><a href="https://x22.chamesle.org/">X22</a></li>
+<li><a href="chat.html">Chat</a> (#chamesle, Libera)</li>
+<li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>
+</ul>
+</div>
+<div class="sbox">
+<h3>Endorsed</h3>
+<div><img src="yaoming.jpg" width="222" height="148" alt="Yao Ming, disappointed"><br>
+Yao Ming, pride of China, was disappointed with the current state of UNIX and Linux distros, until he tried Chamesle.</div>
+</div>
+</div>
+</div>
 </main>
 
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
-<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-14 $
+$Date: 2026-11-18 $
 </div>
 
 </div>
