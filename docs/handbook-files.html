@@ -37,9 +37,9 @@
 </div>
 
 <main>
-<p><a href="handbook-maintaining.html">&larr; Maintaining</a> | <a href="docs.html">Contents</a></p>
-<h2>10. File reference</h2>
-<h2 id="s10-1">10.1 On an installed system</h2>
+<p><a href="handbook-desktop.html">&larr; X and a window manager</a> | <a href="docs.html">Contents</a></p>
+<h2>11. File reference</h2>
+<h2 id="s11-1">11.1 On an installed system</h2>
 <table>
 <tr><th>path</th><th>what</th></tr>
 <tr><td><code>/sbin/init</code>, <code>/etc/rc</code>, <code>/etc/rc.shutdown</code></td><td>init, the boot script, the shutdown script, all run by mksh</td></tr>
@@ -62,11 +62,12 @@
 <tr><td><code>/usr/share/limine/</code></td><td>limine's boot files, for installing it</td></tr>
 <tr><td><code>/usr/share/doc/chamesle/handbook.md</code></td><td>this book</td></tr>
 </table>
-<h2 id="s10-2">10.2 In the sources</h2>
+<h2 id="s11-2">11.2 In the sources</h2>
 <table>
 <tr><th>path</th><th>what</th></tr>
 <tr><td><code>system/tools/chamesle-bootstrap</code></td><td>puts the base into a root with mag</td></tr>
 <tr><td><code>system/tools/chamesle-chroot</code></td><td>chroot with the pseudo file systems mounted</td></tr>
+<tr><td><code>system/tools/chamesle-boot</code></td><td>limine.conf and limine for the system in a directory</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
 <tr><td><code>system/tools/mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code></td><td>packages, signed indexes, Chamesle's own repo</td></tr>
 <tr><td><code>system/files/</code></td><td>init, rc, <code>service</code>, <code>init.conf</code> and the service scripts, in <code>chamesle-base</code></td></tr>
@@ -79,15 +80,16 @@
 <tr><td><code>rifle/rifle.c</code>, <code>rifle/c.h</code>, <code>rifle/build.sh</code></td><td>the coreutils</td></tr>
 <tr><td><code>rifle/tests/run.sh</code>, <code>rifle/tests/cases</code></td><td>the comparison tests</td></tr>
 </table>
-<h2 id="s10-3">10.3 Commands in short</h2>
+<h2 id="s11-3">11.3 Commands in short</h2>
 <pre>chamesle-bootstrap [-a ARCH] [-n HOSTNAME] [-k KERNEL] [-f FIRMWARE] TARGET [PACKAGE]...
 chamesle-chroot DIR [COMMAND...]
 chamesle-disk DISK
+chamesle-boot [DIR]
 mag [-nf] update|install|remove|upgrade|autoremove|list|info|search|files|owns|deps|rdeps|fetch
 rifle --install DIR | --list
 limine bios-install DEVICE</pre>
 <hr>
-<p><a href="handbook-maintaining.html">&larr; Maintaining</a> | <a href="docs.html">Contents</a></p>
+<p><a href="handbook-desktop.html">&larr; X and a window manager</a> | <a href="docs.html">Contents</a></p>
 </main>
 
 <hr>

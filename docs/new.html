@@ -51,6 +51,11 @@ and the tools), <code>mag</code> and <code>rifle</code>, are in our repo at <cod
 <p>There is a 32-bit ISO now as well as the x86_64 one. The <a href="docs.html">handbook</a> is rewritten for all of
 this. SPAS and hoard are retired.</p>
 
+<p>Later the same day: <code>chamesle-boot</code> writes <code>limine.conf</code> from what is mounted on
+<code>/mnt</code> and puts limine on the disk for UEFI, and for BIOS when the disk has a BIOS boot partition, so the boot
+entry is no longer written by hand. The base has <code>doas</code> and <code>su</code> works for users. The
+<a href="handbook-desktop.html">handbook</a> has a chapter on X with Window Maker and Firefox, and one on installing next
+to another system. The ISOs are new.</p>
 <h2 id="2026-11-16">November 16, 2026: ebuilds, and a name for the init</h2>
 <p>Packages will come from Gentoo's ebuilds, run by <a href="https://spas.chamesle.org/">SPAS</a>, instead of pkgsrc and mag. mag could read pkgsrc, but
 every package that built needed another fix, and we'd rather stand on something that already builds. SPAS now runs on
