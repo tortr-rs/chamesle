@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repo - Chamesle</title>
+<meta name="description" content="Chamesle's package repo, and a search over every package mag can install.">
+<link rel="canonical" href="https://chamesle.org/repo/">
+<link rel="stylesheet" href="../style.css?19">
+<link rel="icon" href="../img/logo.png">
+<style>
+#q { width: 100%; box-sizing: border-box; font: inherit; padding: 4px; }
+#hits td, .own td { vertical-align: top; }
+.sum { font-size: 11px; word-break: break-all; }
+.pkg { margin: 12px 0; padding: 8px; border: 1px solid #888; }
+.pkg pre { margin: 6px 0 0; }
+</style>
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="../"><img src="../img/banner-dark.png" alt="Chamesle Linux" width="223" height="56"></a></h1>
+</div>
+
+<div id="nav">
+<a href="../">Home</a> |
+<a href="../download.html">Download</a> |
+<a href="../docs.html">Handbook</a> |
+<a href="../packages.html">Packages</a> |
+<b>Repo</b> |
+<a href="../new.html">News</a> |
+<a href="../board.html">Board</a> |
+<a href="../source.html">Source</a> |
+<a href="../about.html">About</a>
+</div>
+
+<main>
+<h2>The repo</h2>
+<p><code>https://chamesle.org/repo</code> has Chamesle's own packages, for <code>x86_64</code> and <code>x86</code>.
+mag reads it next to the musl repo with everything else; both are in <code>/etc/mag/repos</code> of every install.
+The index and every package are signed with <a href="chamesle-20261118.rsa.pub">chamesle-20261118.rsa.pub</a>, whose key has the
+SHA-256 <code class="sum">45694a25d1299eaa555d6bf2e661b49d26db8e6883d6ac92ac1a4c0c9de5c187</code></p>
+<pre>https://chamesle.org/repo
+cp chamesle-20261118.rsa.pub /etc/mag/keys/</pre>
+
+<h2>Search</h2>
+<p>Every package mag can install, 28664 of them for x86_64. <label><input type="radio" name="arch" value="x86_64" checked> x86_64</label>
+<label><input type="radio" name="arch" value="x86"> x86</label></p>
+<input id="q" type="search" placeholder="a name or a word, like tmux or irc" autocomplete="off">
+<div id="pkg"></div>
+<table id="hits"></table>
+
+<h2>Chamesle's packages</h2>
+<h3>x86_64</h3>
+<table class="own">
+<tr><td><b>chamesle-base</b><br>20261121-r15</td><td>Winchester, the files in /etc and the tools of Chamesle<br><small>needs <a href="#alpine-baselayout">alpine-baselayout</a> <a href="#busybox">busybox</a> <a href="#busybox-binsh">busybox-binsh</a> <a href="#busybox-suid">busybox-suid</a> <a href="#doas">doas</a> <a href="#mksh">mksh</a> <a href="#agetty">agetty</a> <a href="#eudev">eudev</a> <a href="#kmod">kmod</a> <a href="#dhcpcd">dhcpcd</a> <a href="#e2fsprogs">e2fsprogs</a> <a href="#dosfstools">dosfstools</a> <a href="#curl">curl</a> <a href="#mag">mag</a> <a href="#rifle">rifle</a></small></td><td>x86_64 K<br>33 K installed</td><td><a href="71/x86_64">chamesle-base-20261121-r15.apk</a><br><code class="sum">chamesle-base-20261121-r15.apk</code></td></tr>
+<tr><td><b>b55dfa6856caec3f125392089ae7434f6826505d2256a7fe417b4d8b4d3666b7</b><br></td><td></td><td> K<br> K installed</td><td><a href="/"></a><br><code class="sum"></code></td></tr>
+<tr><td><b>mag</b><br>0.3</td><td>the package manager</td><td>x86_64 K<br>50 K installed</td><td><a href="111/x86_64">mag-0.3.apk</a><br><code class="sum">mag-0.3.apk</code></td></tr>
+<tr><td><b>6bb7d6661353a6c0ee725a0f8311cbcdfd10cec522f431ec06763c20b5715551</b><br></td><td></td><td> K<br> K installed</td><td><a href="/"></a><br><code class="sum"></code></td></tr>
+<tr><td><b>rifle</b><br>0.2</td><td>the coreutils, in one program</td><td>x86_64 K<br>264 K installed</td><td><a href="553/x86_64">rifle-0.2.apk</a><br><code class="sum">rifle-0.2.apk</code></td></tr>
+<tr><td><b>c47436f7b3c52f00ad75cda7b89af53f20efe2cd86126a9b249890af85f9ba7e</b><br></td><td></td><td> K<br> K installed</td><td><a href="/"></a><br><code class="sum"></code></td></tr>
+</table>
+<h3>x86</h3>
+<table class="own">
+<tr><td><b>chamesle-base</b><br>20261121-r15</td><td>Winchester, the files in /etc and the tools of Chamesle<br><small>needs <a href="#alpine-baselayout">alpine-baselayout</a> <a href="#busybox">busybox</a> <a href="#busybox-binsh">busybox-binsh</a> <a href="#busybox-suid">busybox-suid</a> <a href="#doas">doas</a> <a href="#mksh">mksh</a> <a href="#agetty">agetty</a> <a href="#eudev">eudev</a> <a href="#kmod">kmod</a> <a href="#dhcpcd">dhcpcd</a> <a href="#e2fsprogs">e2fsprogs</a> <a href="#dosfstools">dosfstools</a> <a href="#curl">curl</a> <a href="#mag">mag</a></small></td><td>x86 K<br>33 K installed</td><td><a href="71/x86">chamesle-base-20261121-r15.apk</a><br><code class="sum">chamesle-base-20261121-r15.apk</code></td></tr>
+<tr><td><b>a2c0f480ea11e4a6c8767091c556c8536287eba3cf43b207ca849b0a640fff57</b><br></td><td></td><td> K<br> K installed</td><td><a href="/"></a><br><code class="sum"></code></td></tr>
+<tr><td><b>mag</b><br>0.3</td><td>the package manager</td><td>x86 K<br>58 K installed</td><td><a href="106/x86">mag-0.3.apk</a><br><code class="sum">mag-0.3.apk</code></td></tr>
+<tr><td><b>e3c428f3d037340b475297f95a7186e7619e42ded25071791a552f44831c85ce</b><br></td><td></td><td> K<br> K installed</td><td><a href="/"></a><br><code class="sum"></code></td></tr>
+</table>
+</main>
+
+<hr>
+<div id="foot">
+Made by <code>mkrepopage</code> from <a href="https://github.com/tortr-rs/system">system</a> on 2026-11-21.
+</div>
+
+</div>
+
+<script>
+var lists = {}, arch = 'x86_64', q = document.getElementById('q'), hits = document.getElementById('hits'), one = document.getElementById('pkg');
+function e(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function load(a, then) {
+	if (lists[a]) return then();
+	fetch('list-' + a + '.tsv').then(function (r) { return r.text(); }).then(function (t) {
+		var m = {}, l = t.split('\n').filter(Boolean).map(function (x) { var f = x.split('\t'); m[f[0]] = f; return f; });
+		lists[a] = { all: l, by: m }; then();
+	});
+}
+function find() {
+	var w = q.value.trim().toLowerCase(), l = lists[arch].all, out = [];
+	if (w.length < 2) { hits.innerHTML = ''; return; }
+	l.forEach(function (f) {
+		var n = f[0].toLowerCase(), r = n == w ? 0 : n.indexOf(w) == 0 ? 1 : n.indexOf(w) > 0 ? 2 : f[4].toLowerCase().indexOf(w) >= 0 ? 3 : -1;
+		if (r >= 0) out.push([r, f]);
+	});
+	out.sort(function (a, b) { return a[0] - b[0] || a[1][0].localeCompare(b[1][0]); });
+	hits.innerHTML = out.slice(0, 100).map(function (x) {
+		var f = x[1];
+		return '<tr><td><a href="#' + e(f[0]) + '">' + e(f[0]) + '</a></td><td>' + e(f[1]) + '</td><td>' + e(f[4]) + '</td></tr>';
+	}).join('') + (out.length > 100 ? '<tr><td colspan="3"><i>' + (out.length - 100) + ' more, say more</i></td></tr>' : '');
+}
+function show() {
+	var n = decodeURIComponent(location.hash.slice(1)), f = lists[arch] && lists[arch].by[n];
+	if (!n) { one.innerHTML = ''; return; }
+	if (!f) { one.innerHTML = '<div class="pkg">no <b>' + e(n) + '</b> for ' + arch + '</div>'; return; }
+	var d = f[5] ? f[5].split(' ').map(function (x) { var b = x.replace(/[<>=~].*/, '').replace(/^so:|^cmd:|^pc:/, ''); return lists[arch].by[b] ? '<a href="#' + e(b) + '">' + e(x) + '</a>' : e(x); }).join(' ') : 'nothing';
+	one.innerHTML = '<div class="pkg"><b>' + e(f[0]) + '</b> ' + e(f[1]) + ', from ' + e(f[2]) + ', ' + Math.round(f[3] / 1024) + ' K installed<br>' + e(f[4]) + '<br><small>needs ' + d + '</small><pre>mag install ' + e(f[0]) + '</pre></div>';
+}
+document.querySelectorAll('input[name=arch]').forEach(function (r) { r.onchange = function () { arch = r.value; load(arch, function () { find(); show(); }); }; });
+q.oninput = find;
+window.onhashchange = show;
+load(arch, function () { find(); show(); });
+</script>
+</body>
+</html>
