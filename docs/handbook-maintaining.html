@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maintaining - Chamesle</title>
-<meta name="description" content="sync brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever">
+<meta name="description" content="The first gets the indexes, the second says what would change, the third does it.">
 <link rel="canonical" href="https://chamesle.org/handbook-maintaining.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Maintaining - Chamesle">
-<meta property="og:description" content="sync brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever">
+<meta property="og:description" content="The first gets the indexes, the second says what would change, the third does it.">
 <meta property="og:url" content="https://chamesle.org/handbook-maintaining.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,46 +32,37 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
 <p><a href="handbook-iso.html">&larr; The live ISO</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
 <h2>9. Maintaining</h2>
-<h2 id="s9-1">9.1 Updating packages</h2>
-<pre>hoard sync
-hoard upgrade -p
-hoard upgrade</pre>
-<p><code>sync</code> brings the Gentoo tree up to date (section 2.3), the second says what would be rebuilt, the third rebuilds whatever the tree has a newer version of. One package: <code>hoard install name</code>.</p>
+<h2 id="s9-1">9.1 Updating</h2>
+<pre>mag update
+mag -n upgrade
+mag upgrade</pre>
+<p>The first gets the indexes, the second says what would change, the third does it.</p>
 <h2 id="s9-2">9.2 Cleaning up</h2>
-<pre>hoard autoremove                dependencies nothing needs any more
-rm -rf /var/cache/distfiles/*   downloaded sources; they are fetched again when needed</pre>
-<h2 id="s9-3">9.3 C23 and CFLAGS</h2>
-<p>clang compiles C as C23 by default. Older programs written for C89 or C99 stop with errors about <code>bool</code>, <code>true</code> or <code>false</code> used as names, or about functions declared as <code>int f()</code> and called with arguments. <code>CFLAGS="-O2 -std=gnu17"</code> in <code>/etc/spas/make.conf</code> makes the compiler use C17 for every build. It is in the file chamesle-bootstrap writes; if you wrote your own <code>make.conf</code> without it, add it.</p>
-<p>To see the error of a failed build, read the log hoard names: the build directory is kept, and <code>hoard install --resume</code> goes on from the phase that stopped.</p>
-<h2 id="s9-4">9.4 Installing into a root</h2>
-<p><code>hoard --root /mnt install name</code> builds and merges into <code>/mnt</code>, with the configuration of <code>/mnt/etc/spas</code>. Once the root has musl in it, the builds use the clang of the new root, so a package is built for the system it goes into.</p>
-<h2 id="s9-5">9.5 Build tools</h2>
-<p>Ebuilds call the usual tools by name: <code>make</code>, <code>awk</code>, <code>sed</code>, <code>grep</code>, <code>diff</code>, <code>cmp</code>, <code>install</code>, <code>python3</code>, <code>perl</code>, <code>m4</code>. The coreutils ones are rifle's, and the rest are packages like any other. A name an ebuild asks for that is missing is a package to install, and <code>hoard install -p</code> says which one.</p>
-<h2 id="s9-6">9.6 Failures you will see</h2>
+<pre>mag autoremove                 dependencies nothing needs any more
+rm -rf /var/cache/mag/pkg      downloaded packages; they are fetched again when needed</pre>
+<h2 id="s9-3">9.3 Configuration files</h2>
+<p>A changed file under <code>/etc</code> is never written over. When a package brings a new one, it lands next to yours as <code>NAME.new</code>. Look for them after an upgrade and merge by hand:</p>
+<pre>find /etc -name &#x27;*.new&#x27;</pre>
+<h2 id="s9-4">9.4 Failures you will see</h2>
 <table>
 <tr><th>what you see</th><th>why, and what to do</th></tr>
-<tr><td><code>no ebuilds match NAME</code></td><td>the name is in no repository of <code>repos.conf</code>; try <code>hoard search</code>, and run <code>hoard sync</code></td></tr>
-<tr><td>a checksum mismatch</td><td>the download is not the one the Manifest names; hoard fetches it again</td></tr>
-<tr><td><code>no clang in PATH</code></td><td>the build host has no clang outside the new root; install one</td></tr>
-<tr><td>files clash, or a package cannot be removed</td><td>another package owns the file or needs the package; read what hoard says</td></tr>
-<tr><td>errors on <code>bool</code>, <code>true</code>, <code>false</code> or on old declarations</td><td>C23; <code>CFLAGS=-O2 -std=gnu17</code> (section 9.3)</td></tr>
-<tr><td>musl's build fails</td><td><code>gmake</code> is missing on the host</td></tr>
-<tr><td>"root device not found" at boot</td><td>the kernel cannot see the disk or the file system: it needs a module, use an initramfs (section 7.5)</td></tr>
+<tr><td><code>no package NAME</code></td><td>not in any repo; <code>mag search</code>, and <code>mag update</code></td></tr>
+<tr><td>a signature or hash that does not match</td><td>the download or the index is not what the repo signed; <code>mag update</code> and try again, check <code>/etc/mag/keys</code></td></tr>
+<tr><td><code>NAME wants FILE, which OTHER has</code></td><td>two packages want the same file; <code>-f</code> writes over it if you are sure</td></tr>
+<tr><td>"root device not found" at boot</td><td>the initramfs cannot see the disk or the file system: check <code>root=</code> and <code>modules=</code> in <code>limine.conf</code></td></tr>
 <tr><td>the machine boots to a limine prompt</td><td><code>limine.conf</code> is not found, or its <code>path:</code> does not name a file in <code>/boot</code>; check with <code>ls /boot</code></td></tr>
 <tr><td>a BIOS machine does not boot</td><td><code>limine bios-install /dev/sda</code> was not run, or <code>limine-bios.sys</code> is not in <code>/boot</code></td></tr>
 <tr><td>a UEFI machine does not boot</td><td><code>EFI/BOOT/BOOTX64.EFI</code> is not on the EFI partition, or the partition is not of type EFI System</td></tr>
-<tr><td>a login without a password</td><td>the password field of <code>passwd</code> is empty</td></tr>
-<tr><td>no devices in <code>/dev</code></td><td>udev did not start; check that <code>udevd</code> is installed with <code>hoard list</code></td></tr>
+<tr><td>no wireless interface</td><td>the firmware is missing (7.4); <code>dmesg</code> names the file</td></tr>
+<tr><td>no devices in <code>/dev</code></td><td>udev did not start; check <code>udev</code> is in <code>boot-services</code></td></tr>
 </table>
-<h2 id="s9-7">9.7 Keeping a build</h2>
-<p>hoard keeps the build directory of a failed build, in <code>/var/tmp/portage</code>. <code>hoard install -f name</code> only downloads and checks the sources, and <code>hoard install --resume</code> carries on from the phase that stopped.</p>
 <hr>
 <p><a href="handbook-iso.html">&larr; The live ISO</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
 </main>

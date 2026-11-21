@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The kernel and firmware - Chamesle</title>
-<meta name="description" content="Nobody builds a kernel in Chamesle. sys-kernel/linux is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a">
+<meta name="description" content="Nobody builds a kernel in Chamesle. linux-lts is a Linux 6.18 LTS kernel with a generic configuration that runs on">
 <link rel="canonical" href="https://chamesle.org/handbook-kernel.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="The kernel and firmware - Chamesle">
-<meta property="og:description" content="Nobody builds a kernel in Chamesle. sys-kernel/linux is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a">
+<meta property="og:description" content="Nobody builds a kernel in Chamesle. linux-lts is a Linux 6.18 LTS kernel with a generic configuration that runs on">
 <meta property="og:url" content="https://chamesle.org/handbook-kernel.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,7 +32,7 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
@@ -40,48 +40,40 @@
 <p><a href="handbook-base.html">&larr; The base system</a> | <a href="docs.html">Contents</a> | <a href="handbook-iso.html">The live ISO &rarr;</a></p>
 <h2>7. The kernel and firmware</h2>
 <h2 id="s7-1">7.1 The kernel package</h2>
-<p>Nobody builds a kernel in Chamesle. <code>sys-kernel/linux</code> is a prebuilt Linux 6.18 LTS kernel with its modules, taken from a binary mirror, with a generic configuration that runs on most machines. The recipe unpacks the package and installs</p>
-<pre>/boot/vmlinuz-VERSION
+<p>Nobody builds a kernel in Chamesle. <code>linux-lts</code> is a Linux 6.18 LTS kernel with a generic configuration that runs on most machines, and it installs</p>
+<pre>/boot/vmlinuz-lts
 /boot/config-VERSION
 /boot/System.map-VERSION
 /lib/modules/VERSION/</pre>
-<p><code>VERSION</code> is the one the package carries, such as <code>6.18.63-0-lts</code>. <code>sys-kernel/linux-headers</code> has the headers the libc and util-linux build against.</p>
+<p><code>linux-virt</code> is a smaller one for virtual machines. Give it to chamesle-bootstrap with <code>-k</code>, and name its files in <code>limine.conf</code> (<code>vmlinuz-virt</code>, <code>initramfs-virt</code>).</p>
 <h2 id="s7-2">7.2 Updating</h2>
-<p>The mirror drops a package when a newer one comes out, so a new kernel is a new <code>version</code> and <code>sha256</code> in the recipe. Edit <code>repo/sys-kernel/linux</code>:</p>
-<pre>version: 6.18.64
-sha256: the new one</pre>
-<p>The kernel comes from <code>sys-kernel/gentoo-sources</code>, or from <code>sys-kernel/vanilla-sources</code> for the plain one. Install it, which puts the source in <code>/usr/src</code>:</p>
-<pre>hoard install sys-kernel/gentoo-sources</pre>
-<p>and add an entry in <code>/boot/limine.conf</code> for the new <code>vmlinuz-VERSION</code>. Keep the old one until the new one has booted:</p>
-<pre>/Chamesle
-    protocol: linux
-    path: boot():/vmlinuz-NEW
-    cmdline: root=UUID=ROOT-UUID rw
-
-/Chamesle (old)
-    protocol: linux
-    path: boot():/vmlinuz-OLD
-    cmdline: root=UUID=ROOT-UUID rw</pre>
-<p>After a reboot, <code>uname -r</code> says what runs.</p>
+<pre>mag update
+mag upgrade</pre>
+<p>A new <code>linux-lts</code> replaces <code>vmlinuz-lts</code> and makes <code>initramfs-lts</code> again, so <code>limine.conf</code> needs no change. Reboot to run it; <code>uname -r</code> says what runs. Keep the ISO at hand in case a new kernel does not boot.</p>
 <h2 id="s7-3">7.3 Modules</h2>
-<p>Modules are <code>.ko</code> files in <code>/lib/modules/VERSION</code>. <code>lsmod</code> shows what is loaded, <code>modprobe name</code> loads a module with what it needs, <code>modinfo name</code> describes it. udev loads the ones the hardware asks for. Modules belong to one kernel build: after installing a new kernel, reboot before loading any.</p>
+<p>Modules are files in <code>/lib/modules/VERSION</code>. <code>lsmod</code> shows what is loaded, <code>modprobe name</code> loads a module with what it needs, <code>modinfo name</code> describes it. udev loads the ones the hardware asks for. Modules belong to one kernel build: after an upgrade of the kernel, reboot before loading any.</p>
 <h2 id="s7-4">7.4 Firmware</h2>
-<pre>hoard install sys-kernel/linux-firmware</pre>
-<p>puts the firmware for wifi, graphics, ethernet and the rest, compressed with zstd, into <code>/lib/firmware</code>. <code>sys-firmware/sof-firmware</code> has the sound firmware of newer Intel machines. Both are in the base set. A new firmware release is a new <code>version</code> and <code>sha256</code> in <code>repo/sys-kernel/linux-firmware</code>, the same way as the kernel's.</p>
-<h2 id="s7-5">7.5 An initramfs</h2>
-<p>A root on ext4 on a common disk (SATA, NVMe, virtio, USB storage) needs none. A root on ZFS needs one: the pool has to be imported before the root can be mounted. A root that needs a module to be reached, or RAID, LVM or an encrypted disk, does.</p>
-<p><code>iso/mkinitramfs</code> makes one, and the live ISO uses it:</p>
-<pre>mkinitramfs [-m modules-file] ROOTFS KVER OUT</pre>
-<p><code>ROOTFS</code> is the root whose <code>/lib/modules</code> and programs are used, <code>KVER</code> the name of the kernel's directory in <code>/lib/modules</code>, <code>OUT</code> the file to write. It puts in a few tools (<code>sh mount umount switch_root insmod mkdir sleep blkid</code>, and <code>zpool</code> when the root has it, with the libraries they need), the modules named in the modules file together with what they depend on, and <code>iso/init</code>. The names after a <code>[zfs]</code> line of the modules file go into a second list, which <code>iso/init</code> loads only for <code>root=ZFS=</code>. The result is a zstd compressed cpio.</p>
-<pre>$HOME/src/system/iso/mkinitramfs -m modules /mnt 6.18.63-0-lts /mnt/boot/initrd</pre>
-<p><code>iso/init</code> mounts <code>proc</code>, <code>sysfs</code> and <code>devtmpfs</code>, loads the modules, reads <code>root=</code> from the command line (<code>root=UUID=...</code> or a device), waits up to 15 seconds for the device, mounts it read-only at <code>/mnt/root</code>, and runs <code>switch_root /mnt/root /sbin/init</code>. With <code>root=ZFS=rpool/root</code> it loads the zfs modules, runs <code>zpool import -N -d /dev rpool</code> (until it works, 15 seconds at most) and mounts the dataset with <code>mount -o zfsutil -t zfs</code>. If anything fails it prints why and drops into a shell.</p>
-<p>Name the initrd in <code>limine.conf</code>:</p>
-<pre>/Chamesle
-    protocol: linux
-    path: boot():/vmlinuz-6.18.63-0-lts
-    module_path: boot():/initrd
-    cmdline: root=UUID=ROOT-UUID rw</pre>
-<p>On ZFS the command line is <code>root=ZFS=rpool/root rw</code>. The ZFS module is <code>sys-kernel/zfs-module</code>, for the kernel of <code>sys-kernel/linux</code>: when one is updated the other has to be too, and <code>depmod</code> has to run after installing it.</p>
+<p>The firmware is split by vendor, so a machine takes only what it uses:</p>
+<table>
+<tr><th>package</th><th>for</th></tr>
+<tr><td><code>linux-firmware-intel</code></td><td>Intel wireless (iwlwifi), Bluetooth and the rest of the intel folder</td></tr>
+<tr><td><code>linux-firmware-i915</code></td><td>Intel graphics</td></tr>
+<tr><td><code>linux-firmware-amdgpu</code>, <code>linux-firmware-radeon</code></td><td>AMD graphics</td></tr>
+<tr><td><code>linux-firmware-rtlwifi</code>, <code>linux-firmware-rtw88</code>, <code>linux-firmware-rtw89</code>, <code>linux-firmware-rtl_nic</code></td><td>Realtek wireless and ethernet</td></tr>
+<tr><td><code>linux-firmware-ath10k</code>, <code>linux-firmware-ath11k</code>, <code>linux-firmware-ath9k_htc</code></td><td>Qualcomm Atheros wireless</td></tr>
+<tr><td><code>linux-firmware-brcm</code></td><td>Broadcom wireless</td></tr>
+<tr><td><code>linux-firmware</code></td><td>all of them, over 500 MB</td></tr>
+<tr><td><code>linux-firmware-none</code></td><td>none</td></tr>
+</table>
+<p><code>mag search linux-firmware</code> lists them. If <code>dmesg</code> says a firmware file failed to load, <code>mag owns</code> is no help yet, since it is not installed; the name of the file says the vendor.</p>
+<h2 id="s7-5">7.5 The initramfs</h2>
+<p>The kernel package makes <code>/boot/initramfs-lts</code> with <code>mkinitfs</code> whenever the kernel is installed or updated. What goes into it is set in <code>/etc/mkinitfs/mkinitfs.conf</code>:</p>
+<pre>features=&quot;ata base cdrom ext4 keymap kms mmc nvme raid scsi usb virtio&quot;</pre>
+<p>For a root on ZFS add <code>zfs</code> to the list, install <code>zfs</code> and <code>zfs-lts</code>, and make it again:</p>
+<pre>mag install zfs zfs-lts
+mkinitfs $(ls /lib/modules)</pre>
+<p>The initramfs reads <code>root=</code>, <code>rootfstype=</code> and <code>modules=</code> from the command line, mounts the root and starts <code>/sbin/init</code>. If it cannot, it says why and gives a shell.</p>
+<p>The live ISO has its own initramfs, made by <code>iso/mkinitramfs</code>, which mounts the squashfs (chapter 8).</p>
 <hr>
 <p><a href="handbook-base.html">&larr; The base system</a> | <a href="docs.html">Contents</a> | <a href="handbook-iso.html">The live ISO &rarr;</a></p>
 </main>

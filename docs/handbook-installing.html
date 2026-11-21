@@ -32,15 +32,15 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-spas.html">Using SPAS &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">mag &rarr;</a></p>
 <h2>3. Installing by hand</h2>
-<p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the machine you install from, usually the live ISO, and it erases the disk.</p>
-<p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
+<p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the live system, and it erases the disk.</p>
+<p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself with the root on ext4. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
 <h2 id="s3-1">3.1 chamesle-disk</h2>
 <pre>chamesle-disk /dev/sda</pre>
 <p>It lists the disk and asks you to type its name before it touches anything. Then it starts <code>cfdisk</code> so you lay out the partitions. Three of them work for BIOS and UEFI both:</p>
@@ -58,8 +58,9 @@ zfs mount rpool/root
 zfs create -o mountpoint=/home rpool/home
 zfs create -o mountpoint=/var rpool/var
 zpool set bootfs=rpool/root rpool</pre>
-<p>and mounts <code>rpool/root</code>, <code>rpool/home</code> and <code>rpool/var</code> under <code>/mnt</code> and the boot partition on <code>/mnt/boot</code>. It also writes <code>/mnt/etc/fstab</code> with the boot partition by UUID and the <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code> lines (an existing one is left alone). It writes nothing else: no <code>limine.conf</code>, no host name, no password. Those are 3.7 and 3.8.</p>
-<p>ZFS mounts its own datasets, so the fstab does not list them. limine cannot read ZFS: the kernel, the initrd and <code>limine.conf</code> live on the FAT partition, which is <code>/boot</code>, and the initramfs imports the pool (3.8).</p>
+<p>and mounts <code>rpool/root</code>, <code>rpool/home</code> and <code>rpool/var</code> under <code>/mnt</code> and the boot partition on <code>/mnt/boot</code>. It also writes <code>/mnt/etc/fstab</code> with the boot partition by UUID and the <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code> lines. It writes nothing else.</p>
+<p>ZFS mounts its own datasets, so the fstab does not list them. limine cannot read ZFS: the kernel, the initramfs and <code>limine.conf</code> live on the FAT partition, which is <code>/boot</code>.</p>
+<p>ZFS on a machine with little memory is slow; on the 256 MB machine use ext4 (3.2).</p>
 <h2 id="s3-2">3.2 Partitioning and file systems by hand</h2>
 <p>For a root on ext4. The layout is the one in 3.1, <code>sda1</code> to <code>sda3</code>:</p>
 <pre>sfdisk /dev/sda &lt;&lt;P
@@ -74,83 +75,56 @@ mkfs.ext4 /dev/sda3
 mount /dev/sda3 /mnt
 mkdir /mnt/boot
 mount /dev/sda2 /mnt/boot</pre>
-<p>The FAT partition is <code>/boot</code>. The kernel and <code>limine.conf</code> end up there, where limine looks for them on both BIOS and UEFI. The root can be ZFS by hand as well: the <code>zpool</code> and <code>zfs</code> lines of 3.1 are all there is to it.</p>
-<h2 id="s3-3">3.3 Unpacking the stage</h2>
-<p>The system comes as a stage tarball, as on Gentoo: a root with the base already in it. rifle, mksh, Winchester, musl, gcc, python, perl, gettext, <code>hoard</code> and its records of what is installed (<code>/var/db/pkg</code>) are all inside. Nothing is compiled until you ask hoard for something. It is on the releases page of github.com/tortr-rs/chamesle, with its <code>.sha256</code>. Check the tarball against its <code>.sha256</code> and unpack it:</p>
-<pre>sha256sum -c chamesle-stage-20261117.tar.xz.sha256
-    tar -C /mnt --exclude ./etc/fstab -xpf chamesle-stage-20261117.tar.xz</pre>
-<p>[ -e /mnt/etc/fstab ] || tar -C /mnt -xpf chamesle-stage-20261117.tar.xz ./etc/fstab</p>
-<p>Make the directories the stage leaves out:</p>
-<pre>mkdir -p /mnt/proc /mnt/sys /mnt/dev /mnt/run /mnt/tmp /mnt/var/tmp /mnt/var/log /mnt/var/cache /mnt/home
-chmod 1777 /mnt/tmp /mnt/var/tmp</pre>
-<p>Keep <code>-p</code>: the modes and the owners matter. <code>/boot</code>, <code>/home</code>, <code>/proc</code>, <code>/sys</code>, <code>/dev</code>, <code>/run</code>, <code>/tmp</code>, <code>/var/cache</code>, <code>/var/log</code> and the Gentoo tree are not in the stage: the first are yours, the tree comes from <code>hoard sync</code> (section 2.3). The fstab chamesle-disk wrote is left alone, the stage's own is only used if there is none (3.6). The kernel and the initrd come from the ISO:</p>
-<pre>cp /run/live/medium/boot/initrd /mnt/boot/initrd
-cp /run/live/medium/boot/vmlinuz-* /mnt/boot/</pre>
-<p>Work inside the new root with <code>chamesle-chroot</code>:</p>
+<p>The FAT partition is <code>/boot</code>. The kernel and <code>limine.conf</code> end up there, where limine looks for them on both BIOS and UEFI.</p>
+<h2 id="s3-3">3.3 chamesle-bootstrap</h2>
+<pre>chamesle-bootstrap /mnt</pre>
+<p>That is the whole base. It copies <code>/etc/mag/repos</code> and <code>/etc/mag/keys</code> of the live system into <code>/mnt</code>, runs <code>mag update</code> there, and installs <code>chamesle-base</code>, the kernel (<code>linux-lts</code>) and its firmware with everything they need. The kernel package writes <code>vmlinuz-lts</code> and <code>initramfs-lts</code> into <code>/mnt/boot</code>. It takes as long as the download, a few minutes.</p>
+<pre>chamesle-bootstrap [-a ARCH] [-n HOSTNAME] [-k KERNEL] [-f FIRMWARE] TARGET [PACKAGE]...</pre>
+<table>
+<tr><th>option</th><th>what</th></tr>
+<tr><td><code>-n</code></td><td>the host name, <code>chamesle</code> if not given</td></tr>
+<tr><td><code>-f</code></td><td>the firmware package. The default, <code>linux-firmware-none</code>, has no firmware; take the one your hardware needs (7.4)</td></tr>
+<tr><td><code>-k</code></td><td>the kernel package, <code>linux-lts</code> if not given</td></tr>
+<tr><td><code>-a</code></td><td>the architecture, the machine's own if not given (3.10)</td></tr>
+</table>
+<p>Packages after the target go in too. A ThinkPad with Intel wireless and graphics, with an editor:</p>
+<pre>chamesle-bootstrap -n t480 -f linux-firmware-intel /mnt vim</pre>
+<p>What <code>chamesle-base</code> brings: Winchester and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, <code>agetty</code>, eudev, kmod, dhcpcd and e2fsprogs.</p>
+<h2 id="s3-4">3.4 Working inside the new root</h2>
 <pre>chamesle-chroot /mnt
 chamesle-chroot /mnt passwd root</pre>
-<p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/usr/bin/mksh -l</code>.</p>
-<p>Inside, fetch the tree and install what you want:</p>
-<pre>hoard sync
-hoard install -y -j4 --keep-going app-editors/vim</pre>
-<p>The stage's <code>/etc/spas/make.conf</code> builds with gcc (<code>CC=gcc</code>, <code>CXX=g++</code>) for <code>x86_64-pc-linux-musl</code> and the musl profile. Its <code>/etc/spas/profile/package.provided</code> lists what the stage already has, so hoard does not build those again: <code>musl</code>, <code>baselayout</code>, <code>util-linux</code>, <code>libunistring</code>, <code>make</code>, <code>m4</code>, <code>linux-headers</code>, <code>e2fsprogs</code>, <code>gettext</code> and a few others. <code>--resume</code> goes on after a failed build. Then go on with 3.6 (fstab) and the rest.</p>
-<h2 id="s3-4">3.4 Building the stage</h2>
-<p>You do not need this to install. It is how the stage is made. Start from a Gentoo musl stage3, whose gcc, binutils, python, perl and gettext are binaries, check its digest, and take from it the files each package lists in <code>/var/db/pkg/<i>/</i>/CONTENTS</code>, plus the <code>/var/db/pkg</code> directories themselves so hoard knows they are installed. Put rifle, mksh, Winchester, the files in <code>files/</code> and a <code>hoard</code> built for musl on top, write <code>make.conf</code> and <code>package.provided</code>, build whatever else the base needs with hoard, and pack the root:</p>
-<pre>tar -C ROOT -cpf - --exclude=./proc --exclude=./sys --exclude=./dev --exclude=./run --exclude=./tmp \
-    --exclude=./boot --exclude=./home --exclude=./var/tmp --exclude=./var/cache --exclude=./var/log \
-    --exclude=./var/db/repos . | xz -T0 &gt; chamesle-stage-20261117.tar.xz</pre>
-<p>GNU patch is the one thing the stage3 does not give, and it is built from source.</p>
-<h2 id="s3-5">3.5 The other stages</h2>
-<p>There are two stages. The unpacking in 3.3 is the same for both; only the tarball differs.</p>
-<table>
-<tr><th>tarball</th><th>what is in it</th></tr>
-<tr><td><code>chamesle-stage-DATE</code></td><td>the base of 3.3: musl, rifle, mksh, Winchester, gcc, SPAS, sam</td></tr>
-<tr><td><code>chamesle-stage-graphical-DATE</code></td><td>the base, plus X, 9wm, sxhkd, dmenu, and plan9port with 9term and acme</td></tr>
-</table>
-<h3 id="the-graphical-stage">The graphical stage</h3>
-<p>On the first boot the login on tty1 is <code>chamesle-session</code>, not a shell. It starts X, and X starts <code>9wm</code>, which is the window manager that looks and works like rio: the right button makes windows (New, Reshape, Move, Delete, Hide), and text is selected and cut by chording the mouse buttons. A <code>9term</code> is open when it comes up, with <code>plumber</code> behind it. When X ends you land in <code>mksh</code>. The login is <code>root</code> with no password until you set one (3.7).</p>
-<p><code>sxhkd</code> carries the keys of the dwm setup that make sense without tags (<code>/etc/sxhkd/sxhkdrc</code>):</p>
-<table>
-<tr><th>key</th><th>does</th></tr>
-<tr><td>Super+t, Super+Shift+Return</td><td>a new <code>9term</code></td></tr>
-<tr><td>Super+d</td><td><code>dmenu_run</code></td></tr>
-<tr><td>Super+a</td><td><code>acme</code></td></tr>
-<tr><td>Super+e</td><td><code>sam</code> in a <code>9term</code></td></tr>
-<tr><td>Super+Shift+q</td><td>ends the session (kills <code>9wm</code>)</td></tr>
-<tr><td>volume and brightness keys</td><td><code>amixer</code> and <code>brightnessctl</code></td></tr>
-</table>
-<p><code>EDITOR</code> is <code>sam -d</code> there too. Everything is a file to change: <code>/etc/X11/xinit/xinitrc</code> is the session, and <code>getty-tty1</code> in <code>/etc/init.conf</code> is what starts it. Take that line out to go back to a plain login.</p>
-<h2 id="s3-6">3.6 fstab</h2>
+<p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/bin/mksh -l</code>. Inside, <code>mag install name</code> works as on the finished system.</p>
+<h2 id="s3-5">3.5 fstab</h2>
 <p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
 <p>By hand, <code>blkid</code> prints the UUIDs:</p>
 <pre>blkid /dev/sda2 /dev/sda3</pre>
-<p>Open <code>/mnt/etc/fstab</code> and add the root and boot lines under the <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code> lines already there:</p>
-<pre>UUID=ROOT-UUID  /      ext4  defaults  0 1
-UUID=BOOT-UUID  /boot  vfat  defaults  0 2</pre>
-<p>A root on ZFS gets only the boot line. Check that the UUID is the one <code>blkid</code> shows for the boot partition.</p>
-<h2 id="s3-7">3.7 Host name, users, password</h2>
-<p>The host name is already in <code>/mnt/etc/init.conf</code> from <code>-n</code>. The root account is in <code>/mnt/etc/passwd</code> with an <code>x</code> in the password field, and there is no shadow file, so the hash goes into that field. Make one on any machine that has openssl, SHA-512:</p>
-<pre>openssl passwd -6</pre>
-<p>Put the output in the second field of the root line:</p>
-<pre>root:$6$salt$hash:0:0:root:/root:/usr/bin/mksh</pre>
-<p>musl's <code>crypt</code> reads <code>$6$</code> hashes. An empty field means no password at all.</p>
-<p>The groups are <code>root</code>, <code>wheel</code> (10) and <code>users</code> (100). More accounts are lines in <code>passwd</code> and <code>group</code> and a home directory you make (section 6.5).</p>
-<h2 id="s3-8">3.8 The kernel and the boot entry</h2>
-<p>The kernel package put these in <code>/mnt/boot</code> (the version number is whatever the recipe carries):</p>
+<p>Write <code>/mnt/etc/fstab</code>:</p>
+<pre>UUID=ROOT-UUID  /      ext4   defaults        0 1
+UUID=BOOT-UUID  /boot  vfat   defaults        0 2
+proc            /proc  proc   defaults        0 0
+sysfs           /sys   sysfs  defaults        0 0
+tmpfs           /tmp   tmpfs  nosuid,nodev    0 0</pre>
+<p>A root on ZFS gets no root line.</p>
+<h2 id="s3-6">3.6 Host name and password</h2>
+<p>The host name is in <code>/mnt/etc/init.conf</code>, from <code>-n</code>. Set the root password:</p>
+<pre>chamesle-chroot /mnt passwd root</pre>
+<p>The hash goes into <code>/etc/shadow</code>. The login shell of root is mksh.</p>
+<h2 id="s3-7">3.7 The boot entry</h2>
 <pre>ls /mnt/boot
-config-6.18.63-0-lts   System.map-6.18.63-0-lts   vmlinuz-6.18.63-0-lts</pre>
-<p>Write <code>/mnt/boot/limine.conf</code> with the file name you see and the UUID of the root partition:</p>
+System.map-6.18.64-0-lts  config-6.18.64-0-lts  initramfs-lts  vmlinuz-lts</pre>
+<p>The names stay the same when the kernel is updated, so <code>limine.conf</code> is written once. <code>/mnt/boot/limine.conf</code>, with the UUID of the root partition:</p>
 <pre>timeout: 3
 
 /Chamesle
     protocol: linux
-    path: boot():/vmlinuz-6.18.63-0-lts
-    module_path: boot():/initrd
-    cmdline: root=UUID=ROOT-UUID rw console=tty0</pre>
-<p>For a root on ZFS the command line names the dataset, there is no UUID:</p>
-<pre>    cmdline: root=ZFS=rpool/root rw console=tty0</pre>
-<p><code>boot()</code> is the partition <code>limine.conf</code> is on, which is <code>/boot</code>; with ZFS it is the FAT partition, since limine cannot read ZFS. The kernel has ext4 and the disk drivers as modules, so the system needs the initramfs. The one from the ISO (<code>/mnt/boot/initrd</code>, copied in 3.3) finds the root by <code>root=UUID=</code> or <code>root=ZFS=</code> and loads the modules in <code>iso/profile/modules</code>. Section 7.5 says how to make your own.</p>
-<p>limine's files are in <code>/mnt/usr/share/limine</code>.</p>
+    path: boot():/vmlinuz-lts
+    module_path: boot():/initramfs-lts
+    cmdline: root=UUID=ROOT-UUID modules=sd-mod,usb-storage,ext4 rootfstype=ext4 quiet</pre>
+<p><code>boot()</code> is the partition <code>limine.conf</code> is on, which is <code>/boot</code>. The initramfs finds the root, loads the modules on the command line and starts <code>/sbin/init</code>. Take <code>quiet</code> out to see the kernel's messages. For a serial console add <code>console=ttyS0,115200</code>.</p>
+<p>A root on ZFS names the dataset; the initramfs needs the zfs module, which is section 7.5:</p>
+<pre>    cmdline: root=ZFS=rpool/root rootfstype=zfs quiet</pre>
+<p>Install limine. <code>limine</code> is a package; install it into the new root, or use the one of the live system:</p>
+<pre>chamesle-chroot /mnt mag install limine</pre>
 <h3 id="bios">BIOS</h3>
 <pre>cp /mnt/usr/share/limine/limine-bios.sys /mnt/boot/
 limine bios-install /dev/sda</pre>
@@ -160,20 +134,22 @@ limine bios-install /dev/sda</pre>
 cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/</pre>
 <p>The firmware starts <code>EFI/BOOT/BOOTX64.EFI</code> of the EFI System partition by itself.</p>
 <p>Do both and the disk boots either way.</p>
-<h2 id="s3-9">3.9 First boot</h2>
+<h2 id="s3-8">3.8 First boot</h2>
 <pre>umount -R /mnt
 zpool export rpool
 reboot</pre>
 <p>Leave out <code>zpool export</code> if the root is not on ZFS.</p>
-<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. <code>init</code> runs <code>/etc/rc</code>, which mounts the file systems and starts the services of <code>init.conf</code>, and puts a login on the ttys. Log in as root.</p>
-<p>Then:</p>
-<ol>
-<li>Bring the network up (section 6.7).</li>
-<li><code>hoard sync</code> brings the Gentoo tree up to date (section 2.3), so <code>hoard install name</code> works from then on, and the compiler is in the base set.</li>
-<li><code>hoard list</code> shows what the bootstrap put on the machine.</li>
-</ol>
+<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. <code>init</code> runs <code>/etc/rc</code>, which mounts the file systems and starts the services of <code>init.conf</code>, and puts a login on the ttys. Log in as root. <code>dhcpcd</code> brings up a cable at boot; for wireless see section 6.8.</p>
+<h2 id="s3-9">3.9 What to install next</h2>
+<pre>mag install vim htop tmux
+mag search irc</pre>
+<p>Chapter 4 has the rest.</p>
+<h2 id="s3-10">3.10 32-bit machines</h2>
+<p>On a 32-bit PC (Pentium 4, Athlon XP and the like) boot the ISO on another machine, or install from any Linux there (2.2), and give the architecture:</p>
+<pre>chamesle-bootstrap -a x86 /mnt</pre>
+<p>The x86 repository has the same packages, built for i686 with SSE2. <code>-a x86</code> is written to <code>/mnt/etc/mag/arch</code>, and mag keeps to it from then on. <code>rifle</code> is only built for x86_64, so on x86 busybox gives the coreutils. limine boots 32-bit BIOS machines as well; the entry is the same.</p>
 <hr>
-<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-spas.html">Using SPAS &rarr;</a></p>
+<p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">mag &rarr;</a></p>
 </main>
 
 <hr>

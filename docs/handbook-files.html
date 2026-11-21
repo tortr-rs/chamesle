@@ -32,7 +32,7 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
@@ -45,46 +45,45 @@
 <tr><td><code>/sbin/init</code>, <code>/etc/rc</code>, <code>/etc/rc.shutdown</code></td><td>init, the boot script, the shutdown script, all run by mksh</td></tr>
 <tr><td><code>/etc/init.conf</code></td><td>host name, boot services, modules, ttys</td></tr>
 <tr><td><code>/etc/rc.d/</code>, <code>/usr/local/etc/rc.d/</code></td><td>the service scripts</td></tr>
-<tr><td><code>/etc/services</code>, <code>/etc/hosts</code></td><td>port names and the local host name, the libc reads them</td></tr>
-<tr><td><code>/etc/profile</code></td><td><code>PATH</code>, <code>EDITOR</code>, <code>PAGER</code>, <code>umask</code></td></tr>
-<tr><td><code>/etc/passwd</code>, <code>/etc/group</code>, <code>/etc/shells</code></td><td>accounts, groups, login shells</td></tr>
+<tr><td><code>/etc/profile</code></td><td><code>PATH</code>, <code>umask</code></td></tr>
+<tr><td><code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/group</code>, <code>/etc/shells</code></td><td>accounts, passwords, groups, login shells</td></tr>
 <tr><td><code>/etc/fstab</code></td><td>file systems</td></tr>
 <tr><td><code>/etc/os-release</code></td><td><code>NAME=Chamesle</code>, <code>ID=chamesle</code></td></tr>
-<tr><td><code>/etc/spas/</code></td><td>hoard's configuration: <code>make.conf</code>, <code>make.profile</code>, <code>repos.conf/</code>, <code>package.use</code> and the rest (section 4.3)</td></tr>
+<tr><td><code>/etc/mag/</code></td><td><code>repos</code>, <code>keys/</code>, <code>arch</code></td></tr>
+<tr><td><code>/etc/mkinitfs/mkinitfs.conf</code></td><td>what goes into the initramfs</td></tr>
 <tr><td><code>/boot/limine.conf</code></td><td>the boot entries</td></tr>
 <tr><td><code>/boot/limine-bios.sys</code></td><td>limine's BIOS stage</td></tr>
 <tr><td><code>/boot/EFI/BOOT/BOOTX64.EFI</code></td><td>limine for UEFI</td></tr>
-<tr><td><code>/boot/vmlinuz-V</code>, <code>config-V</code>, <code>System.map-V</code></td><td>the kernel</td></tr>
+<tr><td><code>/boot/vmlinuz-lts</code>, <code>initramfs-lts</code></td><td>the kernel and its initramfs</td></tr>
 <tr><td><code>/lib/modules/V/</code></td><td>its modules</td></tr>
 <tr><td><code>/lib/firmware/</code></td><td>firmware</td></tr>
-<tr><td><code>/var/db/pkg/</code></td><td>the file list of each installed package</td></tr>
-<tr><td><code>/var/cache/distfiles/</code></td><td>downloaded sources</td></tr>
+<tr><td><code>/var/lib/mag/</code></td><td>what is installed, and its files</td></tr>
+<tr><td><code>/var/cache/mag/</code></td><td>indexes and downloaded packages</td></tr>
 <tr><td><code>/usr/share/limine/</code></td><td>limine's boot files, for installing it</td></tr>
-<tr><td><code>/usr/share/doc/chamesle/handbook.md</code></td><td>this book, on the live ISO</td></tr>
-<tr><td><code>/var/db/repos/gentoo/</code></td><td>the Gentoo tree, from <code>hoard sync</code></td></tr>
+<tr><td><code>/usr/share/doc/chamesle/handbook.md</code></td><td>this book</td></tr>
 </table>
 <h2 id="s10-2">10.2 In the sources</h2>
 <table>
 <tr><th>path</th><th>what</th></tr>
-<tr><td><code>system/tools/chamesle-bootstrap</code></td><td>makes a root file system and builds the base set into it</td></tr>
+<tr><td><code>system/tools/chamesle-bootstrap</code></td><td>puts the base into a root with mag</td></tr>
 <tr><td><code>system/tools/chamesle-chroot</code></td><td>chroot with the pseudo file systems mounted</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
-<tr><td><code>system/files/</code></td><td>init, rc, <code>service</code>, <code>init.conf</code> and the service scripts that go into every root</td></tr>
-<tr><td><code>system/iso/mkinitramfs</code></td><td>builds an initramfs</td></tr>
-<tr><td><code>system/iso/init</code></td><td>the first process in the initramfs</td></tr>
-<tr><td><code>system/iso/profile/packages</code></td><td>what is in the live root</td></tr>
-<tr><td><code>system/iso/profile/modules</code></td><td>what the initramfs loads</td></tr>
-<tr><td><code>system/iso/profile/limine.conf</code></td><td>the live boot menu</td></tr>
-<tr><td><code>system/iso/profile/overlay/</code></td><td>files copied over the live root</td></tr>
+<tr><td><code>system/tools/mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code></td><td>packages, signed indexes, Chamesle's own repo</td></tr>
+<tr><td><code>system/files/</code></td><td>init, rc, <code>service</code>, <code>init.conf</code> and the service scripts, in <code>chamesle-base</code></td></tr>
+<tr><td><code>system/pkg/chamesle-base/</code></td><td>its scripts, <code>repos</code>, <code>os-release</code>, <code>issue</code></td></tr>
+<tr><td><code>system/keys/</code></td><td>the public keys the repos are signed with</td></tr>
+<tr><td><code>system/iso/mkiso</code>, <code>mkinitramfs</code>, <code>init</code></td><td>the live ISO, its initramfs and the first process in it</td></tr>
+<tr><td><code>system/iso/profile/</code></td><td><code>packages</code>, <code>modules</code>, <code>limine.conf</code> and the <code>overlay/</code> of the live root</td></tr>
 <tr><td><code>system/handbook/handbook.md</code></td><td>this book</td></tr>
-<tr><td><code>SimplePackagemAnagingSystem/src/</code></td><td>hoard, in Rust, and <code>ebuild.sh</code>, the environment ebuilds run in</td></tr>
+<tr><td><code>mag/mag.c</code>, <code>mag/c.h</code>, <code>mag/build.sh</code></td><td>the package manager</td></tr>
 <tr><td><code>rifle/rifle.c</code>, <code>rifle/c.h</code>, <code>rifle/build.sh</code></td><td>the coreutils</td></tr>
 <tr><td><code>rifle/tests/run.sh</code>, <code>rifle/tests/cases</code></td><td>the comparison tests</td></tr>
 </table>
 <h2 id="s10-3">10.3 Commands in short</h2>
-<pre>chamesle-bootstrap [-s PACKAGES] [-n HOSTNAME] TARGET
-mkinitramfs [-m modules] ROOTFS KVER OUT
-hoard [--root DIR] install|upgrade|remove|autoremove|sync|search|info|list|files|owns|env-update|manifest|self-update
+<pre>chamesle-bootstrap [-a ARCH] [-n HOSTNAME] [-k KERNEL] [-f FIRMWARE] TARGET [PACKAGE]...
+chamesle-chroot DIR [COMMAND...]
+chamesle-disk DISK
+mag [-nf] update|install|remove|upgrade|autoremove|list|info|search|files|owns|deps|rdeps|fetch
 rifle --install DIR | --list
 limine bios-install DEVICE</pre>
 <hr>

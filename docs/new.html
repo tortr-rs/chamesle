@@ -32,13 +32,24 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
+
+<h2 id="2026-11-21">November 21, 2026: binary packages, and a bootstrap instead of a stage</h2>
+<p>Building everything on every machine was too slow, and a Pentium 4 with 256 MB would never get there. So nothing is
+built any more. <a href="https://github.com/tortr-rs/mag">mag</a> is back, rewritten as a binary package manager:
+one C file with its own inflate, tar, sha1, sha256 and RSA, that reads signed apk repos and checks every package
+before it unpacks it. The big musl repo it reads has about 28,000 packages for x86_64 and as many for 32-bit x86.</p>
+<p>The stage is gone too. <code>chamesle-bootstrap /mnt</code> installs the base with mag, like debootstrap, and you
+write the fstab and the boot entry by hand, as before. Chamesle's own packages, <code>chamesle-base</code> (Winchester
+and the tools), <code>mag</code> and <code>rifle</code>, are in our repo at <code>chamesle.org/repo</code>.</p>
+<p>There is a 32-bit ISO now as well as the x86_64 one. The <a href="docs.html">handbook</a> is rewritten for all of
+this. SPAS and hoard are retired.</p>
 
 <h2 id="2026-11-16">November 16, 2026: ebuilds, and a name for the init</h2>
 <p>Packages will come from Gentoo's ebuilds, run by <a href="https://spas.chamesle.org/">SPAS</a>, instead of pkgsrc and mag. mag could read pkgsrc, but
