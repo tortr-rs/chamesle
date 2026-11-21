@@ -1,12 +1,12 @@
 name=chamesle-gnome
 version=0.3.0
-rel=3
+rel=4
 desc="The Chamesle look for GNOME: wallpaper, icons, a dock and tray icons"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="chamesle-artwork gnome-shell-extension-dash-to-dock gnome-shell-extension-appindicator"
+depends="chamesle-artwork gnome-shell-extension-dash-to-dock gnome-shell-extension-appindicator chamesle-access"
 
 build() {
     cp -a . "$pkgdir/"

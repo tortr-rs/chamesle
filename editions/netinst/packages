@@ -15,6 +15,9 @@ chamesle-kernel-cachyos intel-ucode
 chamesle-grub grub grub-x86_64-efi grub-i386-efi efibootmgr os-prober
 e2fsprogs dosfstools ntfs-3g exfatprogs btrfs-progs xfsprogs cryptsetup lvm2 gptfdisk parted
 
+# the screen reader for the text screens (the usb's "with a screen reader" entry): espeakup, and alsa-utils to unmute
+espeakup alsa-utils
+
 # jiggity in text, dracut for the installed system
 python3 python3-parted xkeyboard-config dracut
 

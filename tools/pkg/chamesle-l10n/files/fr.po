@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-11-09 16:27+0000\n"
+"POT-Creation-Date: 2026-11-09 19:26+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,45 @@ msgstr "Annuler"
 msgid "OK"
 msgstr "OK"
 
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:200
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:205
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Screen reader"
+msgstr "Lecteur d'écran"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:271
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:30
+msgid "Accessibility"
+msgstr "Accessibilité"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:272
+msgid "Changes apply right away. Some apps show them when you open them again."
+msgstr "Les changements s'appliquent tout de suite. Certaines applications ne les montrent qu'une fois rouvertes."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Reads the screen aloud. Super+Alt+S turns it on or off anywhere."
+msgstr "Lit l'écran à voix haute. Super+Alt+S l'active ou le désactive partout."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "High contrast"
+msgstr "Contraste élevé"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "Strong colors that are easier to tell apart."
+msgstr "Des couleurs franches, plus faciles à distinguer."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Large text"
+msgstr "Grand texte"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Makes text bigger everywhere."
+msgstr "Agrandit le texte partout."
+
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:58
+msgid "Screen reader, high contrast and large text"
+msgstr "Lecteur d'écran, contraste élevé et grand texte"
+
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
 msgid "GeForce 400 and 500 series"
 msgstr "GeForce séries 400 et 500"
@@ -209,7 +248,7 @@ msgid "HP drivers (hplip)"
 msgstr "Pilotes HP (hplip)"
 
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:30
 msgid "Driver Manager"
 msgstr "Gestionnaire de pilotes"
 
@@ -268,9 +307,13 @@ msgstr "Redémarrer maintenant"
 msgid "That didn't work"
 msgstr "Cela n'a pas fonctionné"
 
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:58
 msgid "Install drivers for your graphics card, Wi-Fi and printer"
 msgstr "Installer des pilotes pour la carte graphique, le Wi-Fi et l'imprimante"
+
+#: tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup:9
+msgid "Chamesle sign-in. Type your password and press Enter. After you sign in, the screen reader starts."
+msgstr "Connexion à Chamesle. Tapez votre mot de passe puis appuyez sur Entrée. Une fois connecté, le lecteur d'écran démarre."
 
 #: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
 msgid "Started from before an update"
@@ -338,7 +381,7 @@ msgstr "Appareil"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:30
 msgid "Store"
 msgstr "Boutique"
 
@@ -642,11 +685,11 @@ msgstr "Installer un fichier .deb ou .rpm"
 msgid "%s is installed"
 msgstr "%s est installé"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:58
 msgid "App Store"
 msgstr "Boutique d'applications"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:86
 msgid "Find, install and update apps"
 msgstr "Trouver, installer et mettre à jour des applications"
 
@@ -715,10 +758,10 @@ msgstr "La prise en charge de Windows n'a pas pu être installée. Vérifiez que
 msgid "Setting up Windows support. This only happens once..."
 msgstr "Préparation de la prise en charge de Windows. Cela n'arrive qu'une fois..."
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:30
 msgid "Windows Program"
 msgstr "Programme Windows"
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:58
 msgid "Run Windows programs"
 msgstr "Lancer des programmes Windows"

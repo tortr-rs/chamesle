@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-11-09 16:27+0000\n"
+"POT-Creation-Date: 2026-11-09 19:26+0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,45 @@ msgstr "取消"
 msgid "OK"
 msgstr "确定"
 
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:200
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:205
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Screen reader"
+msgstr "屏幕阅读器"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:271
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:30
+msgid "Accessibility"
+msgstr "无障碍"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:272
+msgid "Changes apply right away. Some apps show them when you open them again."
+msgstr "更改立即生效。有些应用需要重新打开才会显示。"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Reads the screen aloud. Super+Alt+S turns it on or off anywhere."
+msgstr "朗读屏幕内容。按 Super+Alt+S 可随时开启或关闭。"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "High contrast"
+msgstr "高对比度"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "Strong colors that are easier to tell apart."
+msgstr "更容易分辨的鲜明颜色。"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Large text"
+msgstr "大号文字"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Makes text bigger everywhere."
+msgstr "把各处的文字放大。"
+
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:58
+msgid "Screen reader, high contrast and large text"
+msgstr "屏幕阅读器、高对比度和大号文字"
+
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
 msgid "GeForce 400 and 500 series"
 msgstr "GeForce 400 和 500 系列"
@@ -209,7 +248,7 @@ msgid "HP drivers (hplip)"
 msgstr "HP 驱动（hplip）"
 
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:30
 msgid "Driver Manager"
 msgstr "驱动管理器"
 
@@ -268,9 +307,13 @@ msgstr "立即重启"
 msgid "That didn't work"
 msgstr "操作失败"
 
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:58
 msgid "Install drivers for your graphics card, Wi-Fi and printer"
 msgstr "为显卡、Wi-Fi 和打印机安装驱动"
+
+#: tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup:9
+msgid "Chamesle sign-in. Type your password and press Enter. After you sign in, the screen reader starts."
+msgstr "Chamesle 登录。输入密码后按回车键。登录后屏幕阅读器会启动。"
 
 #: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
 msgid "Started from before an update"
@@ -338,7 +381,7 @@ msgstr "设备"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:30
 msgid "Store"
 msgstr "商店"
 
@@ -638,11 +681,11 @@ msgstr "安装 .deb 或 .rpm 文件"
 msgid "%s is installed"
 msgstr "%s 已安装"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:58
 msgid "App Store"
 msgstr "应用商店"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:86
 msgid "Find, install and update apps"
 msgstr "查找、安装和更新应用"
 
@@ -708,10 +751,10 @@ msgstr "无法安装 Windows 支持。请确认已联网后再试一次。"
 msgid "Setting up Windows support. This only happens once..."
 msgstr "正在设置 Windows 支持。只需要这一次..."
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:30
 msgid "Windows Program"
 msgstr "Windows 程序"
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:58
 msgid "Run Windows programs"
 msgstr "运行 Windows 程序"

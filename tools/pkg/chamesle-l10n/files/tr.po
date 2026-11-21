@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-11-09 16:27+0000\n"
+"POT-Creation-Date: 2026-11-09 19:26+0000\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,45 @@ msgstr "İptal"
 msgid "OK"
 msgstr "Tamam"
 
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:200
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:205
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Screen reader"
+msgstr "Ekran okuyucu"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:271
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:30
+msgid "Accessibility"
+msgstr "Erişilebilirlik"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:272
+msgid "Changes apply right away. Some apps show them when you open them again."
+msgstr "Değişiklikler hemen geçerli olur. Bazı uygulamalar onları yeniden açtığınızda gösterir."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Reads the screen aloud. Super+Alt+S turns it on or off anywhere."
+msgstr "Ekranı sesli okur. Super+Alt+S onu her yerde açar veya kapatır."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "High contrast"
+msgstr "Yüksek karşıtlık"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "Strong colors that are easier to tell apart."
+msgstr "Birbirinden daha kolay ayırt edilen güçlü renkler."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Large text"
+msgstr "Büyük yazı"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Makes text bigger everywhere."
+msgstr "Yazıyı her yerde büyütür."
+
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:58
+msgid "Screen reader, high contrast and large text"
+msgstr "Ekran okuyucu, yüksek karşıtlık ve büyük yazı"
+
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
 msgid "GeForce 400 and 500 series"
 msgstr "GeForce 400 ve 500 serisi"
@@ -209,7 +248,7 @@ msgid "HP drivers (hplip)"
 msgstr "HP sürücüleri (hplip)"
 
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:30
 msgid "Driver Manager"
 msgstr "Sürücü Yöneticisi"
 
@@ -268,9 +307,13 @@ msgstr "Şimdi yeniden başlat"
 msgid "That didn't work"
 msgstr "Bu işe yaramadı"
 
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:58
 msgid "Install drivers for your graphics card, Wi-Fi and printer"
 msgstr "Ekran kartı, Wi-Fi ve yazıcı için sürücü kurun"
+
+#: tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup:9
+msgid "Chamesle sign-in. Type your password and press Enter. After you sign in, the screen reader starts."
+msgstr "Chamesle girişi. Parolanızı yazın ve Enter'a basın. Giriş yaptıktan sonra ekran okuyucu başlar."
 
 #: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
 msgid "Started from before an update"
@@ -338,7 +381,7 @@ msgstr "Aygıt"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:30
 msgid "Store"
 msgstr "Mağaza"
 
@@ -642,11 +685,11 @@ msgstr ".deb veya .rpm dosyası yükle"
 msgid "%s is installed"
 msgstr "Yüklendi: %s"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:58
 msgid "App Store"
 msgstr "Uygulama Mağazası"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:86
 msgid "Find, install and update apps"
 msgstr "Uygulama bulun, kurun ve güncelleyin"
 
@@ -715,10 +758,10 @@ msgstr "Windows desteği kurulamadı. Çevrimiçi olduğunuzu kontrol edip tekra
 msgid "Setting up Windows support. This only happens once..."
 msgstr "Windows desteği hazırlanıyor. Bu yalnızca bir kez olur..."
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:30
 msgid "Windows Program"
 msgstr "Windows programı"
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:58
 msgid "Run Windows programs"
 msgstr "Windows programlarını çalıştırın"

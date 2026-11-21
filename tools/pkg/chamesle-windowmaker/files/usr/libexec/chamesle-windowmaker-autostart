@@ -2,9 +2,16 @@
 # window maker runs this once it's up and the dock has started the tray, so the network and bluetooth
 # icons have somewhere to go
 [ -x /usr/libexec/xfce-polkit ] && /usr/libexec/xfce-polkit &
+# sound: the other desktops start it from xdg autostart, which window maker doesn't read. wireplumber and the
+# pulseaudio server come with it (/etc/pipewire/pipewire.conf.d)
+pgrep -u "$(id -u)" -x pipewire >/dev/null || pipewire &
 sleep 1
 nm-applet &
 command -v blueman-applet >/dev/null && blueman-applet &
 # lock with xlock after 10 minutes, and before the lid closes
 xset s 600
 xss-lock -- xlock -mode blank &
+# the screen reader and large text if they're on, and Super+Alt+S for the screen reader. window maker has no
+# shortcuts for commands of its own, sxhkd does them
+chamesle-access apply &
+sxhkd -c /usr/share/chamesle/windowmaker/sxhkdrc &

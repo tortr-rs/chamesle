@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-11-09 16:27+0000\n"
+"POT-Creation-Date: 2026-11-09 19:26+0000\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,45 @@ msgstr "Batal"
 msgid "OK"
 msgstr "OK"
 
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:200
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:205
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Screen reader"
+msgstr "Pembaca layar"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:271
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:30
+msgid "Accessibility"
+msgstr "Aksesibilitas"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:272
+msgid "Changes apply right away. Some apps show them when you open them again."
+msgstr "Perubahan langsung berlaku. Beberapa aplikasi baru menampilkannya saat dibuka lagi."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Reads the screen aloud. Super+Alt+S turns it on or off anywhere."
+msgstr "Membacakan layar dengan suara. Super+Alt+S menyalakan atau mematikannya di mana saja."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "High contrast"
+msgstr "Kontras tinggi"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "Strong colors that are easier to tell apart."
+msgstr "Warna tegas yang lebih mudah dibedakan."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Large text"
+msgstr "Teks besar"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Makes text bigger everywhere."
+msgstr "Membesarkan teks di mana-mana."
+
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:58
+msgid "Screen reader, high contrast and large text"
+msgstr "Pembaca layar, kontras tinggi, dan teks besar"
+
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
 msgid "GeForce 400 and 500 series"
 msgstr "GeForce seri 400 dan 500"
@@ -209,7 +248,7 @@ msgid "HP drivers (hplip)"
 msgstr "Driver HP (hplip)"
 
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:30
 msgid "Driver Manager"
 msgstr "Pengelola Driver"
 
@@ -268,9 +307,13 @@ msgstr "Mulai ulang sekarang"
 msgid "That didn't work"
 msgstr "Itu tidak berhasil"
 
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:58
 msgid "Install drivers for your graphics card, Wi-Fi and printer"
 msgstr "Pasang driver untuk kartu grafis, Wi-Fi, dan printer"
+
+#: tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup:9
+msgid "Chamesle sign-in. Type your password and press Enter. After you sign in, the screen reader starts."
+msgstr "Masuk ke Chamesle. Ketik kata sandi Anda lalu tekan Enter. Setelah masuk, pembaca layar akan berjalan."
 
 #: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
 msgid "Started from before an update"
@@ -338,7 +381,7 @@ msgstr "Perangkat"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:30
 msgid "Store"
 msgstr "Toko"
 
@@ -638,11 +681,11 @@ msgstr "Pasang berkas .deb atau .rpm"
 msgid "%s is installed"
 msgstr "%s sudah terpasang"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:58
 msgid "App Store"
 msgstr "Toko Aplikasi"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:86
 msgid "Find, install and update apps"
 msgstr "Cari, pasang, dan perbarui aplikasi"
 
@@ -708,10 +751,10 @@ msgstr "Dukungan Windows tidak bisa dipasang. Periksa apakah Anda terhubung ke i
 msgid "Setting up Windows support. This only happens once..."
 msgstr "Menyiapkan dukungan Windows. Ini hanya terjadi sekali..."
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:30
 msgid "Windows Program"
 msgstr "Program Windows"
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:58
 msgid "Run Windows programs"
 msgstr "Jalankan program Windows"

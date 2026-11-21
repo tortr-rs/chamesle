@@ -69,6 +69,8 @@ def choose(title, note, items, sel=0, disabled=()):
             if i in disabled:
                 attr |= curses.A_DIM
             scr.addstr(y + i - top, 6, items[i][:w - 12].ljust(w - 12), attr)
+        # the cursor on the chosen line, hidden: the screen reader reads the line it's on
+        scr.move(y + sel - top, 6)
         k = scr.get_wch()
         if k in ("\n", curses.KEY_ENTER) and sel not in disabled:
             return sel
@@ -221,13 +223,58 @@ def network():
             say("Couldn't connect to %s" % ssid, "Check the password and try again.")
 
 
+# booted from the usb's "with a screen reader" entry
+def speech():
+    try:
+        return "chamesle.speech=1" in open("/proc/cmdline").read().split()
+    except OSError:
+        return False
+
+
+ACCESS = [("reader", "Screen reader", "reads the screen aloud, Super+Alt+S turns it on or off"),
+          ("contrast", "High contrast", "strong colors that are easier to tell apart"),
+          ("text", "Large text", "bigger text everywhere")]
+
+
+def access_text(access):
+    on = [name.lower() for k, name, _ in ACCESS if access.get(k)]
+    return ", ".join(on) if on else "none"
+
+
+# a list of things to turn on or off, and Continue at the bottom
+def access_page(access):
+    sel = len(ACCESS)
+    while True:
+        frame("Seeing the screen", "ENTER=Turn on or off  ESC=Back")
+        y = text(5, "Anything here to make it easier? You can change these later in Accessibility, in the menu.")
+        h, w = scr.getmaxyx()
+        for i, (k, name, what) in enumerate(ACCESS):
+            line = "[%s] %-15s %s" % ("x" if access.get(k) else " ", name, what)
+            scr.addstr(y + i, 6, line[:w - 12].ljust(w - 12), curses.color_pair(3) if i == sel else curses.color_pair(1))
+        scr.addstr(y + len(ACCESS) + 1, 6, "Continue".ljust(w - 12), curses.color_pair(3) if sel == len(ACCESS) else curses.color_pair(1))
+        scr.move(y + sel + (sel == len(ACCESS)), 6)
+        k = scr.get_wch()
+        if k == "\x1b":
+            return False
+        if k == curses.KEY_UP:
+            sel = max(0, sel - 1)
+        elif k in (curses.KEY_DOWN, "\t"):
+            sel = min(len(ACCESS), sel + 1)
+        elif k in ("\n", curses.KEY_ENTER, " "):
+            if sel == len(ACCESS):
+                return True
+            key = ACCESS[sel][0]
+            access[key] = not access.get(key)
+
+
 def run_netinst():
     kbds = keyboards()
     us = next((i for i, k in enumerate(kbds) if k[1] == "us" and not k[2]), 0)
     zs = account.zones()
     zone_names = [z.replace("_", " ").replace("/", " / ") for z in zs]
     c = {"lang": 0, "kb": us, "zone": zs.index("Europe/London") if "Europe/London" in zs else 0, "name": "",
-         "user": "", "pw": "", "host": "", "row": None, "passphrase": None, "desktop": 0}
+         "user": "", "pw": "", "host": "", "row": None, "passphrase": None, "desktop": 0,
+         "access": {"reader": speech()}}
 
     def p_lang():
         i = choose("Language to install", "", [ENGLISH.get(code, n) for n, code in LANGUAGES], c["lang"])
@@ -341,7 +388,7 @@ def run_netinst():
                  ("Keyboard", kbds[c["kb"]][0]), ("Time zone", zone_names[c["zone"]]),
                  ("You", "%s (%s)" % (c["name"] or c["user"], c["user"])), ("Computer name", c["host"]),
                  ("Install on", where), ("Encrypted", "yes" if c["passphrase"] else "no"),
-                 ("Desktop", edition_name(DESKTOPS[c["desktop"]][0]))]
+                 ("Desktop", edition_name(DESKTOPS[c["desktop"]][0])), ("Accessibility", access_text(c["access"]))]
         while True:
             frame("Ready to install", "ENTER=Install  ESC=Back")
             y = text(5, "Check this. When you press ENTER, Chamesle installs and the disk is changed. It needs nothing "
@@ -356,7 +403,7 @@ def run_netinst():
             if k == "\x1b":
                 return False
 
-    pages = [p_lang, p_keyboard, network, p_zone, p_you, p_disk, p_desktop, p_summary]
+    pages = [p_lang, p_keyboard, network, p_zone, p_you, p_disk, p_desktop, lambda: access_page(c["access"]), p_summary]
     n = 0
     while n < len(pages):
         if pages[n]():
@@ -367,7 +414,7 @@ def run_netinst():
     desktop = DESKTOPS[c["desktop"]][0]
     user = {"zone": zs[c["zone"]], "user": c["user"], "name": c["name"], "password": c["pw"], "host": c["host"]}
     steps = STEPS[:2] + ["Downloading and installing %s" % edition_name(desktop)] + STEPS[2:]
-    work(steps, c["row"], c["passphrase"], LANGUAGES[c["lang"]][1], kbds[c["kb"]][1:], desktop, user)
+    work(steps, c["row"], c["passphrase"], LANGUAGES[c["lang"]][1], kbds[c["kb"]][1:], desktop, user, c["access"])
     say("Chamesle is installed", "Take out the USB stick, then press ENTER to restart into your new %s desktop."
         % edition_name(desktop) if desktop != "server" else
         "Take out the USB stick, then press ENTER to restart. Sign in with your username, or over SSH.")
@@ -375,12 +422,13 @@ def run_netinst():
 
 
 # installs with a screen of steps. returns when it's done, or says what went wrong and restarts
-def work(steps, row, passphrase, language, keyboard, desktop=None, user=None):
+def work(steps, row, passphrase, language, keyboard, desktop=None, user=None, access=None):
     state = {"step": 0, "percent": 0, "error": None, "done": False}
 
     def go():
         try:
-            install.install(row, passphrase, language, keyboard, progress=progress, desktop=desktop, user=user)
+            install.install(row, passphrase, language, keyboard, progress=progress, desktop=desktop, user=user,
+                            access=access)
         except Exception as e:
             print("jiggity: the installation failed:", e, file=sys.stderr)
             state["error"] = str(e)

@@ -1,12 +1,12 @@
 name=chamesle-windowmaker
 version=0.1
-rel=1
+rel=2
 desc="Chamesle's Window Maker session: the dock apps, network, sound and OneStepBack for the apps"
 url=https://chamesle.org
 license=GPL-3.0-or-later
 source=
 makedeps=""
-depends="WindowMaker onestepback wmclock wmix wmsystemtray chamesle-artwork"
+depends="WindowMaker onestepback wmclock wmix wmsystemtray chamesle-artwork chamesle-access sxhkd"
 
 build() {
     cp -a . "$pkgdir/"

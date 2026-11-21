@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chamesle\n"
 "Report-Msgid-Bugs-To: https://github.com/tortr-rs/chamesle/issues\n"
-"POT-Creation-Date: 2026-11-09 16:27+0000\n"
+"POT-Creation-Date: 2026-11-09 19:26+0000\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,6 +127,45 @@ msgstr "Mégse"
 msgid "OK"
 msgstr "OK"
 
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:200
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:205
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Screen reader"
+msgstr "Képernyőolvasó"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:271
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:30
+msgid "Accessibility"
+msgstr "Akadálymentesség"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:272
+msgid "Changes apply right away. Some apps show them when you open them again."
+msgstr "A változások azonnal érvényesek. Néhány alkalmazás csak újranyitás után mutatja őket."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:274
+msgid "Reads the screen aloud. Super+Alt+S turns it on or off anywhere."
+msgstr "Felolvassa a képernyőt. A Super+Alt+S bárhol be- vagy kikapcsolja."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "High contrast"
+msgstr "Nagy kontraszt"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:275
+msgid "Strong colors that are easier to tell apart."
+msgstr "Erős színek, amelyeket könnyebb megkülönböztetni."
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Large text"
+msgstr "Nagy betűk"
+
+#: tools/pkg/chamesle-access/files/usr/bin/chamesle-access:276
+msgid "Makes text bigger everywhere."
+msgstr "Mindenhol nagyobbra állítja a szöveget."
+
+#: tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop:58
+msgid "Screen reader, high contrast and large text"
+msgstr "Képernyőolvasó, nagy kontraszt és nagy betűk"
+
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:18
 msgid "GeForce 400 and 500 series"
 msgstr "GeForce 400-as és 500-as sorozat"
@@ -209,7 +248,7 @@ msgid "HP drivers (hplip)"
 msgstr "HP illesztőprogramok (hplip)"
 
 #: tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers:103
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:3
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:30
 msgid "Driver Manager"
 msgstr "Illesztőprogram-kezelő"
 
@@ -268,9 +307,13 @@ msgstr "Újraindítás most"
 msgid "That didn't work"
 msgstr "Ez nem sikerült"
 
-#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:4
+#: tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop:58
 msgid "Install drivers for your graphics card, Wi-Fi and printer"
 msgstr "Illesztőprogramok telepítése videokártyához, Wi-Fi-hez és nyomtatóhoz"
+
+#: tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup:9
+msgid "Chamesle sign-in. Type your password and press Enter. After you sign in, the screen reader starts."
+msgstr "Chamesle bejelentkezés. Írd be a jelszavad, és nyomd meg az Entert. Bejelentkezés után elindul a képernyőolvasó."
 
 #: tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot:147
 msgid "Started from before an update"
@@ -338,7 +381,7 @@ msgstr "Eszköz"
 
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:336
 #: tools/pkg/chamesle-store/files/usr/bin/chamesle-store:398
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:3
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:30
 msgid "Store"
 msgstr "Áruház"
 
@@ -642,11 +685,11 @@ msgstr ".deb vagy .rpm fájl telepítése"
 msgid "%s is installed"
 msgstr "Telepítve: %s"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:4
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:58
 msgid "App Store"
 msgstr "Alkalmazásbolt"
 
-#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:5
+#: tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop:86
 msgid "Find, install and update apps"
 msgstr "Alkalmazások keresése, telepítése és frissítése"
 
@@ -715,10 +758,10 @@ msgstr "A Windows-támogatást nem sikerült telepíteni. Ellenőrizze, hogy van
 msgid "Setting up Windows support. This only happens once..."
 msgstr "Windows-támogatás beállítása. Ez csak egyszer történik meg..."
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:3
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:30
 msgid "Windows Program"
 msgstr "Windows-program"
 
-#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:4
+#: tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop:58
 msgid "Run Windows programs"
 msgstr "Windows-programok futtatása"
