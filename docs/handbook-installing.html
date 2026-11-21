@@ -89,7 +89,7 @@ mount /dev/sda2 /mnt/boot</pre>
 </table>
 <p>Packages after the target go in too. A ThinkPad with Intel wireless and graphics, with an editor:</p>
 <pre>chamesle-bootstrap -n t480 -f linux-firmware-intel /mnt vim</pre>
-<p>What <code>chamesle-base</code> brings: Winchester and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs and curl.</p>
+<p>What <code>chamesle-base</code> brings: dinit and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs and curl.</p>
 <h2 id="s3-4">3.4 Working inside the new root</h2>
 <pre>chamesle-chroot /mnt
 chamesle-chroot /mnt passwd root</pre>
@@ -106,7 +106,7 @@ sysfs           /sys   sysfs  defaults        0 0
 tmpfs           /tmp   tmpfs  nosuid,nodev    0 0</pre>
 <p>A root on ZFS gets no root line.</p>
 <h2 id="s3-6">3.6 Host name and password</h2>
-<p>The host name is in <code>/mnt/etc/init.conf</code>, from <code>-n</code>. Set the root password:</p>
+<p>The host name is in <code>/mnt/etc/hostname</code>, from <code>-n</code>. Set the root password:</p>
 <pre>chamesle-chroot /mnt passwd root</pre>
 <p>The hash goes into <code>/etc/shadow</code>. The login shell of root is mksh.</p>
 <h2 id="s3-7">3.7 The boot entry</h2>
@@ -150,7 +150,7 @@ cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/</pre>
 zpool export rpool
 reboot</pre>
 <p>Leave out <code>zpool export</code> if the root is not on ZFS.</p>
-<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. <code>init</code> runs <code>/etc/rc</code>, which mounts the file systems and starts the services of <code>init.conf</code>, and puts a login on the ttys. Log in as root. <code>dhcpcd</code> brings up a cable at boot; for wireless see section 6.8.</p>
+<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. dinit mounts the file systems, starts the services of <code>/etc/dinit.d/boot.d</code> and puts a login on the ttys. Log in as root. <code>dhcpcd</code> brings up a cable at boot; for wireless see section 6.8.</p>
 <h2 id="s3-9">3.9 What to install next</h2>
 <pre>mag install vim htop tmux
 mag search irc</pre>

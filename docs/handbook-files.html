@@ -42,9 +42,10 @@
 <h2 id="s11-1">11.1 On an installed system</h2>
 <table>
 <tr><th>path</th><th>what</th></tr>
-<tr><td><code>/sbin/init</code>, <code>/etc/rc</code>, <code>/etc/rc.shutdown</code></td><td>init, the boot script, the shutdown script, all run by mksh</td></tr>
-<tr><td><code>/etc/init.conf</code></td><td>host name, boot services, modules, ttys</td></tr>
-<tr><td><code>/etc/rc.d/</code>, <code>/usr/local/etc/rc.d/</code></td><td>the service scripts</td></tr>
+<tr><td><code>/sbin/init</code></td><td>mounts what dinit needs and starts it</td></tr>
+<tr><td><code>/etc/dinit.d/</code>, <code>/etc/dinit.d/boot.d/</code></td><td>the services, and the ones started at boot</td></tr>
+<tr><td><code>/usr/lib/chamesle/</code></td><td>the boot scripts the services run</td></tr>
+<tr><td><code>/etc/hostname</code>, <code>/etc/modules</code></td><td>host name, modules loaded at boot</td></tr>
 <tr><td><code>/etc/profile</code></td><td><code>PATH</code>, <code>umask</code></td></tr>
 <tr><td><code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/group</code>, <code>/etc/shells</code></td><td>accounts, passwords, groups, login shells</td></tr>
 <tr><td><code>/etc/fstab</code></td><td>file systems</td></tr>
@@ -71,7 +72,7 @@
 <tr><td><code>system/tools/chamesle-boot</code></td><td>limine.conf and limine for the system in a directory</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
 <tr><td><code>system/tools/mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code></td><td>packages, signed indexes, Chamesle's own repo</td></tr>
-<tr><td><code>system/files/</code></td><td>init, rc, <code>service</code>, <code>init.conf</code> and the service scripts, in <code>chamesle-base</code></td></tr>
+<tr><td><code>system/files/</code></td><td><code>/sbin/init</code>, the dinit services and boot scripts, <code>service</code>, in <code>chamesle-base</code></td></tr>
 <tr><td><code>system/pkg/chamesle-base/</code></td><td>its scripts, <code>repos</code>, <code>os-release</code>, <code>issue</code></td></tr>
 <tr><td><code>system/keys/</code></td><td>the public keys the repos are signed with</td></tr>
 <tr><td><code>system/iso/mkiso</code>, <code>mkinitramfs</code>, <code>init</code></td><td>the live ISO, its initramfs and the first process in it</td></tr>

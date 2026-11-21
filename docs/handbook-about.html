@@ -49,14 +49,14 @@
 <tr><td>mag</td><td>the package manager, binary packages only, in one C file</td></tr>
 <tr><td>rifle</td><td>the coreutils, all in one C file; <code>cat</code>, <code>ls</code>, <code>cp</code> and the rest are links to one program</td></tr>
 <tr><td>mksh</td><td>the login shell; <code>/bin/sh</code> is busybox's ash</td></tr>
-<tr><td>init</td><td>Winchester, <code>/sbin/init</code>, a shell script that runs under mksh, in the style of FreeBSD's: <code>/etc/rc</code>, <code>/etc/init.conf</code>, services</td></tr>
+<tr><td>init</td><td>dinit, with Chamesle's services in <code>/etc/dinit.d</code></td></tr>
 <tr><td>limine</td><td>the boot loader, BIOS and UEFI</td></tr>
 </table>
 <p>Chamesle is made to be the most UNIX distribution possible, and to run on almost anything: the same base goes on a new laptop and on a Pentium 4 with 256 MB of memory. It is a system for the tty first. Anything else is a <code>mag install</code> away.</p>
 <h2 id="s1-2">1.2 Where the packages come from</h2>
 <p>mag reads two kinds of repository, both signed:</p>
 <ul>
-<li>Chamesle's own, at <code>https://chamesle.org/repo</code>: <code>chamesle-base</code> (Winchester, <code>/etc/rc</code>, the services, the tools of this book and the keys), <code>mag</code> and <code>rifle</code></li>
+<li>Chamesle's own, at <code>https://chamesle.org/repo</code>: <code>chamesle-base</code> (the dinit services, the tools of this book and the keys), <code>mag</code> and <code>rifle</code></li>
 <li>a large musl repository with everything else: the kernel, the firmware, the libraries, editors, compilers, X, about 28,000 packages for x86_64</li>
 </ul>
 <p>Both are in <code>/etc/mag/repos</code>. A package is checked against the keys in <code>/etc/mag/keys</code> before anything of it is unpacked.</p>

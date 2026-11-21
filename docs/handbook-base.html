@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The base system - Chamesle</title>
-<meta name="description" content="The init is called Winchester. /sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<meta name="description" content="The init is dinit. /sbin/init is a short script: it mounts proc, sysfs, devtmpfs and /run, and hands over">
 <link rel="canonical" href="https://chamesle.org/handbook-base.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="The base system - Chamesle">
-<meta property="og:description" content="The init is called Winchester. /sbin/init is a mksh script, and it works the way FreeBSD&#x27;s init does: the kernel starts it as process 1, it runs">
+<meta property="og:description" content="The init is dinit. /sbin/init is a short script: it mounts proc, sysfs, devtmpfs and /run, and hands over">
 <meta property="og:url" content="https://chamesle.org/handbook-base.html">
 <link rel="stylesheet" href="style.css?20">
 <link rel="icon" href="img/logo.png">
@@ -40,59 +40,35 @@
 <p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
 <h2>6. The base system</h2>
 <h2 id="s6-1">6.1 init</h2>
-<p>The init is called Winchester. <code>/sbin/init</code> is a mksh script, and it works the way FreeBSD's init does: the kernel starts it as process 1, it runs <code>/etc/rc</code>, then it keeps a getty on every tty and waits for a signal. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root. Step by step:</p>
+<p>The init is dinit. <code>/sbin/init</code> is a short script: it mounts <code>proc</code>, <code>sysfs</code>, <code>devtmpfs</code> and <code>/run</code>, and hands over to <code>dinit</code>, which stays process 1. dinit starts the service called <code>boot</code> and everything it needs, keeps the services running, and stops them all in order when the machine goes down. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root.</p>
+<p>A boot goes:</p>
 <ol>
-<li><code>PATH</code> is set to <code>/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin</code>. <code>proc</code>, <code>sysfs</code> and <code>devtmpfs</code> are mounted if they are not yet, and what init prints goes to <code>/dev/console</code>.</li>
-<li>If <code>single</code> is on the kernel command line, init runs <code>sulogin</code> first.</li>
-<li><code>/etc/rc autoboot</code> runs (6.2). If it fails, init runs <code>sulogin</code> and goes on when you leave it.</li>
-<li>For every name in <code>ttys</code> of <code>init.conf</code> that has a node in <code>/dev</code>, init starts a loop that runs the getty command again whenever it exits. A getty that dies within five seconds is run again after a pause of five.</li>
-<li>init waits. A signal ends the wait:</li>
+<li><code>rootfs</code>: <code>fsck</code> checks the file systems (not with <code>fastboot</code> on the kernel command line), <code>/</code> is remounted read-write, <code>devpts</code>, <code>/dev/shm</code> and the cgroup2 hierarchy are mounted, <code>mount -a</code> mounts <code>/etc/fstab</code>, <code>zfs mount -a</code> mounts the ZFS datasets, <code>swapon -a</code>, and <code>/tmp</code> is emptied. A failed check gives a root shell; leave it to go on.</li>
+<li><code>udevd</code>, then <code>setup</code>: loopback up, the clock, the host name from <code>/etc/hostname</code>, <code>/etc/sysctl.d/*.conf</code>, the modules (6.6), and <code>dmesg</code> into <code>/var/log/dmesg.boot</code>.</li>
+<li><code>udev-trigger</code> replays the devices and waits for them.</li>
+<li>Every service in <code>/etc/dinit.d/boot.d</code>, all at once, each after what it depends on.</li>
 </ol>
-<table>
-<tr><th>signal</th><th>what it does</th></tr>
-<tr><td><code>INT</code>, <code>TERM</code></td><td>reboot</td></tr>
-<tr><td><code>USR1</code></td><td>halt: stop everything and stay stopped</td></tr>
-<tr><td><code>USR2</code></td><td>power off</td></tr>
-</table>
-<ol>
-<li>Then it runs <code>/etc/rc.shutdown</code>, sends <code>TERM</code> to every process, <code>KILL</code> two seconds later, runs <code>sync</code>, <code>umount -a -r</code> and does the last step through <code>/proc/sysrq-trigger</code> (<code>b</code> or <code>o</code>). That needs <code>CONFIG_MAGIC_SYSRQ</code> in the kernel; the base set has no <code>reboot</code> program of its own that calls the kernel.</li>
-</ol>
-<h2 id="s6-2">6.2 rc, init.conf and the services</h2>
-<p><code>/etc/rc</code> mounts the system. In order: <code>/</code> is remounted read-write; with <code>autoboot</code>, <code>fsck -A -R -p</code> checks the other file systems; <code>devpts</code> and <code>/dev/shm</code> are mounted; a tmpfs goes on <code>/run</code> (not on the live ISO, where <code>/run/live</code> is already there); <code>mount -a</code> mounts <code>/etc/fstab</code>; <code>swapon -a</code>; <code>/tmp</code> is emptied if it is not a mount and set to mode 1777; the host name is set; <code>dmesg</code> is saved in <code>/var/log/dmesg.boot</code>. Then every service in <code>boot-services</code> is started, in the order it is written.</p>
-<p><code>/etc/init.conf</code> is the one configuration file. One setting per line, <code>key = value</code>, <code>#</code> starts a comment, blank lines are ignored, spaces around <code>=</code> are free. A list is in braces and may go over several lines:</p>
-<pre>hostname = chamesle
-
-# started in this order at boot, stopped in reverse at shutdown
-boot-services = {udev,modules,network}
-
-modules = {}
-ttys = {tty1,tty2,tty3,tty4,tty5,tty6,ttyS0}
-getty = agetty --noclear $tty linux
-getty-ttyS0 = agetty -L $tty 115200 vt100</pre>
-<table>
-<tr><th>key</th><th>meaning</th></tr>
-<tr><td><code>hostname</code></td><td>the host name</td></tr>
-<tr><td><code>boot-services</code></td><td>the services started at boot, in order; shutdown stops them in reverse</td></tr>
-<tr><td><code>modules</code></td><td>kernel modules the <code>modules</code> service loads with <code>modprobe</code></td></tr>
-<tr><td><code>ttys</code></td><td>the ttys that get a getty</td></tr>
-<tr><td><code>getty</code></td><td>the getty command; <code>$tty</code> is the tty name</td></tr>
-<tr><td><code>getty-NAME</code></td><td>the getty command for that tty alone</td></tr>
-</table>
-<p>The parser is <code>conf</code> in <code>/etc/init.sh</code>; <code>conf KEY</code> prints the value, with a list separated by spaces. A change to <code>ttys</code> or <code>getty</code> takes effect at the next boot.</p>
-<p>A service is an executable file in <code>/etc/rc.d</code> (or <code>/usr/local/etc/rc.d</code>, for the ones you add) that takes <code>start</code>, <code>stop</code>, <code>restart</code> or <code>status</code>. The base set has <code>udev</code> (starts <code>udevd</code>, replays the devices and waits for them), <code>modules</code>, <code>network</code> (<code>dhcpcd</code>), and <code>dbus</code>, <code>iwd</code> and <code>NetworkManager</code> for when those packages are installed. A name in <code>boot-services</code> without a script is skipped with one line saying so.</p>
-<p><code>service</code> is the way to run them:</p>
-<pre>service -l                 every service
-service -e                 the services of boot-services, as paths
-service network restart
-service udev status</pre>
-<p>To add a service, write the script, make it executable, and put its name in <code>boot-services</code>. With <code>/etc/rc.subr</code> it is short. Set <code>procname</code> to the name the process shows in <code>/proc/PID/comm</code>, write <code>svc_start</code>, and finish with <code>run "$1"</code>; <code>stop</code> then kills that process, <code>status</code> looks for it and <code>start</code> refuses to start it twice. Override <code>svc_stop</code> and <code>svc_status</code> if the defaults do not fit:</p>
-<pre>#!/bin/sh
-. /etc/rc.subr
-procname=chronyd
-svc_start() { chronyd; }
-run &quot;$1&quot;</pre>
+<p><code>single</code> on the kernel command line starts a root shell and nothing else; the boot goes on when you leave it. If the boot fails, dinit starts a root shell too.</p>
+<h2 id="s6-2">6.2 Services</h2>
+<p>A service is a file in <code>/etc/dinit.d</code> named after it. The base set has <code>dbus</code>, <code>dhcpcd</code>, <code>elogind</code>, <code>gdm</code>, <code>iwd</code>, <code>NetworkManager</code>, <code>wpa_supplicant</code> and the logins <code>tty1</code> to <code>tty6</code> and <code>ttyS0</code>, for when those packages are installed. <code>dinitctl</code> does the rest:</p>
+<pre>dinitctl list                    every service that is loaded, and its state
+dinitctl start iwd
+dinitctl stop iwd
+dinitctl restart dhcpcd
+dinitctl status dbus
+dinitctl enable NetworkManager   start it now and at every boot
+dinitctl disable dhcpcd          not at boot any more</pre>
+<p><code>enable</code> and <code>disable</code> make and remove a link in <code>/etc/dinit.d/boot.d</code>; that directory is the list of what starts at boot. A fresh install has <code>dhcpcd</code> and <code>tty1</code> to <code>tty6</code> in it. <code>service NAME start</code> and the rest still work and run <code>dinitctl</code>.</p>
+<p>A service whose process dies is started again, unless it dies over and over in a few seconds; then dinit gives up and <code>dinitctl list</code> shows it stopped. To add a service, write its file. A daemon that can stay in the foreground is a <code>process</code>:</p>
+<pre># /etc/dinit.d/chronyd
+type = process
+command = /usr/sbin/chronyd -d
+depends-on = system
+smooth-recovery = true</pre>
+<p><code>depends-on = system</code> waits for the file systems and devices; <code>depends-on = dbus</code> for the system bus. <code>dinit-service(5)</code> has every setting.</p>
+<p>Chamesle before base r18 ran Winchester, a shell init with <code>/etc/init.conf</code> and scripts in <code>/etc/rc.d</code>. The upgrade to r18 moves you over by itself: the host name goes to <code>/etc/hostname</code>, the services of <code>boot-services</code> and the <code>ttys</code> are enabled in dinit (<code>network</code> is <code>dhcpcd</code> now, <code>udev</code> and <code>modules</code> are part of the boot), and <code>init.conf</code> is kept as <code>/etc/init.conf.old</code>. A changed <code>getty</code> line is not carried over; edit <code>/etc/dinit.d/ttyN</code> for that.</p>
 <h2 id="s6-3">6.3 Shutting down</h2>
-<p><code>reboot</code>, <code>halt</code> and <code>poweroff</code> send <code>INT</code>, <code>USR1</code> and <code>USR2</code> to init. <code>shutdown -r</code>, <code>-h</code> or <code>-p</code> does the same, at once (<code>now</code>) or after <code>+minutes</code>, with an optional message sent through <code>wall</code>:</p>
+<p><code>reboot</code>, <code>halt</code> and <code>poweroff</code> ask dinit to stop. It stops the services, the ones others depend on last, sends <code>TERM</code> and then <code>KILL</code> to what is left, turns swap off, unmounts the file systems and powers off. <code>shutdown -r</code>, <code>-h</code> or <code>-p</code> does the same, at once (<code>now</code>) or after <code>+minutes</code>, with an optional message sent through <code>wall</code>:</p>
 <pre>shutdown -r now
 shutdown -p +10 back in ten minutes</pre>
 <h2 id="s6-4">6.4 The files in /etc</h2>
@@ -100,7 +76,9 @@ shutdown -p +10 back in ten minutes</pre>
 <tr><th>file</th><th>what it holds</th></tr>
 <tr><td><code>passwd</code>, <code>shadow</code>, <code>group</code></td><td>accounts, password hashes, groups</td></tr>
 <tr><td><code>shells</code></td><td>the login shells; <code>/bin/mksh</code> is one</td></tr>
-<tr><td><code>init.conf</code></td><td>host name, boot services, modules, ttys (6.2)</td></tr>
+<tr><td><code>hostname</code></td><td>the host name</td></tr>
+<tr><td><code>dinit.d/</code></td><td>the services, and in <code>boot.d</code> the ones started at boot (6.2)</td></tr>
+<tr><td><code>modules</code></td><td>kernel modules loaded at boot, one a line</td></tr>
 <tr><td><code>fstab</code></td><td>the file systems (3.5)</td></tr>
 <tr><td><code>profile</code></td><td><code>PATH</code>, <code>PAGER</code>, <code>umask 022</code>, and <code>/etc/profile.d/*.sh</code></td></tr>
 <tr><td><code>os-release</code></td><td><code>NAME=Chamesle</code>, <code>ID=chamesle</code></td></tr>
@@ -117,31 +95,31 @@ adduser alice input</pre>
 <p><code>wheel</code> may use <code>doas</code>, which is in the base with <code>permit persist :wheel</code> in <code>/etc/doas.d/wheel.conf</code>. <code>video</code> opens <code>/dev/dri</code>, the graphics, and <code>input</code> the keyboard and mouse under <code>/dev/input</code>. There is no logind to hand them out, so whoever runs X or a Wayland compositor needs both, or Xorg stops with <code>open /dev/dri/card0: Permission denied</code> and <code>no screens found</code>. Groups count from the next login.</p>
 <h2 id="s6-6">6.6 udev and modules</h2>
 <p>eudev is the udev. <code>udevd</code> gives devices their nodes in <code>/dev</code> and loads the modules the hardware needs.</p>
-<p>kmod provides <code>modprobe</code>, <code>insmod</code>, <code>rmmod</code>, <code>lsmod</code>, <code>modinfo</code> and <code>depmod</code>. A kernel's modules are in <code>/lib/modules/VERSION</code>. To load one by hand: <code>modprobe name</code>. To load one at every boot, put its name in <code>modules</code> of <code>/etc/init.conf</code>. To keep one from loading, put <code>blacklist name</code> in a file in <code>/etc/modprobe.d/</code>.</p>
+<p>kmod provides <code>modprobe</code>, <code>insmod</code>, <code>rmmod</code>, <code>lsmod</code>, <code>modinfo</code> and <code>depmod</code>. A kernel's modules are in <code>/lib/modules/VERSION</code>. To load one by hand: <code>modprobe name</code>. To load one at every boot, put its name on a line of <code>/etc/modules</code>. The base loads the input and network drivers of <code>/usr/lib/modules-load.d/chamesle.conf</code> too. To keep one from loading, put <code>blacklist name</code> in a file in <code>/etc/modprobe.d/</code>.</p>
 <h2 id="s6-7">6.7 Networking</h2>
-<p><code>dhcpcd</code> is the DHCP client and is in the base set. It is the <code>network</code> service, in <code>boot-services</code> by default, and takes every interface, so a cable is up at boot. <code>ip</code> lists them:</p>
+<p><code>dhcpcd</code> is the DHCP client and is in the base set. It is the <code>dhcpcd</code> service, enabled by default, and takes every interface, so a cable is up at boot. <code>ip</code> lists them:</p>
 <pre>ip addr
 ip link set eth0 up</pre>
 <p>A static address:</p>
 <pre>ip addr add 192.168.1.10/24 dev eth0
 ip route add default via 192.168.1.1
 echo &#x27;nameserver 192.168.1.1&#x27; &gt; /etc/resolv.conf</pre>
-<p>and take <code>network</code> out of <code>boot-services</code>.</p>
+<p>and <code>dinitctl disable dhcpcd</code>.</p>
 <h2 id="s6-8">6.8 Wireless</h2>
 <p>The card needs its firmware (7.4). Then iwd:</p>
 <pre>mag install iwd dbus</pre>
-<p>and put <code>dbus</code> and <code>iwd</code> in <code>boot-services</code> before <code>network</code>:</p>
-<pre>boot-services = {udev,modules,dbus,iwd,network}</pre>
-<p><code>service dbus start</code>, <code>service iwd start</code> to have them now. <code>iwctl</code> connects, the same as on the ISO (2.3), and remembers the network. dhcpcd gives it an address.</p>
+<p>and enable it, which starts dbus with it:</p>
+<pre>dinitctl enable iwd</pre>
+<p><code>iwctl</code> connects, the same as on the ISO (2.3), and remembers the network. dhcpcd gives it an address.</p>
 <p><code>wpa_supplicant</code> works too, for those who know it: <code>mag install wpa_supplicant</code>.</p>
 <h2 id="s6-9">6.9 Mounting and disks</h2>
 <pre>mount /dev/sdb1 /mnt/usb
 mount -t vfat -o ro /dev/sdb1 /mnt/usb
 umount /mnt/usb</pre>
 <p><code>mount</code> and <code>umount</code> are busybox's; <code>lsblk</code>, <code>blkid</code>, <code>sfdisk</code> and <code>cfdisk</code> are packages of their own, <code>mkfs.ext4</code> and <code>fsck.ext4</code> are e2fsprogs', <code>mkfs.fat</code> is dosfstools', <code>zpool</code> and <code>zfs</code> are <code>zfs</code>.</p>
-<p>On a ZFS root, <code>/etc/rc</code> runs <code>zfs mount -a</code> right after <code>mount -a</code>, which mounts <code>rpool/home</code> and <code>rpool/var</code>; the root itself was mounted by the initramfs.</p>
+<p>On a ZFS root, the boot runs <code>zfs mount -a</code> right after <code>mount -a</code>, which mounts <code>rpool/home</code> and <code>rpool/var</code>; the root itself was mounted by the initramfs.</p>
 <h2 id="s6-10">6.10 Kernel settings</h2>
-<p><code>/etc/rc</code> loads every <code>/etc/sysctl.d/*.conf</code> and <code>/etc/sysctl.conf</code> at boot. The base ships <code>/etc/sysctl.d/10-chamesle.conf</code>: kernel addresses and <code>dmesg</code> are for root only (<code>doas dmesg</code>), a process may <code>ptrace</code> only its own children, users get no BPF, links and files in sticky directories like <code>/tmp</code> are protected, setuid programs leave no core dumps, and the network takes no redirects or source routes and filters spoofed addresses. To change one, put it in a file of your own that sorts later, <code>/etc/sysctl.d/90-local.conf</code>:</p>
+<p>The boot loads every <code>/etc/sysctl.d/*.conf</code> and <code>/etc/sysctl.conf</code> at boot. The base ships <code>/etc/sysctl.d/10-chamesle.conf</code>: kernel addresses and <code>dmesg</code> are for root only (<code>doas dmesg</code>), a process may <code>ptrace</code> only its own children, users get no BPF, links and files in sticky directories like <code>/tmp</code> are protected, setuid programs leave no core dumps, and the network takes no redirects or source routes and filters spoofed addresses. To change one, put it in a file of your own that sorts later, <code>/etc/sysctl.d/90-local.conf</code>:</p>
 <pre>kernel.dmesg_restrict = 0</pre>
 <p><code>sysctl -a</code> lists them all, <code>sysctl -w name=value</code> changes one until the next boot.</p>
 <hr>

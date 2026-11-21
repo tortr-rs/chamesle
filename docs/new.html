@@ -40,6 +40,17 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="dinit">November 21, 2026, late: dinit</h2>
+<p>Winchester is gone. The init is <a href="handbook-base.html#s6-1">dinit</a> now, from chamesle-base r18. It keeps
+the services running and brings back the ones that crash, and turning one on is one command:</p>
+<pre>dinitctl enable NetworkManager
+dinitctl disable dhcpcd
+dinitctl list</pre>
+<p>No reinstall. <code>mag update &amp;&amp; mag upgrade</code> and a reboot move you over: the services of your old
+<code>init.conf</code> get enabled in dinit and the host name goes to <code>/etc/hostname</code>. The base has
+services for dbus, elogind, gdm, NetworkManager, iwd and wpa_supplicant ready, so GNOME is
+<code>dinitctl enable gdm</code> away. New ISOs are on the release.</p>
+
 <h2 id="mag-0-4">November 21, 2026, at night: mag 0.4 builds from CRUX, Void and Exherbo</h2>
 <p>Binary packages stay the way in, but some things aren't in any repo. mag 0.4 can now build them from the source
 trees of three other systems. Add a line to <code>/etc/mag/repos</code>, run <code>mag update</code>, and

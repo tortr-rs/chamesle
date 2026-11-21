@@ -82,7 +82,7 @@ exec wmaker</pre>
 <p>The first start makes <code>~/GNUstep</code> with Window Maker's settings. The right button on the desktop opens the menu, with programs, workspaces and Exit. The dock is in the top right corner and the clip, which switches workspaces, in the top left. Drag a program's icon to the dock to keep it there. <code>WPrefs</code> changes the rest: focus, themes, keys. The menu is <code>~/GNUstep/Defaults/WMRootMenu</code>.</p>
 <h2 id="s10-6">10.6 Firefox</h2>
 <pre>mag install firefox</pre>
-<p><code>firefox-esr</code> is the long-term one. Firefox and many other programs want a D-Bus session; with <code>dbus</code> and <code>dbus-x11</code> installed and <code>dbus</code> in <code>boot-services</code> (6.8), start the window manager inside one:</p>
+<p><code>firefox-esr</code> is the long-term one. Firefox and many other programs want a D-Bus session; with <code>dbus</code> and <code>dbus-x11</code> installed and <code>dbus</code> enabled (6.2), start the window manager inside one:</p>
 <pre>exec dbus-launch --exit-with-session wmaker</pre>
 <h2 id="s10-7">10.7 When it fails</h2>
 <p>X writes <code>~/.local/share/xorg/Xorg.0.log</code>; <code>grep EE</code> in it shows the errors.</p>

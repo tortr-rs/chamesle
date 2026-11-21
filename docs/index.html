@@ -42,7 +42,7 @@
 
 <p>Chamesle is a small Linux distribution on musl, installed by hand. Nothing is compiled: the package manager,
 <code>mag</code>, installs binary packages, and <code>chamesle-bootstrap</code> puts the base on a disk the way
-debootstrap does. The init is Winchester, the coreutils are rifle, the shell is mksh. It boots to a text login, and it
+debootstrap does. The init is dinit, the coreutils are rifle, the shell is mksh. It boots to a text login, and it
 runs on a new laptop as well as on a Pentium 4 with 256 MB of memory.</p>
 
 <figure class="shot"><a href="img/wmaker.png"><img src="img/wmaker.png" width="720" height="405" alt="Window Maker on Chamesle with st, fastfetch and Dillo"></a>
@@ -55,6 +55,9 @@ runs on a new laptop as well as on a Pentium 4 with 256 MB of memory.</p>
 <h2 id="news">News</h2>
 
 <dl class="news">
+<dt>2026-11-21</dt>
+<dd>The init is <a href="new.html#dinit">dinit</a> now. <code>mag update &amp;&amp; mag upgrade</code>, reboot, done.
+<code>dinitctl enable gdm</code> for GNOME.</dd>
 <dt>2026-11-21</dt>
 <dd>mag 0.4 builds what no repo has from <a href="handbook-mag.html#s4-6">CRUX, Void and Exherbo</a>, and
 chamesle-base r17 fixes <code>gzip</code>. <code>mag update &amp;&amp; mag upgrade</code> brings both. The
@@ -86,7 +89,7 @@ own. The <a href="new.html">news page</a> has the history of the old releases.</
 <tr><td><a href="https://github.com/tortr-rs/mag">mag</a></td><td>the package manager, binary packages only, one C file. Checks every package against its signature</td></tr>
 <tr><td>rifle</td><td>the coreutils, one C file. 113 tools, more than 1700 test cases against GNU's</td></tr>
 <tr><td>mksh</td><td>the login shell</td></tr>
-<tr><td>Winchester</td><td>the init, a shell script in the FreeBSD style, set up in <code>/etc/init.conf</code></td></tr>
+<tr><td>dinit</td><td>the init, services in <code>/etc/dinit.d</code>, turned on with <code>dinitctl enable</code></td></tr>
 <tr><td>limine</td><td>the boot loader</td></tr>
 </table>
 
