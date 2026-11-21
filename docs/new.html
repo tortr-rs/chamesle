@@ -56,6 +56,14 @@ this. SPAS and hoard are retired.</p>
 entry is no longer written by hand. The base has <code>doas</code> and <code>su</code> works for users. The
 <a href="handbook-desktop.html">handbook</a> has a chapter on X with Window Maker and Firefox, and one on installing next
 to another system. The ISOs are new.</p>
+<p>And in the evening, the first install on real hardware, a ThinkPad T480 next to its Gentoo, found the worst bug yet:
+wireless never worked. A service script is named like its daemon, <code>iwd</code> or <code>NetworkManager</code>, and
+looked for the daemon by name, found itself, said "already running" and started nothing. Fixed in
+<code>rc.subr</code>. There is a <code>wpa_supplicant</code> service for NetworkManager now, and
+<code>chamesle-base</code> r15 hardens the kernel: <code>dmesg</code> and kernel addresses are root's, ptrace only
+reaches your own children, no BPF for users, the usual protections for links in <code>/tmp</code>, and no ICMP
+redirects. It is all in <code>/etc/sysctl.d/10-chamesle.conf</code> and <a href="handbook-base.html">handbook
+6.10</a>. <code>mag update &amp;&amp; mag upgrade</code> brings it.</p>
 <h2 id="2026-11-16">November 16, 2026: ebuilds, and a name for the init</h2>
 <p>Packages will come from Gentoo's ebuilds, run by <a href="https://spas.chamesle.org/">SPAS</a>, instead of pkgsrc and mag. mag could read pkgsrc, but
 every package that built needed another fix, and we'd rather stand on something that already builds. SPAS now runs on
