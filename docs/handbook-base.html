@@ -110,8 +110,11 @@ shutdown -p +10 back in ten minutes</pre>
 <p>The login shell is mksh and <code>/etc/profile</code> is read by login shells. For a prompt and aliases make <code>~/.mkshrc</code> and set <code>ENV=$HOME/.mkshrc</code> in <code>/etc/profile</code>.</p>
 <h2 id="s6-5">6.5 Users</h2>
 <pre>adduser alice
-adduser alice wheel</pre>
-<p><code>adduser</code> makes the account, the group and the home, and asks for the password; <code>passwd alice</code> changes it. <code>deluser alice</code> takes the account away. For <code>doas</code> or <code>sudo</code>, <code>mag install</code> them and give <code>wheel</code> the right in their file.</p>
+adduser alice wheel
+adduser alice video
+adduser alice input</pre>
+<p><code>adduser</code> makes the account, the group and the home, and asks for the password; <code>passwd alice</code> changes it. <code>deluser alice</code> takes the account away.</p>
+<p><code>wheel</code> may use <code>doas</code>, which is in the base with <code>permit persist :wheel</code> in <code>/etc/doas.d/wheel.conf</code>. <code>video</code> opens <code>/dev/dri</code>, the graphics, and <code>input</code> the keyboard and mouse under <code>/dev/input</code>. There is no logind to hand them out, so whoever runs X or a Wayland compositor needs both, or Xorg stops with <code>open /dev/dri/card0: Permission denied</code> and <code>no screens found</code>. Groups count from the next login.</p>
 <h2 id="s6-6">6.6 udev and modules</h2>
 <p>eudev is the udev. <code>udevd</code> gives devices their nodes in <code>/dev</code> and loads the modules the hardware needs.</p>
 <p>kmod provides <code>modprobe</code>, <code>insmod</code>, <code>rmmod</code>, <code>lsmod</code>, <code>modinfo</code> and <code>depmod</code>. A kernel's modules are in <code>/lib/modules/VERSION</code>. To load one by hand: <code>modprobe name</code>. To load one at every boot, put its name in <code>modules</code> of <code>/etc/init.conf</code>. To keep one from loading, put <code>blacklist name</code> in a file in <code>/etc/modprobe.d/</code>.</p>
