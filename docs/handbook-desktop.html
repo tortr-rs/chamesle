@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X and a window manager - Chamesle</title>
+<meta name="description" content="Any other window manager or desktop in the repos goes the same way; only the line in ~/.xinitrc changes.">
+<link rel="canonical" href="https://chamesle.org/handbook-desktop.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="X and a window manager - Chamesle">
+<meta property="og:description" content="Any other window manager or desktop in the repos goes the same way; only the line in ~/.xinitrc changes.">
+<meta property="og:url" content="https://chamesle.org/handbook-desktop.html">
+<link rel="stylesheet" href="style.css?19">
+<link rel="icon" href="img/logo.png">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./"><img src="img/banner-dark.png" alt="Chamesle Linux" width="223" height="56"></a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Download</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-maintaining.html">&larr; Maintaining</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
+<h2>10. X and a window manager</h2>
+<h2 id="s10-1">10.1 What to install</h2>
+<pre>mag install xorg-server xinit xf86-input-libinput mesa-dri-gallium font-dejavu windowmaker st</pre>
+<table>
+<tr><th>package</th><th>for</th></tr>
+<tr><td><code>xorg-server</code></td><td>X itself, with the <code>modesetting</code> driver, which drives Intel, AMD, NVIDIA and virtual graphics through the kernel</td></tr>
+<tr><td><code>xinit</code></td><td><code>startx</code></td></tr>
+<tr><td><code>xf86-input-libinput</code></td><td>keyboard, mouse and touchpad</td></tr>
+<tr><td><code>mesa-dri-gallium</code></td><td>OpenGL</td></tr>
+<tr><td><code>font-dejavu</code></td><td>a font; X programs show empty boxes without one</td></tr>
+<tr><td><code>windowmaker</code></td><td>the window manager, and <code>WPrefs</code> for its settings</td></tr>
+<tr><td><code>st</code></td><td>a terminal; <code>xterm</code> is another</td></tr>
+</table>
+<p>Any other window manager or desktop in the repos goes the same way; only the line in <code>~/.xinitrc</code> changes.</p>
+<h2 id="s10-2">10.2 Firmware for the graphics</h2>
+<p>The kernel's graphics drivers load firmware for most cards. Install the one for yours and reboot:</p>
+<table>
+<tr><th>graphics</th><th>firmware</th><th>Vulkan</th></tr>
+<tr><td>Intel, up to 14th generation</td><td><code>linux-firmware-i915</code></td><td><code>mesa-vulkan-intel</code></td></tr>
+<tr><td>Intel Arc, Lunar Lake and newer</td><td><code>linux-firmware-xe</code></td><td><code>mesa-vulkan-intel</code></td></tr>
+<tr><td>AMD</td><td><code>linux-firmware-amdgpu</code>, <code>linux-firmware-radeon</code> for older cards</td><td><code>mesa-vulkan-ati</code></td></tr>
+<tr><td>NVIDIA</td><td><code>linux-firmware-nvidia</code></td><td><code>mesa-vulkan-nouveau</code></td></tr>
+</table>
+<p>NVIDIA's own driver is built for glibc and is not in the repos. The open one, nouveau, runs every card; from the GTX 16 and RTX 20 on, the card's own firmware sets the clocks and it is fast, with Vulkan from NVK in <code>mesa-vulkan-nouveau</code>. On older NVIDIA cards it stays slow. <code>lspci</code> says which graphics a machine has.</p>
+<h2 id="s10-3">10.3 Groups</h2>
+<p>There is no logind to hand the screen and the input devices to whoever logs in. X opens them as the user, so the user needs the <code>video</code> and <code>input</code> groups (6.5):</p>
+<pre>adduser alice video
+adduser alice input</pre>
+<p>Log out and in again after.</p>
+<h2 id="s10-4">10.4 startx</h2>
+<p><code>startx</code> runs <code>~/.xinitrc</code>, as the user, from a text login:</p>
+<pre>echo &#x27;exec wmaker&#x27; &gt; ~/.xinitrc
+startx</pre>
+<p>X runs until <code>wmaker</code> ends: Exit in its menu. To start X at every login on tty1, at the end of <code>~/.profile</code>:</p>
+<pre>[ &quot;$(tty)&quot; = /dev/tty1 ] &amp;&amp; exec startx</pre>
+<p>Lines in <code>.xinitrc</code> before the <code>exec</code> run first, which is the place for the keyboard layout and the screen size:</p>
+<pre>setxkbmap fr
+xrandr --output eDP-1 --mode 1920x1080
+exec wmaker</pre>
+<p><code>mag install setxkbmap xrandr</code> for those; <code>xrandr</code> alone lists the outputs and their modes.</p>
+<h2 id="s10-5">10.5 Window Maker</h2>
+<p>The first start makes <code>~/GNUstep</code> with Window Maker's settings. The right button on the desktop opens the menu, with programs, workspaces and Exit. The dock is in the top right corner and the clip, which switches workspaces, in the top left. Drag a program's icon to the dock to keep it there. <code>WPrefs</code> changes the rest: focus, themes, keys. The menu is <code>~/GNUstep/Defaults/WMRootMenu</code>.</p>
+<h2 id="s10-6">10.6 Firefox</h2>
+<pre>mag install firefox</pre>
+<p><code>firefox-esr</code> is the long-term one. Firefox and many other programs want a D-Bus session; with <code>dbus</code> and <code>dbus-x11</code> installed and <code>dbus</code> in <code>boot-services</code> (6.8), start the window manager inside one:</p>
+<pre>exec dbus-launch --exit-with-session wmaker</pre>
+<h2 id="s10-7">10.7 When it fails</h2>
+<p>X writes <code>~/.local/share/xorg/Xorg.0.log</code>; <code>grep EE</code> in it shows the errors.</p>
+<table>
+<tr><th>what you see</th><th>why, and what to do</th></tr>
+<tr><td><code>open /dev/dri/card0: Permission denied</code>, then <code>no screens found</code></td><td>the user is not in <code>video</code> (10.3)</td></tr>
+<tr><td><code>no screens found</code> with no permission error</td><td>no graphics driver came up; check <code>ls /dev/dri</code>, and the firmware (10.2)</td></tr>
+<tr><td>no keyboard or mouse in X</td><td><code>xf86-input-libinput</code> is not installed, or the user is not in <code>input</code></td></tr>
+<tr><td>X starts and ends at once</td><td><code>~/.xinitrc</code> is missing, or names a program that is not installed</td></tr>
+<tr><td>boxes in place of letters</td><td>no font, <code>font-dejavu</code></td></tr>
+</table>
+<hr>
+<p><a href="handbook-maintaining.html">&larr; Maintaining</a> | <a href="docs.html">Contents</a> | <a href="handbook-files.html">File reference &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-21 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>

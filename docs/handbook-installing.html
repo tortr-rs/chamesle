@@ -110,6 +110,17 @@ tmpfs           /tmp   tmpfs  nosuid,nodev    0 0</pre>
 <pre>chamesle-chroot /mnt passwd root</pre>
 <p>The hash goes into <code>/etc/shadow</code>. The login shell of root is mksh.</p>
 <h2 id="s3-7">3.7 The boot entry</h2>
+<pre>chamesle-boot /mnt</pre>
+<p>It looks at what is mounted on <code>/mnt</code> and <code>/mnt/boot</code> and</p>
+<ul>
+<li>installs <code>limine</code> into the new root, so its boot files and its <code>limine</code> are the same version</li>
+<li>for a root on ZFS, installs <code>zfs</code> and <code>zfs-lts</code> and adds <code>zfs</code> to the initramfs (7.5)</li>
+<li>writes <code>/mnt/boot/limine.conf</code> with an entry for every kernel in <code>/mnt/boot</code>, the root by UUID, or by dataset on ZFS</li>
+<li>copies <code>BOOTX64.EFI</code> to <code>EFI/BOOT/</code> on the boot partition, for UEFI</li>
+<li>runs <code>limine bios-install</code> on the disk, for BIOS; on a GPT disk only when it has a BIOS boot partition, else it says the disk boots by UEFI only</li>
+</ul>
+<p>An old <code>limine.conf</code> is kept as <code>limine.conf.old</code>. If <code>/boot</code> is not FAT, limine cannot read it; chamesle-boot then writes nothing and prints an entry for the GRUB of the system already on the machine (3.11).</p>
+<p>What it does by hand follows; skip to 3.8 if it said nothing went wrong.</p>
 <pre>ls /mnt/boot
 System.map-6.18.64-0-lts  config-6.18.64-0-lts  initramfs-lts  vmlinuz-lts</pre>
 <p>The names stay the same when the kernel is updated, so <code>limine.conf</code> is written once. <code>/mnt/boot/limine.conf</code>, with the UUID of the root partition:</p>
@@ -119,16 +130,16 @@ System.map-6.18.64-0-lts  config-6.18.64-0-lts  initramfs-lts  vmlinuz-lts</pre>
     protocol: linux
     path: boot():/vmlinuz-lts
     module_path: boot():/initramfs-lts
-    cmdline: root=UUID=ROOT-UUID modules=sd-mod,usb-storage,ext4 rootfstype=ext4 quiet</pre>
+    cmdline: root=UUID=ROOT-UUID modules=sd-mod,usb-storage,nvme,ext4 rootfstype=ext4 quiet</pre>
 <p><code>boot()</code> is the partition <code>limine.conf</code> is on, which is <code>/boot</code>. The initramfs finds the root, loads the modules on the command line and starts <code>/sbin/init</code>. Take <code>quiet</code> out to see the kernel's messages. For a serial console add <code>console=ttyS0,115200</code>.</p>
 <p>A root on ZFS names the dataset; the initramfs needs the zfs module, which is section 7.5:</p>
 <pre>    cmdline: root=ZFS=rpool/root rootfstype=zfs quiet</pre>
-<p>Install limine. <code>limine</code> is a package; install it into the new root, or use the one of the live system:</p>
+<p>Install limine into the new root, and use its files, not the ones of the live system; the two can differ in version, and limine's BIOS stage only works with a <code>limine-bios.sys</code> of its own version:</p>
 <pre>chamesle-chroot /mnt mag install limine</pre>
 <h3 id="bios">BIOS</h3>
 <pre>cp /mnt/usr/share/limine/limine-bios.sys /mnt/boot/
-limine bios-install /dev/sda</pre>
-<p><code>limine bios-install</code> writes the loader to the start of the disk and into the BIOS boot partition. <code>limine-bios.sys</code> on the FAT partition is the part it loads.</p>
+chamesle-chroot /mnt limine bios-install /dev/sda</pre>
+<p><code>limine bios-install</code> writes the loader to the start of the disk and into the BIOS boot partition, which a GPT disk needs (3.1). <code>limine-bios.sys</code> on the FAT partition is the part it loads.</p>
 <h3 id="uefi">UEFI</h3>
 <pre>mkdir -p /mnt/boot/EFI/BOOT
 cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/</pre>
@@ -143,11 +154,30 @@ reboot</pre>
 <h2 id="s3-9">3.9 What to install next</h2>
 <pre>mag install vim htop tmux
 mag search irc</pre>
-<p>Chapter 4 has the rest.</p>
+<p>Chapter 4 has the rest, chapter 10 a graphical desktop.</p>
 <h2 id="s3-10">3.10 32-bit machines</h2>
 <p>On a 32-bit PC (Pentium 4, Athlon XP and the like) boot the ISO on another machine, or install from any Linux there (2.2), and give the architecture:</p>
 <pre>chamesle-bootstrap -a x86 /mnt</pre>
 <p>The x86 repository has the same packages, built for i686 with SSE2. <code>-a x86</code> is written to <code>/mnt/etc/mag/arch</code>, and mag keeps to it from then on. <code>rifle</code> is only built for x86_64, so on x86 busybox gives the coreutils. limine boots 32-bit BIOS machines as well; the entry is the same.</p>
+<h2 id="s3-11">3.11 Next to another system</h2>
+<p>To keep a Linux that is already on the disk, Chamesle goes on a partition of its own and the other system's GRUB boots both. The other system is not changed, except for one GRUB entry. Make a backup first; shrinking a file system that is in use is not possible, so it is done from the ISO.</p>
+<p>Say the disk has an EFI partition <code>nvme0n1p1</code> and the other system's ext4 root <code>nvme0n1p2</code>, 238G with 100G free. Shrink it to 170G and make the file system fit its partition again:</p>
+<pre>e2fsck -f /dev/nvme0n1p2
+resize2fs /dev/nvme0n1p2 170G
+cfdisk /dev/nvme0n1</pre>
+<p>In cfdisk resize <code>nvme0n1p2</code> to 171G (a little more than the file system, never less), make <code>nvme0n1p3</code> in the free space, write and quit. Then</p>
+<pre>resize2fs /dev/nvme0n1p2
+mkfs.ext4 /dev/nvme0n1p3
+mount /dev/nvme0n1p3 /mnt</pre>
+<p>Leave the EFI partition alone and do not mount anything on <code>/mnt/boot</code>: the kernel stays in <code>/boot</code> on the ext4 root, where GRUB reads it. Go on with 3.3 to 3.6. <code>chamesle-boot /mnt</code> then prints a GRUB entry; boot the other system, put the entry at the end of its <code>/etc/grub.d/40_custom</code> and run <code>grub-mkconfig -o /boot/grub/grub.cfg</code>.</p>
+<p>To use the same home in both, mount the other root in Chamesle and bind its <code>/home</code>, in <code>/etc/fstab</code>:</p>
+<pre>UUID=OTHER-ROOT-UUID /old ext4 defaults 0 2
+/old/home /home none bind 0 0</pre>
+<p>and make your user with the same name, user number and group number as there (<code>id</code> on the other system says them):</p>
+<pre>mkdir /old
+addgroup -g 1000 alice
+adduser -H -u 1000 -G alice alice</pre>
+<p><code>-H</code> makes no home, since the other system's is used: the files, the dotfiles and the settings of the programs are the same in both systems.</p>
 <hr>
 <p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">mag &rarr;</a></p>
 </main>
