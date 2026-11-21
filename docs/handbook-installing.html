@@ -89,11 +89,11 @@ mount /dev/sda2 /mnt/boot</pre>
 </table>
 <p>Packages after the target go in too. A ThinkPad with Intel wireless and graphics, with an editor:</p>
 <pre>chamesle-bootstrap -n t480 -f linux-firmware-intel /mnt vim</pre>
-<p>What <code>chamesle-base</code> brings: dinit and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs and curl.</p>
+<p>What <code>chamesle-base</code> brings: dinit and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, bash, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs, curl and <code>arch-chroot</code>.</p>
 <h2 id="s3-4">3.4 Working inside the new root</h2>
-<pre>chamesle-chroot /mnt
-chamesle-chroot /mnt passwd root</pre>
-<p>It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code> and a tmpfs on <code>run</code> under the directory, copies <code>/etc/resolv.conf</code> into it, runs <code>chroot</code> with an empty environment (<code>HOME=/root</code>, <code>TERM</code>, <code>PATH</code>) and takes the mounts away again when the command ends. Without a command it starts <code>/bin/mksh -l</code>. Inside, <code>mag install name</code> works as on the finished system.</p>
+<pre>arch-chroot /mnt
+arch-chroot /mnt passwd root</pre>
+<p><code>arch-chroot</code> is Arch's, the same script. It mounts <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>dev/pts</code>, <code>dev/shm</code>, <code>run</code> and <code>tmp</code> under the directory, puts the live system's <code>/etc/resolv.conf</code> in it, and takes the mounts away again when the command ends. Without a command it starts bash. Inside, <code>mag install name</code> works as on the finished system.</p>
 <h2 id="s3-5">3.5 fstab</h2>
 <p>If you used chamesle-disk the file is written. Look at it: the boot partition by UUID on <code>/boot</code>, then <code>proc</code>, <code>sysfs</code> and <code>tmpfs</code>, and nothing for the ZFS datasets, because ZFS mounts them itself.</p>
 <p>By hand, <code>blkid</code> prints the UUIDs:</p>
@@ -107,7 +107,7 @@ tmpfs           /tmp   tmpfs  nosuid,nodev    0 0</pre>
 <p>A root on ZFS gets no root line.</p>
 <h2 id="s3-6">3.6 Host name and password</h2>
 <p>The host name is in <code>/mnt/etc/hostname</code>, from <code>-n</code>. Set the root password:</p>
-<pre>chamesle-chroot /mnt passwd root</pre>
+<pre>arch-chroot /mnt passwd root</pre>
 <p>The hash goes into <code>/etc/shadow</code>. The login shell of root is mksh.</p>
 <h2 id="s3-7">3.7 The boot entry</h2>
 <pre>chamesle-boot /mnt</pre>
@@ -135,10 +135,10 @@ System.map-6.18.64-0-lts  config-6.18.64-0-lts  initramfs-lts  vmlinuz-lts</pre>
 <p>A root on ZFS names the dataset; the initramfs needs the zfs module, which is section 7.5:</p>
 <pre>    cmdline: root=ZFS=rpool/root rootfstype=zfs quiet</pre>
 <p>Install limine into the new root, and use its files, not the ones of the live system; the two can differ in version, and limine's BIOS stage only works with a <code>limine-bios.sys</code> of its own version:</p>
-<pre>chamesle-chroot /mnt mag install limine</pre>
+<pre>arch-chroot /mnt mag install limine</pre>
 <h3 id="bios">BIOS</h3>
 <pre>cp /mnt/usr/share/limine/limine-bios.sys /mnt/boot/
-chamesle-chroot /mnt limine bios-install /dev/sda</pre>
+arch-chroot /mnt limine bios-install /dev/sda</pre>
 <p><code>limine bios-install</code> writes the loader to the start of the disk and into the BIOS boot partition, which a GPT disk needs (3.1). <code>limine-bios.sys</code> on the FAT partition is the part it loads.</p>
 <h3 id="uefi">UEFI</h3>
 <pre>mkdir -p /mnt/boot/EFI/BOOT

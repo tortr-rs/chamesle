@@ -50,7 +50,7 @@
 </ol>
 <p><code>single</code> on the kernel command line starts a root shell and nothing else; the boot goes on when you leave it. If the boot fails, dinit starts a root shell too.</p>
 <h2 id="s6-2">6.2 Services</h2>
-<p>A service is a file in <code>/etc/dinit.d</code> named after it. The base set has <code>dbus</code>, <code>dhcpcd</code>, <code>elogind</code>, <code>gdm</code>, <code>iwd</code>, <code>NetworkManager</code>, <code>wpa_supplicant</code> and the logins <code>tty1</code> to <code>tty6</code> and <code>ttyS0</code>, for when those packages are installed. <code>dinitctl</code> does the rest:</p>
+<p>A service is a file in <code>/etc/dinit.d</code> named after it. The base set has one for every common daemon, ready for when its package is installed: <code>dbus</code>, <code>elogind</code>, <code>seatd</code>, <code>dhcpcd</code>, <code>iwd</code>, <code>wpa_supplicant</code>, <code>NetworkManager</code>, <code>connmand</code>, <code>lightdm</code>, <code>sddm</code>, <code>gdm</code>, <code>xdm</code>, <code>greetd</code>, <code>sshd</code>, <code>chronyd</code>, <code>ntpd</code>, <code>crond</code>, <code>syslogd</code>, <code>klogd</code>, <code>acpid</code>, <code>cupsd</code>, <code>bluetoothd</code>, <code>avahi-daemon</code>, and the logins <code>tty1</code> to <code>tty6</code> and <code>ttyS0</code>. <code>dinitctl</code> does the rest:</p>
 <pre>dinitctl list                    every service that is loaded, and its state
 dinitctl start iwd
 dinitctl stop iwd
@@ -58,7 +58,7 @@ dinitctl restart dhcpcd
 dinitctl status dbus
 dinitctl enable NetworkManager   start it now and at every boot
 dinitctl disable dhcpcd          not at boot any more</pre>
-<p><code>enable</code> and <code>disable</code> make and remove a link in <code>/etc/dinit.d/boot.d</code>; that directory is the list of what starts at boot. A fresh install has <code>dhcpcd</code> and <code>tty1</code> to <code>tty6</code> in it. <code>service NAME start</code> and the rest still work and run <code>dinitctl</code>.</p>
+<p><code>enable</code> and <code>disable</code> make and remove a link in <code>/etc/dinit.d/boot.d</code>; that directory is the list of what starts at boot. A fresh install has <code>dhcpcd</code> and <code>tty1</code> to <code>tty6</code> in it. As a user in <code>wheel</code>, <code>dinitctl</code> asks for your password through doas. Where dinit is not running, in <code>arch-chroot /mnt</code> for one, <code>enable</code> and <code>disable</code> still work. <code>service NAME start</code> and the rest still work and run <code>dinitctl</code>.</p>
 <p>A service whose process dies is started again, unless it dies over and over in a few seconds; then dinit gives up and <code>dinitctl list</code> shows it stopped. To add a service, write its file. A daemon that can stay in the foreground is a <code>process</code>:</p>
 <pre># /etc/dinit.d/chronyd
 type = process

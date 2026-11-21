@@ -68,7 +68,6 @@
 <table>
 <tr><th>path</th><th>what</th></tr>
 <tr><td><code>system/tools/chamesle-bootstrap</code></td><td>puts the base into a root with mag</td></tr>
-<tr><td><code>system/tools/chamesle-chroot</code></td><td>chroot with the pseudo file systems mounted</td></tr>
 <tr><td><code>system/tools/chamesle-boot</code></td><td>limine.conf and limine for the system in a directory</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
 <tr><td><code>system/tools/mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code></td><td>packages, signed indexes, Chamesle's own repo</td></tr>
@@ -84,7 +83,7 @@
 </table>
 <h2 id="s11-3">11.3 Commands in short</h2>
 <pre>chamesle-bootstrap [-a ARCH] [-n HOSTNAME] [-k KERNEL] [-f FIRMWARE] TARGET [PACKAGE]...
-chamesle-chroot DIR [COMMAND...]
+arch-chroot DIR [COMMAND...]
 chamesle-disk DISK
 chamesle-boot [DIR]
 mag [-nf] update|install|build|remove|upgrade|autoremove|list|info|search|files|owns|deps|rdeps|fetch
