@@ -205,3 +205,5 @@ main.editing { outline: 1px dashed #888; padding: 4px; }
 .side .sbox li { margin: 2px 0; }
 .side .ver { font-size: 15px; font-weight: bold; color: #2b2d33; }
 @media screen and (max-width: 700px) { .front { grid-template-columns: 1fr; } }
+.me { float: right; margin: 0 0 8px 16px; border: 1px solid #000000; }
+@media (max-width: 520px) { .me { float: none; display: block; margin: 0 0 8px 0; } }
