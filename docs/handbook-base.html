@@ -140,6 +140,10 @@ mount -t vfat -o ro /dev/sdb1 /mnt/usb
 umount /mnt/usb</pre>
 <p><code>mount</code> and <code>umount</code> are busybox's; <code>lsblk</code>, <code>blkid</code>, <code>sfdisk</code> and <code>cfdisk</code> are packages of their own, <code>mkfs.ext4</code> and <code>fsck.ext4</code> are e2fsprogs', <code>mkfs.fat</code> is dosfstools', <code>zpool</code> and <code>zfs</code> are <code>zfs</code>.</p>
 <p>On a ZFS root, <code>/etc/rc</code> runs <code>zfs mount -a</code> right after <code>mount -a</code>, which mounts <code>rpool/home</code> and <code>rpool/var</code>; the root itself was mounted by the initramfs.</p>
+<h2 id="s6-10">6.10 Kernel settings</h2>
+<p><code>/etc/rc</code> loads every <code>/etc/sysctl.d/*.conf</code> and <code>/etc/sysctl.conf</code> at boot. The base ships <code>/etc/sysctl.d/10-chamesle.conf</code>: kernel addresses and <code>dmesg</code> are for root only (<code>doas dmesg</code>), a process may <code>ptrace</code> only its own children, users get no BPF, links and files in sticky directories like <code>/tmp</code> are protected, setuid programs leave no core dumps, and the network takes no redirects or source routes and filters spoofed addresses. To change one, put it in a file of your own that sorts later, <code>/etc/sysctl.d/90-local.conf</code>:</p>
+<pre>kernel.dmesg_restrict = 0</pre>
+<p><code>sysctl -a</code> lists them all, <code>sysctl -w name=value</code> changes one until the next boot.</p>
 <hr>
 <p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
 </main>
