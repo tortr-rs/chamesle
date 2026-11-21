@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chamesle, a Linux distribution built from source</title>
-<meta name="description" content="Chamesle is a Linux distribution you install by hand and build from source, with its own coreutils and package manager.">
+<meta name="description" content="Chamesle is a small musl Linux distribution you install by hand, with its own init, coreutils and binary package manager.">
 <link rel="canonical" href="https://chamesle.org/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Chamesle, a Linux distribution built from source">
-<meta property="og:description" content="Chamesle is a Linux distribution you install by hand and build from source, with its own coreutils and package manager.">
+<meta property="og:description" content="Chamesle is a small musl Linux distribution you install by hand, with its own init, coreutils and binary package manager.">
 <meta property="og:url" content="https://chamesle.org/">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -40,22 +40,26 @@
 <h2 id="what">What is Chamesle</h2>
 
 
-<p>Chamesle is a Linux distribution built from source and installed by hand, like Gentoo or Linux From
-Scratch. The kernel is Linux. Nothing else in it is GNU. It boots to a text login, and the graphical stage starts X with <code>9wm</code>, a window manager like Plan 9's rio, with <code>9term</code>, <code>acme</code> and <code>sam</code>.</p>
+<p>Chamesle is a small Linux distribution on musl, installed by hand. Nothing is compiled: the package manager,
+<code>mag</code>, installs binary packages, and <code>chamesle-bootstrap</code> puts the base on a disk the way
+debootstrap does. The init is Winchester, the coreutils are rifle, the shell is mksh. It boots to a text login, and it
+runs on a new laptop as well as on a Pentium 4 with 256 MB of memory.</p>
 
 
 <h2 id="news">News</h2>
 
 <dl class="news">
+<dt>2026-11-21</dt>
+<dd>No more building. <code>mag</code> is now a binary package manager, one C file, and reads signed repos with
+about 28,000 packages for x86_64 and 32-bit x86. There is no stage any more: boot the <a href="download.html">ISO</a>,
+run <code>chamesle-bootstrap /mnt</code>, and write the fstab and the boot entry by hand. Chamesle's own packages are
+in its repo at <code>chamesle.org/repo</code>. The <a href="handbook-installing.html">handbook</a> is rewritten for it.</dd>
 <dt>2026-11-17</dt>
-<dd>Stages are out. The <a href="download.html">base stage</a> is the whole system in one tarball: unpack it,
-chroot, and let <code>hoard</code> build the rest. The graphical stage adds Xorg and starts <code>9wm</code> with
-<code>9term</code>, <code>acme</code> and <code>sam</code> on the first login. The <a href="handbook-installing.html">handbook</a>
-covers both.</dd>
+<dd>Stages are out: the whole system in one tarball, with <code>hoard</code> to build the rest. Replaced a day
+later.</dd>
 <dt>2026-11-14</dt>
 <dd>Chamesle starts over. The old Debian-style desktop distro is gone, with its desktops and the 0.8 release.
-The new one is written from scratch. The handbook has the install steps: partition, mount,
-<code>chamesle-bootstrap</code>, fstab and limine.</dd>
+The new one is written from scratch.</dd>
 <dt>2026-11-10</dt>
 <dd>The old Chamesle went on hold. X8664 became <a href="https://x22.chamesle.org/">X22</a> and got a site of its
 own. The <a href="new.html">news page</a> has the history of the old releases.</dd>
@@ -65,55 +69,36 @@ own. The <a href="new.html">news page</a> has the history of the old releases.</
 
 <table class="grid">
 <tr><th>part</th><th>what it is</th></tr>
-<tr><td>kernel</td><td>Linux 6.18 LTS, a prebuilt distribution kernel, boots on BIOS and UEFI</td></tr>
+<tr><td>kernel</td><td>Linux 6.18 LTS, prebuilt, boots on BIOS and UEFI</td></tr>
 <tr><td>musl</td><td>the C library</td></tr>
+<tr><td><a href="https://github.com/tortr-rs/mag">mag</a></td><td>the package manager, binary packages only, one C file. Checks every package against its signature</td></tr>
 <tr><td>rifle</td><td>the coreutils, one C file. 113 tools, more than 1700 test cases against GNU's</td></tr>
-<tr><td><a href="https://spas.chamesle.org/">SPAS</a></td><td>the package manager, its command is <code>hoard</code>. Builds from source, runs Gentoo's ebuilds</td></tr>
-<tr><td>ebuilds</td><td>the package repo, Gentoo's, on the musl profile</td></tr>
-<tr><td>mksh</td><td>the shell, also <code>/bin/sh</code></td></tr>
+<tr><td>mksh</td><td>the login shell</td></tr>
 <tr><td>Winchester</td><td>the init, a shell script in the FreeBSD style, set up in <code>/etc/init.conf</code></td></tr>
 <tr><td>limine</td><td>the boot loader</td></tr>
-<tr><td>sam</td><td>the editor, from Plan 9 (<code>sam -d</code> is <code>$EDITOR</code>)</td></tr>
 </table>
 
 <h2 id="install">Install</h2>
 
-<p>Boot the <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">ISO</a> or unpack a <a href="download.html">stage</a>, and install by hand from the
-<a href="docs.html">handbook</a> (chapter 3). Or, from any running Linux, mount a disk and run the bootstrap into it.</p>
+<p>Boot the <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">ISO</a> and install by hand from the
+<a href="docs.html">handbook</a> (chapter 3): partition, mount, then</p>
 
-<pre>chamesle-disk /dev/sda
-chamesle-bootstrap -n yourhostname /mnt</pre>
+<pre>chamesle-bootstrap -n yourhostname /mnt</pre>
 
-<p>The commands, one after the other, are on the <a href="download.html">install page</a>.</p>
-
-<h2 id="plan">Plan</h2>
-
-<ol>
-<li>rifle, the coreutils. Done.</li>
-<li>Packages: SPAS running Gentoo's ebuilds on musl. Under way.</li>
-<li>The full image, a root built entirely with SPAS.</li>
-<li>The handbook: every step of installing by hand, on BIOS and on UEFI.</li>
-<li>Publish the source.</li>
-</ol>
-
-<p>X22, our X server, is a separate project with
-<a href="https://x22.chamesle.org/">its own site</a>.</p>
+<p>and write the fstab, the password and <code>limine.conf</code>. For a 32-bit machine there is
+<a href="download.html">chamesle-x86.iso</a>.</p>
 
 <h2 id="questions">Questions</h2>
 
 <dl>
-<dt>Is there an ISO to download?</dt>
-<dd>Yes, <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">chamesle.iso</a>. Anything older with Chamesle's name on it is the old distro,
-not this system.</dd>
 <dt>Where is the code?</dt>
-<dd>There is no public source repo yet. The old Chamesle code is on
-<a href="https://github.com/tortr-rs/chamesle">GitHub</a>, and none of it is in the new system.
-<a href="source.html">Chamesle Source</a> is a side project with its own repo.</dd>
+<dd>On GitHub: <a href="https://github.com/tortr-rs/system">system</a> (init, tools, ISO, handbook),
+<a href="https://github.com/tortr-rs/mag">mag</a> and <a href="https://github.com/tortr-rs/rifle">rifle</a>.</dd>
+<dt>Where do the packages come from?</dt>
+<dd>Chamesle's own (the base, mag, rifle) from its repo. Everything else, the kernel included, from a large musl
+binary repo that mag reads as it is. <a href="packages.html">Packages</a> has more.</dd>
 <dt>What license?</dt>
-<dd>Not decided. The packages SPAS builds keep their own licenses.</dd>
-<dt>No GNU at all?</dt>
-<dd>Nothing GNU is installed. A few GNU build tools (gmake, bison, flex, m4) are used while some packages are
-built, and they are not part of the system.</dd>
+<dd>Not decided. The packages keep their own licenses.</dd>
 <dt>Why start over?</dt>
 <dd>The old Chamesle was mostly other people's software with our paint on it. <a href="about.html">About</a> has
 more.</dd>
@@ -126,15 +111,14 @@ more.</dd>
 
 <div class="side">
 <div class="sbox">
-<h3>Latest stage</h3>
-<div><span class="ver">2026-11-17</span><br>musl, x86_64</div>
+<h3>Latest ISO</h3>
+<div><span class="ver">2026-11-21</span><br>x86_64 and x86</div>
 </div>
 <div class="sbox">
 <h3>Download</h3>
 <ul>
-<li><a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-20261117.tar.xz">Base stage</a> (988 MB)</li>
-<li><a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-graphical-20261117.tar.xz">Graphical stage</a> (1.5 GB)</li>
-<li><a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Live ISO</a></li>
+<li><a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">chamesle.iso</a> (x86_64)</li>
+<li><a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle-x86.iso">chamesle-x86.iso</a> (32-bit)</li>
 <li><a href="download.html">Checksums and more</a></li>
 </ul>
 </div>
@@ -143,14 +127,14 @@ more.</dd>
 <ul>
 <li><a href="docs.html">Handbook</a></li>
 <li><a href="handbook-installing.html">Installing</a></li>
-<li><a href="handbook-spas.html">SPAS and hoard</a></li>
+<li><a href="handbook-mag.html">mag</a></li>
 <li><a href="handbook-rifle.html">rifle</a></li>
 </ul>
 </div>
 <div class="sbox">
 <h3>Elsewhere</h3>
 <ul>
-<li><a href="https://spas.chamesle.org/">SPAS</a></li>
+<li><a href="https://github.com/tortr-rs/mag">mag</a></li>
 <li><a href="https://x22.chamesle.org/">X22</a></li>
 <li><a href="chat.html">Chat</a> (#chamesle, Libera)</li>
 <li><a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a></li>

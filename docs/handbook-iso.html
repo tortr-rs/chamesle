@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The live ISO - Chamesle</title>
-<meta name="description" content="The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, and has">
+<meta name="description" content="The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, logs in as">
 <link rel="canonical" href="https://chamesle.org/handbook-iso.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="The live ISO - Chamesle">
-<meta property="og:description" content="The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, and has">
+<meta property="og:description" content="The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, logs in as">
 <meta property="og:url" content="https://chamesle.org/handbook-iso.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,7 +32,7 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
@@ -40,17 +40,29 @@
 <p><a href="handbook-kernel.html">&larr; The kernel and firmware</a> | <a href="docs.html">Contents</a> | <a href="handbook-maintaining.html">Maintaining &rarr;</a></p>
 <h2>8. The live ISO</h2>
 <h2 id="s8-1">8.1 What it is</h2>
-<p>The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, and has mksh, vim, hoard with the Gentoo tree (<code>hoard search</code> and <code>hoard info</code> work before <code>hoard sync</code>), <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>, <code>chamesle-disk</code>, the disk tools (<code>cfdisk</code>, <code>sfdisk</code>, <code>mkfs.ext4</code>, <code>mkfs.fat</code>, <code>zpool</code>, <code>zfs</code>) and this handbook in <code>/usr/share/doc/chamesle/handbook.md</code>. It is where you do chapter 3 on a machine that has nothing on it.</p>
+<p>The ISO is a live system to work from. It boots on BIOS and UEFI machines with limine, from a disc or a stick, logs in as root on every tty and has</p>
+<ul>
+<li>mag, the keys and the repos, and <code>chamesle-bootstrap</code>, <code>chamesle-chroot</code>, <code>chamesle-disk</code></li>
+<li>the disk tools: <code>cfdisk</code>, <code>sfdisk</code>, <code>lsblk</code>, <code>blkid</code>, <code>mkfs.ext4</code>, <code>mkfs.fat</code>, <code>zpool</code>, <code>zfs</code>, <code>limine</code></li>
+<li>the network: <code>dhcpcd</code>, <code>iwd</code> with <code>iwctl</code>, <code>wpa_supplicant</code>, <code>curl</code></li>
+<li>the Intel wireless firmware, vim, less, and this handbook in <code>/usr/share/doc/chamesle/handbook.md</code></li>
+</ul>
+<p>It is where you do chapter 3. <code>chamesle.iso</code> is for x86_64, <code>chamesle-x86.iso</code> for 32-bit machines (BIOS only).</p>
 <h2 id="s8-2">8.2 How it boots</h2>
 <p><code>iso/init</code> looks through <code>/dev/sr*</code>, <code>/dev/sd*</code>, <code>/dev/nvme*n*p*</code>, <code>/dev/vd*</code> and <code>/dev/mmcblk*</code> until it finds one that mounts and has <code>LiveOS/rootfs.sfs</code>. It mounts that squashfs read-only, puts a tmpfs overlay over it, moves the medium and the squashfs to <code>/run/live/medium</code> and <code>/run/live/rootfs</code>, and runs <code>switch_root</code> into the result. Whatever you change in the live system is gone at shutdown.</p>
-<h2 id="s8-3">8.3 Trying it in qemu</h2>
+<h2 id="s8-3">8.3 Making it</h2>
+<pre>iso/mkiso -o chamesle.iso
+iso/mkiso -a x86 -o chamesle-x86.iso</pre>
+<p>as root, with mag in PATH, <code>xorriso</code>, <code>mksquashfs</code>, <code>zstd</code>, <code>bsdcpio</code> and limine on the host. mkiso installs <code>chamesle-base</code>, the kernel and what <code>iso/profile/packages</code> names into <code>work/rootfs</code> with mag, copies <code>iso/profile/overlay</code> over it, makes the initramfs and the squashfs and puts them on the ISO with limine.</p>
+<h2 id="s8-4">8.4 Trying it in qemu</h2>
 <p>BIOS:</p>
-<pre>qemu-system-x86_64 -cpu max -m 1G -cdrom chamesle.iso -boot d</pre>
+<pre>qemu-system-x86_64 -m 1G -cdrom chamesle.iso -boot d</pre>
 <p>UEFI, with the firmware of your qemu (<code>edk2-x86_64-code.fd</code>; the path differs between systems):</p>
-<pre>qemu-system-x86_64 -cpu max -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
+<pre>qemu-system-x86_64 -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
 <p>Add <code>-enable-kvm</code> for speed. To go through all of chapter 3 in a virtual machine, give it a disk:</p>
-<pre>qemu-img create -f qcow2 disk.qcow2 20G
-qemu-system-x86_64 -cpu max -m 2G -enable-kvm -cdrom chamesle.iso -drive file=disk.qcow2 -boot d -nic user</pre>
+<pre>qemu-img create -f qcow2 disk.qcow2 8G
+qemu-system-x86_64 -m 1G -enable-kvm -cdrom chamesle.iso -drive file=disk.qcow2 -boot d -nic user</pre>
+<p>A machine like an old Pentium 4 with 256 MB: <code>-cpu pentium3,+sse2 -m 256</code> and the x86 ISO.</p>
 <p>To write the ISO to a stick: <code>dd if=chamesle.iso of=/dev/sdX bs=4M conv=fsync</code>.</p>
 <hr>
 <p><a href="handbook-kernel.html">&larr; The kernel and firmware</a> | <a href="docs.html">Contents</a> | <a href="handbook-maintaining.html">Maintaining &rarr;</a></p>

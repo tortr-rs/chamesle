@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mag - Chamesle</title>
+<meta name="description" content="mag is the package manager. It installs binary packages from the repositories in /etc/mag/repos, checks every index">
+<link rel="canonical" href="https://chamesle.org/handbook-mag.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chamesle">
+<meta property="og:title" content="mag - Chamesle">
+<meta property="og:description" content="mag is the package manager. It installs binary packages from the repositories in /etc/mag/repos, checks every index">
+<meta property="og:url" content="https://chamesle.org/handbook-mag.html">
+<link rel="stylesheet" href="style.css?19">
+<link rel="icon" href="img/logo.png">
+</head>
+<body>
+
+<div id="page">
+
+<div id="top">
+<h1><a href="./"><img src="img/banner-dark.png" alt="Chamesle Linux" width="223" height="56"></a></h1>
+</div>
+
+<div id="nav">
+<a href="./">Home</a> |
+<a href="download.html">Download</a> |
+<b>Handbook</b> |
+<a href="packages.html">Packages</a> |
+<a href="new.html">News</a> |
+<a href="board.html">Board</a> |
+<a href="chat.html">Chat</a> |
+<a href="source.html">Source</a> |
+<a href="https://x22.chamesle.org/">X22</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
+<a href="about.html">About</a>
+</div>
+
+<main>
+<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+<h2>4. mag</h2>
+<p>mag is the package manager. It installs binary packages from the repositories in <code>/etc/mag/repos</code>, checks every index and every package against <code>/etc/mag/keys</code>, and keeps what it installed in <code>/var/lib/mag</code>. It is one C file and runs nothing but the download command.</p>
+<h2 id="s4-1">4.1 The commands</h2>
+<pre>mag update                 get the index of every repo
+mag install PKG...         install, with what they need
+mag remove PKG...          take packages off
+mag upgrade                install what the repos have a newer version of
+mag autoremove             remove what was only a dependency and is not needed now
+mag list                   what is installed
+mag info PKG               version, size, description, and whether it is installed
+mag search WORD            names and descriptions
+mag files PKG              the files a package put on the system
+mag owns PATH              which package a file came from
+mag deps PKG               what it needs; rdeps PKG for what needs it
+mag fetch PKG...           only download them</pre>
+<p><code>-n</code> says what would happen and does nothing, <code>-f</code> goes on when files clash or something still needs a package. <code>MAG_ROOT=/mnt mag ...</code> works on another root, which is what chamesle-bootstrap does.</p>
+<h2 id="s4-2">4.2 Installing and removing</h2>
+<pre>mag install vim
+mag -n install xorg-server      what would come with it
+mag remove vim</pre>
+<p>Before it unpacks anything, mag checks each file against what other packages own and stops if two packages want the same file. A file under <code>/etc</code> that you changed stays, and the new one is written next to it as <code>NAME.new</code>. Packages carry scripts that run after they are installed, and triggers that run when a directory they watch changes, like the one that makes the initramfs when a kernel is installed.</p>
+<p>A name can also be what a package provides: <code>mag install cmd:htop</code> installs the package that has the command.</p>
+<h2 id="s4-3">4.3 Where it keeps things</h2>
+<table>
+<tr><th>what</th><th>where</th></tr>
+<tr><td>the repositories</td><td><code>/etc/mag/repos</code>, one URL a line</td></tr>
+<tr><td>the keys</td><td><code>/etc/mag/keys</code></td></tr>
+<tr><td>the architecture</td><td><code>/etc/mag/arch</code></td></tr>
+<tr><td>installed packages</td><td><code>/var/lib/mag/NAME/</code>: <code>version</code>, <code>files</code>, <code>deps</code>, <code>explicit</code> and the scripts</td></tr>
+<tr><td>indexes and downloads</td><td><code>/var/cache/mag</code></td></tr>
+</table>
+<h2 id="s4-4">4.4 Repositories</h2>
+<pre>https://chamesle.org/repo
+https://dl-cdn.alpinelinux.org/alpine/v3.24/main
+https://dl-cdn.alpinelinux.org/alpine/v3.24/community</pre>
+<p>Each line is the URL above the directory of the architecture: mag adds <code>/x86_64/APKINDEX.tar.gz</code>. A repository you add needs its key in <code>/etc/mag/keys</code>. <code>mag update</code> after any change.</p>
+<h2 id="s4-5">4.5 Making a package</h2>
+<p><code>tools/mkapk</code> packs a directory, signs it and leaves its index entry; <code>tools/mkrepo</code> signs the index of a directory of them:</p>
+<pre>mkapk -k KEY -n hello -v 1.0 -a x86_64 -d &quot;says hello&quot; -D &quot;musl&quot; -o repo/x86_64 ./root
+mkrepo repo/x86_64 KEY</pre>
+<p>Put the public half of KEY in <code>/etc/mag/keys</code> and the repo's URL in <code>/etc/mag/repos</code>. <code>tools/mkpkgs</code> is how Chamesle's own repo is made.</p>
+<hr>
+<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+</main>
+
+<hr>
+<div id="foot">
+Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
+Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+<a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
+<a href="#" id="edit-link">Edit text</a><br>
+$Date: 2026-11-18 $
+</div>
+
+</div>
+
+<script src="edit.js"></script>
+</body>
+</html>

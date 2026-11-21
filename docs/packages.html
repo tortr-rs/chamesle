@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Packages - Chamesle</title>
-<meta name="description" content="Chamesle packages are Gentoo ebuilds, built from source with SPAS.">
+<meta name="description" content="Chamesle packages are signed binary packages, installed with mag.">
 <link rel="canonical" href="https://chamesle.org/packages.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Packages - Chamesle">
-<meta property="og:description" content="Chamesle packages are Gentoo ebuilds, built from source with hoard.">
+<meta property="og:description" content="Chamesle packages are signed binary packages, installed with mag.">
 <meta property="og:url" content="https://chamesle.org/packages.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,28 +32,34 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
 <h2>Packages</h2>
-<p><i>Packages are Gentoo's ebuilds, built from source with SPAS.</i></p>
+<p><i>Binary packages, signed, installed with mag.</i></p>
 
-<p>The repo is Gentoo's, on the musl profile. <a href="https://spas.chamesle.org/">SPAS</a> is the package manager, and <code>hoard</code> is its command: it reads the ebuilds,
-resolves the dependencies, runs them in bash and merges the result. There are no binary packages yet.</p>
-<pre>hoard sync
-hoard install app-misc/fastfetch
-hoard remove fastfetch
-hoard upgrade
-hoard search word</pre>
+<p><a href="https://github.com/tortr-rs/mag">mag</a> is the package manager. It reads two repos: Chamesle's own,
+with <code>chamesle-base</code>, <code>mag</code> and <code>rifle</code>, and a large musl repo with everything else,
+about 28,000 packages for x86_64 and as many for 32-bit x86. Every index and every package is checked against the
+keys in <code>/etc/mag/keys</code> before anything is unpacked.</p>
+<pre>mag update
+mag install tmux
+mag remove tmux
+mag upgrade
+mag search word</pre>
 
-<p>We started on pkgsrc with our own package manager, mag. It kept breaking on small things, one package after
-another, so we're moving to ebuilds. This is still being set up: a first dry run on Chamesle reads the tree and resolves
-dependencies, and the builds are what's being worked on.</p>
+<p>Before this, mag built from pkgsrc, then SPAS ran Gentoo's ebuilds. Both meant compiling for hours on every
+machine, so now nothing is built at all.</p>
+
+<h2>Chamesle's repo</h2>
+<p><code>https://chamesle.org/repo</code>, for <code>x86_64</code> and <code>x86</code>. The packages are made with
+<code>mkapk</code> and <code>mkrepo</code> from <a href="https://github.com/tortr-rs/system">system</a>, and signed
+with <code>chamesle-20261118.rsa</code>.</p>
 
 <h2>Missing something?</h2>
-<p>If Gentoo has it, SPAS can usually build it. If it doesn't build, tell us on the <a href="board.html">board</a>.</p>
+<p><code>mag search</code> first. If it is not there, tell us on the <a href="board.html">board</a>.</p>
 </main>
 
 <hr>

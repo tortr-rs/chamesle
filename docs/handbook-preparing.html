@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Preparing - Chamesle</title>
-<meta name="description" content="Chamesle is built from a running Linux machine: any distribution, or the live ISO of chapter 8. The host needs:">
+<meta name="description" content="The CPU can be x86_64, or a 32-bit x86 one from the Pentium 4 on (section 3.10).">
 <link rel="canonical" href="https://chamesle.org/handbook-preparing.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Preparing - Chamesle">
-<meta property="og:description" content="Chamesle is built from a running Linux machine: any distribution, or the live ISO of chapter 8. The host needs:">
+<meta property="og:description" content="The CPU can be x86_64, or a 32-bit x86 one from the Pentium 4 on (section 3.10).">
 <meta property="og:url" content="https://chamesle.org/handbook-preparing.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,48 +32,40 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
 <p><a href="handbook-about.html">&larr; About Chamesle</a> | <a href="docs.html">Contents</a> | <a href="handbook-installing.html">Installing by hand &rarr;</a></p>
 <h2>2. Preparing</h2>
-<h2 id="s2-1">2.1 What the build host needs</h2>
-<p>Chamesle is built from a running Linux machine: any distribution, or the live ISO of chapter 8. The host needs:</p>
+<h2 id="s2-1">2.1 What you need</h2>
 <ul>
-<li><code>clang</code> and <code>lld</code>: <code>rifle</code> is built with them, and so is everything in the new system</li>
-<li><code>cargo</code> and <code>rustc</code>, for <code>hoard</code>, with the musl standard library for <code>x86_64-unknown-linux-musl</code></li>
-<li><code>bash</code>, which ebuilds run in</li>
-<li><code>gmake</code>, for musl</li>
-<li><code>tar</code> and a POSIX <code>sh</code></li>
-<li><code>sfdisk</code>, <code>mkfs.ext4</code> and <code>mkfs.fat</code> to prepare the disk</li>
-<li><code>blkid</code> to read UUIDs</li>
+<li>the ISO, from chamesle.org, written to a stick or a disc (chapter 8). It has everything chapter 3 uses</li>
+<li>a network connection: the packages come from the repositories</li>
+<li>about 1 GB of disk for a base system with a kernel, more for what you add</li>
+<li>256 MB of memory is enough to install and to run</li>
 </ul>
-<p>Plan for about 20 GB of free disk space for the sources and build directories of a first install, and a network connection.</p>
-<h2 id="s2-2">2.2 Building SPAS and rifle</h2>
-<p>rifle is a single C file with no libc under it:</p>
-<pre>cd $HOME/src/rifle &amp;&amp; ./build.sh</pre>
-<p><code>rifle/build.sh</code> leaves <code>./rifle</code> and a <code>bin/</code> directory with a link for every tool. SPAS is a Rust program, and builds the <code>hoard</code> command. For a system on musl it is built for the musl target, as a static binary:</p>
-<pre>cd $HOME/src/SimplePackagemAnagingSystem
-cargo build --release --target x86_64-unknown-linux-musl
-install -m755 target/x86_64-unknown-linux-musl/release/hoard /usr/local/bin/hoard</pre>
-<p>The releases of SPAS have a binary for glibc machines, which is what a Gentoo host uses to start with.</p>
-<h2 id="s2-3">2.3 Getting the Gentoo tree</h2>
-<pre>mkdir -p /var/db/repos /etc/spas/repos.conf
-printf &#x27;[gentoo]\nlocation = /var/db/repos/gentoo\nsync-type = git\nsync-uri = https://github.com/gentoo-mirror/gentoo.git\n&#x27; &gt; /etc/spas/repos.conf/gentoo.conf
-hoard sync</pre>
-<p><code>sync</code> clones the tree the first time and pulls it after that, so it is also how the tree is brought up to date. Gentoo has a directory per category (<code>app-editors</code>, <code>sys-apps</code>, ...) and a directory per package inside it (<code>app-editors/vim</code>) with the ebuilds, a <code>Manifest</code> and the files they carry.</p>
-<h2 id="s2-4">2.4 The profile</h2>
-<p>The profile says what a package is built for. Chamesle uses the musl one, and <code>make.profile</code> is a link to it:</p>
-<pre>ln -sfn /var/db/repos/gentoo/profiles/default/linux/amd64/23.0/musl /etc/spas/make.profile</pre>
-<p><code>--root DIR</code> says where to install; it is the new root during an installation (chapter 3) and left out on a running system. Its own <code>etc/spas</code> is the one used.</p>
-<h2 id="s2-5">2.5 make.conf</h2>
-<p><code>/etc/spas/make.conf</code> holds the build settings, and section 4.4 has what goes in it. The stage has one. For the host you build from, make one yourself:</p>
-<pre>CFLAGS=&quot;-O2 -pipe -std=gnu17&quot;
-CXXFLAGS=&quot;${CFLAGS}&quot;
-MAKEOPTS=&quot;-j8&quot;</pre>
-<p><code>-std=gnu17</code> matters. clang defaults to C23 now, and a lot of older source does not compile under it (section 9.3).</p>
+<p>The CPU can be x86_64, or a 32-bit x86 one from the Pentium 4 on (section 3.10).</p>
+<h2 id="s2-2">2.2 From another Linux</h2>
+<p>The ISO is the easy way, but any Linux machine can install Chamesle. It needs <code>mag</code>, the keys and the repos:</p>
+<pre>curl -LO https://chamesle.org/repo/x86_64/mag-0.3.apk
+tar -xzf mag-0.3.apk usr/bin/mag
+mkdir -p /etc/mag
+cp -R keys /etc/mag/keys
+cp pkg/chamesle-base/repos /etc/mag/repos
+install -m755 usr/bin/mag /usr/local/bin/mag</pre>
+<p><code>keys/</code> and <code>pkg/chamesle-base/repos</code> are in <code>system/</code> of the sources. The <code>tar</code> line warns about the signature and control parts it does not know; the program comes out all the same. mag is static, so it runs on any distribution. From there chapter 3 is the same, without the live system.</p>
+<h2 id="s2-3">2.3 Getting on the network</h2>
+<p>On the live system a cable works by itself: <code>dhcpcd</code> runs at boot. Check it with</p>
+<pre>ip addr
+ping -c 3 chamesle.org</pre>
+<p>For wireless, <code>iwctl</code> (iwd runs at boot on the ISO):</p>
+<pre>iwctl device list
+iwctl station wlan0 scan
+iwctl station wlan0 get-networks
+iwctl station wlan0 connect NAME</pre>
+<p>It asks for the passphrase. dhcpcd gives the interface an address once it is connected.</p>
 <hr>
 <p><a href="handbook-about.html">&larr; About Chamesle</a> | <a href="docs.html">Contents</a> | <a href="handbook-installing.html">Installing by hand &rarr;</a></p>
 </main>

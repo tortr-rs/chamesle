@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Download - Chamesle</title>
-<meta name="description" content="Download the Chamesle ISO: one image for x86-64 machines, BIOS and UEFI, with its checksum and how to write it to a stick.">
+<meta name="description" content="Download the Chamesle ISO for x86-64 or 32-bit x86, with its checksum and how to write it to a stick.">
 <link rel="canonical" href="https://chamesle.org/download.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Download - Chamesle">
-<meta property="og:description" content="Download the Chamesle ISO: one image for x86-64 machines, BIOS and UEFI, with its checksum and how to write it to a stick.">
+<meta property="og:description" content="Download the Chamesle ISO for x86-64 or 32-bit x86, with its checksum and how to write it to a stick.">
 <meta property="og:url" content="https://chamesle.org/download.html">
 <link rel="stylesheet" href="style.css?19">
 <link rel="icon" href="img/logo.png">
@@ -32,23 +32,33 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <a href="about.html">About</a>
 </div>
 
 <main>
 <h2>Download</h2>
-<p>Chamesle is one ISO for x86-64 machines. Write it to a stick, boot it, and install from it by hand with the
-<a href="handbook-installing.html">handbook</a>.</p>
+<p>Chamesle is one ISO, for x86-64 machines, and one for 32-bit x86. Write it to a stick, boot it, and install from it
+by hand with the <a href="handbook-installing.html">handbook</a>. There is no stage: <code>chamesle-bootstrap</code>
+fetches the base from the repos while you install.</p>
 
-<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Download chamesle.iso (447 MB)</a></p>
+<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">Download chamesle.iso (376 MB)</a></p>
 
 <table>
 <tr><td>File</td><td>chamesle.iso</td></tr>
-<tr><td>Size</td><td>447 MB</td></tr>
-<tr><td>SHA-256</td><td><code>ac10b4c41f66790004f8d05c76f2229523667e014ce108de392825788e10f232</code></td></tr>
+<tr><td>Size</td><td>376 MB</td></tr>
+<tr><td>SHA-256</td><td><code>fd6f3b28cbf9707dfbea3496adc4b86b9c61560c87b1e10f4a82ebef270bb10d</code></td></tr>
 <tr><td>Machines</td><td>x86-64, BIOS and UEFI</td></tr>
 <tr><td>Kernel</td><td>Linux 6.18 LTS</td></tr>
+</table>
+
+<h3>32-bit</h3>
+<p><a class="button" href="https://github.com/tortr-rs/system/releases/latest/download/chamesle-x86.iso">Download chamesle-x86.iso (291 MB)</a></p>
+<table>
+<tr><td>File</td><td>chamesle-x86.iso</td></tr>
+<tr><td>Size</td><td>291 MB</td></tr>
+<tr><td>SHA-256</td><td><code>d2b506c4cabdfa7440c92953e7744f75ce6d28051fccef1fcaba10c89e010e72</code></td></tr>
+<tr><td>Machines</td><td>32-bit x86 with SSE2 (Pentium 4 and later), BIOS</td></tr>
 </table>
 
 <p>Check the download before you use it:</p>
@@ -58,35 +68,32 @@
 <p>Find the stick with <code>lsblk</code> and use its name, not a partition. This erases everything on it.</p>
 <pre>dd if=chamesle.iso of=/dev/sdX bs=4M status=progress conv=fsync</pre>
 
-<h2>The stage</h2>
-<p><a class="button" href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-20261117.tar.xz">Download chamesle-stage-20261117.tar.xz (988 MB)</a></p>
-<p>The system as a stage tarball: musl, rifle, mksh, Winchester, gcc, python, perl, SPAS and sam. Unpack it into a new root as in <a href="handbook-installing.html">the handbook</a>. Check it against <a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-20261117.tar.xz.sha256">the sha256</a>.</p>
-<h3>The graphical stage</h3>
-<p><a class="button" href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-graphical-20261117.tar.xz">Download chamesle-stage-graphical-20261117.tar.xz (1.5 GB)</a></p>
-<p>The same system with Xorg, 9wm, 9term, acme and the other Plan 9 programs. It starts X on the first login at tty1. Check it against <a href="https://github.com/tortr-rs/chamesle/releases/download/stage-20261117/chamesle-stage-graphical-20261117.tar.xz.sha256">the sha256</a>.</p>
-
-
 <h2>What is on it</h2>
-<p>A live system with mksh, vim, SPAS and the Gentoo tree, <code>chamesle-chroot</code>, <code>chamesle-disk</code>
-(cfdisk, then vfat for boot and ZFS for the root), the disk tools (sfdisk, mkfs.ext4, mkfs.fat, zpool, zfs) and the
-handbook in <code>/usr/share/doc/chamesle/</code>. It boots with limine and logs in as root with no password.</p>
+<p>A live system that logs in as root: mag with the keys and the repos, <code>chamesle-bootstrap</code>,
+<code>chamesle-chroot</code>, <code>chamesle-disk</code>, the disk tools (cfdisk, sfdisk, lsblk, blkid, mkfs.ext4,
+mkfs.fat, zpool, zfs, limine), dhcpcd and iwd for the network, the Intel wireless firmware, vim, and the handbook in
+<code>/usr/share/doc/chamesle/</code>.</p>
 
 <h2>What you need</h2>
-<p>An x86-64 machine with 2 GB of RAM and a disk to install on. The network comes up with DHCP on a wired card; wifi
-firmware is added with SPAS after the install, as the handbook says.</p>
+<p>A machine with 256 MB of RAM or more, a disk to install on, and a network connection: a cable works at once,
+wireless with <code>iwctl</code>. The packages come from the repos during the install.</p>
 
 <h2>Try it in QEMU first</h2>
-<pre>qemu-system-x86_64 -cpu max -m 2G -cdrom chamesle.iso -boot d
-qemu-system-x86_64 -cpu max -m 2G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
+<pre>qemu-system-x86_64 -m 1G -cdrom chamesle.iso -boot d
+qemu-system-x86_64 -m 1G -bios /usr/share/qemu/edk2-x86_64-code.fd -cdrom chamesle.iso</pre>
 <p>The first boots it as BIOS, the second as UEFI.</p>
 
 <h2>Then</h2>
-<p>Install it with <a href="handbook-installing.html">chapter 3 of the handbook</a>: partition the disk, copy the
-system, write the boot entry, reboot.</p>
+<p>Install it with <a href="handbook-installing.html">chapter 3 of the handbook</a>: partition the disk, run
+<code>chamesle-bootstrap /mnt</code>, write the fstab and the boot entry, reboot.</p>
+
+<h2>The repo</h2>
+<p>Chamesle's own packages are at <code>https://chamesle.org/repo/x86_64</code> and <code>/repo/x86</code>, signed
+with <a href="repo/chamesle-20261118.rsa.pub">chamesle-20261118.rsa.pub</a>.</p>
 
 <h2>Older Chamesle ISOs</h2>
-<p>Anything older with Chamesle's name on it, such as the 0.7 ISO, is the old Debian-based distro. It is a different
-system and gets no updates.</p>
+<p>The stages of 2026-11-17 and anything older with Chamesle's name on it, such as the 0.7 ISO, are earlier systems.
+They get no updates.</p>
 
 </main>
 

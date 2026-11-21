@@ -32,7 +32,7 @@
 <a href="chat.html">Chat</a> |
 <a href="source.html">Source</a> |
 <a href="https://x22.chamesle.org/">X22</a> |
-<a href="https://spas.chamesle.org/">SPAS</a> |
+<a href="https://github.com/tortr-rs/mag">mag</a> |
 <b>About</b>
 </div>
 
@@ -54,20 +54,21 @@ with them. The old code is still on <a href="https://github.com/tortr-rs/chamesl
 <ul>
 <li><b>rifle</b>, the coreutils, from scratch, in one C file. It is tested against GNU's tools: 810 cases pass.<br>
 The Rifle Shoots down the GNU<br>
-Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down. gmake, to build musl, and the kernel's build tools are still GNU.</li>
+Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down.</li>
 <li><b>Winchester</b>, the init. A shell script that runs <code>/etc/rc</code> and keeps the gettys alive.</li>
-<li><b><a href="https://spas.chamesle.org/">SPAS</a></b>, the package manager. Its command is <code>hoard</code>. It reads Gentoo's repository and runs the ebuilds, on the musl profile.
-<code>hoard sync</code> fetches the tree.</li>
+<li><b><a href="https://github.com/tortr-rs/mag">mag</a></b>, the package manager, in one C file with its own inflate, tar, sha256 and RSA.
+It installs signed binary packages and runs nothing but the download command.</li>
+<li><b>chamesle-bootstrap</b>, which puts the base on a mounted disk with mag, like debootstrap.</li>
 <li><b>chamesle-disk</b> and <b>chamesle-chroot</b>, two small helpers for installing: the first runs cfdisk and makes a vfat boot partition and a ZFS root, the second chroots with <code>/proc</code>, <code>/dev</code> and the rest mounted. The install itself stays by hand.</li>
-<li><b>musl</b> for the C library, <b>mksh</b> for the login shell and <code>/bin/sh</code>, a shell script init in the FreeBSD style (<code>/etc/init.conf</code>, services in <code>/etc/rc.d</code>),
+<li><b>musl</b> for the C library, <b>mksh</b> for the login shell, a shell script init in the FreeBSD style (<code>/etc/init.conf</code>, services in <code>/etc/rc.d</code>),
 <b>limine</b> to boot.</li>
 <li><b>Linux 6.18 LTS</b> as the kernel, prebuilt. Nobody here builds a kernel.</li>
 </ul>
-<p>No GNU software goes in the system. The exceptions are build tools: gmake, bison, flex and m4, which
-some packages need while they are being built. They are not part of what gets installed.</p>
+<p>The rest, the kernel included, comes as binary packages from a large musl repo, which mag reads as it is. Nobody
+here compiles anything to install Chamesle, so it goes on old machines as fast as on new ones.</p>
 
 <h2 id="roadmap">Roadmap</h2>
-<p>The plan is on the <a href="./#plan">home page</a>. There are no dates.</p>
+<p>Next: more of the base in our own repo, and more machines tested. There are no dates.</p>
 <p>X22, our X server, is a separate project and has
 <a href="https://x22.chamesle.org/">its own site</a>.</p>
 
@@ -78,13 +79,13 @@ vi, and nothing else. You write the shell and everything after it.</p>
 <h2 id="help">Help out</h2>
 <ul>
   <li>Say hello and ask things on the <a href="board.html">board</a> or in the <a href="chat.html">chat</a>.</li>
-  <li>When the source is out, build it and tell us what breaks.</li>
+  <li>Install it on whatever you have and tell us what breaks.</li>
   <li>Chip in on <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a>. It pays for hosting and test machines.</li>
 </ul>
 <p>cheers @tortr-rs</p>
 
 <h2>License</h2>
-<p>Not decided. The packages SPAS builds keep their own licenses.</p>
+<p>Not decided. The packages keep their own licenses.</p>
 
 </main>
 
