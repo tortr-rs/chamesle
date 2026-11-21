@@ -39,10 +39,11 @@
 <main>
 <p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
 <h2>4. mag</h2>
-<p>mag is the package manager. It installs binary packages from the repositories in <code>/etc/mag/repos</code>, checks every index and every package against <code>/etc/mag/keys</code>, and keeps what it installed in <code>/var/lib/mag</code>. It is one C file and runs nothing but the download command.</p>
+<p>mag is the package manager. It installs binary packages from the repositories in <code>/etc/mag/repos</code>, checks every index and every package against <code>/etc/mag/keys</code>, and keeps what it installed in <code>/var/lib/mag</code>. It is one C file and runs nothing but the download command, and bash when it builds from a source tree (4.6, 4.7).</p>
 <h2 id="s4-1">4.1 The commands</h2>
 <pre>mag update                 get the index of every repo
 mag install PKG...         install, with what they need
+mag build PKG...           build them from a source tree: CRUX, Void or Exherbo (4.6, 4.7)
 mag remove PKG...          take packages off
 mag upgrade                install what the repos have a newer version of
 mag autoremove             remove what was only a dependency and is not needed now
@@ -79,6 +80,27 @@ https://dl-cdn.alpinelinux.org/alpine/v3.24/community</pre>
 <pre>mkapk -k KEY -n hello -v 1.0 -a x86_64 -d &quot;says hello&quot; -D &quot;musl&quot; -o repo/x86_64 ./root
 mkrepo repo/x86_64 KEY</pre>
 <p>Put the public half of KEY in <code>/etc/mag/keys</code> and the repo's URL in <code>/etc/mag/repos</code>. <code>tools/mkpkgs</code> is how Chamesle's own repo is made.</p>
+<h2 id="s4-6">4.6 CRUX ports</h2>
+<p>mag also builds from CRUX's port trees. A line that starts with <code>crux</code> is a tree of ports, and its key goes next to the others:</p>
+<pre>echo &#x27;crux https://crux.nu/ports/crux-3.8/opt&#x27; &gt;&gt; /etc/mag/repos
+curl -o /etc/mag/keys/opt.pub https://crux.nu/ports/crux-3.8/core/ports/opt.pub
+mag update
+mag build foo</pre>
+<p><code>mag update</code> gets only the ports that changed, as httpup does, into <code>/var/cache/mag</code>. Every port's <code>.signature</code> is checked with the key, then its sources against the signature, and its <code>build()</code> runs with bash. <code>core</code>, <code>xorg</code> and <code>contrib</code> work the same way, with <code>core.pub</code>, <code>xorg.pub</code> and <code>contrib.pub</code>.</p>
+<p>A package the binary repos have wins over a port of the same name: <code>mag install</code> takes a port only when nothing has it built, <code>mag build</code> always takes the port. A port brings build-base, pkgconf and bash with it, and the <code>-dev</code> package of every dependency that comes built. The flags go in <code>/etc/mag/build.conf</code>, otherwise it is <code>-O2 -pipe</code> and one job per core:</p>
+<pre>CFLAGS=&quot;-O2 -pipe -march=native&quot;
+MAKEFLAGS=&quot;-j4&quot;</pre>
+<p>What a port installs is a package like any other: <code>mag files</code>, <code>mag remove</code> and <code>mag upgrade</code> work on it.</p>
+<h2 id="s4-7">4.7 Void and Exherbo</h2>
+<p>mag builds Void's templates and Exherbo's exheres too, from their git trees:</p>
+<pre>echo &#x27;void https://github.com/void-linux/void-packages&#x27; &gt;&gt; /etc/mag/repos
+echo &#x27;exherbo https://gitlab.exherbo.org/exherbo/arbor&#x27; &gt;&gt; /etc/mag/repos
+mag update
+mag build tmux</pre>
+<p><code>mag update</code> gets the whole tree as one tarball, about 9 MB for Void and 2 MB for arbor, and indexes it. Neither tree is signed: what you get is what GitHub or Exherbo's GitLab sent over https. A Void template has the sha256 of each of its sources, and mag checks them. An exheres has none, so its sources are as good as the connection they came over.</p>
+<p>A Void template runs with the helpers in the tree's <code>common/</code>, the way xbps-src runs it: the build style (<code>gnu-configure</code>, <code>cmake</code>, <code>meson</code> and the others), <code>vinstall</code>, <code>vmove</code> and the rest, and Void's patches. What Void splits into subpackages stays in one package here: <code>mag build libzstd</code> builds zstd. A <code>-devel</code> it needs is the <code>-dev</code> of the binary repos.</p>
+<p>An exheres runs on a small exheres-0 of mag's own, with the exlibs of the tree. Options are what Exherbo's profile turns on, without systemd and pam. Exherbo puts programs in <code>/usr/x86_64-...-musl/bin</code>; mag builds them there and moves them to <code>/usr</code> afterwards. Arbor is Exherbo's main tree, about 1000 packages; the others are on the same GitLab and work the same way.</p>
+<p>When two trees have a package, <code>mag build</code> takes the newer version. A package the binary repos split differently, like xz with its <code>xz-libs</code>, clashes with what is installed, and mag stops; <code>-f</code> writes over it.</p>
 <hr>
 <p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
 </main>

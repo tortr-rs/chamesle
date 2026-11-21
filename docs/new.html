@@ -40,6 +40,25 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="mag-0-4">November 21, 2026, at night: mag 0.4 builds from CRUX, Void and Exherbo</h2>
+<p>Binary packages stay the way in, but some things aren't in any repo. mag 0.4 can now build them from the source
+trees of three other systems. Add a line to <code>/etc/mag/repos</code>, run <code>mag update</code>, and
+<code>mag build foo</code> builds the package and installs it:</p>
+<ul>
+<li><code>crux https://crux.nu/ports/crux-3.8/opt</code>, with the tree's key in <code>/etc/mag/keys</code>. Every
+port is checked against its signature before anything runs, and mag has ed25519 for it now.</li>
+<li><code>void https://github.com/void-linux/void-packages</code>. Templates run with the helpers of Void's own tree,
+the way xbps-src runs them, and every source is checked against the template's sha256.</li>
+<li><code>exherbo https://gitlab.exherbo.org/exherbo/arbor</code>. Exheres run on a small exheres-0 of mag's own,
+with the tree's exlibs. Exherbo has no checksums for sources, so those are only as good as the connection.</li>
+</ul>
+<p>A package that comes built still wins over all of them, so nothing changes unless you ask for a source build.
+<a href="handbook-mag.html#s4-6">Handbook 4.6 and 4.7</a> have the details.</p>
+<p>chamesle-base r17 fixes <code>gzip</code>. The base still had <code>gzip</code>, <code>gunzip</code> and
+<code>python3</code> links from the days of the stage, pointing at programs that are not there any more.
+<code>gzip</code> was broken on every install, and python3 could not be installed. <code>mag update &amp;&amp; mag
+upgrade</code> brings both and takes the links away.</p>
+
 <h2 id="2026-11-21">November 21, 2026: binary packages, and a bootstrap instead of a stage</h2>
 <p>Building everything on every machine was too slow, and a Pentium 4 with 256 MB would never get there. So nothing is
 built any more. <a href="https://github.com/tortr-rs/mag">mag</a> is back, rewritten as a binary package manager:
@@ -109,7 +128,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-14 $
+$Date: 2026-11-21 $
 </div>
 
 </div>

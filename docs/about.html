@@ -64,7 +64,7 @@ The Rifle Shoots down the GNU<br>
 Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down.</li>
 <li><b>Winchester</b>, the init. A shell script that runs <code>/etc/rc</code> and keeps the gettys alive.</li>
 <li><b><a href="https://github.com/tortr-rs/mag">mag</a></b>, the package manager, in one C file with its own inflate, tar, sha256 and RSA.
-It installs signed binary packages and runs nothing but the download command.</li>
+It installs signed binary packages, and builds what no repo has from <a href="handbook-mag.html#s4-6">CRUX, Void and Exherbo</a> source trees.</li>
 <li><b>chamesle-bootstrap</b>, which puts the base on a mounted disk with mag, like debootstrap.</li>
 <li><b>chamesle-disk</b> and <b>chamesle-chroot</b>, two small helpers for installing: the first runs cfdisk and makes a vfat boot partition and a ZFS root, the second chroots with <code>/proc</code>, <code>/dev</code> and the rest mounted. The install itself stays by hand.</li>
 <li><b>musl</b> for the C library, <b>mksh</b> for the login shell, a shell script init in the FreeBSD style (<code>/etc/init.conf</code>, services in <code>/etc/rc.d</code>),
