@@ -53,7 +53,7 @@
 <h2 id="s8-3">8.3 Making it</h2>
 <pre>iso/mkiso -o chamesle.iso
 iso/mkiso -a x86 -o chamesle-x86.iso</pre>
-<p>as root, with mag in PATH, <code>xorriso</code>, <code>mksquashfs</code>, <code>zstd</code>, <code>bsdcpio</code> and limine on the host. mkiso installs <code>chamesle-base</code>, the kernel and what <code>iso/profile/packages</code> names into <code>work/rootfs</code> with mag, copies <code>iso/profile/overlay</code> over it, makes the initramfs and the squashfs and puts them on the ISO with limine.</p>
+<p>as root, with mag in PATH, and <code>xorriso</code>, <code>mksquashfs</code>, <code>zstd</code> and <code>bsdcpio</code> on the host. mkiso installs <code>chamesle-base</code>, the kernel and what <code>iso/profile/packages</code> names into <code>work/rootfs</code> with mag, copies <code>iso/profile/overlay</code> over it, makes the initramfs and the squashfs and puts them on the ISO with limine.</p>
 <h2 id="s8-4">8.4 Trying it in qemu</h2>
 <p>BIOS:</p>
 <pre>qemu-system-x86_64 -m 1G -cdrom chamesle.iso -boot d</pre>
@@ -74,7 +74,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-18 $
+$Date: 2026-11-21 $
 </div>
 
 </div>
