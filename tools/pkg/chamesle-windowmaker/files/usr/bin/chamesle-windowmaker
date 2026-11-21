@@ -4,6 +4,8 @@
 export XDG_CURRENT_DESKTOP=WindowMaker
 export GTK_THEME=OneStepBack
 export GTK2_RC_FILES=/usr/share/themes/OneStepBack/gtk-2.0/gtkrc
+# high contrast from Chamesle Accessibility takes over from it
+eval "$(chamesle-access env 2>/dev/null)"
 
 xdg-user-dirs-update 2>/dev/null
 

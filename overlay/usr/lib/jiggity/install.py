@@ -44,7 +44,27 @@ def set_grub(key, value):
         f.write("\n".join(lines).rstrip("\n") + "\n")
 
 
-def install(row, passphrase, language, keyboard, progress, desktop=None, user=None):
+# what was picked for seeing the screen: {"reader": bool, "contrast": bool, "text": bool}. chamesle-access puts it
+# on the desktop the first time someone signs in, the sign-in screen reads it from here
+def save_access(access):
+    with open(T + "/etc/chamesle/access", "w") as f:
+        f.writelines("%s=%d\n" % (k, access.get(k, False)) for k in ("reader", "contrast", "text"))
+    # gdm's own sign-in screen: through its dconf, over the defaults it ships
+    if os.path.isdir(T + "/etc/gdm") and any(access.values()):
+        os.makedirs(T + "/etc/dconf/db/gdm.d", exist_ok=True)
+        with open(T + "/etc/dconf/profile/gdm", "w") as f:
+            f.write("user-db:user\nsystem-db:gdm\nfile-db:/usr/share/gdm/greeter-dconf-defaults\n")
+        with open(T + "/etc/dconf/db/gdm.d/90-chamesle-access", "w") as f:
+            f.write("[org/gnome/desktop/a11y/applications]\nscreen-reader-enabled=%s\n\n" % str(access.get("reader", False)).lower())
+            f.write("[org/gnome/desktop/a11y/interface]\nhigh-contrast=%s\n\n" % str(access.get("contrast", False)).lower())
+            f.write("[org/gnome/desktop/interface]\ntext-scaling-factor=%s\n" % ("1.25" if access.get("text") else "1.0"))
+        chroot("dconf", "update")
+    # a beep when the boot menu is up, so it's known it's there
+    if access.get("reader"):
+        set_grub("GRUB_INIT_TUNE", "480 440 1")
+
+
+def install(row, passphrase, language, keyboard, progress, desktop=None, user=None, access=None):
     os.makedirs(T, exist_ok=True)
     if desktop:
         step = progress
@@ -143,6 +163,8 @@ def install(row, passphrase, language, keyboard, progress, desktop=None, user=No
         f.write("KEYMAP=%s\n" % console_keymap(layout, variant))
     if user:
         account.make(user["zone"], user["user"], user["name"], user["password"], user["host"], T)
+    if access is not None:
+        save_access(access)
     progress(2, 100)
 
     if passphrase is not None:

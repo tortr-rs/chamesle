@@ -4,5 +4,7 @@ command = /usr/lib/chamesle/console-getty
 depends-on = system-identity
 waits-for = console-setup
 waits-for = plymouth-quit
+# the screen reader talks from the first screen on
+waits-for = speech
 restart = true
 smooth-recovery = true

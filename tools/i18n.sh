@@ -10,14 +10,17 @@ xgettext $O -L Python --keyword=_ --keyword=N_ --keyword=ngettext:1,2 -o $P/cham
     tools/pkg/chamesle-store/files/usr/bin/chamesle-store \
     tools/pkg/chamesle-updater/files/usr/bin/chamesle-updater \
     tools/pkg/chamesle-drivers/files/usr/bin/chamesle-drivers \
+    tools/pkg/chamesle-access/files/usr/bin/chamesle-access \
     overlay/usr/lib/jiggity/firstboot.py overlay/usr/lib/jiggity/ui.py overlay/usr/lib/jiggity/account.py
 xgettext $O -j -L Shell --keyword=_ -o $P/chamesle.pot \
     tools/pkg/chamesle-snapshots/files/usr/bin/chamesle-snapshot \
-    tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe
+    tools/pkg/chamesle-wine/files/usr/bin/chamesle-exe \
+    tools/pkg/chamesle-sddm/files/usr/lib/chamesle/sddm-setup
 # the menu entries' names and descriptions (not their keywords)
 D="tools/pkg/chamesle-store/files/usr/share/applications/org.chamesle.Store.desktop
 tools/pkg/chamesle-drivers/files/usr/share/applications/org.chamesle.Drivers.desktop
-tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop"
+tools/pkg/chamesle-wine/files/usr/share/applications/chamesle-exe.desktop
+tools/pkg/chamesle-access/files/usr/share/applications/org.chamesle.Access.desktop"
 xgettext $O -j -L Desktop --keyword= --keyword=Name --keyword=GenericName --keyword=Comment -o $P/chamesle.pot $D
 for f in $P/*.po; do
     [ -e "$f" ] || continue

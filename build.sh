@@ -251,6 +251,9 @@ if [ -f \$prefix/themes/chamesle/theme.txt ]; then
     set theme=\$prefix/themes/chamesle/theme.txt
 fi
 if [ ! -f /live/vmlinuz ]; then search --no-floppy --set=root --file /live/vmlinuz; fi
+# a beep when the menu is up, for whoever can't see it. S starts the installer with a screen reader
+insmod play
+play 480 440 1
 
 # two choices, like a Windows USB: try it, or install it. Install starts Jiggity alone on the screen, with no desktop
 menuentry "Try Chamesle" {
@@ -259,6 +262,10 @@ menuentry "Try Chamesle" {
 }
 menuentry "Install Chamesle" {
     linux /live/vmlinuz chamesle.install=1 quiet splash loglevel=3 drm.panic_screen=qr_code
+    initrd /live/initrd.img
+}
+menuentry "Install Chamesle with a screen reader" --hotkey=s {
+    linux /live/vmlinuz chamesle.install=1 chamesle.speech=1 quiet loglevel=3 drm.panic_screen=qr_code
     initrd /live/initrd.img
 }
 submenu "More options" {
@@ -287,6 +294,10 @@ if [ "$NETINST" = yes ]; then
     cat >> "$ISO_DIR/boot/grub/grub.cfg" <<'EOF'
 menuentry "Install Chamesle" {
     linux /live/vmlinuz chamesle.install=1 modprobe.blacklist=amdgpu,radeon,nouveau,xe quiet loglevel=3
+    initrd /live/initrd.img
+}
+menuentry "Install Chamesle with a screen reader" --hotkey=s {
+    linux /live/vmlinuz chamesle.install=1 chamesle.speech=1 modprobe.blacklist=amdgpu,radeon,nouveau,xe quiet loglevel=3
     initrd /live/initrd.img
 }
 menuentry "Install Chamesle (show boot messages)" {
