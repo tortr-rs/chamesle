@@ -61,7 +61,7 @@ rm -rf /var/cache/mag/pkg      downloaded packages; they are fetched again when 
 <tr><td>a BIOS machine does not boot</td><td><code>limine bios-install /dev/sda</code> was not run, or <code>limine-bios.sys</code> is not in <code>/boot</code></td></tr>
 <tr><td>a UEFI machine does not boot</td><td><code>EFI/BOOT/BOOTX64.EFI</code> is not on the EFI partition, or the partition is not of type EFI System</td></tr>
 <tr><td>no wireless interface</td><td>the firmware is missing (7.4); <code>dmesg</code> names the file</td></tr>
-<tr><td>no devices in <code>/dev</code></td><td>udev did not start; <code>dinitctl status udevd</code></td></tr>
+<tr><td>no devices in <code>/dev</code></td><td>udev did not start; <code>rc-service udev status</code></td></tr>
 </table>
 <hr>
 <p><a href="handbook-iso.html">&larr; The live ISO</a> | <a href="docs.html">Contents</a> | <a href="handbook-desktop.html">X and a window manager &rarr;</a></p>
@@ -70,10 +70,10 @@ rm -rf /var/cache/mag/pkg      downloaded packages; they are fetched again when 
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

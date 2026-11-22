@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Installing by hand - Chamesle</title>
-<meta name="description" content="Follow the BIOS or the UEFI variant where they differ. The disk here is /dev/sda; change it to yours. Everything below">
+<title>Installing - Chamesle</title>
+<meta name="description" content="The live system has chamesle-install, which asks for the disk, the file system (ZFS, btrfs or ext4), the bootloader">
 <link rel="canonical" href="https://chamesle.org/handbook-installing.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
-<meta property="og:title" content="Installing by hand - Chamesle">
-<meta property="og:description" content="Follow the BIOS or the UEFI variant where they differ. The disk here is /dev/sda; change it to yours. Everything below">
+<meta property="og:title" content="Installing - Chamesle">
+<meta property="og:description" content="The live system has chamesle-install, which asks for the disk, the file system (ZFS, btrfs or ext4), the bootloader">
 <meta property="og:url" content="https://chamesle.org/handbook-installing.html">
 <link rel="stylesheet" href="style.css?20">
 <link rel="icon" href="img/logo.png">
@@ -38,11 +38,15 @@
 
 <main>
 <p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">mag &rarr;</a></p>
-<h2>3. Installing by hand</h2>
+<h2>3. Installing</h2>
+<p>The live system has <code>chamesle-install</code>, which asks for the disk, the file system (ZFS, btrfs or ext4), the bootloader (limine or GRUB), the firmware (what the machine has is ticked), wifi, the host name, the root password and a user, and then does this chapter on the whole disk. The log is <code>/var/log/chamesle-install.log</code>, and a copy is kept on the new system. The rest of the chapter is the same install by hand, for another layout or to know what it did.</p>
 <p>Follow the BIOS or the UEFI variant where they differ. The disk here is <code>/dev/sda</code>; change it to yours. Everything below is run as root on the live system, and it erases the disk.</p>
-<p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems and leaves the root on ZFS, or you do both yourself with the root on ext4. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
+<p>There are two ways through 3.1 and 3.2: <code>chamesle-disk</code> does the partitioning and the file systems, or you do both yourself. From 3.3 on the steps are the same, and they are yours: <code>chamesle-disk</code> is only a helper.</p>
 <h2 id="s3-1">3.1 chamesle-disk</h2>
-<pre>chamesle-disk /dev/sda</pre>
+<pre>chamesle-disk /dev/sda
+chamesle-disk -t btrfs /dev/sda
+chamesle-disk -t ext4 -y /dev/sda</pre>
+<p><code>-t</code> is the file system of the root: <code>zfs</code> (the default), <code>btrfs</code> or <code>ext4</code>. btrfs gets the subvolumes <code>@</code> for <code>/</code> and <code>@home</code> for <code>/home</code>, mounted with <code>compress=zstd</code>. <code>-y</code> asks nothing and lays out the whole disk as in the table below.</p>
 <p>It lists the disk and asks you to type its name before it touches anything. Then it starts <code>cfdisk</code> so you lay out the partitions. Three of them work for BIOS and UEFI both:</p>
 <table>
 <tr><th>partition</th><th>size</th><th>type</th><th>use</th></tr>
@@ -89,7 +93,7 @@ mount /dev/sda2 /mnt/boot</pre>
 </table>
 <p>Packages after the target go in too. A ThinkPad with Intel wireless and graphics, with an editor:</p>
 <pre>chamesle-bootstrap -n t480 -f linux-firmware-intel /mnt vim</pre>
-<p>What <code>chamesle-base</code> brings: dinit and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, bash, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs, curl and <code>arch-chroot</code>.</p>
+<p>What <code>chamesle-base</code> brings: OpenRC and the files of chapter 6, mag, rifle, mksh, busybox for the tools rifle does not have, bash, <code>agetty</code>, eudev, kmod, dhcpcd, e2fsprogs, curl and <code>arch-chroot</code>.</p>
 <h2 id="s3-4">3.4 Working inside the new root</h2>
 <pre>arch-chroot /mnt
 arch-chroot /mnt passwd root</pre>
@@ -110,11 +114,13 @@ tmpfs           /tmp   tmpfs  nosuid,nodev    0 0</pre>
 <pre>arch-chroot /mnt passwd root</pre>
 <p>The hash goes into <code>/etc/shadow</code>. The login shell of root is mksh.</p>
 <h2 id="s3-7">3.7 The boot entry</h2>
-<pre>chamesle-boot /mnt</pre>
+<pre>chamesle-boot /mnt
+chamesle-boot -b grub /mnt</pre>
+<p><code>-b grub</code> installs GRUB instead of limine, for UEFI and for BIOS, and writes <code>/boot/grub/grub.cfg</code> the same way.</p>
 <p>It looks at what is mounted on <code>/mnt</code> and <code>/mnt/boot</code> and</p>
 <ul>
 <li>installs <code>limine</code> into the new root, so its boot files and its <code>limine</code> are the same version</li>
-<li>for a root on ZFS, installs <code>zfs</code> and <code>zfs-lts</code> and adds <code>zfs</code> to the initramfs (7.5)</li>
+<li>for a root on ZFS, installs <code>zfs</code> and <code>zfs-lts</code>, adds <code>zfs</code> to the initramfs (7.5) and <code>zfs-import</code> and <code>zfs-mount</code> to the sysinit runlevel; for btrfs, installs <code>btrfs-progs</code>, adds <code>btrfs</code> to the initramfs and puts the subvolume on the kernel command line</li>
 <li>writes <code>/mnt/boot/limine.conf</code> with an entry for every kernel in <code>/mnt/boot</code>, the root by UUID, or by dataset on ZFS</li>
 <li>copies <code>BOOTX64.EFI</code> to <code>EFI/BOOT/</code> on the boot partition, for UEFI</li>
 <li>runs <code>limine bios-install</code> on the disk, for BIOS; on a GPT disk only when it has a BIOS boot partition, else it says the disk boots by UEFI only</li>
@@ -150,7 +156,7 @@ cp /mnt/usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/BOOT/</pre>
 zpool export rpool
 reboot</pre>
 <p>Leave out <code>zpool export</code> if the root is not on ZFS.</p>
-<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. dinit mounts the file systems, starts the services of <code>/etc/dinit.d/boot.d</code> and puts a login on the ttys. Log in as root. <code>dhcpcd</code> brings up a cable at boot; for wireless see section 6.8.</p>
+<p>Take out the installation medium. limine shows the entry for three seconds and boots the kernel. OpenRC mounts the file systems, starts the services of the runlevels and puts a login on the ttys. Log in as root. <code>dhcpcd</code> brings up a cable at boot; for wireless see section 6.8.</p>
 <h2 id="s3-9">3.9 What to install next</h2>
 <pre>mag install vim htop tmux
 mag search irc</pre>
@@ -185,10 +191,10 @@ adduser -H -u 1000 -G alice alice</pre>
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

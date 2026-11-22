@@ -37,7 +37,7 @@
 </div>
 
 <main>
-<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+<p><a href="handbook-installing.html">&larr; Installing</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
 <h2>4. mag</h2>
 <p>mag is the package manager. It installs binary packages from the repositories in <code>/etc/mag/repos</code>, checks every index and every package against <code>/etc/mag/keys</code>, and keeps what it installed in <code>/var/lib/mag</code>. It is one C file and runs nothing but the download command, and bash when it builds from a source tree (4.6, 4.7).</p>
 <h2 id="s4-1">4.1 The commands</h2>
@@ -102,16 +102,16 @@ mag build tmux</pre>
 <p>An exheres runs on a small exheres-0 of mag's own, with the exlibs of the tree. Options are what Exherbo's profile turns on, without systemd and pam. Exherbo puts programs in <code>/usr/x86_64-...-musl/bin</code>; mag builds them there and moves them to <code>/usr</code> afterwards. Arbor is Exherbo's main tree, about 1000 packages; the others are on the same GitLab and work the same way.</p>
 <p>When two trees have a package, <code>mag build</code> takes the newer version. A package the binary repos split differently, like xz with its <code>xz-libs</code>, clashes with what is installed, and mag stops; <code>-f</code> writes over it.</p>
 <hr>
-<p><a href="handbook-installing.html">&larr; Installing by hand</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
+<p><a href="handbook-installing.html">&larr; Installing</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
 </main>
 
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

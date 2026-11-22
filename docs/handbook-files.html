@@ -42,8 +42,8 @@
 <h2 id="s11-1">11.1 On an installed system</h2>
 <table>
 <tr><th>path</th><th>what</th></tr>
-<tr><td><code>/sbin/init</code></td><td>mounts what dinit needs and starts it</td></tr>
-<tr><td><code>/etc/dinit.d/</code>, <code>/etc/dinit.d/boot.d/</code></td><td>the services, and the ones started at boot</td></tr>
+<tr><td><code>/sbin/init</code>, <code>/etc/inittab</code></td><td>busybox init, which runs OpenRC</td></tr>
+<tr><td><code>/etc/init.d/</code>, <code>/etc/runlevels/</code></td><td>the services, and the ones started at boot</td></tr>
 <tr><td><code>/usr/lib/chamesle/</code></td><td>the boot scripts the services run</td></tr>
 <tr><td><code>/etc/hostname</code>, <code>/etc/modules</code></td><td>host name, modules loaded at boot</td></tr>
 <tr><td><code>/etc/profile</code></td><td><code>PATH</code>, <code>umask</code></td></tr>
@@ -71,7 +71,7 @@
 <tr><td><code>system/tools/chamesle-boot</code></td><td>limine.conf and limine for the system in a directory</td></tr>
 <tr><td><code>system/tools/chamesle-disk</code></td><td>cfdisk, vfat boot partition, ZFS root, mounted on <code>/mnt</code></td></tr>
 <tr><td><code>system/tools/mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code></td><td>packages, signed indexes, Chamesle's own repo</td></tr>
-<tr><td><code>system/files/</code></td><td><code>/sbin/init</code>, the dinit services and boot scripts, <code>service</code>, in <code>chamesle-base</code></td></tr>
+<tr><td><code>system/files/</code></td><td>the files in <code>/etc</code> and the tools, in <code>chamesle-base</code></td></tr>
 <tr><td><code>system/pkg/chamesle-base/</code></td><td>its scripts, <code>repos</code>, <code>os-release</code>, <code>issue</code></td></tr>
 <tr><td><code>system/keys/</code></td><td>the public keys the repos are signed with</td></tr>
 <tr><td><code>system/iso/mkiso</code>, <code>mkinitramfs</code>, <code>init</code></td><td>the live ISO, its initramfs and the first process in it</td></tr>
@@ -96,10 +96,10 @@ limine bios-install DEVICE</pre>
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

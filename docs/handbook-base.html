@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The base system - Chamesle</title>
-<meta name="description" content="The init is dinit. /sbin/init is a short script: it mounts proc, sysfs, devtmpfs and /run, and hands over">
+<meta name="description" content="The init is OpenRC. /sbin/init is busybox init, which reads /etc/inittab: it runs openrc sysinit, openrc boot">
 <link rel="canonical" href="https://chamesle.org/handbook-base.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="The base system - Chamesle">
-<meta property="og:description" content="The init is dinit. /sbin/init is a short script: it mounts proc, sysfs, devtmpfs and /run, and hands over">
+<meta property="og:description" content="The init is OpenRC. /sbin/init is busybox init, which reads /etc/inittab: it runs openrc sysinit, openrc boot">
 <meta property="og:url" content="https://chamesle.org/handbook-base.html">
 <link rel="stylesheet" href="style.css?20">
 <link rel="icon" href="img/logo.png">
@@ -40,44 +40,36 @@
 <p><a href="handbook-rifle.html">&larr; rifle</a> | <a href="docs.html">Contents</a> | <a href="handbook-kernel.html">The kernel and firmware &rarr;</a></p>
 <h2>6. The base system</h2>
 <h2 id="s6-1">6.1 init</h2>
-<p>The init is dinit. <code>/sbin/init</code> is a short script: it mounts <code>proc</code>, <code>sysfs</code>, <code>devtmpfs</code> and <code>/run</code>, and hands over to <code>dinit</code>, which stays process 1. dinit starts the service called <code>boot</code> and everything it needs, keeps the services running, and stops them all in order when the machine goes down. The files are in <code>files/</code> in the sources and <code>chamesle-bootstrap</code> copies them into the root.</p>
-<p>A boot goes:</p>
-<ol>
-<li><code>rootfs</code>: <code>fsck</code> checks the file systems (not with <code>fastboot</code> on the kernel command line), <code>/</code> is remounted read-write, <code>devpts</code>, <code>/dev/shm</code> and the cgroup2 hierarchy are mounted, <code>mount -a</code> mounts <code>/etc/fstab</code>, <code>zfs mount -a</code> mounts the ZFS datasets, <code>swapon -a</code>, and <code>/tmp</code> is emptied. A failed check gives a root shell; leave it to go on.</li>
-<li><code>udevd</code>, then <code>setup</code>: loopback up, the clock, the host name from <code>/etc/hostname</code>, <code>/etc/sysctl.d/*.conf</code>, the modules (6.6), and <code>dmesg</code> into <code>/var/log/dmesg.boot</code>.</li>
-<li><code>udev-trigger</code> replays the devices and waits for them.</li>
-<li>Every service in <code>/etc/dinit.d/boot.d</code>, all at once, each after what it depends on.</li>
-</ol>
-<p><code>single</code> on the kernel command line starts a root shell and nothing else; the boot goes on when you leave it. If the boot fails, dinit starts a root shell too.</p>
+<p>The init is OpenRC. <code>/sbin/init</code> is busybox init, which reads <code>/etc/inittab</code>: it runs <code>openrc sysinit</code>, <code>openrc boot</code> and <code>openrc default</code> in turn, then puts a login on <code>tty1</code> to <code>tty6</code>. OpenRC starts the services of each runlevel, each after what it needs, and stops them in order when the machine goes down.</p>
+<p>A runlevel is a directory in <code>/etc/runlevels</code> with links to the services in <code>/etc/init.d</code>. A fresh install has:</p>
+<table>
+<tr><th>runlevel</th><th>services</th></tr>
+<tr><td>sysinit</td><td><code>devfs</code>, <code>dmesg</code>, <code>udev</code>, <code>udev-trigger</code>, <code>udev-settle</code></td></tr>
+<tr><td>boot</td><td><code>modules</code>, <code>hwclock</code>, <code>sysctl</code>, <code>hostname</code>, <code>bootmisc</code>, <code>syslog</code>, <code>seedrng</code>, <code>swap</code></td></tr>
+<tr><td>default</td><td><code>udev-postmount</code>, <code>dhcpcd</code></td></tr>
+<tr><td>shutdown</td><td><code>killprocs</code>, <code>mount-ro</code>, <code>savecache</code></td></tr>
+</table>
+<p><code>fsck</code>, <code>root</code> and <code>localmount</code> come in because the boot ones need them: the file systems are checked, <code>/</code> is remounted read-write and <code>/etc/fstab</code> is mounted. On ZFS, <code>zfs-import</code> and <code>zfs-mount</code> are in sysinit too.</p>
 <h2 id="s6-2">6.2 Services</h2>
-<p>A service is a file in <code>/etc/dinit.d</code> named after it. The base set has one for every common daemon, ready for when its package is installed: <code>dbus</code>, <code>elogind</code>, <code>seatd</code>, <code>dhcpcd</code>, <code>iwd</code>, <code>wpa_supplicant</code>, <code>NetworkManager</code>, <code>connmand</code>, <code>lightdm</code>, <code>sddm</code>, <code>gdm</code>, <code>xdm</code>, <code>greetd</code>, <code>sshd</code>, <code>chronyd</code>, <code>ntpd</code>, <code>crond</code>, <code>syslogd</code>, <code>klogd</code>, <code>acpid</code>, <code>cupsd</code>, <code>bluetoothd</code>, <code>avahi-daemon</code>, and the logins <code>tty1</code> to <code>tty6</code> and <code>ttyS0</code>. <code>dinitctl</code> does the rest:</p>
-<pre>dinitctl list                    every service that is loaded, and its state
-dinitctl start iwd
-dinitctl stop iwd
-dinitctl restart dhcpcd
-dinitctl status dbus
-dinitctl enable NetworkManager   start it now and at every boot
-dinitctl disable dhcpcd          not at boot any more</pre>
-<p><code>enable</code> and <code>disable</code> make and remove a link in <code>/etc/dinit.d/boot.d</code>; that directory is the list of what starts at boot. A fresh install has <code>dhcpcd</code> and <code>tty1</code> to <code>tty6</code> in it. As a user in <code>wheel</code>, <code>dinitctl</code> asks for your password through doas. Where dinit is not running, in <code>arch-chroot /mnt</code> for one, <code>enable</code> and <code>disable</code> still work. <code>service NAME start</code> and the rest still work and run <code>dinitctl</code>.</p>
-<p>A service whose process dies is started again, unless it dies over and over in a few seconds; then dinit gives up and <code>dinitctl list</code> shows it stopped. To add a service, write its file. A daemon that can stay in the foreground is a <code>process</code>:</p>
-<pre># /etc/dinit.d/chronyd
-type = process
-command = /usr/sbin/chronyd -d
-depends-on = system
-smooth-recovery = true</pre>
-<p><code>depends-on = system</code> waits for the file systems and devices; <code>depends-on = dbus</code> for the system bus. <code>dinit-service(5)</code> has every setting.</p>
-<p>Chamesle before base r18 ran Winchester, a shell init with <code>/etc/init.conf</code> and scripts in <code>/etc/rc.d</code>. The upgrade to r18 moves you over by itself: the host name goes to <code>/etc/hostname</code>, the services of <code>boot-services</code> and the <code>ttys</code> are enabled in dinit (<code>network</code> is <code>dhcpcd</code> now, <code>udev</code> and <code>modules</code> are part of the boot), and <code>init.conf</code> is kept as <code>/etc/init.conf.old</code>. A changed <code>getty</code> line is not carried over; edit <code>/etc/dinit.d/ttyN</code> for that.</p>
+<p>Every package with a daemon has its service next to it, in a package called after it with <code>-openrc</code> on the end. mag installs that one by itself once OpenRC and the daemon are both there, so <code>mag install lightdm</code> brings <code>lightdm-openrc</code> too. Then:</p>
+<pre>rc-update add lightdm            start it at every boot
+rc-update del dhcpcd             not at boot any more
+rc-service iwd start
+rc-service iwd stop
+rc-service dhcpcd restart
+rc-status                        what runs, by runlevel
+rc-update                        what starts at boot, and in which runlevel</pre>
+<p><code>rc-update add</code> puts a service in the default runlevel unless you name another. <code>service NAME start</code> works too. The service files are in <code>/etc/init.d</code> and their settings in <code>/etc/conf.d/NAME</code>. <code>openrc-run(8)</code> has the rest.</p>
+<p>Chamesle before base r20 ran dinit, and before r18 Winchester. The upgrade to r20 moves you over by itself: what was enabled there (<code>/etc/dinit.d/boot.d</code>, or <code>boot-services</code> of <code>/etc/init.conf</code>) is added to the default runlevel. dinit is still process 1 until the next boot, so reboot that once with <code>dinit-reboot</code>.</p>
 <h2 id="s6-3">6.3 Shutting down</h2>
-<p><code>reboot</code>, <code>halt</code> and <code>poweroff</code> ask dinit to stop. It stops the services, the ones others depend on last, sends <code>TERM</code> and then <code>KILL</code> to what is left, turns swap off, unmounts the file systems and powers off. <code>shutdown -r</code>, <code>-h</code> or <code>-p</code> does the same, at once (<code>now</code>) or after <code>+minutes</code>, with an optional message sent through <code>wall</code>:</p>
-<pre>shutdown -r now
-shutdown -p +10 back in ten minutes</pre>
+<p><code>reboot</code>, <code>halt</code> and <code>poweroff</code> ask init to stop. <code>openrc shutdown</code> stops the services, the ones others need last, sends <code>TERM</code> and then <code>KILL</code> to what is left, turns swap off and remounts the file systems read-only.</p>
 <h2 id="s6-4">6.4 The files in /etc</h2>
 <table>
 <tr><th>file</th><th>what it holds</th></tr>
 <tr><td><code>passwd</code>, <code>shadow</code>, <code>group</code></td><td>accounts, password hashes, groups</td></tr>
 <tr><td><code>shells</code></td><td>the login shells; <code>/bin/mksh</code> is one</td></tr>
 <tr><td><code>hostname</code></td><td>the host name</td></tr>
-<tr><td><code>dinit.d/</code></td><td>the services, and in <code>boot.d</code> the ones started at boot (6.2)</td></tr>
+<tr><td><code>init.d/</code>, <code>runlevels/</code></td><td>the services, and the ones started at boot (6.2)</td></tr>
 <tr><td><code>modules</code></td><td>kernel modules loaded at boot, one a line</td></tr>
 <tr><td><code>fstab</code></td><td>the file systems (3.5)</td></tr>
 <tr><td><code>profile</code></td><td><code>PATH</code>, <code>PAGER</code>, <code>umask 022</code>, and <code>/etc/profile.d/*.sh</code></td></tr>
@@ -104,12 +96,13 @@ ip link set eth0 up</pre>
 <pre>ip addr add 192.168.1.10/24 dev eth0
 ip route add default via 192.168.1.1
 echo &#x27;nameserver 192.168.1.1&#x27; &gt; /etc/resolv.conf</pre>
-<p>and <code>dinitctl disable dhcpcd</code>.</p>
+<p>and <code>rc-update del dhcpcd</code>.</p>
 <h2 id="s6-8">6.8 Wireless</h2>
 <p>The card needs its firmware (7.4). Then iwd:</p>
 <pre>mag install iwd dbus</pre>
-<p>and enable it, which starts dbus with it:</p>
-<pre>dinitctl enable iwd</pre>
+<p>and add it, which starts dbus with it:</p>
+<pre>rc-update add iwd
+rc-service iwd start</pre>
 <p><code>iwctl</code> connects, the same as on the ISO (2.3), and remembers the network. dhcpcd gives it an address.</p>
 <p><code>wpa_supplicant</code> works too, for those who know it: <code>mag install wpa_supplicant</code>.</p>
 <h2 id="s6-9">6.9 Mounting and disks</h2>
@@ -129,10 +122,10 @@ umount /mnt/usb</pre>
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

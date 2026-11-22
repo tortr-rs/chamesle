@@ -40,6 +40,27 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r20">November 22, 2026: r20</h2>
+<p>OpenRC, for good. Winchester and then dinit both worked, but every package in the repos already comes with an
+OpenRC service, and writing our own for every daemon was a losing game. Now <code>mag install lightdm</code> brings
+its service with it, and</p>
+<pre>rc-update add lightdm
+rc-service lightdm start
+rc-status</pre>
+<p>is all there is. Upgrading from r18 or r19 moves you over by itself: whatever you had enabled ends up in the
+default runlevel. Reboot that once with <code>dinit-reboot</code>.</p>
+<p>Also in r20:</p>
+<ul>
+<li><code>chamesle-install</code> on the ISO: disk, file system, bootloader, firmware, wifi, host name, user, done.
+The <a href="handbook-installing.html">handbook</a> still has the whole install by hand.</li>
+<li><code>chamesle-disk -t zfs|btrfs|ext4</code>. btrfs gets <code>@</code> and <code>@home</code> with zstd.</li>
+<li><code>chamesle-boot -b grub</code> next to limine, UEFI and BIOS.</li>
+<li>mag 0.5: packages that come along by themselves (the <code>-openrc</code> ones), file owners by name so
+<code>/var/lib/lightdm</code> belongs to lightdm, triggers that fire for subdirectories, and an interrupted run
+finishes its triggers next time.</li>
+<li><code>/etc</code> files you never touched get updated instead of left as <code>.new</code>.</li>
+</ul>
+
 <h2 id="dinit">November 21, 2026, late: dinit</h2>
 <p>Winchester is gone. The init is <a href="handbook-base.html#s6-1">dinit</a> now, from chamesle-base r18. It keeps
 the services running and brings back the ones that crash, and turning one on is one command:</p>
@@ -136,7 +157,7 @@ Chamesle, and none of it is supported.</p>
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
 $Date: 2026-11-21 $

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About Chamesle - Chamesle</title>
-<meta name="description" content="Chamesle is a small Linux distribution on musl that you put on a disk yourself, from the ISO. There is no installer and">
+<meta name="description" content="Chamesle is a small Linux distribution on musl, installed from the ISO. Nothing is compiled: chamesle-bootstrap puts">
 <link rel="canonical" href="https://chamesle.org/handbook-about.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="About Chamesle - Chamesle">
-<meta property="og:description" content="Chamesle is a small Linux distribution on musl that you put on a disk yourself, from the ISO. There is no installer and">
+<meta property="og:description" content="Chamesle is a small Linux distribution on musl, installed from the ISO. Nothing is compiled: chamesle-bootstrap puts">
 <meta property="og:url" content="https://chamesle.org/handbook-about.html">
 <link rel="stylesheet" href="style.css?20">
 <link rel="icon" href="img/logo.png">
@@ -40,7 +40,7 @@
 <p><a href="docs.html">Contents</a> | <a href="handbook-preparing.html">Preparing &rarr;</a></p>
 <h2>1. About Chamesle</h2>
 <h2 id="s1-1">1.1 What it is</h2>
-<p>Chamesle is a small Linux distribution on musl that you put on a disk yourself, from the ISO. There is no installer and nothing is compiled: <code>chamesle-bootstrap</code> puts the base into an empty root with the package manager, and you write the fstab, the password and the boot entry by hand. This handbook goes through every step.</p>
+<p>Chamesle is a small Linux distribution on musl, installed from the ISO. Nothing is compiled: <code>chamesle-bootstrap</code> puts the base into an empty root with the package manager. <code>chamesle-install</code> does the whole install from a few questions, or you do it by hand, writing the fstab, the password and the boot entry yourself. This handbook goes through every step.</p>
 <p>The parts:</p>
 <table>
 <tr><th>part</th><th>what it is</th></tr>
@@ -49,14 +49,14 @@
 <tr><td>mag</td><td>the package manager, binary packages only, in one C file</td></tr>
 <tr><td>rifle</td><td>the coreutils, all in one C file; <code>cat</code>, <code>ls</code>, <code>cp</code> and the rest are links to one program</td></tr>
 <tr><td>mksh</td><td>the login shell; <code>/bin/sh</code> is busybox's ash</td></tr>
-<tr><td>init</td><td>dinit, with Chamesle's services in <code>/etc/dinit.d</code></td></tr>
+<tr><td>init</td><td>OpenRC, the services come with their packages</td></tr>
 <tr><td>limine</td><td>the boot loader, BIOS and UEFI</td></tr>
 </table>
 <p>Chamesle is made to be the most UNIX distribution possible, and to run on almost anything: the same base goes on a new laptop and on a Pentium 4 with 256 MB of memory. It is a system for the tty first. Anything else is a <code>mag install</code> away.</p>
 <h2 id="s1-2">1.2 Where the packages come from</h2>
 <p>mag reads two kinds of repository, both signed:</p>
 <ul>
-<li>Chamesle's own, at <code>https://chamesle.org/repo</code>: <code>chamesle-base</code> (the dinit services, the tools of this book and the keys), <code>mag</code> and <code>rifle</code></li>
+<li>Chamesle's own, at <code>https://chamesle.org/repo</code>: <code>chamesle-base</code> (the files in <code>/etc</code>, the tools of this book and the keys), <code>mag</code> and <code>rifle</code></li>
 <li>a large musl repository with everything else: the kernel, the firmware, the libraries, editors, compilers, X, about 28,000 packages for x86_64</li>
 </ul>
 <p>Both are in <code>/etc/mag/repos</code>. A package is checked against the keys in <code>/etc/mag/keys</code> before anything of it is unpacked.</p>
@@ -86,10 +86,10 @@
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-21 $
+$Date: 2026-11-22 $
 </div>
 
 </div>

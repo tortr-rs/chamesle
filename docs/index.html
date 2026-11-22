@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chamesle, a small Linux distribution on musl</title>
-<meta name="description" content="Chamesle is a small musl Linux distribution you install by hand, with its own init, coreutils and binary package manager.">
+<meta name="description" content="Chamesle is a small musl Linux distribution with its own coreutils and binary package manager, OpenRC, and an installer that asks for ZFS, btrfs or ext4 and limine or GRUB.">
 <link rel="canonical" href="https://chamesle.org/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Chamesle">
 <meta property="og:title" content="Chamesle, a small Linux distribution on musl">
-<meta property="og:description" content="Chamesle is a small musl Linux distribution you install by hand, with its own init, coreutils and binary package manager.">
+<meta property="og:description" content="Chamesle is a small musl Linux distribution with its own coreutils and binary package manager, OpenRC, and an installer that asks for ZFS, btrfs or ext4 and limine or GRUB.">
 <meta property="og:url" content="https://chamesle.org/">
 <link rel="stylesheet" href="style.css?20">
 <link rel="icon" href="img/logo.png">
@@ -40,13 +40,10 @@
 <h2 id="what">What is Chamesle</h2>
 
 
-<p>Chamesle is a small Linux distribution on musl, installed by hand. Nothing is compiled: the package manager,
+<p>Chamesle is a small Linux distribution on musl. Nothing is compiled: the package manager,
 <code>mag</code>, installs binary packages, and <code>chamesle-bootstrap</code> puts the base on a disk the way
-debootstrap does. The init is dinit, the coreutils are rifle, the shell is mksh. It boots to a text login, and it
+debootstrap does. The init is OpenRC, the coreutils are rifle, the shell is mksh. It boots to a text login, and it
 runs on a new laptop as well as on a Pentium 4 with 256 MB of memory.</p>
-
-<figure class="shot"><a href="img/wmaker.png"><img src="img/wmaker.png" width="720" height="405" alt="Window Maker on Chamesle with st, fastfetch and Dillo"></a>
-<figcaption>Window Maker on Chamesle, in qemu.</figcaption></figure>
 
 <figure class="shot"><a href="img/wmaker.png"><img src="img/wmaker.png" width="720" height="405" alt="Window Maker on Chamesle with st, fastfetch and Dillo"></a>
 <figcaption>Window Maker on Chamesle, in qemu.</figcaption></figure>
@@ -55,6 +52,9 @@ runs on a new laptop as well as on a Pentium 4 with 256 MB of memory.</p>
 <h2 id="news">News</h2>
 
 <dl class="news">
+<dt>2026-11-22</dt>
+<dd><a href="new.html#r20">r20</a>: OpenRC for good, <code>chamesle-install</code>, ZFS, btrfs or ext4, limine or GRUB.
+Upgrading moves you over by itself, reboot once with <code>dinit-reboot</code>.</dd>
 <dt>2026-11-21</dt>
 <dd>The init is <a href="new.html#dinit">dinit</a> now. <code>mag update &amp;&amp; mag upgrade</code>, reboot, done.
 <code>dinitctl enable gdm</code> for GNOME.</dd>
@@ -89,18 +89,18 @@ own. The <a href="new.html">news page</a> has the history of the old releases.</
 <tr><td><a href="https://github.com/tortr-rs/mag">mag</a></td><td>the package manager, binary packages only, one C file. Checks every package against its signature</td></tr>
 <tr><td>rifle</td><td>the coreutils, one C file. 113 tools, more than 1700 test cases against GNU's</td></tr>
 <tr><td>mksh</td><td>the login shell</td></tr>
-<tr><td>dinit</td><td>the init, services in <code>/etc/dinit.d</code>, turned on with <code>dinitctl enable</code></td></tr>
+<tr><td>OpenRC</td><td>the init, every package brings its service, turned on with <code>rc-update add</code></td></tr>
 <tr><td>limine</td><td>the boot loader</td></tr>
 </table>
 
 <h2 id="install">Install</h2>
 
-<p>Boot the <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">ISO</a> and install by hand from the
-<a href="docs.html">handbook</a> (chapter 3): partition, mount, then</p>
+<p>Boot the <a href="https://github.com/tortr-rs/system/releases/latest/download/chamesle.iso">ISO</a> and run</p>
 
-<pre>chamesle-bootstrap -n yourhostname /mnt</pre>
+<pre>chamesle-install</pre>
 
-<p>and write the fstab, the password and <code>limine.conf</code>. For a 32-bit machine there is
+<p>It asks for the disk, ZFS, btrfs or ext4, limine or GRUB, the firmware, a host name and a user. Or do it by hand
+from the <a href="docs.html">handbook</a> (chapter 3). For a 32-bit machine there is
 <a href="download.html">chamesle-x86.iso</a>.</p>
 
 <h2 id="questions">Questions</h2>
@@ -167,7 +167,7 @@ Yao Ming, pride of China, was disappointed with the current state of UNIX and Li
 <hr>
 <div id="foot">
 Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
-Chamesle is installed by hand, from the <a href="docs.html">handbook</a>.<br>
+Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="#" id="edit-link">Edit text</a><br>
 $Date: 2026-11-21 $
 </div>
