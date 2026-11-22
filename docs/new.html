@@ -40,6 +40,23 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r23">November 22, 2026, late: r23</h2>
+<p>Two Chamesles now. The installer asks which one.</p>
+<p><b>musl</b> is the one there was, moved to the newest packages: the repos follow the development branch instead
+of the last stable one, so a fix upstream is a <code>mag upgrade</code> away the same week. The LTS kernel is 7.3.</p>
+<p><b>glibc</b> is new, for what musl can't run: NVIDIA's driver, Steam, anything that only comes built for glibc. It
+runs on Artix's and Arch's packages, about 25,000, plus the AUR. Same mag, same rifle, same OpenRC, same installer.
+ZFS isn't there, since neither Artix nor Arch carries it, so the root is btrfs or ext4.</p>
+<p>That took mag 0.6. It reads pacman repos as they are: the database, zstd (mag has its own decoder now, still no
+libc under it), the OpenPGP signatures (RSA and ed25519, against the keyrings the keyring packages install) and the
+hooks pacman runs after a transaction, which make the initramfs, the users and the caches. A name in two repos comes
+from the first one, so Artix's OpenRC builds win over Arch's. The AUR is one more repo:</p>
+<pre>mag install spotify</pre>
+<p>builds it with makepkg as nobody and installs it like anything else. Read the PKGBUILD first if you don't trust
+who wrote it; it stays in <code>/var/cache/mag/aur</code>.</p>
+<p>Already on Chamesle: <code>mag update &amp;&amp; mag upgrade</code> moves you to the new repos. If you changed
+<code>/etc/mag/repos</code> yourself, the new one is <code>repos.new</code> next to it.</p>
+
 <h2 id="r22">November 22, 2026, night: r22</h2>
 <p>If your dinit setup had both NetworkManager and <code>wpa_supplicant</code> enabled, the move to OpenRC kept both. The
 <code>wpa_supplicant</code> service takes the card for itself, and NetworkManager never connects to wifi on its own.

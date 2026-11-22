@@ -44,7 +44,7 @@
 <p>The parts:</p>
 <table>
 <tr><th>part</th><th>what it is</th></tr>
-<tr><td>kernel</td><td>a prebuilt Linux 6.18 LTS kernel with its modules</td></tr>
+<tr><td>kernel</td><td>a prebuilt Linux LTS kernel with its modules</td></tr>
 <tr><td>musl</td><td>the C library</td></tr>
 <tr><td>mag</td><td>the package manager, binary packages only, in one C file</td></tr>
 <tr><td>rifle</td><td>the coreutils, all in one C file; <code>cat</code>, <code>ls</code>, <code>cp</code> and the rest are links to one program</td></tr>
@@ -60,7 +60,18 @@
 <li>a large musl repository with everything else: the kernel, the firmware, the libraries, editors, compilers, X, about 28,000 packages for x86_64</li>
 </ul>
 <p>Both are in <code>/etc/mag/repos</code>. A package is checked against the keys in <code>/etc/mag/keys</code> before anything of it is unpacked.</p>
-<h2 id="s1-3">1.3 The layout of the system</h2>
+<h2 id="s1-3">1.3 The glibc Chamesle</h2>
+<p>There is a second Chamesle on glibc, for what musl cannot run: NVIDIA's driver, Steam, programs that only come built for glibc. It is the same idea on other packages. mag, rifle, the tools and OpenRC are the same; the packages are Artix's and Arch's, about 25,000, and anything else comes from the AUR, built here. <code>chamesle-install</code> asks which one you want, <code>chamesle-bootstrap -l glibc</code> makes it by hand (3.12).</p>
+<table>
+<tr><th>part</th><th>musl Chamesle</th><th>glibc Chamesle</th></tr>
+<tr><td>kernel</td><td>Linux LTS</td><td>Linux, latest (<code>linux-lts</code> and <code>linux-zen</code> are there too)</td></tr>
+<tr><td>initramfs</td><td>mkinitfs</td><td>mkinitcpio</td></tr>
+<tr><td>file systems</td><td>ZFS, btrfs, ext4</td><td>btrfs, ext4</td></tr>
+<tr><td>login shell</td><td>mksh</td><td>bash</td></tr>
+<tr><td>packages</td><td>~28,000</td><td>~25,000, and the AUR</td></tr>
+</table>
+<p>On glibc, coreutils owns <code>/usr/bin/ls</code> and the rest, so rifle's links are in <code>/usr/lib/rifle/bin</code>, which a login shell puts first in PATH (<code>/etc/profile.d/rifle.sh</code>).</p>
+<h2 id="s1-4">1.4 The layout of the system</h2>
 <pre>/bin /sbin /lib     /lib holds the musl loader and the firmware
 /usr/bin /usr/sbin  programs, /usr/lib libraries, /usr/share data
 /usr/local/bin      yours, first in PATH
@@ -71,7 +82,7 @@
 /var/lib/mag        which package owns which file
 /var/cache/mag      downloaded indexes and packages
 /run /tmp           tmpfs, made new at every boot</pre>
-<h2 id="s1-4">1.4 Where the sources are</h2>
+<h2 id="s1-5">1.5 Where the sources are</h2>
 <table>
 <tr><th>directory</th><th>what is in it</th></tr>
 <tr><td><code>system/</code></td><td><code>tools/</code> (<code>chamesle-bootstrap</code>, <code>chamesle-disk</code>, <code>chamesle-boot</code>, and <code>mkapk</code>, <code>mkrepo</code>, <code>mkpkgs</code> for the repo), <code>files/</code> (init, rc and the services), <code>pkg/</code>, <code>keys/</code>, <code>iso/</code>, this handbook</td></tr>

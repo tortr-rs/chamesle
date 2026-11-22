@@ -72,8 +72,8 @@ mag remove vim</pre>
 </table>
 <h2 id="s4-4">4.4 Repositories</h2>
 <pre>https://chamesle.org/repo
-https://dl-cdn.alpinelinux.org/alpine/v3.24/main
-https://dl-cdn.alpinelinux.org/alpine/v3.24/community</pre>
+https://dl-cdn.alpinelinux.org/alpine/edge/main
+https://dl-cdn.alpinelinux.org/alpine/edge/community</pre>
 <p>Each line is the URL above the directory of the architecture: mag adds <code>/x86_64/APKINDEX.tar.gz</code>. A repository you add needs its key in <code>/etc/mag/keys</code>. <code>mag update</code> after any change.</p>
 <h2 id="s4-5">4.5 Making a package</h2>
 <p><code>tools/mkapk</code> packs a directory, signs it and leaves its index entry; <code>tools/mkrepo</code> signs the index of a directory of them:</p>
@@ -101,6 +101,21 @@ mag build tmux</pre>
 <p>A Void template runs with the helpers in the tree's <code>common/</code>, the way xbps-src runs it: the build style (<code>gnu-configure</code>, <code>cmake</code>, <code>meson</code> and the others), <code>vinstall</code>, <code>vmove</code> and the rest, and Void's patches. What Void splits into subpackages stays in one package here: <code>mag build libzstd</code> builds zstd. A <code>-devel</code> it needs is the <code>-dev</code> of the binary repos.</p>
 <p>An exheres runs on a small exheres-0 of mag's own, with the exlibs of the tree. Options are what Exherbo's profile turns on, without systemd and pam. Exherbo puts programs in <code>/usr/x86_64-...-musl/bin</code>; mag builds them there and moves them to <code>/usr</code> afterwards. Arbor is Exherbo's main tree, about 1000 packages; the others are on the same GitLab and work the same way.</p>
 <p>When two trees have a package, <code>mag build</code> takes the newer version. A package the binary repos split differently, like xz with its <code>xz-libs</code>, clashes with what is installed, and mag stops; <code>-f</code> writes over it.</p>
+<h2 id="s4-8">4.8 pacman repos and the AUR</h2>
+<p>The glibc Chamesle (1.3) runs on pacman repos, which mag reads natively. Its <code>/etc/mag/repos</code>:</p>
+<pre>https://chamesle.org/repo/glibc
+pacman https://mirrors.dotsrc.org/artix-linux/repos/system/os
+pacman https://mirrors.dotsrc.org/artix-linux/repos/world/os
+pacman https://mirrors.dotsrc.org/artix-linux/repos/galaxy/os
+pacman https://mirrors.dotsrc.org/artix-linux/repos/lib32/os
+pacman https://geo.mirror.pkgbuild.com/extra/os
+pacman https://geo.mirror.pkgbuild.com/multilib/os
+aur https://aur.archlinux.org</pre>
+<p>A <code>pacman</code> line is the URL above the architecture's directory; the database is named after the last part before <code>os</code> (<code>system.db</code>). As in pacman, a package that two repos have comes from the first one, so Artix's OpenRC builds win over Arch's systemd ones. Any other mirror of the same repos works the same.</p>
+<p>Packages are checked against their sha256 in the database and their OpenPGP signature, with the keyrings of <code>artix-keyring</code> and <code>archlinux-keyring</code> in <code>/usr/share/pacman/keyrings</code> (RSA and ed25519, without the revoked keys), and any <code>*.gpg</code> in <code>/etc/mag/keys</code>. A package's <code>.INSTALL</code> runs as its scripts, and after every run mag runs the hooks in <code>/usr/share/libalpm/hooks</code> and <code>/etc/pacman.d/hooks</code>, the way pacman does: they make the initramfs, the system users, the linker cache and the other caches. mag decompresses zstd itself.</p>
+<p>The <code>aur</code> line makes the AUR one more repo. <code>mag update</code> gets the metadata of every AUR package (15 MB), and <code>mag install</code> builds what is not in the binary repos:</p>
+<pre>mag install spotify</pre>
+<p>mag installs <code>base-devel</code>, <code>git</code> and what the PKGBUILD needs to build, gets the snapshot into <code>/var/cache/mag/aur/NAME</code>, and runs makepkg there as nobody; the package it makes is installed like any other. Keys the PKGBUILD lists in <code>validpgpkeys</code> are fetched from keyserver.ubuntu.com for the build. A PKGBUILD is written by whoever uploaded it and nobody else read it: look at it first (<code>/var/cache/mag/aur/NAME/PKGBUILD</code> stays after the build) if you do not trust the package.</p>
 <hr>
 <p><a href="handbook-installing.html">&larr; Installing</a> | <a href="docs.html">Contents</a> | <a href="handbook-rifle.html">rifle &rarr;</a></p>
 </main>
