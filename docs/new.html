@@ -40,6 +40,19 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r22">November 22, 2026, night: r22</h2>
+<p>If your dinit setup had both NetworkManager and <code>wpa_supplicant</code> enabled, the move to OpenRC kept both. The
+<code>wpa_supplicant</code> service takes the card for itself, and NetworkManager never connects to wifi on its own.
+r22 turns that service off when NetworkManager is on, since NetworkManager starts its own.</p>
+<p>Two things that aren't Chamesle's fault but bite anyone coming from another distro:</p>
+<ul>
+<li>NetworkManager profiles copied from a system with other interface names (<code>wlp3s0</code> there,
+<code>wlan0</code> here) are tied to that name and never connect. <code>nmcli con modify NAME connection.interface-name ""</code>
+frees them.</li>
+<li>The Rescan Wi-Fi button in nmtui is new in NetworkManager 1.58. The repos are on 1.52 for now; until they move,
+<code>nmcli device wifi rescan</code> before nmtui gives a fresh list.</li>
+</ul>
+
 <h2 id="r21">November 22, 2026, evening: r21</h2>
 <p>r20 broke the upgrade from r19. The old mag that runs the upgrade doesn't know install_if, so udev's boot scripts
 and the <code>-openrc</code> service of every daemon stayed out. After the reboot <code>/dev</code> was never set up and

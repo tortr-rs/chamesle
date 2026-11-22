@@ -2483,7 +2483,7 @@ chafa-doc	1.18.2-r0	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r0	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r0	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r0	community	5326	Zsh completions for chafa	
-chamesle-base	20261122-r21	chamesle	84586	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261122-r22	chamesle	84586	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r3	community	19948539	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r3	community	8152976	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
