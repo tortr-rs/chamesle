@@ -63,16 +63,14 @@ with them. The old code is still on <a href="https://github.com/tortr-rs/chamesl
 The Rifle Shoots down the GNU<br>
 Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down.</li>
 <li><b>dinit</b>, the init, with Chamesle's own services and boot scripts.</li>
-<li><b><a href="https://github.com/tortr-rs/mag">mag</a></b>, the package manager, in one C file with its own inflate, zstd, tar, sha256, RSA and OpenPGP.
+<li><b><a href="https://github.com/tortr-rs/mag">mag</a></b>, the package manager, in one C file with its own inflate, tar, sha256 and RSA.
 It installs signed binary packages, and builds what no repo has from <a href="handbook-mag.html#s4-6">CRUX, Void and Exherbo</a> source trees.</li>
 <li><b>chamesle-bootstrap</b>, which puts the base on a mounted disk with mag, like debootstrap.</li>
 <li><b>chamesle-install</b>, which asks a few questions and installs on a whole disk, and the helpers it runs, which work by hand too: <b>chamesle-disk</b> (partitions, and ZFS, btrfs or ext4), <b>chamesle-boot</b> (limine or GRUB).</li>
 <li><b>musl</b> for the C library, <b>mksh</b> for the login shell, <b>OpenRC</b> for the init,
 <b>limine</b> to boot.</li>
-<li><b>Linux LTS</b> as the kernel, prebuilt. Nobody here builds a kernel.</li>
+<li><b>Linux 6.18 LTS</b> as the kernel, prebuilt. Nobody here builds a kernel.</li>
 </ul>
-<p>The glibc Chamesle has the same tools on Artix's and Arch's packages and the AUR, which mag reads natively since
-0.6: for NVIDIA's driver, Steam and what else only comes built for glibc. The installer asks which one.</p>
 <p>The rest, the kernel included, comes as binary packages from a large musl repo, which mag reads as it is. Nobody
 here compiles anything to install Chamesle, so it goes on old machines as fast as on new ones.</p>
 

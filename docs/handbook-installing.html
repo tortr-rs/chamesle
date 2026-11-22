@@ -128,7 +128,7 @@ chamesle-boot -b grub /mnt</pre>
 <p>An old <code>limine.conf</code> is kept as <code>limine.conf.old</code>. If <code>/boot</code> is not FAT, limine cannot read it; chamesle-boot then writes nothing and prints an entry for the GRUB of the system already on the machine (3.11).</p>
 <p>What it does by hand follows; skip to 3.8 if it said nothing went wrong.</p>
 <pre>ls /mnt/boot
-System.map-7.3.5-0-lts  config-7.3.5-0-lts  initramfs-lts  vmlinuz-lts</pre>
+System.map-6.18.64-0-lts  config-6.18.64-0-lts  initramfs-lts  vmlinuz-lts</pre>
 <p>The names stay the same when the kernel is updated, so <code>limine.conf</code> is written once. <code>/mnt/boot/limine.conf</code>, with the UUID of the root partition:</p>
 <pre>timeout: 3
 
@@ -184,18 +184,6 @@ mount /dev/nvme0n1p3 /mnt</pre>
 addgroup -g 1000 alice
 adduser -H -u 1000 -G alice alice</pre>
 <p><code>-H</code> makes no home, since the other system's is used: the files, the dotfiles and the settings of the programs are the same in both systems.</p>
-<h2 id="s3-12">3.12 The glibc Chamesle</h2>
-<p>The install is the same, with <code>-l glibc</code> for chamesle-bootstrap. ZFS is not there: neither Artix nor Arch carries it, so the root is btrfs or ext4.</p>
-<pre>chamesle-disk -t btrfs -y /dev/sda
-chamesle-bootstrap -l glibc -n box -f &quot;linux-firmware-intel linux-firmware-realtek&quot; /mnt networkmanager networkmanager-openrc</pre>
-<p>The repos and keyrings come from <code>/usr/share/chamesle/glibc</code> on the live system. <code>-k</code> is the kernel (<code>linux</code>, or <code>linux-lts</code>, <code>linux-zen</code>); <code>-f</code> the firmware, split by vendor as in Arch (<code>linux-firmware-amdgpu</code>, <code>-nvidia</code>, <code>-atheros</code>, <code>-broadcom</code>, <code>-mediatek</code>, or <code>linux-firmware</code> for all of it). For an NVIDIA card, add <code>nvidia-open nvidia-utils</code>. Users are made with <code>useradd</code>, services have their names from Artix (<code>NetworkManager</code>, <code>iwd</code>):</p>
-<pre>echo root:PASSWORD | arch-chroot /mnt chpasswd
-arch-chroot /mnt useradd -m -G wheel,video,input,audio alice
-arch-chroot /mnt passwd alice
-arch-chroot /mnt rc-update del dhcpcd default
-arch-chroot /mnt rc-update add NetworkManager default
-chamesle-boot /mnt</pre>
-<p>chamesle-boot sees the glibc system and writes the entries for mkinitcpio's <code>initramfs-linux.img</code>.</p>
 <hr>
 <p><a href="handbook-preparing.html">&larr; Preparing</a> | <a href="docs.html">Contents</a> | <a href="handbook-mag.html">mag &rarr;</a></p>
 </main>
