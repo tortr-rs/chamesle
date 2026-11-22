@@ -2299,7 +2299,7 @@ chafa-doc	1.18.2-r0	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r0	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r0	community	353920	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r0	community	5326	Zsh completions for chafa	
-chamesle-base	20261122-r20	chamesle	84553	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
+chamesle-base	20261122-r21	chamesle	84586	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r3	community	17195419	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r3	community	8145240	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -12408,7 +12408,7 @@ mado-fish-completion	0.3.0-r0	community	2527	Fish completions for mado
 mado-zsh-completion	0.3.0-r0	community	3731	Zsh completions for mado	
 madonctl	3.0.3-r11	community	11132116	CLI client for the Mastodon social network API	
 madonctl-doc	3.0.3-r11	community	4227	CLI client for the Mastodon social network API (documentation)	
-mag	0.5	chamesle	181692	the package manager	
+mag	0.5.1	chamesle	181692	the package manager	
 magic-wormhole-rs	0.8.1-r0	community	5226812	Rust implementation of Magic Wormhole, with new features and enhancements	
 magic-wormhole-rs-bash-completion	0.8.1-r0	community	12191	Bash completions for magic-wormhole-rs	
 magic-wormhole-rs-fish-completion	0.8.1-r0	community	19722	Fish completions for magic-wormhole-rs	

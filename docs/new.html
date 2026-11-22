@@ -40,6 +40,16 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r21">November 22, 2026, evening: r21</h2>
+<p>r20 broke the upgrade from r19. The old mag that runs the upgrade doesn't know install_if, so udev's boot scripts
+and the <code>-openrc</code> service of every daemon stayed out. After the reboot <code>/dev</code> was never set up and
+every login hit <code>Permission denied</code> on <code>/dev/null</code>. Fresh installs were fine.</p>
+<p>r21 puts udev's scripts in the base, and mag 0.5.1 runs once after an upgrade done by an older mag to bring what it
+left out. If r20 got you, log in as root (that still works) and</p>
+<pre>mag update &amp;&amp; mag upgrade
+reboot</pre>
+<p>Without a network there, chroot in from the ISO and run the same.</p>
+
 <h2 id="r20">November 22, 2026: r20</h2>
 <p>OpenRC, for good. Winchester and then dinit both worked, but every package in the repos already comes with an
 OpenRC service, and writing our own for every daemon was a losing game. Now <code>mag install lightdm</code> brings
