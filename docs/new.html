@@ -40,6 +40,12 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r25">November 23, 2026, later: r25</h2>
+<p>mag 0.7.1. On the glibc Chamesle a daemon brings its OpenRC service along: <code>mag install lightdm</code>
+installs <code>lightdm-openrc</code> too, as the musl one always did. It shows in the list before you say yes, and
+nothing is turned on until <code>rc-update add</code>. What you installed before keeps going without it:
+<code>mag install foo-openrc</code> once.</p>
+
 <h2 id="r24">November 23, 2026: r24</h2>
 <p>mag 0.7. It asks now. Before it installs or removes anything it lists the packages, which repo each comes from,
 what you have now, and how much it downloads and takes on disk:</p>

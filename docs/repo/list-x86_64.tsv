@@ -765,8 +765,8 @@ arif-doc	0.3.0-r1	community	16821	Tab completion-based Readline input framework 
 ark	26.08.3-r0	community	1829093	Graphical file compression/decompression utility with support for multiple formats	7zip-virtual lrzip unzip zip zstd
 ark-doc	26.08.3-r0	community	1082268	Graphical file compression/decompression utility with support for multiple formats (documentation)	
 ark-lang	26.08.3-r0	community	2323058	Languages for package ark	
-arm-trusted-firmware	2.14.13-r0	main	1	ARM Trusted Firmware-A (TF-A)	
-arm-trusted-firmware-tools	2.14.13-r0	main	90304	ARM Trusted Firmware-A (TF-A) (tools)	
+arm-trusted-firmware	2.14.15-r0	main	1	ARM Trusted Firmware-A (TF-A)	
+arm-trusted-firmware-tools	2.14.15-r0	main	90304	ARM Trusted Firmware-A (TF-A) (tools)	
 armadillo	15.6.2-r0	community	71440	C++ library for linear algebra & scientific computing	liblapack openblas
 armadillo-dev	15.6.2-r0	community	5648812	C++ library for linear algebra & scientific computing (development files)	hdf5-dev superlu-dev armadillo=15.6.2-r0 pkgconfig
 arp-scan	1.10.0-r2	community	1568768	Address Resolution Protocol (ARP) packet scanner	
@@ -2095,7 +2095,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261123-r24	chamesle	2131123	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261123-r25	chamesle	2131123	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	20261659	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8327056	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -10091,7 +10091,7 @@ libltc-dev	1.3.2-r1	community	61702	provides functionality to encode and decode 
 libltc-doc	1.3.2-r1	community	10617	provides functionality to encode and decode LTC audio (documentation)	
 libltdl	2.6.2-r1	main	38600	Runtime libraries for GNU Libtool Dynamic Module Loader	
 libltdl-static	2.6.2-r1	main	62756	Generic library support script (static library)	
-libluv	1.52.1.0-r0	community	165632	Bare libuv bindings for Lua (shared library)	
+libluv	1.53.0.1-r0	community	165632	Bare libuv bindings for Lua (shared library)	
 liblxqt	2.4.0-r0	community	435614	Common base library for LXQt components	
 liblxqt-dev	2.4.0-r0	community	73903	Common base library for LXQt components (development files)	liblxqt=2.4.0-r0 pkgconfig
 liblxqt-lang	2.4.0-r0	community	239711	Common base library for LXQt components	
@@ -12051,9 +12051,9 @@ lua-lume	2.3.0-r2	community	0	Lua functions geared towards gamedev
 lua-lunit	0.5-r2	community	0	a unit testing framework for lua, written in lua	
 lua-lunix	20190403-r0	community	4096	Comprehensive Unix API Module for Lua	
 lua-lustache	1.3.1-r4	main	13870	Logic-less {{mustache}} templates with Lua	lua
-lua-luv	1.52.1.0-r0	community	0	Bare libuv bindings for Lua	
-lua-luv-dev	1.52.1.0-r0	community	9397	Bare libuv bindings for Lua (development files)	libluv=1.52.1.0-r0 pkgconfig
-lua-luv-static	1.52.1.0-r0	community	321654	Bare libuv bindings for Lua (static library)	lua-luv-dev
+lua-luv	1.53.0.1-r0	community	0	Bare libuv bindings for Lua	
+lua-luv-dev	1.53.0.1-r0	community	9560	Bare libuv bindings for Lua (development files)	libluv=1.53.0.1-r0 pkgconfig
+lua-luv-static	1.53.0.1-r0	community	321806	Bare libuv bindings for Lua (static library)	lua-luv-dev
 lua-lxc	3.0.2-r3	main	0	Lua bindings for LXC	
 lua-lyaml	6.2.9-r0	main	0	LibYAML binding for Lua	
 lua-lzlib	0.4.3-r3	main	0	Lua bindings to the ZLib compression library	
@@ -12209,7 +12209,7 @@ lua5.1-luautf8	0.1.5-r0	community	106496	A UTF-8 support module for Lua 5.1	lua5
 lua5.1-lume	2.3.0-r2	community	15110	Lua functions geared towards gamedev (for Lua 5.1)	lua5.1
 lua5.1-lunit	0.5-r2	community	17500	a unit testing framework for lua, written in lua (for Lua 5.1)	lua5.1
 lua5.1-lunix	20190403-r0	community	163840	Comprehensive Unix API Module for Lua 5.1	
-lua5.1-luv	1.52.1.0-r0	community	165651	Bare libuv bindings for Lua 5.1	lua5.1
+lua5.1-luv	1.53.0.1-r0	community	165651	Bare libuv bindings for Lua 5.1	lua5.1
 lua5.1-lxc	3.0.2-r3	main	29112	Lua bindings for LXC (for Lua 5.1)	
 lua5.1-lyaml	6.2.9-r0	main	56373	LibYAML binding for Lua 5.1	lua5.1 lua5.1-stdlib-normalize
 lua5.1-lzlib	0.4.3-r3	main	24286	Lua bindings to the ZLib compression library for Lua 5.1	
@@ -12333,7 +12333,7 @@ lua5.2-luaxml	2.0.0-r2	main	32645	A minimal set of functions for the processing 
 lua5.2-lume	2.3.0-r2	community	15110	Lua functions geared towards gamedev (for Lua 5.2)	lua5.2
 lua5.2-lunit	0.5-r2	community	17500	a unit testing framework for lua, written in lua (for Lua 5.2)	lua5.2
 lua5.2-lunix	20190403-r0	community	163840	Comprehensive Unix API Module for Lua 5.2	
-lua5.2-luv	1.52.1.0-r0	community	165651	Bare libuv bindings for Lua 5.2	lua5.2
+lua5.2-luv	1.53.0.1-r0	community	165651	Bare libuv bindings for Lua 5.2	lua5.2
 lua5.2-lxc	3.0.2-r3	main	29112	Lua bindings for LXC (for Lua 5.2)	
 lua5.2-lyaml	6.2.9-r0	main	56373	LibYAML binding for Lua 5.2	lua5.2 lua5.2-stdlib-normalize
 lua5.2-lzlib	0.4.3-r3	main	24286	Lua bindings to the ZLib compression library for Lua 5.2	
@@ -12453,7 +12453,7 @@ lua5.3-luaxml	2.0.0-r2	main	36741	A minimal set of functions for the processing 
 lua5.3-lume	2.3.0-r2	community	15110	Lua functions geared towards gamedev (for Lua 5.3)	lua5.3
 lua5.3-lunit	0.5-r2	community	17500	a unit testing framework for lua, written in lua (for Lua 5.3)	lua5.3
 lua5.3-lunix	20190403-r0	community	163840	Comprehensive Unix API Module for Lua 5.3	
-lua5.3-luv	1.52.1.0-r0	community	161555	Bare libuv bindings for Lua 5.3	lua5.3
+lua5.3-luv	1.53.0.1-r0	community	161555	Bare libuv bindings for Lua 5.3	lua5.3
 lua5.3-lxc	3.0.2-r3	main	29112	Lua bindings for LXC (for Lua 5.3)	
 lua5.3-lyaml	6.2.9-r0	main	56373	LibYAML binding for Lua 5.3	lua5.3 lua5.3-stdlib-normalize
 lua5.3-lzlib	0.4.3-r3	main	24286	Lua bindings to the ZLib compression library for Lua 5.3	
@@ -12566,7 +12566,7 @@ lua5.4-luautf8	0.1.5-r0	community	106496	A UTF-8 support module for Lua 5.4	lua5
 lua5.4-luaxml	2.0.0-r2	main	32645	A minimal set of functions for the processing of XML data in Lua 5.4	lua5.4
 lua5.4-lume	2.3.0-r2	community	15110	Lua functions geared towards gamedev (for Lua 5.4)	lua5.4
 lua5.4-lunit	0.5-r2	community	17500	a unit testing framework for lua, written in lua (for Lua 5.4)	lua5.4
-lua5.4-luv	1.52.1.0-r0	community	161555	Bare libuv bindings for Lua 5.4	lua5.4
+lua5.4-luv	1.53.0.1-r0	community	161555	Bare libuv bindings for Lua 5.4	lua5.4
 lua5.4-lxc	3.0.2-r3	main	29112	Lua bindings for LXC (for Lua 5.4)	
 lua5.4-lyaml	6.2.9-r0	main	56373	LibYAML binding for Lua 5.4	lua5.4 lua5.4-stdlib-normalize
 lua5.4-lzlib	0.4.3-r3	main	24286	Lua bindings to the ZLib compression library for Lua 5.4	
@@ -12657,7 +12657,7 @@ lua5.5-luatz	0.4.1-r1	community	26121	Time, Date and Timezone library for lua (f
 lua5.5-luaxml	2.0.0-r2	main	32645	A minimal set of functions for the processing of XML data in Lua 5.5	lua5.5
 lua5.5-lume	2.3.0-r2	community	15110	Lua functions geared towards gamedev (for Lua 5.5)	lua5.5
 lua5.5-lunit	0.5-r2	community	17500	a unit testing framework for lua, written in lua (for Lua 5.5)	lua5.5
-lua5.5-luv	1.52.1.0-r0	community	161555	Bare libuv bindings for Lua 5.5	lua5.5
+lua5.5-luv	1.53.0.1-r0	community	161555	Bare libuv bindings for Lua 5.5	lua5.5
 lua5.5-lxc	3.0.2-r3	main	29112	Lua bindings for LXC (for Lua 5.5)	
 lua5.5-lyaml	6.2.9-r0	main	56373	LibYAML binding for Lua 5.5	lua5.5 lua5.5-stdlib-normalize
 lua5.5-lzlib	0.4.3-r3	main	24286	Lua bindings to the ZLib compression library for Lua 5.5	
@@ -12873,7 +12873,7 @@ mado-fish-completion	0.3.0-r0	community	2527	Fish completions for mado
 mado-zsh-completion	0.3.0-r0	community	3731	Zsh completions for mado	
 madonctl	3.0.3-r11	community	12659968	CLI client for the Mastodon social network API	
 madonctl-doc	3.0.3-r11	community	4227	CLI client for the Mastodon social network API (documentation)	
-mag	0.7	chamesle	293920	the package manager	
+mag	0.7.1	chamesle	294544	the package manager	
 magic-wormhole-rs	0.8.1-r1	community	5519888	Rust implementation of Magic Wormhole, with new features and enhancements	
 magic-wormhole-rs-bash-completion	0.8.1-r1	community	12191	Bash completions for magic-wormhole-rs	
 magic-wormhole-rs-fish-completion	0.8.1-r1	community	19722	Fish completions for magic-wormhole-rs	
@@ -15533,7 +15533,7 @@ opentelemetry-cpp-exporter-otlp-common	1.30.0-r0	community	163704	OpenTelemetry 
 opentelemetry-cpp-exporter-otlp-grpc	1.30.0-r0	community	308744	OpenTelemetry C++ OTLP gRPC exporter	opentelemetry-cpp=1.30.0-r0 opentelemetry-cpp-exporter-otlp-common=1.30.0-r0
 opentelemetry-cpp-exporter-otlp-http	1.30.0-r0	community	366088	OpenTelemetry C++ OTLP HTTP exporter	opentelemetry-cpp=1.30.0-r0 opentelemetry-cpp-exporter-otlp-common=1.30.0-r0
 opentelemetry-cpp-exporter-zipkin	1.30.0-r0	community	149432	OpenTelemetry C++ OTLP Zipkin exporter	opentelemetry-cpp=1.30.0-r0
-openterface-qt	0.5.26-r1	community	3973610	Openterface Mini-KVM Host Application	gst-plugins-good-qt hicolor-icon-theme qt6-qtmultimedia-ffmpeg v4l-utils intel-media-driver onevpl-intel-gpu /bin/sh
+openterface-qt	0.5.33-r0	community	5380122	Openterface Mini-KVM Host Application	gst-plugins-good-qt hicolor-icon-theme qt6-qtmultimedia-ffmpeg v4l-utils intel-media-driver onevpl-intel-gpu /bin/sh
 opentimelineio	0.18.1-r0	community	842791	Open Source API and interchange format for editorial timeline information	
 opentimelineio-dev	0.18.1-r0	community	177240	Open Source API and interchange format for editorial timeline information (development files)	imath-dev opentimelineio=0.18.1-r0
 opentofu	1.13.1-r1	community	125965624	OpenTofu lets you declaratively manage your cloud infrastructure	
@@ -19700,8 +19700,8 @@ py3-click-option-group-pyc	0.5.7-r1	community	46301	Precompiled Python bytecode 
 py3-click-plugins	2.0_git20240226-r1	community	17280	An extension module for click to enable registering CLI commands via setuptools entry-points	python3 py3-click python3~3.14
 py3-click-plugins-pyc	2.0_git20240226-r1	community	7536	Precompiled Python bytecode for py3-click-plugins	python3~3.14
 py3-click-pyc	8.4.2-r0	main	566089	Precompiled Python bytecode for py3-click	python3~3.14
-py3-click-repl	0.3.0-r6	community	27479	Subcommand REPL for click apps	python3 py3-click py3-prompt_toolkit py3-typing-extensions python3~3.14
-py3-click-repl-pyc	0.3.0-r6	community	27294	Precompiled Python bytecode for py3-click-repl	python3~3.14
+py3-click-repl	0.4.1-r0	community	39850	Subcommand REPL for click apps	python3 py3-click py3-prompt_toolkit py3-typing-extensions python3~3.14
+py3-click-repl-pyc	0.4.1-r0	community	46241	Precompiled Python bytecode for py3-click-repl	python3~3.14
 py3-cliff	4.17.0-r0	community	298948	Command Line Interface Formulation Framework	py3-importlib-metadata py3-stevedore py3-yaml python3~3.14
 py3-cliff-pyc	4.17.0-r0	community	410638	Precompiled Python bytecode for py3-cliff	python3~3.14
 py3-cligj	0.7.2-r6	community	16735	Common arguments and options for GeoJSON processing commands, using Click	python3 py3-click python3~3.14
@@ -19799,8 +19799,8 @@ py3-crcmod	1.7-r13	community	70613	Cyclic Redundancy Check (CRC) implementation 
 py3-crcmod-pyc	1.7-r13	community	49831	Precompiled Python bytecode for py3-crcmod	python3~3.14
 py3-crispy-bootstrap4	2026.2-r2	community	39370	Bootstrap4 template pack for django-crispy-forms	python3 py3-django-crispy-forms python3~3.14
 py3-crispy-bootstrap4-pyc	2026.2-r2	community	189	Precompiled Python bytecode for py3-crispy-bootstrap4	python3~3.14
-py3-cron-descriptor	2.1.0-r0	community	195744	A Python library that converts cron expressions into human readable strings.	py3-typing-extensions python3~3.14
-py3-cron-descriptor-pyc	2.1.0-r0	community	104088	Precompiled Python bytecode for py3-cron-descriptor	python3~3.14
+py3-cron-descriptor	2.3.5-r0	community	211353	A Python library that converts cron expressions into human readable strings.	py3-babel python3~3.14
+py3-cron-descriptor-pyc	2.3.5-r0	community	118683	Precompiled Python bytecode for py3-cron-descriptor	python3~3.14
 py3-cryptography	50.0.0-r0	main	3659580	Cryptographic recipes and primitives for Python	python3 py3-cffi python3~3.14
 py3-cryptography-pyc	50.0.0-r0	main	717531	Precompiled Python bytecode for py3-cryptography	python3~3.14
 py3-cson	0.8-r1	community	18810	A python parser for the Coffeescript Object Notation (CSON)	py3-speg python3 python3~3.14
@@ -20811,8 +20811,8 @@ py3-lupa-pyc	2.1-r2	community	4602	Precompiled Python bytecode for py3-lupa	pyth
 py3-lxc	7.0.0-r0	main	81792	Python3 bindings for LXC	python3 python3~3.14
 py3-lxc-pyc	7.0.0-r0	main	20867	Precompiled Python bytecode for py3-lxc	python3~3.14
 py3-lxml	6.1.1-r0	main	4111953	Python3 LXML Library	python3~3.14
-py3-lxml-html-clean	0.4.5-r0	community	41002	HTML cleaner from lxml project	python3~3.14
-py3-lxml-html-clean-pyc	0.4.5-r0	community	33032	Precompiled Python bytecode for py3-lxml-html-clean	python3~3.14
+py3-lxml-html-clean	0.4.6-r0	community	42128	HTML cleaner from lxml project	python3~3.14
+py3-lxml-html-clean-pyc	0.4.6-r0	community	34123	Precompiled Python bytecode for py3-lxml-html-clean	python3~3.14
 py3-lxml-pyc	6.1.1-r0	main	343464	Precompiled Python bytecode for py3-lxml	python3~3.14
 py3-lxns	0.1.0-r2	community	25928	Python library to control Linux kernel namespaces	python3~3.14
 py3-lxns-pyc	0.1.0-r2	community	22319	Precompiled Python bytecode for py3-lxns	python3~3.14
@@ -21675,8 +21675,8 @@ py3-pytest-postgresql-pyc	8.0.0-r2	community	58905	Precompiled Python bytecode f
 py3-pytest-pyc	9.1.1-r1	main	1923671	Precompiled Python bytecode for py3-pytest	python3~3.14
 py3-pytest-qt	4.5.0-r3	community	135987	pytest plugin for Qt (PyQt6 and PySide6) application testing	python3 py3-pytest py3-typing-extensions python3~3.14
 py3-pytest-qt-pyc	4.5.0-r3	community	166737	Precompiled Python bytecode for py3-pytest-qt	python3~3.14
-py3-pytest-randomly	4.1.0-r0	community	18830	Pytest plugin to randomly order tests and control random.seed.	py3-pytest python3~3.14
-py3-pytest-randomly-pyc	4.1.0-r0	community	14971	Precompiled Python bytecode for py3-pytest-randomly	python3~3.14
+py3-pytest-randomly	5.1.0-r0	community	20112	Pytest plugin to randomly order tests and control random.seed.	py3-pytest python3~3.14
+py3-pytest-randomly-pyc	5.1.0-r0	community	16308	Precompiled Python bytecode for py3-pytest-randomly	python3~3.14
 py3-pytest-recording	0.13.4-r2	community	32772	pytest plugin to record network interactions via VCR.py	python3 py3-vcrpy python3~3.14
 py3-pytest-recording-pyc	0.13.4-r2	community	35052	Precompiled Python bytecode for py3-pytest-recording	python3~3.14
 py3-pytest-relaxed	2.0.2-r0	community	33070	pytest plugin for relaxed test discovery	py3-pytest py3-decorator python3~3.14
@@ -21723,8 +21723,8 @@ py3-python-editor	1.0.4-r9	community	5762	Programmatically open an editor, captu
 py3-python-editor-pyc	1.0.4-r9	community	5129	Precompiled Python bytecode for py3-python-editor	python3~3.14
 py3-python-gssapi	1.8.3-r2	community	2023066	A Python interface to RFC 2743/2744 (plus common extensions)	krb5 python3 py3-decorator python3~3.14
 py3-python-gssapi-pyc	1.8.3-r2	community	293853	Precompiled Python bytecode for py3-python-gssapi	python3~3.14
-py3-python-ipware	3.0.0-r1	community	30232	A python package for server applications to retrieve client's IP address	python3~3.14
-py3-python-ipware-pyc	3.0.0-r1	community	17079	Precompiled Python bytecode for py3-python-ipware	python3~3.14
+py3-python-ipware	4.1.1-r0	community	71125	A python package for server applications to retrieve client's IP address	python3~3.14
+py3-python-ipware-pyc	4.1.1-r0	community	51318	Precompiled Python bytecode for py3-python-ipware	python3~3.14
 py3-python-jose	3.5.0-r1	community	113584	A JOSE implementation in Python	python3 python3~3.14
 py3-python-jose-doc	3.5.0-r1	community	4787	A JOSE implementation in Python (documentation)	
 py3-python-jose-pyc	3.5.0-r1	community	134057	Precompiled Python bytecode for py3-python-jose	python3~3.14
@@ -22168,8 +22168,8 @@ py3-sqlalchemy	2.0.54-r0	community	8648072	object relational mapper for Python	p
 py3-sqlalchemy-migrate	0.13.0-r7	community	192963	SQLAlchemy Schema Migration Tools	py3-pbr py3-sqlalchemy py3-decorator py3-setuptools py3-six py3-sqlparse py3-tempita python3~3.14
 py3-sqlalchemy-migrate-pyc	0.13.0-r7	community	252423	Precompiled Python bytecode for py3-sqlalchemy-migrate	python3~3.14
 py3-sqlalchemy-pyc	2.0.54-r0	community	10129474	Precompiled Python bytecode for py3-sqlalchemy	python3~3.14
-py3-sqlalchemy-utils	0.42.1-r1	community	274474	Various utility functions and custom data types for SQLAlchemy	python3 py3-sqlalchemy python3~3.14
-py3-sqlalchemy-utils-pyc	0.42.1-r1	community	385733	Precompiled Python bytecode for py3-sqlalchemy-utils	python3~3.14
+py3-sqlalchemy-utils	0.43.0-r0	community	270488	Various utility functions and custom data types for SQLAlchemy	python3 py3-sqlalchemy python3~3.14
+py3-sqlalchemy-utils-pyc	0.43.0-r0	community	381957	Precompiled Python bytecode for py3-sqlalchemy-utils	python3~3.14
 py3-sqlglot	30.0.3-r0	community	2601801	Python SQL Parser and Transpiler	python3 python3~3.14
 py3-sqlglot-pyc	30.0.3-r0	community	4140591	Precompiled Python bytecode for py3-sqlglot	python3~3.14
 py3-sqlparse	0.5.3-r1	community	141901	A non-validating SQL parser module for Python	python3 python3~3.14
@@ -23349,11 +23349,11 @@ rasdaemon-bash-completion	1.0.0-r0	community	1687	Bash completions for rasdaemon
 rasdaemon-doc	1.0.0-r0	community	2968	utility to receive RAS error tracings (documentation)	
 rasdaemon-openrc	1.0.0-r0	community	384	utility to receive RAS error tracings (OpenRC init scripts)	
 rasdaemon-zsh-completion	1.0.0-r0	community	5999	Zsh completions for rasdaemon	
-raspberrypi-eeprom	28.37-r0	community	33693	Raspberry Pi 4/5 boot EEPROM updater	python3
-raspberrypi-eeprom-doc	28.37-r0	community	6047	Raspberry Pi 4/5 boot EEPROM updater (documentation)	
-raspberrypi-eeprom-pi4	28.37-r0	community	6133556	EEPROM bootloader files bundle for Pi4 series.	raspberrypi-eeprom=28.37-r0
-raspberrypi-eeprom-pi5	28.37-r0	community	44233196	EEPROM bootloader files bundle for Pi5 series.	raspberrypi-eeprom=28.37-r0
-raspberrypi-eeprom-sign-tools	28.37-r0	community	16190	Signing tools for Pi 4/5 EEPROMs.	python3 py3-pycryptodome
+raspberrypi-eeprom	28.38-r0	community	33693	Raspberry Pi 4/5 boot EEPROM updater	python3
+raspberrypi-eeprom-doc	28.38-r0	community	6047	Raspberry Pi 4/5 boot EEPROM updater (documentation)	
+raspberrypi-eeprom-pi4	28.38-r0	community	6658196	EEPROM bootloader files bundle for Pi4 series.	raspberrypi-eeprom=28.38-r0
+raspberrypi-eeprom-pi5	28.38-r0	community	44233196	EEPROM bootloader files bundle for Pi5 series.	raspberrypi-eeprom=28.38-r0
+raspberrypi-eeprom-sign-tools	28.38-r0	community	16190	Signing tools for Pi 4/5 EEPROMs.	python3 py3-pycryptodome
 raspberrypi-usbboot	20260603-r0	community	39420527	rpiboot and bin2c from Raspberry Pi	
 raspberrypi-utils	0.20260811-r0	community	0	Collection of Raspberry Pi utilities (scripts and simple applications)	raspberrypi-utils-dtapply=0.20260811-r0 raspberrypi-utils-dtmerge=0.20260811-r0 raspberrypi-utils-eeptools=0.20260811-r0 raspberrypi-utils-kdtc=0.20260811-r0 raspberrypi-utils-otamaker=0.20260811-r0 raspberrypi-utils-otpset=0.20260811-r0 raspberrypi-utils-overlaycheck=0.20260811-r0 raspberrypi-utils-ovmerge=0.20260811-r0 raspberrypi-utils-pinctrl=0.20260811-r0 raspberrypi-utils-raspinfo=0.20260811-r0 raspberrypi-utils-rpifwcrypto=0.20260811-r0 raspberrypi-utils-splashasm=0.20260811-r0 raspberrypi-utils-vcgencmd=0.20260811-r0 raspberrypi-utils-vclog=0.20260811-r0 raspberrypi-utils-vcmailbox=0.20260811-r0
 raspberrypi-utils-dtapply	0.20260811-r0	community	12353	A script that reads a Raspberry Pi config.txt and uses dtmerge to apply all its dtparam and dtoverlay directives to a base .dtb file.	python3 raspberrypi-utils-dtmerge=0.20260811-r0
@@ -26498,8 +26498,8 @@ tzdata-doc	2026f-r0	main	12747	Timezone data (documentation)
 tzdata-right	2026f-r0	main	592195	Timezone data for TAI-10 system clock	
 tzdata-timed	2025b-r0	community	36345	Data files for the time daemon, timed	tzdata
 tzdata-utils	2026f-r0	main	104088	Timezone data	
-u-boot	2026.10-r1	main	5010	u-boot bootloader common files	
-u-boot-tools	2026.10-r1	main	1678419	u-boot bootloader utility tools	
+u-boot	2026.10-r2	main	5010	u-boot bootloader common files	
+u-boot-tools	2026.10-r2	main	1678419	u-boot bootloader utility tools	
 uacme	1.8.1-r0	community	198604	Lightweight client for the RFC8555 ACMEv2 protocol	
 uacme-doc	1.8.1-r0	community	88277	Lightweight client for the RFC8555 ACMEv2 protocol (documentation)	
 uarmsolver	0.4.0-r1	community	305296	Universal Association Rule Mining Solver	
