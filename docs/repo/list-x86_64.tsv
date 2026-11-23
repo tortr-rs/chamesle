@@ -2095,7 +2095,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261123-r25	chamesle	2131123	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261123-r26	chamesle	2131148	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	20261659	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8327056	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -5328,12 +5328,12 @@ galculator-lang	2.1.4-r5	community	491321	Languages for package galculator
 galera	26.4.13-r3	community	2863104	Galera replication - Codership's implementation of the write set replication (wsrep) interface	mariadb
 galera-arbitrator	26.4.13-r3	community	2273280	Galera replication - Codership's implementation of the write set replication (wsrep) interface	
 galera-arbitrator-doc	26.4.13-r3	community	24576	Galera replication - Codership's implementation of the write set replication (wsrep) interface	
-gallery-dl	1.32.19-r0	community	2895229	CLI tool to download image galleries	py3-requests python3 python3~3.14
-gallery-dl-bash-completion	1.32.19-r0	community	2288	Bash completions for gallery-dl	
-gallery-dl-doc	1.32.19-r0	community	61687	CLI tool to download image galleries (documentation)	
-gallery-dl-fish-completion	1.32.19-r0	community	14090	Fish completions for gallery-dl	
-gallery-dl-pyc	1.32.19-r0	community	4125781	Precompiled Python bytecode for gallery-dl	python3~3.14
-gallery-dl-zsh-completion	1.32.19-r0	community	11398	Zsh completions for gallery-dl	
+gallery-dl	1.32.21-r0	community	2927477	CLI tool to download image galleries	py3-requests python3 python3~3.14
+gallery-dl-bash-completion	1.32.21-r0	community	2304	Bash completions for gallery-dl	
+gallery-dl-doc	1.32.21-r0	community	62042	CLI tool to download image galleries (documentation)	
+gallery-dl-fish-completion	1.32.21-r0	community	14181	Fish completions for gallery-dl	
+gallery-dl-pyc	1.32.21-r0	community	4171299	Precompiled Python bytecode for gallery-dl	python3~3.14
+gallery-dl-zsh-completion	1.32.21-r0	community	11463	Zsh completions for gallery-dl	
 gamemode	1.8.2-r0	community	221058	Optimise Linux system performance on demand	
 gamemode-dev	1.8.2-r0	community	12580	Optimise Linux system performance on demand (development files)	gamemode=1.8.2-r0 pkgconfig
 gamemode-doc	1.8.2-r0	community	5772	Optimise Linux system performance on demand (documentation)	
@@ -5811,9 +5811,9 @@ glib-networking-dbg	2.90.1-r0	community	518472	Networking support for GLib (debu
 glib-networking-lang	2.90.1-r0	community	566993	Languages for package glib-networking	
 glib-networking-systemd	2.90.1-r0	community	147	Networking support for GLib (systemd files)	
 glib-static	2.90.1-r0	main	29415246	Low-level core library that forms the basis for projects such as GTK and GNOME (static library)	gettext-static
-glibd	2.4.3-r6	community	2969736	D bindings for the GLib C Utility Library	
-glibd-dbg	2.4.3-r6	community	1109968	D bindings for the GLib C Utility Library (debug symbols)	!glibd<2.4.3-r6 !glibd>2.4.3-r6
-glibd-dev	2.4.3-r6	community	4941378	D bindings for the GLib C Utility Library (development files)	glibd=2.4.3-r6 pkgconfig
+glibd	2.4.3-r7	community	2973832	D bindings for the GLib C Utility Library	
+glibd-dbg	2.4.3-r7	community	1111152	D bindings for the GLib C Utility Library (debug symbols)	
+glibd-dev	2.4.3-r7	community	4959837	D bindings for the GLib C Utility Library (development files)	glibd=2.4.3-r7 pkgconfig
 glibmm	2.90.0-r0	community	2587584	C++ wrapper for the GLib toolkit	
 glibmm-dev	2.90.0-r0	community	3522821	C++ wrapper for the GLib toolkit (development files)	glibmm=2.90.0-r0 pkgconfig
 glibmm2.66	2.66.10-r0	community	2247616	C++ wrapper for the GLib toolkit	
@@ -9578,10 +9578,10 @@ libebml	1.4.7-r0	community	116696	C++ library to parse Extensible Binary Meta-La
 libebml-dev	1.4.7-r0	community	87574	C++ library to parse Extensible Binary Meta-Language files (development files)	libebml=1.4.7-r0 pkgconfig
 libebur128	1.2.6-r4	community	30320	Library implementing the EBU R128 loudness standard	
 libebur128-dev	1.2.6-r4	community	15813	Library implementing the EBU R128 loudness standard (development files)	libebur128=1.2.6-r4 pkgconfig
-libeconf	0.8.4-r0	main	65672	Enhanced Config File Parser	
-libeconf-dev	0.8.4-r0	main	49304	Enhanced Config File Parser (development files)	libeconf=0.8.4-r0 pkgconfig
-libeconf-doc	0.8.4-r0	main	37919	Enhanced Config File Parser (documentation)	
-libeconf-static	0.8.4-r0	main	318158	Enhanced Config File Parser (static library)	libeconf-dev
+libeconf	0.8.8-r0	main	65672	Enhanced Config File Parser	
+libeconf-dev	0.8.8-r0	main	50570	Enhanced Config File Parser (development files)	libeconf=0.8.8-r0 pkgconfig
+libeconf-doc	0.8.8-r0	main	41989	Enhanced Config File Parser (documentation)	
+libeconf-static	0.8.8-r0	main	323534	Enhanced Config File Parser (static library)	libeconf-dev
 libecpg	18.7-r0	main	188368	ECPG - Embedded SQL in C	
 libecpg-dev	18.7-r0	main	1173365	ECPG - Embedded SQL in C (development files)	libpq-dev=18.7-r0 libecpg=18.7-r0 pkgconfig
 libedit	20260512.3.1-r0	main	178016	BSD line editing library	
@@ -12873,7 +12873,7 @@ mado-fish-completion	0.3.0-r0	community	2527	Fish completions for mado
 mado-zsh-completion	0.3.0-r0	community	3731	Zsh completions for mado	
 madonctl	3.0.3-r11	community	12659968	CLI client for the Mastodon social network API	
 madonctl-doc	3.0.3-r11	community	4227	CLI client for the Mastodon social network API (documentation)	
-mag	0.7.1	chamesle	294544	the package manager	
+mag	0.7.2	chamesle	294768	the package manager	
 magic-wormhole-rs	0.8.1-r1	community	5519888	Rust implementation of Magic Wormhole, with new features and enhancements	
 magic-wormhole-rs-bash-completion	0.8.1-r1	community	12191	Bash completions for magic-wormhole-rs	
 magic-wormhole-rs-fish-completion	0.8.1-r1	community	19722	Fish completions for magic-wormhole-rs	
@@ -18801,8 +18801,8 @@ podofo-dev	1.1.1-r0	community	820106	C++ library to work with the PDF file forma
 poedit	3.9.1-r0	community	4630266	cross-platform translations editor	gettext
 poedit-doc	3.9.1-r0	community	919	cross-platform translations editor (documentation)	
 poedit-lang	3.9.1-r0	community	3956974	Languages for package poedit	
-poetry	2.5.1-r1	community	989992	Python3 dependency management and packaging system	py3-poetry-core py3-build py3-cachecontrol py3-cleo py3-dulwich py3-fastjsonschema py3-installer py3-keyring py3-packaging py3-pkginfo py3-platformdirs py3-pyproject-hooks py3-requests py3-requests-toolbelt py3-shellingham py3-tomlkit py3-trove-classifiers py3-virtualenv py3-findpython py3-pbs-installer python3~3.14
-poetry-pyc	2.5.1-r1	community	1398813	Precompiled Python bytecode for poetry	python3~3.14
+poetry	2.5.2-r0	community	990645	Python3 dependency management and packaging system	py3-poetry-core py3-build py3-cachecontrol py3-cleo py3-dulwich py3-fastjsonschema py3-installer py3-keyring py3-packaging py3-pkginfo py3-platformdirs py3-pyproject-hooks py3-requests py3-requests-toolbelt py3-shellingham py3-tomlkit py3-trove-classifiers py3-virtualenv py3-findpython py3-pbs-installer python3~3.14
+poetry-pyc	2.5.2-r0	community	1399520	Precompiled Python bytecode for poetry	python3~3.14
 poke	5.0-r0	community	1588252	Extensible editor for binary data	
 poke-dev	5.0-r0	community	2292269	Extensible editor for binary data (development files)	poke-libs=5.0-r0 pkgconfig
 poke-doc	5.0-r0	community	891343	Extensible editor for binary data (documentation)	
@@ -28346,7 +28346,7 @@ zam-plugins-vst3	4.5-r0	community	35690832	Collection of LADSPA/LV2/VST/JACK aud
 zangband	2.7.5.1-r2	community	6402048	Roguelike computer role playing game based on Angband	ncurses
 zanshin	26.08.3-r0	community	3858973	A Getting Things Done application which aims at getting your mind like water	
 zanshin-lang	26.08.3-r0	community	393169	Languages for package zanshin	
-zaproxy	2.17.0-r0	community	279764476	OWASP Zed Attack Proxy web app scanner	bash openjdk17-jre font-liberation
+zaproxy	2.17.1-r0	community	288703733	OWASP Zed Attack Proxy web app scanner	bash openjdk17-jre font-liberation
 zapzap	7.5.1-r0	community	2821405	Custom WhatsApp desktop client using PyQt	py3-qt6 py3-pyqt6-webengine py3-dbus py3-gettext qt6-qtwebengine qt6-qtbase-x11 mesa-dri-gallium python3~3.14
 zapzap-pyc	7.5.1-r0	community	2298943	Precompiled Python bytecode for zapzap	python3~3.14
 zathura	2026.10.23-r0	community	779077	Highly customizable and functional document viewer	

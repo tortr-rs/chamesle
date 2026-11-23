@@ -40,6 +40,18 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r26">November 23, 2026, late: r26</h2>
+<p>The glibc Chamesle says Chamesle. Artix's packages put their name in os-release, the release files, GRUB's menu
+and the line OpenRC boots with; the base puts Chamesle back in all of them, and a hook does it again whenever those
+packages come again. Plasma, fastfetch and the login prompt follow os-release.</p>
+<p>The kernel is <code>linux-lts</code> now, as on musl, named <code>6.18.64-1-lts</code>. To move:</p>
+<pre>mag update &amp;&amp; mag upgrade
+mag install linux-lts          # nvidia-open-lts too, for NVIDIA
+mag remove linux               # and nvidia-open
+chamesle-boot /</pre>
+<p>mag 0.7.2: <code>mag remove</code> runs pacman's hooks, so a removed kernel leaves <code>/boot</code> as it
+should. <code>chamesle-boot /</code> works on the running system.</p>
+
 <h2 id="r25">November 23, 2026, later: r25</h2>
 <p>mag 0.7.1. On the glibc Chamesle a daemon brings its OpenRC service along: <code>mag install lightdm</code>
 installs <code>lightdm-openrc</code> too, as the musl one always did. It shows in the list before you say yes, and
