@@ -54,7 +54,7 @@ mag files PKG              the files a package put on the system
 mag owns PATH              which package a file came from
 mag deps PKG               what it needs; rdeps PKG for what needs it
 mag fetch PKG...           only download them</pre>
-<p><code>-n</code> says what would happen and does nothing, <code>-f</code> goes on when files clash or something still needs a package. <code>MAG_ROOT=/mnt mag ...</code> works on another root, which is what chamesle-bootstrap does.</p>
+<p>Before it installs or removes anything it lists the packages, where they come from and their sizes, and asks. <code>-n</code> says what would happen and does nothing, <code>-f</code> goes on when files clash or something still needs a package. <code>-y</code> or <code>MAG_YES=1</code> answers yes, for scripts. <code>MAG_ROOT=/mnt mag ...</code> works on another root, which is what chamesle-bootstrap does.</p>
 <h2 id="s4-2">4.2 Installing and removing</h2>
 <pre>mag install vim
 mag -n install xorg-server      what would come with it
@@ -126,7 +126,7 @@ Something wrong on this page? Tell us on the <a href="board.html">board</a>.<br>
 Chamesle installs with <code>chamesle-install</code>, or by hand from the <a href="docs.html">handbook</a>.<br>
 <a href="https://ko-fi.com/L6N725GI1V">Ko-fi</a><br>
 <a href="#" id="edit-link">Edit text</a><br>
-$Date: 2026-11-22 $
+$Date: 2026-11-23 $
 </div>
 
 </div>

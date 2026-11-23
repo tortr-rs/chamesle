@@ -319,8 +319,8 @@ addrwatch	1.0.2-r1	community	122880	IPv4/IPv6 and ethernet address pairing monit
 addrwatch-doc	1.0.2-r1	community	24576	IPv4/IPv6 and ethernet address pairing monitoring (documentation)	
 addrwatch-mysql	1.0.2-r1	community	77824	IPv4/IPv6 and ethernet address pairing monitoring - with MySQL output	addrwatch=1.0.2-r1
 addrwatch-openrc	1.0.2-r1	community	32768	IPv4/IPv6 and ethernet address pairing monitoring (OpenRC init scripts)	
-adguardhome	0.107.79-r1	community	39463152	Network-wide ads & trackers blocking DNS server	ca-certificates /bin/sh
-adguardhome-openrc	0.107.79-r1	community	1253	Network-wide ads & trackers blocking DNS server (OpenRC init scripts)	
+adguardhome	1.0.0-r0	community	35961744	Network-wide ads & trackers blocking DNS server	ca-certificates /bin/sh
+adguardhome-openrc	1.0.0-r0	community	1253	Network-wide ads & trackers blocking DNS server (OpenRC init scripts)	
 adman	0.9.0-r7	community	109236	A tool for performing automated Active Directory management	python3 py3-ldap py3-dnspython py3-smbc py3-yaml python3~3.14
 adman-pyc	0.9.0-r7	community	170398	Precompiled Python bytecode for adman	python3~3.14
 advancecomp	2.6-r0	community	995328	A collection of recompression utilities for your .ZIP archives, .PNG snapshots, .MNG video clips and .GZ files	
@@ -359,6 +359,8 @@ agensgraph-plpython3-contrib	2.16.0-r3	community	29469	PL/Python 3 extension mod
 agensgraph-pltcl	2.16.0-r3	community	60228	PL/Tcl procedural language for AgensGraph	agensgraph=2.16.0-r3 pgtcl
 agetty	2.42.4-r3	main	60664	agetty program from util-linux	
 agetty-openrc	0.63.2-r1	main	1438	agetty program from util-linux (OpenRC init scripts)	ifupdown-any openrc-user=0.63.2-r1
+agrep	0.9.0-r0	community	22432	approximate grepping	
+agrep-doc	0.9.0-r0	community	2493	POSIX compliant regexp matching library (documentation)	
 aha	0.5.1-r3	community	49152	ANSI color to HTML converter	
 aha-doc	0.5.1-r3	community	24576	ANSI color to HTML converter (documentation)	
 aircrack-ng	1.7-r5	community	1964182	Key cracker for the 802.11 WEP and WPA-PSK protocols	ethtool wireless-tools iw sqlite grep
@@ -1727,8 +1729,8 @@ bwm-ng	0.6.3-r3	main	61440	A small and simple console-based live bandwidth monit
 bwm-ng-doc	0.6.3-r3	main	28672	A small and simple console-based live bandwidth monitor (documentation)	
 byacc	20260126-r0	main	125392	The Berkeley Yacc general-purpose parser generator	!bison
 byacc-doc	20260126-r0	main	5112	The Berkeley Yacc general-purpose parser generator (documentation)	
-byobu	7.18-r0	main	988848	An enhancement of the GNU Screen	python3 tmux py3-newt
-byobu-doc	7.18-r0	main	40253	An enhancement of the GNU Screen (documentation)	
+byobu	7.24-r0	main	1527224	An enhancement of the GNU Screen	python3 tmux py3-newt
+byobu-doc	7.24-r0	main	44891	An enhancement of the GNU Screen (documentation)	
 bzip2	1.0.8-r6	main	339968	A high-quality data compression program	
 bzip2-dev	1.0.8-r6	main	32768	A high-quality data compression program (development files)	libbz2=1.0.8-r6 pkgconfig
 bzip2-doc	1.0.8-r6	main	57344	A high-quality data compression program (documentation)	
@@ -1926,6 +1928,8 @@ catch2	2.13.10-r0	community	798720	A modern, C++-native, header-only, test frame
 catch2-3	3.16.1-r0	community	3197454	Modern, C++-native, header-only, test framework for unit-tests (v3)	pkgconfig
 catch2-3-doc	3.16.1-r0	community	371462	Modern, C++-native, header-only, test framework for unit-tests (v3) (documentation)	
 catch2-doc	2.13.10-r0	community	331776	A modern, C++-native, header-only, test framework for unit-tests (documentation)	
+catdoc	0.95-r2	community	601922	Convertor for Microsoft Word, Excel, PowerPoint and RTF Files to text	
+catdoc-doc	0.95-r2	community	7288	Convertor for Microsoft Word, Excel, PowerPoint and RTF Files to text (documentation)	
 catgirl	2.2a-r1	community	116008	TLS-only terminal IRC client	
 catgirl-doc	2.2a-r1	community	7223	TLS-only terminal IRC client (documentation)	
 catimg	2.8.0-r1	community	76728	Terminal image renderer	
@@ -2091,7 +2095,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261122-r23	chamesle	2130784	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261123-r24	chamesle	2131123	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	20261659	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8327056	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -5532,11 +5536,11 @@ geary-dbg	46.0-r6	community	34938592	Geary is an email application built around 
 geary-doc	46.0-r6	community	616526	Geary is an email application built around conversations (documentation)	
 geary-lang	46.0-r6	community	2208115	Languages for package geary	
 geckodriver	0.37.1-r1	community	3037656	Proxy for using W3C WebDriver compatible clients to interact with Gecko-based browsers.	
-gedit	51.0-r0	community	1020671	Easy-to-use and general-purpose text editor	adwaita-icon-theme gsettings-desktop-schemas
-gedit-dev	51.0-r0	community	43574	Easy-to-use and general-purpose text editor (development files)	gedit=51.0-r0 pkgconfig
-gedit-doc	51.0-r0	community	3635958	Easy-to-use and general-purpose text editor (documentation)	
-gedit-lang	51.0-r0	community	7286677	Languages for package gedit	
-gedit-plugins	51.0-r0	community	549966	Plugins for the gedit text editor	gedit=51.0-r0
+gedit	51.1-r0	community	1021442	Easy-to-use and general-purpose text editor	adwaita-icon-theme gsettings-desktop-schemas
+gedit-dev	51.1-r0	community	43574	Easy-to-use and general-purpose text editor (development files)	gedit=51.1-r0 pkgconfig
+gedit-doc	51.1-r0	community	3635958	Easy-to-use and general-purpose text editor (documentation)	
+gedit-lang	51.1-r0	community	7283555	Languages for package gedit	
+gedit-plugins	51.1-r0	community	550329	Plugins for the gedit text editor	gedit=51.1-r0
 geeqie	3.4-r0	community	3190335	Gtk+ based image viewer and organiser	
 geeqie-bash-completion	3.4-r0	community	7700	Bash completions for geeqie	
 geeqie-doc	3.4-r0	community	200047	Gtk+ based image viewer and organiser (documentation)	
@@ -9729,9 +9733,9 @@ libgedit-amtk	5.11.0-r0	community	80412	Gedit Technology — actions, menus and 
 libgedit-amtk-dev	5.11.0-r0	community	183120	Gedit Technology — actions, menus and toolbars kit (development files)	libgedit-amtk=5.11.0-r0 pkgconfig
 libgedit-amtk-doc	5.11.0-r0	community	386464	Gedit Technology — actions, menus and toolbars kit (documentation)	
 libgedit-amtk-lang	5.11.0-r0	community	86380	Languages for package libgedit-amtk	
-libgedit-gfls	0.5.0-r0	community	118503	Gedit Technology — file loading and saving	
-libgedit-gfls-dev	0.5.0-r0	community	186049	Gedit Technology — file loading and saving (development files)	libgedit-gfls=0.5.0-r0 pkgconfig
-libgedit-gfls-doc	0.5.0-r0	community	384704	Gedit Technology — file loading and saving (documentation)	
+libgedit-gfls	0.5.1-r0	community	118329	Gedit Technology — file loading and saving	
+libgedit-gfls-dev	0.5.1-r0	community	186049	Gedit Technology — file loading and saving (development files)	libgedit-gfls=0.5.1-r0 pkgconfig
+libgedit-gfls-doc	0.5.1-r0	community	385354	Gedit Technology — file loading and saving (documentation)	
 libgedit-gtksourceview	299.8.0-r0	community	2277625	Gedit Technology — source code editing widget	
 libgedit-gtksourceview-dev	299.8.0-r0	community	1033447	Gedit Technology — source code editing widget (development files)	libgedit-gtksourceview=299.8.0-r0 pkgconfig
 libgedit-gtksourceview-doc	299.8.0-r0	community	1785738	Gedit Technology — source code editing widget (documentation)	
@@ -12858,10 +12862,10 @@ macchanger-doc	1.7.0-r3	community	57344	An utility for viewing/manipulating the 
 macifrename	0.1.2-r1	main	36864	stably rename NICs based on MAC addresses	
 macifrename-openrc	0.1.2-r1	main	24576	stably rename NICs based on MAC addresses (OpenRC init scripts)	
 madbomber	0.2.5-r3	community	3059028	Clone of Activision's classic Atari 2600 console game Kaboom!	libmikmod
-maddy	0.9.8-r0	community	30576246	Composable all-in-one mail server	/bin/sh
-maddy-doc	0.9.8-r0	community	736	Composable all-in-one mail server (documentation)	
-maddy-openrc	0.9.8-r0	community	802	Composable all-in-one mail server (OpenRC init scripts)	
-maddy-vim	0.9.8-r0	community	4210	Composable all-in-one mail server (vim syntax)	
+maddy	0.9.8-r1	community	30576246	Composable all-in-one mail server	/bin/sh
+maddy-doc	0.9.8-r1	community	737	Composable all-in-one mail server (documentation)	
+maddy-openrc	0.9.8-r1	community	815	Composable all-in-one mail server (OpenRC init scripts)	
+maddy-vim	0.9.8-r1	community	4210	Composable all-in-one mail server (vim syntax)	
 mado	0.3.0-r0	community	3407352	A fast Markdown linter written in Rust	
 mado-bash-completion	0.3.0-r0	community	4891	Bash completions for mado	
 mado-doc	0.3.0-r0	community	23938	A fast Markdown linter written in Rust (documentation)	
@@ -12869,7 +12873,7 @@ mado-fish-completion	0.3.0-r0	community	2527	Fish completions for mado
 mado-zsh-completion	0.3.0-r0	community	3731	Zsh completions for mado	
 madonctl	3.0.3-r11	community	12659968	CLI client for the Mastodon social network API	
 madonctl-doc	3.0.3-r11	community	4227	CLI client for the Mastodon social network API (documentation)	
-mag	0.6	chamesle	288144	the package manager	
+mag	0.7	chamesle	293920	the package manager	
 magic-wormhole-rs	0.8.1-r1	community	5519888	Rust implementation of Magic Wormhole, with new features and enhancements	
 magic-wormhole-rs-bash-completion	0.8.1-r1	community	12191	Bash completions for magic-wormhole-rs	
 magic-wormhole-rs-fish-completion	0.8.1-r1	community	19722	Fish completions for magic-wormhole-rs	
@@ -13769,10 +13773,10 @@ musl-legacy-error	0.5-r1	main	16384	Legacy compatibility error.h header for musl
 musl-libintl	1.2.6-r6	main	881	musl libintl.h header	
 musl-locales	0.1.0-r1	main	245760	Locales support for musl	
 musl-locales-lang	0.1.0-r1	main	225280	Languages for package musl-locales	
-musl-nscd	1.1.1-r4	main	57344	Implementation of nscd for nsswitch modules for musl	/bin/sh
-musl-nscd-dev	1.1.1-r4	main	16384	Implementation of nscd for nsswitch modules for musl (development files)	bison flex
-musl-nscd-doc	1.1.1-r4	main	36864	Implementation of nscd for nsswitch modules for musl (documentation)	
-musl-nscd-openrc	1.1.1-r4	main	16384	Implementation of nscd for nsswitch modules for musl (OpenRC init scripts)	
+musl-nscd	1.2.1-r0	main	43192	Implementation of nscd for nsswitch modules for musl	/bin/sh
+musl-nscd-dev	1.2.1-r0	main	187	Implementation of nscd for nsswitch modules for musl (development files)	bison flex
+musl-nscd-doc	1.2.1-r0	main	5605	Implementation of nscd for nsswitch modules for musl (documentation)	
+musl-nscd-openrc	1.2.1-r0	main	2844	Implementation of nscd for nsswitch modules for musl (OpenRC init scripts)	
 musl-obstack	1.2.3-r2	main	28672	Standalone library to implement GNU libc's obstack	
 musl-obstack-dev	1.2.3-r2	main	57344	Standalone library to implement GNU libc's obstack (development files)	musl-obstack=1.2.3-r2 pkgconfig
 musl-utils	1.2.6-r6	main	55421	the musl c library (libc) implementation	scanelf
@@ -15110,11 +15114,11 @@ one-context	0.9.0-r0	main	81920	Contextualization scripts for OpenNebula guests	
 onedrive	2.5.12-r0	community	4290148	OneDrive Client for Linux	
 onedrive-doc	2.5.12-r0	community	847267	OneDrive Client for Linux (documentation)	
 onedrive-openrc	2.5.12-r0	community	863	OneDrive Client for Linux (OpenRC init scripts)	
-onefetch	3.2.0-r0	community	7476760	Git repository summary on your terminal	
-onefetch-bash-completion	3.2.0-r0	community	8517	Bash completions for onefetch	
-onefetch-doc	3.2.0-r0	community	1831	Git repository summary on your terminal (documentation)	
-onefetch-fish-completion	3.2.0-r0	community	4806	Fish completions for onefetch	
-onefetch-zsh-completion	3.2.0-r0	community	5837	Zsh completions for onefetch	
+onefetch	3.3.0-r0	community	7738744	Git repository summary on your terminal	
+onefetch-bash-completion	3.3.0-r0	community	9114	Bash completions for onefetch	
+onefetch-doc	3.3.0-r0	community	1879	Git repository summary on your terminal (documentation)	
+onefetch-fish-completion	3.3.0-r0	community	5092	Fish completions for onefetch	
+onefetch-zsh-completion	3.3.0-r0	community	6200	Zsh completions for onefetch	
 onetbb	2023.2.0-r0	community	435400	oneAPI Threading Building Blocks	
 onetbb-dbg	2023.2.0-r0	community	7360360	oneAPI Threading Building Blocks (debug symbols)	
 onetbb-dev	2023.2.0-r0	community	1525194	oneAPI Threading Building Blocks (development files)	linux-headers onetbb=2023.2.0-r0 pkgconfig
@@ -15543,9 +15547,9 @@ openttd-opengfx	8.0-r0	community	5323665	Free graphics set for OpenTTD
 openttd-openmsx	0.4.2-r0	community	737696	Music Base Set for OpenTTD	
 openttd-opensfx	1.0.3-r0	community	13205816	Free sound effect set for OpenTTD	
 openv2g	0.9.5-r0	community	311296	Implements ISO IEC 15118 and also the DIN 70121 vehicle to grid (V2G) communication interface	libopenv2g
-openvas-scanner	23.50.24-r0	community	859473	Open Vulnerability Assessment Scanner	redis nmap coreutils openssl util-linux rsync /bin/sh
-openvas-scanner-config	23.50.24-r0	community	214	Configuration files and scripts for openvas	redis nmap coreutils openssl util-linux rsync
-openvas-scanner-doc	23.50.24-r0	community	9067	Open Vulnerability Assessment Scanner (documentation)	
+openvas-scanner	23.50.24-r1	community	859473	Open Vulnerability Assessment Scanner	redis nmap coreutils openssl rsync /bin/sh
+openvas-scanner-config	23.50.24-r1	community	214	Configuration files and scripts for openvas	redis nmap coreutils openssl rsync
+openvas-scanner-doc	23.50.24-r1	community	9067	Open Vulnerability Assessment Scanner (documentation)	
 openvas-smb	22.5.10-r2	community	7264264	SMB module for OpenVAS Scanner	
 openvas-smb-dev	22.5.10-r2	community	4535	SMB module for OpenVAS Scanner (development files)	openvas-smb=22.5.10-r2 pkgconfig
 openvas-smb-doc	22.5.10-r2	community	1471	SMB module for OpenVAS Scanner (documentation)	
@@ -15763,8 +15767,9 @@ papers-lang	50.2-r0	community	3205123	Languages for package papers
 papers-libs	50.2-r0	community	874885	simple document viewer for GNOME desktop (libraries)	
 papers-nautilus	50.2-r0	community	14032	papers (Nautilus extension)	adwaita-icon-theme gsettings-desktop-schemas
 papirus-icon-theme	20250201-r0	community	120456242	papirus icon theme	
-par2cmdline	1.4.0-r0	community	182432	PAR 2.0 compatible file verification and repair tool	
-par2cmdline-doc	1.4.0-r0	community	4912	PAR 2.0 compatible file verification and repair tool (documentation)	
+par2cmdline	2.0.0-r0	community	1002800	PAR 2.0 compatible file verification and repair tool	
+par2cmdline-dev	2.0.0-r0	community	2664572	PAR 2.0 compatible file verification and repair tool (development files)	
+par2cmdline-doc	2.0.0-r0	community	5841	PAR 2.0 compatible file verification and repair tool (documentation)	
 parallel	20261022-r0	main	811227	Shell tool for executing jobs in parallel	perl
 parallel-bash-completion	20261022-r0	main	3648	Bash completions for parallel	
 parallel-doc	20261022-r0	main	3998690	Shell tool for executing jobs in parallel (documentation)	
@@ -18519,6 +18524,8 @@ pike-sqlite	8.0.2040-r1	community	23559	Pike programming language (SQLite suppor
 pike-svg	8.0.2040-r1	community	13496	Pike programming language (SVG support)	pike=8.0.2040-r1
 piknik	0.10.2-r15	community	3774720	Copy/paste anything over the network	
 pil-squasher	0_git20230828-r1	community	45056	Convert split .mdt + .bXX files into a .mbn file	
+piler	1.4.9-r3	community	7143413	Open source email archiving solution with all the necessary features for your enterprise	bash catdoc coreutils findutils libcurl libzip libmanticore-columnar manticore memcached poppler-utils python3 py3-mysqlclient sysstat tnef tre unrtf xlhtml /bin/sh
+piler-openrc	1.4.9-r3	community	1040	Open source email archiving solution with all the necessary features for your enterprise (OpenRC init scripts)	/bin/sh
 pilot-link	0.15.0-r0	community	918915	Suite of tools for connecting to PalmOS handheld devices	pilot-link-libs
 pilot-link-dev	0.15.0-r0	community	646792	Suite of tools for connecting to PalmOS handheld devices (development files)	pilot-link-libs=0.15.0-r0 pkgconfig
 pilot-link-doc	0.15.0-r0	community	73278	Suite of tools for connecting to PalmOS handheld devices (documentation)	
@@ -19914,8 +19921,8 @@ py3-django-annoying	0.10.8-r2	community	21327	This is a django application that 
 py3-django-annoying-pyc	0.10.8-r2	community	24146	Precompiled Python bytecode for py3-django-annoying	python3~3.14
 py3-django-appconf	1.2.0-r2	community	11943	Packaged application configuation helper for Django	python3 py3-django python3~3.14
 py3-django-appconf-pyc	1.2.0-r2	community	9906	Precompiled Python bytecode for py3-django-appconf	python3~3.14
-py3-django-auth-ldap	5.3.0-r2	community	68561	Django LDAP authentication backend	py3-django py3-ldap python3~3.14
-py3-django-auth-ldap-pyc	5.3.0-r2	community	78566	Precompiled Python bytecode for py3-django-auth-ldap	python3~3.14
+py3-django-auth-ldap	5.4.0-r0	community	68530	Django LDAP authentication backend	py3-django py3-ldap python3~3.14
+py3-django-auth-ldap-pyc	5.4.0-r0	community	78566	Precompiled Python bytecode for py3-django-auth-ldap	python3~3.14
 py3-django-autocomplete-light	5.0.0-r0	community	288671	Fresh autocompletes for Django	py3-django-querysetsequence py3-django-taggit py3-django-extensions py3-django-nested-admin python3~3.14
 py3-django-autocomplete-light-pyc	5.0.0-r0	community	183602	Precompiled Python bytecode for py3-django-autocomplete-light	python3~3.14
 py3-django-cache-url	3.4.6-r0	community	9196	Use Cache URLs in your Django Application	py3-django python3~3.14
@@ -19980,8 +19987,8 @@ py3-django-oscar	4.2.1-r0	community	42900017	Domain-driven e-commerce for Django
 py3-django-oscar-promotions	1.0.0_beta1-r8	community	74679	Promotions for Django Oscar	py3-django-oscar python3~3.14
 py3-django-oscar-promotions-pyc	1.0.0_beta1-r8	community	72540	Precompiled Python bytecode for py3-django-oscar-promotions	python3~3.14
 py3-django-oscar-pyc	4.2.1-r0	community	2080644	Precompiled Python bytecode for py3-django-oscar	python3~3.14
-py3-django-otp	1.7.3-r0	community	173389	A pluggable framework for adding two-factor authentication to Django using one-time passwords.	py3-django py3-qrcode python3~3.14
-py3-django-otp-pyc	1.7.3-r0	community	166820	Precompiled Python bytecode for py3-django-otp	python3~3.14
+py3-django-otp	1.7.5-r0	community	173646	A pluggable framework for adding two-factor authentication to Django using one-time passwords.	py3-django py3-qrcode python3~3.14
+py3-django-otp-pyc	1.7.5-r0	community	167005	Precompiled Python bytecode for py3-django-otp	python3~3.14
 py3-django-pgactivity	1.8.0-r3	community	33335	View, filter, and kill Postgres queries.	py3-django py3-importlib-metadata python3~3.14
 py3-django-pgactivity-pyc	1.8.0-r3	community	40930	Precompiled Python bytecode for py3-django-pgactivity	python3~3.14
 py3-django-pglock	1.8.0-r2	community	51521	Postgres advisory locks, table locks, and blocking lock management.	py3-django py3-django-pgactivity py3-importlib-metadata python3~3.14
@@ -20478,8 +20485,8 @@ py3-ijson	3.5.0-r0	community	140250	Iterative JSON parser with standard Python i
 py3-ijson-pyc	3.5.0-r0	community	97189	Precompiled Python bytecode for py3-ijson	python3~3.14
 py3-imagesize	1.4.1-r5	main	17513	Getting image size from png/jpeg/jpeg2000/gif file	python3 python3~3.14
 py3-imagesize-pyc	1.4.1-r5	main	17073	Precompiled Python bytecode for py3-imagesize	python3~3.14
-py3-imap-tools	1.15.0-r0	community	117092	Work with email and mailbox by IMAP	python3~3.14
-py3-imap-tools-pyc	1.15.0-r0	community	146749	Precompiled Python bytecode for py3-imap-tools	python3~3.14
+py3-imap-tools	1.16.0-r0	community	117815	Work with email and mailbox by IMAP	python3~3.14
+py3-imap-tools-pyc	1.16.0-r0	community	147110	Precompiled Python bytecode for py3-imap-tools	python3~3.14
 py3-imaplib2	3.6-r3	community	96757	Threaded Python IMAP4 client	python3 python3~3.14
 py3-imaplib2-pyc	3.6-r3	community	115655	Precompiled Python bytecode for py3-imaplib2	python3~3.14
 py3-imath	3.2.2-r1	community	23408184	Imath Python library	python3 imath=3.2.2-r1 python3~3.14
@@ -21085,8 +21092,8 @@ py3-openapi-core	0.23.1-r1	community	393417	Client-side and server-side support 
 py3-openapi-core-pyc	0.23.1-r1	community	595100	Precompiled Python bytecode for py3-openapi-core	python3~3.14
 py3-openapi-schema-validator	0.9.0-r0	community	57651	OpenApi schema validation for OpenApi versions v2, v3.0.x and v3.1.x	py3-jsonschema py3-jsonschema-specifications py3-rfc3339-validator python3~3.14
 py3-openapi-schema-validator-pyc	0.9.0-r0	community	56608	Precompiled Python bytecode for py3-openapi-schema-validator	python3~3.14
-py3-openapi-spec-validator	0.8.5-r0	community	278993	OpenAPI 2.0 (aka Swagger) and OpenAPI 3 spec validator	py3-jsonschema py3-jsonschema-path py3-openapi-schema-validator py3-lazy-object-proxy py3-pydantic-settings python3~3.14
-py3-openapi-spec-validator-pyc	0.8.5-r0	community	118061	Precompiled Python bytecode for py3-openapi-spec-validator	python3~3.14
+py3-openapi-spec-validator	0.9.0-r0	community	278994	OpenAPI 2.0 (aka Swagger) and OpenAPI 3 spec validator	py3-jsonschema py3-jsonschema-path py3-openapi-schema-validator py3-lazy-object-proxy py3-pydantic-settings python3~3.14
+py3-openapi-spec-validator-pyc	0.9.0-r0	community	118061	Precompiled Python bytecode for py3-openapi-spec-validator	python3~3.14
 py3-opencl	2026.1.4-r0	community	1733753	Python3 wrapper for OpenCL	py3-platformdirs py3-numpy py3-mako py3-pytools python3~3.14
 py3-opencl-pyc	2026.1.4-r0	community	766847	Precompiled Python bytecode for py3-opencl	python3~3.14
 py3-opencolorio	2.5.2-r0	community	5109976	Python3 bindings for OpenColorIO color management framework	python3~3.14
@@ -21558,8 +21565,8 @@ py3-pyqt-feedback-flow-pyc	0.3.7-r0	community	13321	Precompiled Python bytecode 
 py3-pyqt5-sip	12.20.1-r0	community	166176	The sip module support for PyQt5	python3~3.14
 py3-pyqt6-sip	13.13.1-r0	community	149264	The sip module support for PyQt6	python3 python3~3.14
 py3-pyqt6-webengine	6.140.1-r0	community	880266	Python bindings for the Qt6 WebEngine framework	py3-qt6 python3~3.14
-py3-pyrad	2.5.4-r2	community	130553	Python RADIUS Implementation	py3-netaddr python3~3.14
-py3-pyrad-pyc	2.5.4-r2	community	156107	Precompiled Python bytecode for py3-pyrad	python3~3.14
+py3-pyrad	2.6.0-r0	community	219535	Python RADIUS Implementation	py3-netaddr python3~3.14
+py3-pyrad-pyc	2.6.0-r0	community	246214	Precompiled Python bytecode for py3-pyrad	python3~3.14
 py3-pyrate-limiter	4.1.0-r1	community	114047	Rate-limiter using leaky-bucket algorithm	python3 py3-filelock python3~3.14
 py3-pyrate-limiter-pyc	4.1.0-r1	community	143136	Precompiled Python bytecode for py3-pyrate-limiter	python3~3.14
 py3-pyrdfa3	3.6.5-r1	community	330378	pyRdfa Libray	py3-rdflib py3-html5lib py3-isodate python3~3.14
@@ -21592,8 +21599,8 @@ py3-pysol-cards	0.24.0-r1	community	38982	Deal PySol FC Cards	py3-pbr py3-random
 py3-pysol-cards-pyc	0.24.0-r1	community	54787	Precompiled Python bytecode for py3-pysol-cards	python3~3.14
 py3-pyte	0.8.2-r4	community	98022	Pyte is an in memory VTXXX-compatible terminal emulator	py3-wcwidth python3~3.14
 py3-pyte-pyc	0.8.2-r4	community	118447	Precompiled Python bytecode for py3-pyte	python3~3.14
-py3-pytelegrambotapi	4.36.1-r0	community	2317094	A simple, but extensible Python implementation for the Telegram Bot API.	py3-requests python3~3.14
-py3-pytelegrambotapi-pyc	4.36.1-r0	community	2463230	Precompiled Python bytecode for py3-pytelegrambotapi	python3~3.14
+py3-pytelegrambotapi	4.37.1-r0	community	2377252	A simple, but extensible Python implementation for the Telegram Bot API.	py3-requests python3~3.14
+py3-pytelegrambotapi-pyc	4.37.1-r0	community	2533506	Precompiled Python bytecode for py3-pytelegrambotapi	python3~3.14
 py3-pytest	9.1.1-r1	main	1365483	Python3 testing library	py3-iniconfig py3-packaging py3-pluggy py3-py py3-pygments python3~3.14
 py3-pytest-aiohttp	1.1.0-r1	community	21467	pytest plugin for aiohttp support	py3-aiohttp py3-pytest-asyncio python3~3.14
 py3-pytest-aiohttp-pyc	1.1.0-r1	community	12915	Precompiled Python bytecode for py3-pytest-aiohttp	python3~3.14
@@ -21833,8 +21840,8 @@ py3-readme_renderer	46.0-r0	community	30799	readme_renderer is a library for ren
 py3-readme_renderer-pyc	46.0-r0	community	18579	Precompiled Python bytecode for py3-readme_renderer	python3~3.14
 py3-rebulk	6.0.1-r0	community	184253	Define simple search patterns in bulk to perform advanced matching on any string	python3 py3-regex python3~3.14
 py3-rebulk-pyc	6.0.1-r0	community	240616	Precompiled Python bytecode for py3-rebulk	python3~3.14
-py3-recipe-scrapers	15.12.0-r0	community	706394	Python package, scraping recipes from all over the internet	py3-beautifulsoup4 py3-extruct py3-isodate python3~3.14
-py3-recipe-scrapers-pyc	15.12.0-r0	community	1288081	Precompiled Python bytecode for py3-recipe-scrapers	python3~3.14
+py3-recipe-scrapers	15.14.0-r0	community	749256	Python package, scraping recipes from all over the internet	py3-beautifulsoup4 py3-extruct py3-isodate python3~3.14
+py3-recipe-scrapers-pyc	15.14.0-r0	community	1362072	Precompiled Python bytecode for py3-recipe-scrapers	python3~3.14
 py3-redis	8.1.0-r0	community	2599760	Python3 client for Redis key-value store	py3-hiredis python3~3.14
 py3-redis-pyc	8.1.0-r0	community	3414945	Precompiled Python bytecode for py3-redis	python3~3.14
 py3-reedsolo	1.7.0-r3	community	381542	Pure-Python implementation of a Reed–Solomon codec	python3 python3~3.14
@@ -21928,8 +21935,8 @@ py3-rpds-py-pyc	0.30.0-r2	community	325	Precompiled Python bytecode for py3-rpds
 py3-rply	0.7.8-r6	community	47194	Python parser generator, that also works with RPython	py3-appdirs python3~3.14
 py3-rply-pyc	0.7.8-r6	community	62923	Precompiled Python bytecode for py3-rply	python3~3.14
 py3-rpm	4.19.1.1-r5	community	134367	Python3 bindings for RPM	rpm-scripts python3~3.14
-py3-rpy2	3.6.7-r0	community	730012	A very simple, yet robust, Python interface to the R Programming Language	py3-cffi py3-numpy py3-tz py3-tzlocal py3-jinja2 R python3~3.14
-py3-rpy2-pyc	3.6.7-r0	community	843541	Precompiled Python bytecode for py3-rpy2	python3~3.14
+py3-rpy2	3.7.0-r0	community	727873	A very simple, yet robust, Python interface to the R Programming Language	py3-cffi py3-numpy py3-tz py3-tzlocal py3-jinja2 R python3~3.14
+py3-rpy2-pyc	3.7.0-r0	community	841536	Precompiled Python bytecode for py3-rpy2	python3~3.14
 py3-rpyc	6.0.2-r0	community	249346	Remote Python Call (RPyC) is a transparent and symmetric distributed computing library	python3 py3-plumbum python3~3.14
 py3-rpyc-pyc	6.0.2-r0	community	332497	Precompiled Python bytecode for py3-rpyc	python3~3.14
 py3-rsa	4.9.1-r1	community	95667	Pure-Python3 RSA implementation	python3 py3-asn1 python3~3.14
@@ -22066,8 +22073,8 @@ py3-skia-pathops	0.9.2-r1	community	5971471	Python bindings for the Skia library
 py3-skia-pathops-pyc	0.9.2-r1	community	4026	Precompiled Python bytecode for py3-skia-pathops	python3~3.14
 py3-skywriter-hat	0.0.8-r4	community	19295	Python libraries for the Pimoroni Skywriter board	python3 python3~3.14
 py3-skywriter-hat-pyc	0.0.8-r4	community	21016	Precompiled Python bytecode for py3-skywriter-hat	python3~3.14
-py3-slack-sdk	3.44.1-r0	community	1641392	The Slack API Platform SDK for Python	py3-aiohttp py3-aiodns python3~3.14
-py3-slack-sdk-pyc	3.44.1-r0	community	2311411	Precompiled Python bytecode for py3-slack-sdk	python3~3.14
+py3-slack-sdk	3.48.0-r0	community	1749767	The Slack API Platform SDK for Python	py3-aiohttp py3-aiodns python3~3.14
+py3-slack-sdk-pyc	3.48.0-r0	community	2455335	Precompiled Python bytecode for py3-slack-sdk	python3~3.14
 py3-slugify	9.2.0-r0	community	40784	Python module for creating slugs from unicode strings	py3-unidecode python3~3.14
 py3-slugify-pyc	9.2.0-r0	community	33628	Precompiled Python bytecode for py3-slugify	python3~3.14
 py3-sly	0.5-r4	community	108868	Python implementation of lax and yacc	python3 python3~3.14
@@ -22341,8 +22348,8 @@ py3-trustme	1.2.1-r1	community	43160	#1 quality TLS certs while you wait, for th
 py3-trustme-pyc	1.2.1-r1	community	31162	Precompiled Python bytecode for py3-trustme	python3~3.14
 py3-truststore	0.10.4-r2	community	61159	Verify certificates using OS trust stores	python3~3.14
 py3-truststore-pyc	0.10.4-r2	community	68612	Precompiled Python bytecode for py3-truststore	python3~3.14
-py3-twilio	9.11.0-r0	community	22024915	Twilio API client and TwiML generator	py3-requests py3-jwt py3-aiohttp py3-aiohttp-retry python3~3.14
-py3-twilio-pyc	9.11.0-r0	community	26429022	Precompiled Python bytecode for py3-twilio	python3~3.14
+py3-twilio	9.13.1-r0	community	22545390	Twilio API client and TwiML generator	py3-requests py3-jwt py3-aiohttp py3-aiohttp-retry python3~3.14
+py3-twilio-pyc	9.13.1-r0	community	27057976	Precompiled Python bytecode for py3-twilio	python3~3.14
 py3-twisted	26.4.0-r0	community	5935368	Asynchronous networking framework written in Python3	py3-cryptography py3-zope-interface py3-constantly py3-incremental py3-automat py3-hyperlink py3-attrs py3-typing-extensions py3-pyhamcrest py3-service_identity py3-idna py3-pyserial py3-h2 py3-setuptools python3~3.14
 py3-twisted-doc	26.4.0-r0	community	6129	Asynchronous networking framework written in Python3 (documentation)	
 py3-twisted-pyc	26.4.0-r0	community	7679944	Precompiled Python bytecode for py3-twisted	python3~3.14
@@ -22372,8 +22379,8 @@ py3-typogrify	2.1.0-r1	community	32492	Filters to enhance web typography, includ
 py3-typogrify-pyc	2.1.0-r1	community	36604	Precompiled Python bytecode for py3-typogrify	python3~3.14
 py3-tz	2026.6-r0	main	1002927	Python3 definitions of world timezone	python3 python3~3.14
 py3-tz-pyc	2026.6-r0	main	88380	Precompiled Python bytecode for py3-tz	python3~3.14
-py3-tzdata	2026.4-r0	community	580635	Python package wrapping the IANA time zone database	python3 py3-attrs python3~3.14
-py3-tzdata-pyc	2026.4-r0	community	3757	Precompiled Python bytecode for py3-tzdata	python3~3.14
+py3-tzdata	2026.6-r0	community	582438	Python package wrapping the IANA time zone database	python3 py3-attrs python3~3.14
+py3-tzdata-pyc	2026.6-r0	community	3757	Precompiled Python bytecode for py3-tzdata	python3~3.14
 py3-tzlocal	5.3.1-r1	community	62148	Python tzinfo object for the local timezone	python3 py3-tzdata python3~3.14
 py3-tzlocal-pyc	5.3.1-r1	community	51137	Precompiled Python bytecode for py3-tzlocal	python3~3.14
 py3-ua-parser	1.0.2-r0	community	487439	Python port of Browserscope's user agent parser	py3-pyaml python3~3.14
@@ -22515,8 +22522,8 @@ py3-wcwidth	0.6.0-r1	community	347550	Measures number of Terminal column cells o
 py3-wcwidth-pyc	0.6.0-r1	community	137094	Precompiled Python bytecode for py3-wcwidth	python3~3.14
 py3-webassets	3.0.0-r1	community	389818	Asset management for web development	python3 python3~3.14
 py3-webassets-pyc	3.0.0-r1	community	456969	Precompiled Python bytecode for py3-webassets	python3~3.14
-py3-webauthn	3.0.0-r0	community	213693	A Python3 implementation of the WebAuthn API focused on making it easy to leverage the power of WebAuthn.	py3-asn1 py3-asn1-modules py3-cbor2 py3-openssl py3-cryptography python3~3.14
-py3-webauthn-pyc	3.0.0-r0	community	231945	Precompiled Python bytecode for py3-webauthn	python3~3.14
+py3-webauthn	3.0.1-r0	community	213818	A Python3 implementation of the WebAuthn API focused on making it easy to leverage the power of WebAuthn.	py3-asn1 py3-asn1-modules py3-cbor2 py3-openssl py3-cryptography python3~3.14
+py3-webauthn-pyc	3.0.1-r0	community	232093	Precompiled Python bytecode for py3-webauthn	python3~3.14
 py3-webcolors	1.13-r3	community	44543	A library for working with color names and color value formats	python3 python3~3.14
 py3-webcolors-pyc	1.13-r3	community	44597	Precompiled Python bytecode for py3-webcolors	python3~3.14
 py3-webdavclient3	3.14.7-r1	community	106914	WebDAV client	py3-requests py3-lxml py3-dateutil python3~3.14
@@ -24597,15 +24604,15 @@ sgdisk	1.0.10-r1	main	249856	Command-line GUID partition table (GPT) manipulator
 shaderc	2026.1-r0	community	218328	Collection of tools, libraries, and tests for Vulkan shader compilation	
 shaderc-dev	2026.1-r0	community	64250	Collection of tools, libraries, and tests for Vulkan shader compilation (development files)	shaderc=2026.1-r0 pkgconfig
 shaderc-static	2026.1-r0	community	294302	Collection of tools, libraries, and tests for Vulkan shader compilation (static library)	shaderc-dev
-shadow	4.20.3-r2	community	1224404	PAM-using login and passwd utilities (usermod, useradd, ...)	/bin/sh
-shadow-conv	4.20.3-r2	community	179792	Utilities for converting to and from shadow passwords and groups	
-shadow-dbg	4.20.3-r2	community	5535088	PAM-using login and passwd utilities (usermod, useradd, ...) (debug symbols)	
-shadow-dev	4.20.3-r2	community	1389278	PAM-using login and passwd utilities (usermod, useradd, ...) (development files)	shadow-libs=4.20.3-r2
-shadow-doc	4.20.3-r2	community	66983	PAM-using login and passwd utilities (usermod, useradd, ...) (documentation)	
-shadow-libs	4.20.3-r2	community	120880	PAM-using login and passwd utilities (usermod, useradd, ...) (libraries)	
-shadow-login	4.20.3-r2	community	191048	Login utils from shadow package: faillog, lastlog, login, newgrp, nologin, sg, su	
-shadow-login-doc	4.20.3-r2	community	25718	Login utils from shadow package (documentation)	!util-linux-login-doc
-shadow-subids	4.20.3-r2	community	112000	Utilities for using subordinate UIDs and GIDs	
+shadow	4.20.4-r0	community	1212116	PAM-using login and passwd utilities (usermod, useradd, ...)	/bin/sh
+shadow-conv	4.20.4-r0	community	179792	Utilities for converting to and from shadow passwords and groups	
+shadow-dbg	4.20.4-r0	community	5524976	PAM-using login and passwd utilities (usermod, useradd, ...) (debug symbols)	
+shadow-dev	4.20.4-r0	community	1391610	PAM-using login and passwd utilities (usermod, useradd, ...) (development files)	shadow-libs=4.20.4-r0
+shadow-doc	4.20.4-r0	community	66590	PAM-using login and passwd utilities (usermod, useradd, ...) (documentation)	
+shadow-libs	4.20.4-r0	community	120880	PAM-using login and passwd utilities (usermod, useradd, ...) (libraries)	
+shadow-login	4.20.4-r0	community	191048	Login utils from shadow package: faillog, lastlog, login, newgrp, nologin, sg, su	
+shadow-login-doc	4.20.4-r0	community	25708	Login utils from shadow package (documentation)	!util-linux-login-doc
+shadow-subids	4.20.4-r0	community	107904	Utilities for using subordinate UIDs and GIDs	
 shadowsocks-rust	1.25.0-r0	community	0	Rust port of shadowsocks	shadowsocks-rust-sslocal=1.25.0-r0 shadowsocks-rust-ssmanager=1.25.0-r0 shadowsocks-rust-ssserver=1.25.0-r0 shadowsocks-rust-ssservice=1.25.0-r0 shadowsocks-rust-ssurl=1.25.0-r0
 shadowsocks-rust-sslocal	1.25.0-r0	community	5743480	Rust port of shadowsocks (sslocal binary)	
 shadowsocks-rust-ssmanager	1.25.0-r0	community	4696728	Rust port of shadowsocks (ssmanager binary)	
@@ -26185,6 +26192,8 @@ tmuxinator	3.4.2-r0	community	60133	manage complex tmux sessions easily	tmux rub
 tmuxinator-bash-completion	3.4.2-r0	community	668	Bash completions for tmuxinator	
 tmuxinator-fish-completion	3.4.2-r0	community	1270	Fish completions for tmuxinator	
 tmuxinator-zsh-completion	3.4.2-r0	community	708	Zsh completions for tmuxinator	
+tnef	1.4.18-r2	community	56000	Program for unpacking ms-tnef MIME attachment	
+tnef-doc	1.4.18-r2	community	2530	Program for unpacking ms-tnef MIME attachment (documentation)	
 todo.txt-cli	2.13.0-r0	community	52743	A simple and extensible shell script for managing your todo.txt file.	bash
 todo.txt-cli-bash-completion	2.13.0-r0	community	6067	Bash completions for todo.txt-cli	
 todo.txt-cli-doc	2.13.0-r0	community	220	A simple and extensible shell script for managing your todo.txt file. (documentation)	
@@ -26339,6 +26348,9 @@ transmission-remote	4.1.4-r0	community	1455776	Lightweight GTK BitTorrent client
 trash-cli	0.26.9.29-r0	community	235625	Command line interface to the freedesktop.org trashcan	python3 py3-psutil py3-six python3~3.14
 trash-cli-doc	0.26.9.29-r0	community	8122	Command line interface to the freedesktop.org trashcan (documentation)	
 trash-cli-pyc	0.26.9.29-r0	community	326585	Precompiled Python bytecode for trash-cli	python3~3.14
+tre	0.9.0-r0	community	64547	POSIX compliant regexp matching library	
+tre-dev	0.9.0-r0	community	13584	POSIX compliant regexp matching library (development files)	tre=0.9.0-r0 pkgconfig
+tre-static	0.9.0-r0	community	76068	POSIX compliant regexp matching library (static library)	tre-dev
 trealla	3.14.71-r0	community	3798824	Compact and efficient Prolog interpreter	
 trealla-doc	3.14.71-r0	community	192516	Compact and efficient Prolog interpreter (documentation)	
 tree	2.3.2-r0	main	73424	Recursive directory indented listing of files	
@@ -27953,6 +27965,8 @@ xkill-doc	1.0.7-r0	community	1870	Kill tool for the X Window System (documentati
 xl2tpd	1.3.20-r0	main	137509	Layer 2 Tunnelling Protocol Daemon (RFC 2661)	ppp-l2tp
 xl2tpd-doc	1.3.20-r0	main	9154	Layer 2 Tunnelling Protocol Daemon (RFC 2661) (documentation)	
 xl2tpd-openrc	1.3.20-r0	main	548	Layer 2 Tunnelling Protocol Daemon (RFC 2661) (OpenRC init scripts)	
+xlhtml	0.5.1-r1	community	26600	An Excel spreadsheet (.xls) and PowerPoint (.ppt) to HTML converter	
+xlhtml-doc	0.5.1-r1	community	812	An Excel spreadsheet (.xls) and PowerPoint (.ppt) to HTML converter (documentation)	
 xmake	3.1.2-r0	community	7475764	A cross-platform build utility based on Lua	bash git
 xmake-bash-completion	3.1.2-r0	community	1614	Bash completions for xmake	
 xmake-doc	3.1.2-r0	community	2366	A cross-platform build utility based on Lua (documentation)	

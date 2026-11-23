@@ -40,6 +40,25 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r24">November 23, 2026: r24</h2>
+<p>mag 0.7. It asks now. Before it installs or removes anything it lists the packages, which repo each comes from,
+what you have now, and how much it downloads and takes on disk:</p>
+<pre>install (3)
+  vim-runtime  9.2.1178-1  extra
+  gpm          1.20.7-7    extra
+  vim          9.2.1178-1  extra
+
+download 12.3 MiB, installed 40.1 MiB
+install? [Y/n]</pre>
+<p><code>-y</code> says yes, before or after the command, and <code>MAG_YES=1</code> does it for a script. Off a
+terminal it doesn't ask.</p>
+<p>It also fetches up to eight packages at once, which on a slow line takes the glibc install down by about half,
+and the installer leaves the AUR's index for the first <code>mag update</code> on the new system, since the base
+never comes from there.</p>
+<p>The glibc Chamesle shows the logo in fastfetch now.</p>
+<p><code>mag update &amp;&amp; mag upgrade</code> brings it. The pacman repos show their sizes after the
+<code>mag update</code> that follows.</p>
+
 <h2 id="r23">November 22, 2026, late: r23</h2>
 <p>Two Chamesles now. The installer asks which one.</p>
 <p><b>musl</b> is the one there was, moved to the newest packages: the repos follow the development branch instead
