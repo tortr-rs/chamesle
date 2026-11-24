@@ -40,6 +40,14 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r27">November 24, 2026: r27</h2>
+<p>mag 0.7.3. When a package gives the same versioned name as one you have, it replaces it, the way apk does: the
+edge repos renamed <code>lld22</code> to <code>lld23</code> and an upgrade stopped on the files they share. Now it
+says <code>lld23 replaced lld22</code> and goes on.</p>
+<p>chamesle-boot puts limine on a GPT disk booted by BIOS again: it hands limine the BIOS boot partition, and when
+something fails you see limine's own words, not just that it failed. The installer's steps say what they do.</p>
+<p><code>mag update &amp;&amp; mag upgrade</code>.</p>
+
 <h2 id="r26">November 23, 2026, late: r26</h2>
 <p>The glibc Chamesle says Chamesle. Artix's packages put their name in os-release, the release files, GRUB's menu
 and the line OpenRC boots with; the base puts Chamesle back in all of them, and a hook does it again whenever those
