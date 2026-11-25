@@ -1938,7 +1938,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	353920	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261124-r30	chamesle	2134020	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
+chamesle-base	20261125-r30	chamesle	2134373	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	17457275	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8319288	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -2011,9 +2011,9 @@ cinnamon-desktop-lang	6.8.1-r0	community	74920	Languages for package cinnamon-de
 ciso	1.0.0-r0	community	32768	PSP Iso Compressor	
 ciwiki	3.0.5-r1	community	112686	Personal lightweight wiki written in C	
 ciwiki-doc	3.0.5-r1	community	1427	Personal lightweight wiki written in C (documentation)	
-cjdns	22.3-r0	community	8787044	A routing engine designed for security, scalability, speed and ease of use	/bin/sh
-cjdns-doc	22.3-r0	community	97694	A routing engine designed for security, scalability, speed and ease of use (documentation)	
-cjdns-openrc	22.3-r0	community	549	A routing engine designed for security, scalability, speed and ease of use (OpenRC init scripts)	
+cjdns	22.3-r1	community	8770868	A routing engine designed for security, scalability, speed and ease of use	/bin/sh
+cjdns-doc	22.3-r1	community	97694	A routing engine designed for security, scalability, speed and ease of use (documentation)	
+cjdns-openrc	22.3-r1	community	549	A routing engine designed for security, scalability, speed and ease of use (OpenRC init scripts)	
 cjose	0.6.2.4-r1	community	79364	A C library implementing the Javascript Object Signing and Encryption	
 cjose-dev	0.6.2.4-r1	community	49866	A C library implementing the Javascript Object Signing and Encryption (development files)	cjose=0.6.2.4-r1 pkgconfig
 cjose-doc	0.6.2.4-r1	community	1008292	A C library implementing the Javascript Object Signing and Encryption (documentation)	
@@ -6787,7 +6787,7 @@ inspircd-doc	4.12.1-r0	community	1824	internet relay chat daemon (ircd) (documen
 inspircd-openrc	4.12.1-r0	community	324	internet relay chat daemon (ircd) (OpenRC init scripts)	
 install-makedepends	1.0.0-r3	community	3937	Simple script to install makedepends for Alpine and Nura packages	git
 installkernel	4.1-r1	main	918	Alpine Linux Kernel install script	/bin/sh
-intel-ucode	20260812-r0	main	15266717	Microcode update files for Intel CPUs	
+intel-ucode	20261110-r0	main	16775069	Microcode update files for Intel CPUs	
 interrogate	1.7.0-r2	community	159445	Interrogate a codebase for docstring coverage	py3-attrs py3-click py3-colorama py3-py py3-setuptools py3-tabulate py3-toml python3~3.14
 interrogate-doc	1.7.0-r2	community	34234	Interrogate a codebase for docstring coverage (documentation)	
 interrogate-pyc	1.7.0-r2	community	81824	Precompiled Python bytecode for interrogate	python3~3.14
@@ -17709,16 +17709,16 @@ portfolio	1.0.3-r0	community	257726	Minimalist file manager for those who want t
 portfolio-lang	1.0.3-r0	community	76898	Languages for package portfolio	
 portmidi	2.0.4-r0	community	57344	PortMidi is a platform independent library for MIDI input/output.	
 portmidi-dev	2.0.4-r0	community	106496	PortMidi is a platform independent library for MIDI input/output. (development files)	pkgconfig portmidi=2.0.4-r0
-postfix	3.11.7-r0	main	2391663	Secure and fast drop-in replacement for Sendmail (MTA)	/bin/sh
-postfix-doc	3.11.7-r0	main	1872443	Secure and fast drop-in replacement for Sendmail (MTA) (documentation)	
-postfix-ldap	3.11.7-r0	main	34164	ldap map support for postfix	
-postfix-mysql	3.11.7-r0	main	17731	mysql map support for postfix	
-postfix-openrc	3.11.7-r0	main	2013	Secure and fast drop-in replacement for Sendmail (MTA) (OpenRC init scripts)	
-postfix-pcre	3.11.7-r0	main	17620	pcre map support for postfix	
-postfix-pgsql	3.11.7-r0	main	17623	pgsql map support for postfix	
+postfix	3.11.8-r0	main	2391663	Secure and fast drop-in replacement for Sendmail (MTA)	/bin/sh
+postfix-doc	3.11.8-r0	main	1873941	Secure and fast drop-in replacement for Sendmail (MTA) (documentation)	
+postfix-ldap	3.11.8-r0	main	34164	ldap map support for postfix	
+postfix-mysql	3.11.8-r0	main	17731	mysql map support for postfix	
+postfix-openrc	3.11.8-r0	main	2013	Secure and fast drop-in replacement for Sendmail (MTA) (OpenRC init scripts)	
+postfix-pcre	3.11.8-r0	main	17620	pcre map support for postfix	
+postfix-pgsql	3.11.8-r0	main	17623	pgsql map support for postfix	
 postfix-policyd-spf-perl	2.011-r2	main	28672	A Sender Policy Framework implementation	perl perl-mail-spf perl-netaddr-ip perl-sys-hostname-long
-postfix-sqlite	3.11.7-r0	main	13530	sqlite map support for postfix	
-postfix-stone	3.11.7-r0	main	93180	Postfix simulation and testing tools	
+postfix-sqlite	3.11.8-r0	main	13530	sqlite map support for postfix	
+postfix-stone	3.11.8-r0	main	93180	Postfix simulation and testing tools	
 postfixadmin	4.0.5-r0	community	75992208	Web Based Management tool for Postfix	php85 php85-ctype php85-dom php85-gd php85-iconv php85-mbstring php85-mysqli php85-session php85-simplexml php85-xml php85-xmlwriter
 postfixadmin-contrib	4.0.5-r0	community	259313	Web Based Management tool for Postfix	php85 php85-ctype php85-dom php85-gd php85-iconv php85-mbstring php85-mysqli php85-session php85-simplexml php85-xml php85-xmlwriter
 postfixadmin-doc	4.0.5-r0	community	1681836	Web Based Management tool for Postfix	php85 php85-ctype php85-dom php85-gd php85-iconv php85-mbstring php85-mysqli php85-session php85-simplexml php85-xml php85-xmlwriter

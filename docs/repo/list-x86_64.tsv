@@ -2099,7 +2099,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261124-r30	chamesle	2134020	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261125-r30	chamesle	2134373	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	20261659	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8327056	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -7477,7 +7477,7 @@ intel-graphics-compiler-dev	2.40.13-r0	community	1486185	Intel® Graphics Compil
 intel-graphics-compiler-doc	2.40.13-r0	community	237	Intel® Graphics Compiler for OpenCL™ (documentation)	
 intel-media-driver	26.2.4-r0	community	42319728	Intel Media Driver for VAAPI	
 intel-media-driver-dev	26.2.4-r0	community	1497333	Intel Media Driver for VAAPI (development files)	intel-media-driver=26.2.4-r0 pkgconfig
-intel-ucode	20260812-r0	main	15266717	Microcode update files for Intel CPUs	
+intel-ucode	20261110-r0	main	16775069	Microcode update files for Intel CPUs	
 interrogate	1.7.0-r2	community	159445	Interrogate a codebase for docstring coverage	py3-attrs py3-click py3-colorama py3-py py3-setuptools py3-tabulate py3-toml python3~3.14
 interrogate-doc	1.7.0-r2	community	34234	Interrogate a codebase for docstring coverage (documentation)	
 interrogate-pyc	1.7.0-r2	community	81824	Precompiled Python bytecode for interrogate	python3~3.14
@@ -10454,9 +10454,9 @@ libpaper-doc	2.2.8-r0	main	4385	Library for handling paper characteristics (docu
 libparquet	26.0.1-r1	community	3611632	multi-language toolbox for accelerated data interchange and in-memory processing (libparquet library)	apache-arrow=26.0.1-r1
 libpathrs	0.2.6-r0	community	451440	C-friendly API for safe path resolution on Linux	
 libpathrs-dev	0.2.6-r0	community	2893591	C-friendly API for safe path resolution on Linux (development files)	libpathrs=0.2.6-r0 pkgconfig
-libpcap	1.11.0-r0	main	243856	Portable library for network traffic capture	
-libpcap-dev	1.11.0-r0	main	606074	Portable library for network traffic capture (development files)	libpcap=1.11.0-r0 pkgconfig
-libpcap-doc	1.11.0-r0	main	111488	Portable library for network traffic capture (documentation)	
+libpcap	1.11.1-r0	main	247952	Portable library for network traffic capture	
+libpcap-dev	1.11.1-r0	main	609276	Portable library for network traffic capture (development files)	libpcap=1.11.1-r0 pkgconfig
+libpcap-doc	1.11.1-r0	main	112019	Portable library for network traffic capture (documentation)	
 libpciaccess	0.19-r0	main	34512	X11 PCI access library	hwdata-pci
 libpciaccess-dbg	0.19-r0	main	107328	X11 PCI access library (debug symbols)	!libpciaccess<0.19-r0 !libpciaccess>0.19-r0
 libpciaccess-dev	0.19-r0	main	15828	X11 PCI access library (development files)	libpciaccess=0.19-r0 pkgconfig
