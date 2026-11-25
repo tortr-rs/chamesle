@@ -40,6 +40,17 @@
 <h2>News</h2>
 <p><i>Newest first. The home page has the latest.</i></p>
 
+<h2 id="r30">November 25, 2026: r30</h2>
+<p>The installer asks for the keyboard first and loads it right away, so the rest is typed on the layout you have.
+The new system gets it for the console and for X. On musl the console uses kbd's legacy keymaps: the xkb ones
+do not load.</p>
+<p>On glibc it asks for the kernel: <code>linux-lts</code>, or <code>linux</code> for new hardware. Some laptops
+only have sound from 7.x on. The NVIDIA driver follows the kernel you pick.</p>
+<p>The host name goes in <code>/etc/hosts</code>, so <code>startx</code> works the first time. On a machine that
+boots by BIOS, chamesle-disk and chamesle-boot stop on a GPT disk with no BIOS boot partition, and say how to add
+one, where before the disk did not boot. The ISOs have <code>loadkeys</code>.</p>
+<p>New ISOs on the download page. On an installed system, <code>mag update &amp;&amp; mag upgrade</code>.</p>
+
 <h2 id="r27">November 24, 2026: r27</h2>
 <p>mag 0.7.3. When a package gives the same versioned name as one you have, it replaces it, the way apk does: the
 edge repos renamed <code>lld22</code> to <code>lld23</code> and an upgrade stopped on the files they share. Now it

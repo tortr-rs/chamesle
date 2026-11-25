@@ -22,7 +22,7 @@ aaudit	0.7.2-r3	main	49152	Alpine Auditor	lua5.2 lua5.2-posix lua5.2-cjson lua5.
 aaudit-server	0.7.2-r3	main	73728	Alpine Auditor	aaudit git lua5.2 lua5.2-posix lua5.2-cjson lua5.2-lzlib
 abcde	2.9.3-r5	community	241664	A command line CD encoder that reads your CD, downloads the track information from a CDDB provider, and rips your CD	bash cd-discid eyed3 perl-webservice-musicbrainz
 abcde-doc	2.9.3-r5	community	188416	A command line CD encoder that reads your CD, downloads the track information from a CDDB provider, and rips your CD (documentation)	
-abcl	1.10.0-r0	community	13567804	Armed Bear Common Lisp	java-jna openjdk8-jre-base
+abcl	1.10.0-r1	community	13567998	Armed Bear Common Lisp	java-jna openjdk8-jre-base
 abduco	0.6-r7	community	23388	Session management in a clean and simple way	
 abduco-doc	0.6-r7	community	9099	Session management in a clean and simple way (documentation)	
 abi-compliance-checker	2.3-r6	main	1181956	A tool for checking backward compatibility of a C/C++ library	perl build-base
@@ -344,7 +344,7 @@ afpfs-ng-doc	0.8.1-r12	community	28672	A client for the Apple Filing Protocol (A
 age	1.3.2-r1	community	13922608	Simple, modern and secure encryption tool	
 age-doc	1.3.2-r1	community	8744	Simple, modern and secure encryption tool (documentation)	
 agetty	2.42.4-r3	main	55340	agetty program from util-linux	
-agetty-openrc	0.63.2-r1	main	1438	agetty program from util-linux (OpenRC init scripts)	ifupdown-any openrc-user=0.63.2-r1
+agetty-openrc	0.64.1-r0	main	1438	agetty program from util-linux (OpenRC init scripts)	ifupdown-any openrc-user=0.64.1-r0
 agrep	0.9.0-r0	community	21836	approximate grepping	
 agrep-doc	0.9.0-r0	community	2493	POSIX compliant regexp matching library (documentation)	
 aha	0.5.1-r3	community	49152	ANSI color to HTML converter	
@@ -748,7 +748,7 @@ artikulate-lang	26.08.3-r0	community	357346	Languages for package artikulate
 asciidoc	10.2.1-r1	main	858486	Text based documentation	python3 libxml2-utils docbook-xsl python3~3.14
 asciidoc-doc	10.2.1-r1	main	10218	Text based documentation (documentation)	
 asciidoc-pyc	10.2.1-r1	main	441917	Precompiled Python bytecode for asciidoc	python3~3.14
-asciidoctor	2.0.26-r1	main	1056116	Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats	ruby
+asciidoctor	2.0.26-r2	main	1056116	Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats	ruby ruby-logger
 asciinema	3.2.1-r0	community	5016612	Command line recorder for the asciinema.org service	
 asciinema-bash-completion	3.2.1-r0	community	20604	Bash completions for asciinema	
 asciinema-doc	3.2.1-r0	community	14593	Command line recorder for the asciinema.org service (documentation)	
@@ -1938,7 +1938,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	353920	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261124-r27	chamesle	2131674	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
+chamesle-base	20261124-r30	chamesle	2134020	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	17457275	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8319288	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -1989,9 +1989,9 @@ chicken-doc	6.0.0-r0	community	1386167	R5RS and R7RS compatible scheme compiler 
 chicken-libs	6.0.0-r0	community	3859524	R5RS and R7RS compatible scheme compiler and interpreter (libraries)	
 chntpw	140201-r6	community	188416	Change passwords in Windows SAM files	
 choose	1.3.7-r0	community	1433120	A human-friendly and fast alternative to cut and (sometimes) awk	
-chromaprint	1.6.1-r1	community	30164	C library for generating audio fingerprints used by AcoustID	
-chromaprint-dev	1.6.1-r1	community	24009	C library for generating audio fingerprints used by AcoustID (development files)	chromaprint-libs=1.6.1-r1 pkgconfig
-chromaprint-libs	1.6.1-r1	community	71104	C library for generating audio fingerprints used by AcoustID (libraries)	
+chromaprint	1.6.2-r0	community	30164	C library for generating audio fingerprints used by AcoustID	
+chromaprint-dev	1.6.2-r0	community	24009	C library for generating audio fingerprints used by AcoustID (development files)	chromaprint-libs=1.6.2-r0 pkgconfig
+chromaprint-libs	1.6.2-r0	community	71104	C library for generating audio fingerprints used by AcoustID (libraries)	
 chrony	4.9-r0	main	310212	NTP client and server programs (without NTS and SHA/AES)	chrony-common=4.9-r0 /bin/sh
 chrony-common	4.9-r0	main	1698	NTP client and server programs (common files)	/bin/sh
 chrony-dbg	4.9-r0	main	3928	NTP client and server programs (debug symbols)	
@@ -2417,8 +2417,8 @@ commons-daemon	1.4.1-r1	community	25866	Tools to allow Java programs to run as U
 commons-daemon-doc	1.4.1-r1	community	77715	Tools to allow Java programs to run as UNIX daemons (documentation)	
 compat-pvgrub	1-r2	main	20480	compatibility support for PV-GRUB 1.x	/bin/sh
 compiler-rt	23.1.6-r0	main	894883	LLVM compiler-rt runtime libraries	
-composer	2.11.2-r0	community	3815704	Dependency manager for PHP	php85 php85-phar php85-curl php85-iconv php85-mbstring php85-openssl php85-zip p7zip
-composer-bash-completion	2.11.2-r0	community	2766	Bash completions for composer	
+composer	2.11.3-r0	community	3820223	Dependency manager for PHP	php85 php85-phar php85-curl php85-iconv php85-mbstring php85-openssl php85-zip p7zip
+composer-bash-completion	2.11.3-r0	community	2766	Bash completions for composer	
 composer-zsh-completion	5.9.2-r0	main	32230	Zsh completions for composer	
 comrak	1.0.0-r0	community	2110852	CommonMark + GFM compatible Markdown parser and renderer	
 comrak-doc	1.0.0-r0	community	30044	CommonMark + GFM compatible Markdown parser and renderer (documentation)	
@@ -2585,12 +2585,12 @@ crc32c-dev	1.1.2-r3	community	11903	CRC32C implementation with support for CPU-s
 crconf	0_pre2-r3	main	36864	Linux crypto layer configuration tool	
 create-tauri-app	4.7.0-r0	community	1019680	Build tool for Leptos	cargo
 create-tauri-app-doc	4.7.0-r0	community	12129	Build tool for Leptos (documentation)	
-cri-o	1.37.2-r0	community	52174585	OCI-based implementation of Kubernetes Container Runtime Interface	cni-plugins conmon conntrack-tools containers-common iproute2 oci-runtime
-cri-o-bash-completion	1.37.2-r0	community	3162	Bash completions for cri-o	
-cri-o-doc	1.37.2-r0	community	23114	OCI-based implementation of Kubernetes Container Runtime Interface (documentation)	
-cri-o-fish-completion	1.37.2-r0	community	32431	Fish completions for cri-o	
-cri-o-openrc	1.37.2-r0	community	917	OCI-based implementation of Kubernetes Container Runtime Interface (OpenRC init scripts)	
-cri-o-zsh-completion	1.37.2-r0	community	6177	Zsh completions for cri-o	
+cri-o	1.37.3-r0	community	52346937	OCI-based implementation of Kubernetes Container Runtime Interface	cni-plugins conmon conntrack-tools containers-common iproute2 oci-runtime
+cri-o-bash-completion	1.37.3-r0	community	3162	Bash completions for cri-o	
+cri-o-doc	1.37.3-r0	community	23273	OCI-based implementation of Kubernetes Container Runtime Interface (documentation)	
+cri-o-fish-completion	1.37.3-r0	community	32549	Fish completions for cri-o	
+cri-o-openrc	1.37.3-r0	community	917	OCI-based implementation of Kubernetes Container Runtime Interface (OpenRC init scripts)	
+cri-o-zsh-completion	1.37.3-r0	community	6177	Zsh completions for cri-o	
 cri-tools	1.36.0-r3	community	58663464	CLI tool for Kubelet Container Runtime Interface (CRI)	
 critcl	3.3.1-r1	community	1895784	Compiled Runtime in Tcl	musl-dev tcl tcl-lib
 critcl-doc	3.3.1-r1	community	2859468	Compiled Runtime in Tcl (documentation)	
@@ -2782,22 +2782,22 @@ db-c++	5.3.28-r7	main	1578656	C++ binding for libdb
 db-dev	5.3.28-r7	main	178147	The Berkeley DB embedded database system (development files)	db-c++=5.3.28-r7 db=5.3.28-r7
 db-doc	5.3.28-r7	main	86619103	The Berkeley DB embedded database system (documentation)	
 db-utils	5.3.28-r7	main	231420	Utils for The Berkeley DB embedded database system	
-dbus	1.16.4-r0	main	329349	Freedesktop.org message bus system	/bin/sh
+dbus	1.16.4-r1	main	329349	Freedesktop.org message bus system	/bin/sh
 dbus-cpp	5.0.6-r1	community	1060207	A header-only dbus-binding leveraging C++-11	
 dbus-cpp-dev	5.0.6-r1	community	218079	A header-only dbus-binding leveraging C++-11 (development files)	boost-dev properties-cpp-dev dbus-cpp=5.0.6-r1 pkgconfig
-dbus-daemon-launch-helper	1.16.4-r0	main	50604	DBus SUID launch helper for autospawning	
-dbus-dev	1.16.4-r0	main	131035	Freedesktop.org message bus system (development files)	dbus-libs=1.16.4-r0 pkgconfig
-dbus-doc	1.16.4-r0	main	694669	Freedesktop.org message bus system (documentation)	
+dbus-daemon-launch-helper	1.16.4-r1	main	50604	DBus SUID launch helper for autospawning	
+dbus-dev	1.16.4-r1	main	131035	Freedesktop.org message bus system (development files)	dbus-libs=1.16.4-r1 pkgconfig
+dbus-doc	1.16.4-r1	main	694729	Freedesktop.org message bus system (documentation)	
 dbus-glib	0.116-r0	main	136588	GLib bindings for DBUS	
 dbus-glib-dev	0.116-r0	main	129340	GLib bindings for DBUS (development files)	dbus-glib=0.116-r0 pkgconfig
 dbus-glib-doc	0.116-r0	main	431951	GLib bindings for DBUS (documentation)	
-dbus-libs	1.16.4-r0	main	300512	D-BUS access libraries	
-dbus-openrc	1.16.4-r0	main	1695	Freedesktop.org message bus system (OpenRC init scripts)	
+dbus-libs	1.16.4-r1	main	300512	D-BUS access libraries	
+dbus-openrc	1.16.4-r1	main	1668	Freedesktop.org message bus system (OpenRC init scripts)	
 dbus-test-runner	19.04.0-r4	community	77824	Run executabls under a new DBus session for testing	dbus python3 py3-dbusmock
 dbus-test-runner-dev	19.04.0-r4	community	61440	Run executabls under a new DBus session for testing (development files)	dbus-test-runner-libs=19.04.0-r4 pkgconfig
 dbus-test-runner-libs	19.04.0-r4	community	86016	Run executabls under a new DBus session for testing (libraries)	
 dbus-waiter	0.3.0-r0	community	1145576	Implement readiness notifications for dbus services	
-dbus-x11	1.16.4-r0	main	25984	X11 add-ons for D-BUS	dbus=1.16.4-r0
+dbus-x11	1.16.4-r1	main	25984	X11 add-ons for D-BUS	dbus=1.16.4-r1
 dcadec	0.2.0-r2	community	193860	DTS Coherent Acoustics decoder with support for HD extensions	
 dcadec-dev	0.2.0-r2	community	482010	DTS Coherent Acoustics decoder with support for HD extensions (development files)	pkgconfig
 dcc	2.3.169-r3	community	884605	Distributed Checksum Clearinghouses or DCC spam filter	/bin/sh
@@ -3114,10 +3114,10 @@ docopt-cpp-static	0.6.3-r3	community	512000	Command line arguments parser for C+
 docs	0.2-r6	main	4096	Meta package for pulling in all documentation	doc-provider man-pages
 doctest	2.4.12-r0	main	0	Fast header-only C++ unit testing	
 doctest-dev	2.4.12-r0	main	361852	Fast header-only C++ unit testing (development files)	
-doctl	2.7.0-r0	community	38243300	Official command line interface for the DigitalOcean API	
-doctl-bash-completion	2.7.0-r0	community	11711	Bash completions for doctl	
-doctl-fish-completion	2.7.0-r0	community	9600	Fish completions for doctl	
-doctl-zsh-completion	2.7.0-r0	community	7712	Zsh completions for doctl	
+doctl	2.8.0-r0	community	38760452	Official command line interface for the DigitalOcean API	
+doctl-bash-completion	2.8.0-r0	community	11711	Bash completions for doctl	
+doctl-fish-completion	2.8.0-r0	community	9600	Fish completions for doctl	
+doctl-zsh-completion	2.8.0-r0	community	7712	Zsh completions for doctl	
 docuum	0.26.0-r0	community	1413229	Perform least recently used (LRU) eviction of Docker images	/bin/sh
 docuum-openrc	0.26.0-r0	community	1592	Perform least recently used (LRU) eviction of Docker images (OpenRC init scripts)	
 dog	0.1.0-r5	community	548864	dog is a command-line DNS client	
@@ -4511,8 +4511,8 @@ fox-doc	1.6.59-r0	community	2933271	Free Objects for X (documentation)
 fox-pathfinder	1.6.59-r0	community	181744	Free Objects for X - fast file manager	
 fox-shutterbug	1.6.59-r0	community	67056	fox - screen snapshot application	
 fox-utils	1.6.59-r0	community	17680	fox (development utilities)	
-fping	5.5-r0	main	55480	A utility to ping multiple hosts at once	
-fping-doc	5.5-r0	main	5889	A utility to ping multiple hosts at once (documentation)	
+fping	5.5-r1	main	55480	A utility to ping multiple hosts at once	
+fping-doc	5.5-r1	main	5889	A utility to ping multiple hosts at once (documentation)	
 fplll	5.5.0-r1	community	134008	Lattice algorithms using floating-point arithmetic	
 fplll-dev	5.5.0-r1	community	376339	Lattice algorithms using floating-point arithmetic (development files)	fplll-libs=5.5.0-r1 pkgconfig
 fplll-libs	5.5.0-r1	community	25761284	Lattice algorithms using floating-point arithmetic (libraries)	
@@ -5227,8 +5227,8 @@ glade	3.40.0-r10	community	2069272	User Interface Designer for GTK+ and GNOME
 glade-dev	3.40.0-r10	community	1334913	User Interface Designer for GTK+ and GNOME (development files)	glade=3.40.0-r10 pkgconfig
 glade-doc	3.40.0-r10	community	1135600	User Interface Designer for GTK+ and GNOME (documentation)	
 glade-lang	3.40.0-r10	community	7011583	Languages for package glade	
-glances	4.5.7-r0	community	4415271	CLI curses based monitoring tool	py3-batinfo py3-bottle py3-defusedxml py3-docker-py py3-jinja2 py3-packaging py3-psutil py3-snmp py3-ujson python3 python3~3.14
-glances-doc	4.5.7-r0	community	241495	CLI curses based monitoring tool (documentation)	
+glances	4.5.9-r0	community	4420817	CLI curses based monitoring tool	py3-batinfo py3-bottle py3-defusedxml py3-docker-py py3-jinja2 py3-packaging py3-psutil py3-snmp py3-ujson python3 python3~3.14
+glances-doc	4.5.9-r0	community	244452	CLI curses based monitoring tool (documentation)	
 glaze	7.7.0-r0	community	4029221	An Extremely fast, In-Memory JSON and Interface Library for Modern C++	
 gleam	1.19.2-r1	community	10387520	Statically-typed language that compiles to Erlang and JS	erlang-dev
 glew	2.3.1-r0	community	517396	A cross-platform C/C++ extension loading library	
@@ -5944,14 +5944,14 @@ gst-rtsp-server	1.28.9-r0	community	694804	GStreamer RTSP server
 gst-rtsp-server-dev	1.28.9-r0	community	1020127	GStreamer RTSP server (development files)	gst-plugins-base-dev gst-rtsp-server=1.28.9-r0 pkgconfig
 gst-thumbnailers	1.1.0-r1	community	0	Thumbnail generator using GStreamer	gst-audio-thumbnailer gst-video-thumbnailer
 gst-video-thumbnailer	1.1.0-r1	community	566263	Thumbnail generator using GStreamer (video)	gst-plugins-good
-gstreamer	1.28.9-r0	main	3763269	GStreamer streaming media framework	
-gstreamer-bash-completion	1.28.9-r0	main	7870	Bash completions for gstreamer	
-gstreamer-dbg	1.28.9-r0	main	7847076	GStreamer streaming media framework (debug symbols)	
-gstreamer-dev	1.28.9-r0	main	7014276	GStreamer streaming media framework (development files)	libxml2-dev gstreamer=1.28.9-r0 pkgconfig
-gstreamer-doc	1.28.9-r0	main	9489	GStreamer streaming media framework (documentation)	
-gstreamer-lang	1.28.9-r0	main	1579490	Languages for package gstreamer	
-gstreamer-ptp-helper	1.28.9-r0	main	867300	GStreamer streaming media framework (ptp helper)	
-gstreamer-tools	1.28.9-r0	main	165144	Tools for GStreamer streaming media framework	pkgconfig
+gstreamer	1.28.9-r1	main	3763269	GStreamer streaming media framework	
+gstreamer-bash-completion	1.28.9-r1	main	7870	Bash completions for gstreamer	
+gstreamer-dbg	1.28.9-r1	main	7847076	GStreamer streaming media framework (debug symbols)	
+gstreamer-dev	1.28.9-r1	main	7014276	GStreamer streaming media framework (development files)	libxml2-dev gstreamer=1.28.9-r1 pkgconfig
+gstreamer-doc	1.28.9-r1	main	9489	GStreamer streaming media framework (documentation)	
+gstreamer-lang	1.28.9-r1	main	1579490	Languages for package gstreamer	
+gstreamer-ptp-helper	1.28.9-r1	main	867300	GStreamer streaming media framework (ptp helper)	
+gstreamer-tools	1.28.9-r1	main	165144	Tools for GStreamer streaming media framework	pkgconfig
 gtest	1.18.0-r0	main	420524	Google Test - C++ testing utility based on the xUnit framework (like JUnit)	
 gtest-dev	1.18.0-r0	main	1083770	Google Test - C++ testing utility based on the xUnit framework (like JUnit) (development files)	gtest=1.18.0-r0 gmock=1.18.0-r0 gmock=1.18.0-r0 gtest=1.18.0-r0 pkgconfig
 gtest-src	1.18.0-r0	main	484025	Google Test - C++ testing utility based on the xUnit framework (like JUnit)	
@@ -6317,9 +6317,9 @@ himitsu-secret-service	0.1_git20250705-r3	community	48402	Secret-service integra
 himitsu-secret-service-doc	0.1_git20250705-r3	community	2059	Secret-service integration for Himitsu (documentation)	
 himitsu-secret-service-openrc	0.1_git20250705-r3	community	156	Secret-service integration for Himitsu (OpenRC init scripts)	
 himitsu-secret-service-pyc	0.1_git20250705-r3	community	71617	Precompiled Python bytecode for himitsu-secret-service	python3~3.14
-hinsightd	0.9.21-r0	community	257653	hinsightd a http/1.1 webserver with (hopefully) minimal goals	
-hinsightd-dbg	0.9.21-r0	community	746244	hinsightd a http/1.1 webserver with (hopefully) minimal goals (debug symbols)	!hinsightd<0.9.21-r0 !hinsightd>0.9.21-r0
-hinsightd-openrc	0.9.21-r0	community	1714	hinsightd a http/1.1 webserver with (hopefully) minimal goals (OpenRC init scripts)	
+hinsightd	0.9.21-r1	community	257653	hinsightd a http/1.1 webserver with (hopefully) minimal goals	
+hinsightd-dbg	0.9.21-r1	community	749776	hinsightd a http/1.1 webserver with (hopefully) minimal goals (debug symbols)	
+hinsightd-openrc	0.9.21-r1	community	1714	hinsightd a http/1.1 webserver with (hopefully) minimal goals (OpenRC init scripts)	
 hiredict	1.3.1-r1	community	66952	C client library for Redict	
 hiredict-dev	1.3.1-r1	community	336380	C client library for Redict (development files)	hiredict=1.3.1-r1 pkgconfig
 hiredict-ssl	1.3.1-r1	community	13740	C client library for Redict	
@@ -6572,11 +6572,11 @@ ices-doc	2.0.3-r8	community	54827	Source client for broadcasting in MP3 format t
 icewm	4.1.0-r0	community	2835001	Window manager designed for speed, usability and consistency	
 icewm-doc	4.1.0-r0	community	481918	Window manager designed for speed, usability and consistency (documentation)	
 icewm-lang	4.1.0-r0	community	1589284	Languages for package icewm	
-icinga-director-openrc	1.11.9-r0	community	318	Configuration frontend for Icinga 2, integrated automation (OpenRC init scripts)	php83-cli php83-posix php83-iconv php83-sockets php83-curl php83-gettext
-icinga-php-library	1.0.0-r0	community	24365319	Bundle for all Icinga PHP libraries	
-icinga-php-library-doc	1.0.0-r0	community	1095	Bundle for all Icinga PHP libraries (documentation)	
-icinga-php-thirdparty	1.0.0-r0	community	56782365	Bundle for all 3rd party PHP libraries used by Icinga Web products	
-icinga-php-thirdparty-doc	1.0.0-r0	community	1844	Bundle for all 3rd party PHP libraries used by Icinga Web products (documentation)	
+icinga-director-openrc	1.12.1-r0	community	318	Configuration frontend for Icinga 2, integrated automation (OpenRC init scripts)	php83-cli php83-posix php83-iconv php83-sockets php83-curl php83-gettext
+icinga-php-library	1.2.1-r0	community	24463705	Bundle for all Icinga PHP libraries	
+icinga-php-library-doc	1.2.1-r0	community	1095	Bundle for all Icinga PHP libraries (documentation)	
+icinga-php-thirdparty	1.1.0-r0	community	59022353	Bundle for all 3rd party PHP libraries used by Icinga Web products	
+icinga-php-thirdparty-doc	1.1.0-r0	community	1844	Bundle for all 3rd party PHP libraries used by Icinga Web products (documentation)	
 icinga2	2.16.5-r1	community	31483746	An open source host, service and network monitoring program	monitoring-plugins /bin/sh
 icinga2-bash-completion	2.16.5-r1	community	289	Bash completions for icinga2	bash
 icinga2-doc	2.16.5-r1	community	10649686	An open source host, service and network monitoring program (documentation)	
@@ -6586,8 +6586,8 @@ icingaweb2	2.14.0-r0	community	8773431	Web Interface for Icinga2	php85 php85-int
 icingaweb2-bash-completion	2.14.0-r0	community	235	Bash completions for icingaweb2	bash
 icingaweb2-doc	2.14.0-r0	community	35259	Web Interface for Icinga2 (documentation)	
 icingaweb2-ldap	2.14.0-r0	community	0	Icingaweb2 ldap support	icingaweb2 php85-ldap
-icingaweb2-module-director	1.11.9-r0	community	4715215	Configuration frontend for Icinga 2, integrated automation	icingaweb2 php83-curl php83-pcntl icingaweb2-module-incubator /bin/sh
-icingaweb2-module-director-doc	1.11.9-r0	community	2807853	Configuration frontend for Icinga 2, integrated automation (documentation)	
+icingaweb2-module-director	1.12.1-r0	community	4758326	Configuration frontend for Icinga 2, integrated automation	icingaweb2 php83-curl php83-pcntl icingaweb2-module-incubator /bin/sh
+icingaweb2-module-director-doc	1.12.1-r0	community	6648827	Configuration frontend for Icinga 2, integrated automation (documentation)	
 icingaweb2-module-incubator	0.23.0-r0	community	1136078	Bleeding edge libraries useful for Icinga Web 2 modules	icingaweb2
 icingaweb2-module-incubator-doc	0.23.0-r0	community	439	Bleeding edge libraries useful for Icinga Web 2 modules (documentation)	
 icingaweb2-mysql-backend	2.14.0-r0	community	7671	Icingaweb2 mysql backend	icingaweb2 php85-pdo_mysql
@@ -6953,10 +6953,10 @@ jack-dbus	1.9.22-r4	main	118784	Jack D-Bus launcher
 jack-dev	1.9.22-r4	main	258048	The Jack Audio Connection Kit (development files)	jack=1.9.22-r4 jack=1.9.22-r4 pkgconfig
 jack-doc	1.9.22-r4	main	28672	The Jack Audio Connection Kit (documentation)	
 jackline	0.1.0-r4	community	11446937	Minimalistic and secure XMPP client written in OCaml	
-janet	1.43.0-r0	community	809988	Dynamic Lisp dialect and bytecode VM	
-janet-dev	1.43.0-r0	community	95980	Dynamic Lisp dialect and bytecode VM (development files)	janet=1.43.0-r0 pkgconfig
-janet-doc	1.43.0-r0	community	42030	Dynamic Lisp dialect and bytecode VM (documentation)	
-janet-static	1.43.0-r0	community	2249070	Dynamic Lisp dialect and bytecode VM (static library)	janet-dev
+janet	1.43.1-r0	community	809988	Dynamic Lisp dialect and bytecode VM	
+janet-dev	1.43.1-r0	community	95980	Dynamic Lisp dialect and bytecode VM (development files)	janet=1.43.1-r0 pkgconfig
+janet-doc	1.43.1-r0	community	42030	Dynamic Lisp dialect and bytecode VM (documentation)	
+janet-static	1.43.1-r0	community	2255634	Dynamic Lisp dialect and bytecode VM (static library)	janet-dev
 jansson	2.15.1-r0	main	87360	lightweight JSON library	
 jansson-dev	2.15.1-r0	main	18401	lightweight JSON library (development files)	jansson=2.15.1-r0 pkgconfig
 jansson-static	2.15.1-r0	main	123318	lightweight JSON library (static library)	jansson-dev
@@ -8068,9 +8068,9 @@ ksvg-doc	6.32.0-r0	community	665241	Configuration system (documentation)
 ksystemlog	26.08.3-r0	community	888289	KDE SystemLog Application	
 ksystemlog-doc	26.08.3-r0	community	1720753	KDE SystemLog Application (documentation)	
 ksystemlog-lang	26.08.3-r0	community	3588170	Languages for package ksystemlog	
-ksystemstats	6.8.3-r0	community	1069314	A plugin based system monitoring daemon	
-ksystemstats-lang	6.8.3-r0	community	989069	Languages for package ksystemstats	
-ksystemstats-systemd	6.8.3-r0	community	286	A plugin based system monitoring daemon (systemd files)	
+ksystemstats	6.8.3-r1	community	1073410	A plugin based system monitoring daemon	
+ksystemstats-lang	6.8.3-r1	community	989069	Languages for package ksystemstats	
+ksystemstats-systemd	6.8.3-r1	community	286	A plugin based system monitoring daemon (systemd files)	
 kteatime	26.08.3-r0	community	485719	A handy timer for steeping tea	
 kteatime-lang	26.08.3-r0	community	304187	Languages for package kteatime	
 ktechlab	0.51.0_git20260206-r0	community	5934134	IDE for microcontrollers and electronics	
@@ -8140,13 +8140,13 @@ kubie	0.28.0-r1	community	3086432	A more powerful alternative to kubectx and kub
 kubie-bash-completion	0.28.0-r1	community	21121	Bash completions for kubie	
 kubie-fish-completion	0.28.0-r1	community	9686	Fish completions for kubie	
 kubie-zsh-completion	0.28.0-r1	community	16489	Zsh completions for kubie	
-kubo	0.43.1-r1	community	82723156	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol	/bin/sh
-kubo-bash-completion	0.43.1-r1	community	106442	Bash completions for kubo	
-kubo-doc	0.43.1-r1	community	14528	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (documentation)	
-kubo-fish-completion	0.43.1-r1	community	96199	Fish completions for kubo	
-kubo-migration	0.43.1-r1	community	3060532	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (15 to 16 migration)	
-kubo-openrc	0.43.1-r1	community	345	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (OpenRC init scripts)	
-kubo-zsh-completion	0.43.1-r1	community	106451	Zsh completions for kubo	
+kubo	0.43.2-r0	community	84191252	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol	/bin/sh
+kubo-bash-completion	0.43.2-r0	community	106442	Bash completions for kubo	
+kubo-doc	0.43.2-r0	community	14611	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (documentation)	
+kubo-fish-completion	0.43.2-r0	community	96199	Fish completions for kubo	
+kubo-migration	0.43.2-r0	community	3060532	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (15 to 16 migration)	
+kubo-openrc	0.43.2-r0	community	345	Inter Platnetary File System (IPFS), a peer-to-peer hypermedia distribution protocol (OpenRC init scripts)	
+kubo-zsh-completion	0.43.2-r0	community	106451	Zsh completions for kubo	
 kunifiedpush	26.08.3-r0	community	490190	UnifiedPush client library and distributor daemon	
 kunifiedpush-dev	26.08.3-r0	community	16932	UnifiedPush client library and distributor daemon (development files)	kcmutils-dev kcoreaddons-dev kdeclarative-dev kpackage-dev kservice-dev qt6-qtbase-dev qt6-qtwebsockets-dev kunifiedpush-libs=26.08.3-r0
 kunifiedpush-lang	26.08.3-r0	community	169150	Languages for package kunifiedpush	
@@ -8209,11 +8209,11 @@ kwidgetsaddons5	5.116.0-r0	community	4833280	Addons to QtWidgets
 kwidgetsaddons5-dev	5.116.0-r0	community	1060864	Addons to QtWidgets (development files)	qt5-qtbase-dev kwidgetsaddons5=5.116.0-r0
 kwidgetsaddons5-doc	5.116.0-r0	community	3252224	Addons to QtWidgets (documentation)	
 kwidgetsaddons5-lang	5.116.0-r0	community	3321856	Languages for package kwidgetsaddons5	
-kwin	6.8.3-r1	community	21666043	An easy to use, but flexible, composited Window Manager	aurorae hwdata kirigami qt6-qtmultimedia qt6-qtwayland
-kwin-dbg	6.8.3-r1	community	517617680	An easy to use, but flexible, composited Window Manager (debug symbols)	
-kwin-dev	6.8.3-r1	community	1701626	An easy to use, but flexible, composited Window Manager (development files)	breeze-dev eudev-dev fontconfig-dev kcmutils-dev kcompletion-dev kconfig-dev kconfigwidgets-dev kcoreaddons-dev kcrash-dev kdeclarative-dev kdecoration-dev kglobalaccel-dev ki18n-dev kiconthemes-dev kidletime-dev kio-dev knewstuff-dev knighttime-dev knotifications-dev kpackage-dev krunner-dev kscreenlocker-dev kservice-dev ksvg-dev ktextwidgets-dev kwayland-dev kwidgetsaddons-dev kwindowsystem-dev kxmlgui-dev lcms2-dev libdrm-dev libei-dev libepoxy-dev libinput-dev libplasma-dev libqaccessibilityclient-dev libxcvt-dev libxi-dev libxkbcommon-dev mesa-dev mesa-gbm pipewire-dev plasma-activities-dev qt6-qtbase-dev qt6-qtdeclarative-dev qt6-qtsensors-dev wayland-dev xcb-util-cursor-dev xcb-util-image-dev xcb-util-wm-dev kwin=6.8.3-r1
-kwin-lang	6.8.3-r1	community	6874739	Languages for package kwin	
-kwin-systemd	6.8.3-r1	community	184	An easy to use, but flexible, composited Window Manager (systemd files)	
+kwin	6.8.3-r2	community	21666043	An easy to use, but flexible, composited Window Manager	aurorae hwdata kirigami qt6-qtmultimedia qt6-qtwayland
+kwin-dbg	6.8.3-r2	community	517617680	An easy to use, but flexible, composited Window Manager (debug symbols)	
+kwin-dev	6.8.3-r2	community	1701626	An easy to use, but flexible, composited Window Manager (development files)	breeze-dev eudev-dev fontconfig-dev kcmutils-dev kcompletion-dev kconfig-dev kconfigwidgets-dev kcoreaddons-dev kcrash-dev kdeclarative-dev kdecoration-dev kglobalaccel-dev ki18n-dev kiconthemes-dev kidletime-dev kio-dev knewstuff-dev knighttime-dev knotifications-dev kpackage-dev krunner-dev kscreenlocker-dev kservice-dev ksvg-dev ktextwidgets-dev kwayland-dev kwidgetsaddons-dev kwindowsystem-dev kxmlgui-dev lcms2-dev libdrm-dev libei-dev libepoxy-dev libinput-dev libplasma-dev libqaccessibilityclient-dev libxcvt-dev libxi-dev libxkbcommon-dev mesa-dev mesa-gbm pipewire-dev plasma-activities-dev qt6-qtbase-dev qt6-qtdeclarative-dev qt6-qtsensors-dev wayland-dev xcb-util-cursor-dev xcb-util-image-dev xcb-util-wm-dev kwin=6.8.3-r2
+kwin-lang	6.8.3-r2	community	6874739	Languages for package kwin	
+kwin-systemd	6.8.3-r2	community	184	An easy to use, but flexible, composited Window Manager (systemd files)	
 kwindowsystem	6.32.0-r0	community	829801	Access to the windowing system	
 kwindowsystem-dev	6.32.0-r0	community	208860	Access to the windowing system (development files)	libxrender-dev plasma-wayland-protocols qt6-qtdeclarative-dev qt6-qtwayland-dev xcb-util-keysyms-dev xcb-util-wm-dev kwindowsystem=6.32.0-r0 pkgconfig
 kwindowsystem-doc	6.32.0-r0	community	1474017	Access to the windowing system (documentation)	
@@ -8323,8 +8323,8 @@ ldns-tools	1.9.2-r0	main	467328	ldns example tools
 ldoc	1.5.0-r0	main	430080	Documentation tool for Lua	lua-penlight lua5.4
 ledger	3.4.1-r0	community	3671692	Double-entry accounting system with a command-line reporting interface	
 ledger-doc	3.4.1-r0	community	13486	Double-entry accounting system with a command-line reporting interface (documentation)	
-lego	5.5.2-r1	community	68779188	Let's Encrypt client and ACME library written in Go	ca-certificates
-lego-doc	5.5.2-r1	community	1130	Let's Encrypt client and ACME library written in Go (documentation)	
+lego	5.5.2-r2	community	68779188	Let's Encrypt client and ACME library written in Go	ca-certificates
+lego-doc	5.5.2-r2	community	1130	Let's Encrypt client and ACME library written in Go (documentation)	
 leiningen	2.13.1-r0	community	17063067	Automate Clojure Projects	bash java-jdk
 leiningen-bash-completion	2.13.1-r0	community	1575	Bash completions for leiningen	
 leiningen-doc	2.13.1-r0	community	1758	Automate Clojure Projects (documentation)	
@@ -9581,9 +9581,9 @@ libpaper-doc	2.2.8-r0	main	4385	Library for handling paper characteristics (docu
 libparquet	26.0.1-r1	community	3635328	multi-language toolbox for accelerated data interchange and in-memory processing (libparquet library)	apache-arrow=26.0.1-r1
 libpathrs	0.2.6-r0	community	447112	C-friendly API for safe path resolution on Linux	
 libpathrs-dev	0.2.6-r0	community	2535303	C-friendly API for safe path resolution on Linux (development files)	libpathrs=0.2.6-r0 pkgconfig
-libpcap	1.11.0-r0	main	243224	Portable library for network traffic capture	
-libpcap-dev	1.11.0-r0	main	537616	Portable library for network traffic capture (development files)	libpcap=1.11.0-r0 pkgconfig
-libpcap-doc	1.11.0-r0	main	111488	Portable library for network traffic capture (documentation)	
+libpcap	1.11.1-r0	main	243224	Portable library for network traffic capture	
+libpcap-dev	1.11.1-r0	main	540202	Portable library for network traffic capture (development files)	libpcap=1.11.1-r0 pkgconfig
+libpcap-doc	1.11.1-r0	main	112019	Portable library for network traffic capture (documentation)	
 libpciaccess	0.19-r0	main	38180	X11 PCI access library	hwdata-pci
 libpciaccess-dbg	0.19-r0	main	95836	X11 PCI access library (debug symbols)	!libpciaccess<0.19-r0 !libpciaccess>0.19-r0
 libpciaccess-dev	0.19-r0	main	15828	X11 PCI access library (development files)	libpciaccess=0.19-r0 pkgconfig
@@ -12250,9 +12250,9 @@ mednafen	1.32.1-r2	community	11258388	A command-line multi-system emulator
 mednafen-lang	1.32.1-r2	community	53907	Languages for package mednafen	
 mednaffe	0.9.3-r0	community	3145728	front-end (GUI) for mednafen emulator	mednafen gtk+3.0
 mednaffe-doc	0.9.3-r0	community	73728	front-end (GUI) for mednafen emulator (documentation)	
-meek	0.38.0-r25	community	9150052	Pluggable transport proxy written in Go	ca-certificates
-meek-doc	0.38.0-r25	community	16458	Pluggable transport proxy written in Go (documentation)	
-meek-server	0.38.0-r25	community	8577348	meek pluggable transport proxy server	
+meek	0.38.0-r26	community	9154148	Pluggable transport proxy written in Go	ca-certificates
+meek-doc	0.38.0-r26	community	16458	Pluggable transport proxy written in Go (documentation)	
+meek-server	0.38.0-r26	community	8577348	meek pluggable transport proxy server	
 megapixels	2.1.0-r0	community	2375351	GTK+4 camera app for mobile devices	libraw-tools imagemagick exiftool
 meld	3.24.1-r0	community	1196376	Visual diff and merge tool	dconf gsettings-desktop-schemas gtksourceview4 py3-cairo py3-gobject3 python3 python3~3.14
 meld-doc	3.24.1-r0	community	372788	Visual diff and merge tool (documentation)	
@@ -12485,10 +12485,10 @@ mmsd-tng-systemd	2.6.4-r33	community	159	daemon for receiving and managing GSM M
 mmsd-tng-tools	2.6.4-r33	community	35828	daemon for receiving and managing GSM MMS messages (tools)	mobile-broadband-provider-info
 mmtc	0.3.2-r0	community	991372	Minimal mpd terminal client that aims to be simple yet highly configurable	
 mnc	0.5-r17	community	2040340	get the time in seconds to next cron job	
-moarvm	2026.08-r0	community	7239054	VM with adaptive optimization and JIT compilation, built for Rakudo	
-moarvm-dbg	2026.08-r0	community	13277456	VM with adaptive optimization and JIT compilation, built for Rakudo (debug symbols)	
-moarvm-dev	2026.08-r0	community	2576887	VM with adaptive optimization and JIT compilation, built for Rakudo (development files)	moarvm=2026.08-r0 libffi-dev libuv-dev mimalloc2-dev perl zstd-dev pkgconfig
-moarvm-doc	2026.08-r0	community	573739	VM with adaptive optimization and JIT compilation, built for Rakudo (documentation)	
+moarvm	2026.08-r1	community	7239054	VM with adaptive optimization and JIT compilation, built for Rakudo	
+moarvm-dbg	2026.08-r1	community	13284464	VM with adaptive optimization and JIT compilation, built for Rakudo (debug symbols)	
+moarvm-dev	2026.08-r1	community	2576887	VM with adaptive optimization and JIT compilation, built for Rakudo (development files)	moarvm=2026.08-r1 libffi-dev libuv-dev mimalloc2-dev perl zstd-dev pkgconfig
+moarvm-doc	2026.08-r1	community	573739	VM with adaptive optimization and JIT compilation, built for Rakudo (documentation)	
 mobile-broadband-provider-info	20261111-r0	community	534962	Mobile broadband settings for various service providers	pkgconfig
 mobile-config-firefox	5.5.2-r1	community	97429	Firefox tweaks for mobile and privacy	
 mobile-config-firefox-librewolf	5.5.2-r1	community	5557	Firefox tweaks for mobile and privacy	librewolf
@@ -12708,10 +12708,10 @@ mtm-doc	1.2.1-r1	community	2204	Perhaps the smallest useful terminal multiplexer
 mtools	4.0.50-r0	main	195922	collection of utilities to access MS-DOS disks from Unix without mounting them	
 mtools-dbg	4.0.50-r0	main	556716	collection of utilities to access MS-DOS disks from Unix without mounting them (debug symbols)	
 mtools-doc	4.0.50-r0	main	174866	collection of utilities to access MS-DOS disks from Unix without mounting them (documentation)	
-mtr	0.96-r2	community	116756	Full screen ncurses traceroute tool	
-mtr-bash-completion	0.96-r2	community	1948	Bash completion for mtr	
-mtr-doc	0.96-r2	community	17168	Full screen ncurses traceroute tool (documentation)	
-mtr-gtk	0.96-r2	community	145359	The GTK+ interface for mtr	
+mtr	0.96-r3	community	116756	Full screen ncurses traceroute tool	
+mtr-bash-completion	0.96-r3	community	1948	Bash completion for mtr	
+mtr-doc	0.96-r3	community	17168	Full screen ncurses traceroute tool (documentation)	
+mtr-gtk	0.96-r3	community	145359	The GTK+ interface for mtr	
 mtree-portable	0_git20220519-r1	community	55352	Utility for mapping and checking directory hierarchies	
 mtree-portable-doc	0_git20220519-r1	community	9824	Utility for mapping and checking directory hierarchies (documentation)	
 mtu	1.5.1-r0	main	32768	Utility to detect MTU	
@@ -14307,25 +14307,25 @@ openocd-doc	0.12.0-r7	community	627836	Free and Open On-Chip Debugging, In-Syste
 openocd-udev	0.12.0-r7	community	11861	udev rules for openocd	
 openpgm	5.3.128-r1	community	279844	Implementation of the PGM reliable multicast protocol	
 openpgm-dev	5.3.128-r1	community	81332	Implementation of the PGM reliable multicast protocol (development files)	openpgm=5.3.128-r1 pkgconfig
-openrazer	3.12.4-r0	community	529825	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-daemonize py3-dbus py3-gobject3 py3-setproctitle py3-udev python3~3.14
-openrazer-doc	3.12.4-r0	community	2906	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (documentation)	
-openrazer-src	3.12.4-r0	community	930171	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	akms
-openrazer-systemd	3.12.4-r0	community	214	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (systemd files)	
-openrazer-udev	3.12.4-r0	community	3755	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (udev rules)	
-openrc	0.63.2-r1	main	1209837	OpenRC manages the services, startup and shutdown of a host	ifupdown-any openrc-user=0.63.2-r1 /bin/sh
-openrc-bash-completion	0.63.2-r1	main	6253	Bash completions for openrc	
-openrc-dbg	0.63.2-r1	main	1712580	OpenRC manages the services, startup and shutdown of a host (debug symbols)	
-openrc-dev	0.63.2-r1	main	27032	OpenRC manages the services, startup and shutdown of a host (development files)	openrc=0.63.2-r1 pkgconfig
-openrc-doc	0.63.2-r1	main	134329	OpenRC manages the services, startup and shutdown of a host (documentation)	
-openrc-init	0.63.2-r1	main	35440	OpenRC init process	ifupdown-any openrc-user=0.63.2-r1
+openrazer	3.12.5-r0	community	529825	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-daemonize py3-dbus py3-gobject3 py3-setproctitle py3-udev python3~3.14
+openrazer-doc	3.12.5-r0	community	2906	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (documentation)	
+openrazer-src	3.12.5-r0	community	929500	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	akms
+openrazer-systemd	3.12.5-r0	community	214	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (systemd files)	
+openrazer-udev	3.12.5-r0	community	3755	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (udev rules)	
+openrc	0.64.1-r0	main	1294708	OpenRC manages the services, startup and shutdown of a host	ifupdown-any openrc-user=0.64.1-r0 /bin/sh
+openrc-bash-completion	0.64.1-r0	main	6253	Bash completions for openrc	
+openrc-dbg	0.64.1-r0	main	1896624	OpenRC manages the services, startup and shutdown of a host (debug symbols)	
+openrc-dev	0.64.1-r0	main	28042	OpenRC manages the services, startup and shutdown of a host (development files)	openrc=0.64.1-r0 pkgconfig
+openrc-doc	0.64.1-r0	main	136167	OpenRC manages the services, startup and shutdown of a host (documentation)	
+openrc-init	0.64.1-r0	main	35440	OpenRC init process	ifupdown-any openrc-user=0.64.1-r0
 openrc-settingsd	1.5.0-r3	community	148120	System settings D-Bus service for OpenRC	tzdata /bin/sh
 openrc-settingsd-doc	1.5.0-r3	community	1069	System settings D-Bus service for OpenRC (documentation)	
 openrc-settingsd-openrc	1.5.0-r3	community	476	System settings D-Bus service for OpenRC (OpenRC init scripts)	
-openrc-static	0.63.2-r1	main	382996	OpenRC manages the services, startup and shutdown of a host (static library)	openrc-dev
-openrc-tools	0.63.2-r1	main	1203	OpenRC manages the services, startup and shutdown of a host	perl
-openrc-user	0.63.2-r1	main	14651	OpenRC user services without PAM support	
-openrc-user-pam	0.63.2-r1	main	41009	OpenRC user services with PAM support	
-openrc-zsh-completion	0.63.2-r1	main	5020	Zsh completions for openrc	
+openrc-static	0.64.1-r0	main	403134	OpenRC manages the services, startup and shutdown of a host (static library)	openrc-dev
+openrc-tools	0.64.1-r0	main	1203	OpenRC manages the services, startup and shutdown of a host	perl
+openrc-user	0.64.1-r0	main	14827	OpenRC user services without PAM support	
+openrc-user-pam	0.64.1-r0	main	41185	OpenRC user services with PAM support	
+openrc-zsh-completion	0.64.1-r0	main	5020	Zsh completions for openrc	
 openrct2	0.5.5-r1	community	19659172	Open-source re-implementation of Roller Coaster Tycoon 2	openrct2-data /bin/sh
 openrct2-cli	0.5.5-r1	community	13708	Open-source re-implementation of Roller Coaster Tycoon 2	openrct2-data /bin/sh
 openrct2-data	0.5.5-r1	community	81641345	Open-source re-implementation of Roller Coaster Tycoon 2	
@@ -17615,11 +17615,11 @@ pnc-gawk	0.9.5-r40	community	26220	libphonenumber command-line wrapper - Sxmo ex
 pngcrush	1.8.13-r2	community	122880	PNG recompression utility	
 pngquant	3.0.3-r0	community	598016	Lossy PNG compressor	
 pngquant-doc	3.0.3-r0	community	24576	Lossy PNG compressor (documentation)	
-pnpm	11.28.13-r0	community	35031580	Fast, disk space efficient package manager	nodejs
-pnpm-bash-completion	11.28.13-r0	community	994	Bash completions for pnpm	
-pnpm-doc	11.28.13-r0	community	1312	Fast, disk space efficient package manager (documentation)	
-pnpm-fish-completion	11.28.13-r0	community	672	Fish completions for pnpm	
-pnpm-zsh-completion	11.28.13-r0	community	839	Zsh completions for pnpm	
+pnpm	11.29.0-r0	community	35871847	Fast, disk space efficient package manager	nodejs
+pnpm-bash-completion	11.29.0-r0	community	994	Bash completions for pnpm	
+pnpm-doc	11.29.0-r0	community	1312	Fast, disk space efficient package manager (documentation)	
+pnpm-fish-completion	11.29.0-r0	community	672	Fish completions for pnpm	
+pnpm-zsh-completion	11.29.0-r0	community	839	Zsh completions for pnpm	
 po4a	0.74-r1	main	904673	Tools for helping translation of documentation	diffutils gettext perl perl-pod-parser perl-syntax-keyword-try
 po4a-doc	0.74-r1	main	2229257	Tools for helping translation of documentation (documentation)	
 po4a-lang	0.74-r1	main	1255068	Languages for package po4a	
@@ -19909,8 +19909,8 @@ py3-openid-pyc	3.2.0-r3	community	481586	Precompiled Python bytecode for py3-ope
 py3-openimageio	3.1.17.0-r3	community	2167147	Python bindings for OpenImageIO image I/O library	python3~3.14
 py3-openpyxl	3.1.5-r1	community	864071	A Python library to read/write Excel 2010 xlsx/xlsm files	python3 py3-lxml py3-pandas py3-pillow python3~3.14
 py3-openpyxl-pyc	3.1.5-r1	community	1118952	Precompiled Python bytecode for py3-openpyxl	python3~3.14
-py3-openrazer	3.12.4-r0	community	242124	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-numpy python3~3.14
-py3-openrazer-pyc	3.12.4-r0	community	531567	Precompiled Python bytecode for py3-openrazer	python3~3.14
+py3-openrazer	3.12.5-r0	community	242124	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-numpy python3~3.14
+py3-openrazer-pyc	3.12.5-r0	community	531567	Precompiled Python bytecode for py3-openrazer	python3~3.14
 py3-openssl	26.4.0-r0	community	224707	Python3 wrapper module around the OpenSSL library	python3 py3-cryptography py3-typing-extensions python3~3.14
 py3-openssl-pyc	26.4.0-r0	community	265569	Precompiled Python bytecode for py3-openssl	python3~3.14
 py3-openvdb	13.1.0-r1	community	2537928	Sparse volume data structure and tools (Python bindings)	python3~3.14
@@ -20650,8 +20650,8 @@ py3-regress	2025.10.1-r1	community	777739	Python bindings to the Rust regress cr
 py3-regress-pyc	2025.10.1-r1	community	331	Precompiled Python bytecode for py3-regress	python3~3.14
 py3-remoto	1.2.1-r7	community	38929	Execute remote commands or processes	py3-execnet python3~3.14
 py3-remoto-pyc	1.2.1-r7	community	40403	Precompiled Python bytecode for py3-remoto	python3~3.14
-py3-rencode	1.0.8-r1	community	179661	The rencode module is similar to bencode from the BitTorrent project.	python3~3.14
-py3-rencode-pyc	1.0.8-r1	community	22737	Precompiled Python bytecode for py3-rencode	python3~3.14
+py3-rencode	1.0.9-r0	community	135874	The rencode module is similar to bencode from the BitTorrent project.	python3~3.14
+py3-rencode-pyc	1.0.9-r0	community	22737	Precompiled Python bytecode for py3-rencode	python3~3.14
 py3-reportlab	4.4.3-r1	community	4658088	Python library for generating PDFs and graphics	py3-pillow python3 font-dejavu python3~3.14
 py3-reportlab-pyc	4.4.3-r1	community	3804402	Precompiled Python bytecode for py3-reportlab	python3~3.14
 py3-requests	2.34.2-r0	main	234397	HTTP request library for Python3	py3-certifi py3-charset-normalizer py3-idna py3-urllib3 python3 python3~3.14
@@ -23010,8 +23010,8 @@ scrcpy-bash-completion	5.0.1-r1	community	7169	Bash completions for scrcpy
 scrcpy-doc	5.0.1-r1	community	8423	Display and control your Android device (documentation)	
 scrcpy-zsh-completion	5.0.1-r1	community	8700	Zsh completions for scrcpy	
 scream	4.0-r0	community	36864	client for scream virtual network sound card for Microsoft Windows	
-screen	5.0.2-r0	main	617272	Window manager that multiplexes a physical terminal	
-screen-doc	5.0.2-r0	main	55878	Window manager that multiplexes a physical terminal (documentation)	
+screen	5.0.3-r0	main	617272	Window manager that multiplexes a physical terminal	
+screen-doc	5.0.3-r0	main	55874	Window manager that multiplexes a physical terminal (documentation)	
 screen-message	0.29-r0	community	23271	Simple tool to display some text as large as possible	
 screen-message-doc	0.29-r0	community	1922	Simple tool to display some text as large as possible (documentation)	
 screengrab	3.2.0-r0	community	472028	Crossplatform tool for fast making screenshots	
@@ -23211,15 +23211,15 @@ sgdisk	1.0.10-r1	main	270336	Command-line GUID partition table (GPT) manipulator
 shaderc	2026.1-r0	community	237160	Collection of tools, libraries, and tests for Vulkan shader compilation	
 shaderc-dev	2026.1-r0	community	64250	Collection of tools, libraries, and tests for Vulkan shader compilation (development files)	shaderc=2026.1-r0 pkgconfig
 shaderc-static	2026.1-r0	community	258308	Collection of tools, libraries, and tests for Vulkan shader compilation (static library)	shaderc-dev
-shadow	4.20.4-r0	community	1215484	PAM-using login and passwd utilities (usermod, useradd, ...)	/bin/sh
-shadow-conv	4.20.4-r0	community	169516	Utilities for converting to and from shadow passwords and groups	
-shadow-dbg	4.20.4-r0	community	4607824	PAM-using login and passwd utilities (usermod, useradd, ...) (debug symbols)	
-shadow-dev	4.20.4-r0	community	919616	PAM-using login and passwd utilities (usermod, useradd, ...) (development files)	shadow-libs=4.20.4-r0
-shadow-doc	4.20.4-r0	community	66590	PAM-using login and passwd utilities (usermod, useradd, ...) (documentation)	
-shadow-libs	4.20.4-r0	community	123492	PAM-using login and passwd utilities (usermod, useradd, ...) (libraries)	
-shadow-login	4.20.4-r0	community	167732	Login utils from shadow package: faillog, lastlog, login, newgrp, nologin, sg, su	
-shadow-login-doc	4.20.4-r0	community	25708	Login utils from shadow package (documentation)	!util-linux-login-doc
-shadow-subids	4.20.4-r0	community	112512	Utilities for using subordinate UIDs and GIDs	
+shadow	4.20.4-r1	community	1215484	PAM-using login and passwd utilities (usermod, useradd, ...)	/bin/sh
+shadow-conv	4.20.4-r1	community	169516	Utilities for converting to and from shadow passwords and groups	
+shadow-dbg	4.20.4-r1	community	4607824	PAM-using login and passwd utilities (usermod, useradd, ...) (debug symbols)	
+shadow-dev	4.20.4-r1	community	919616	PAM-using login and passwd utilities (usermod, useradd, ...) (development files)	shadow-libs=4.20.4-r1
+shadow-doc	4.20.4-r1	community	66590	PAM-using login and passwd utilities (usermod, useradd, ...) (documentation)	
+shadow-libs	4.20.4-r1	community	123492	PAM-using login and passwd utilities (usermod, useradd, ...) (libraries)	
+shadow-login	4.20.4-r1	community	167732	Login utils from shadow package: faillog, lastlog, login, newgrp, nologin, sg, su	
+shadow-login-doc	4.20.4-r1	community	25708	Login utils from shadow package (documentation)	!util-linux-login-doc
+shadow-subids	4.20.4-r1	community	112512	Utilities for using subordinate UIDs and GIDs	
 shadowsocks-rust	1.25.0-r0	community	0	Rust port of shadowsocks	shadowsocks-rust-sslocal=1.25.0-r0 shadowsocks-rust-ssmanager=1.25.0-r0 shadowsocks-rust-ssserver=1.25.0-r0 shadowsocks-rust-ssservice=1.25.0-r0 shadowsocks-rust-ssurl=1.25.0-r0
 shadowsocks-rust-sslocal	1.25.0-r0	community	5445188	Rust port of shadowsocks (sslocal binary)	
 shadowsocks-rust-ssmanager	1.25.0-r0	community	4438488	Rust port of shadowsocks (ssmanager binary)	
@@ -23816,9 +23816,9 @@ steam-devices	1.0.0.61-r1	community	28672	Udev rules for use with for example th
 stellarsolver	2.8-r0	community	817384	SEP-based star extractor and astrometry.net-based internal astrometric solver	
 stellarsolver-dev	2.8-r0	community	331195	SEP-based star extractor and astrometry.net-based internal astrometric solver (development files)	stellarsolver=2.8-r0 pkgconfig
 step	26.08.3-r0	community	9692339	Interactive Physics Simulator	
-step-certificates	0.30.2-r4	community	50727060	Online certificate authority and related tools	step-cli /bin/sh
-step-certificates-logrotate	0.30.2-r4	community	119	Online certificate authority and related tools (logrotate configuration)	
-step-certificates-openrc	0.30.2-r4	community	2147	Online certificate authority and related tools (OpenRC init scripts)	
+step-certificates	0.30.2-r5	community	50731156	Online certificate authority and related tools	step-cli /bin/sh
+step-certificates-logrotate	0.30.2-r5	community	119	Online certificate authority and related tools (logrotate configuration)	
+step-certificates-openrc	0.30.2-r5	community	2147	Online certificate authority and related tools (OpenRC init scripts)	
 step-cli	0.31.0-r1	community	40194644	Zero trust swiss army knife that integrates with step-ca for automated certificate management	
 step-cli-bash-completion	0.31.0-r1	community	446	Bash completions for step-cli	
 step-cli-zsh-completion	0.31.0-r1	community	454	Zsh completions for step-cli	
@@ -23947,23 +23947,23 @@ svxlink-sounds-en_us-heather-16k	25.05-r0	community	19198072	Sound Package en_US
 swatch	3.2.4-r10	community	60116	Logfile monitoring tool	perl perl-date-calc perl-timedate perl-date-manip perl-file-tail perl-carp-clan
 swatch-doc	3.2.4-r10	community	9119	Logfile monitoring tool (documentation)	
 swatch-openrc	3.2.4-r10	community	1511	Logfile monitoring tool (OpenRC init scripts)	
-sway	1.12-r0	community	494448	i3-compatible window manager for Wayland	
-sway-bash-completion	1.12-r0	community	2399	Bash completions for sway	
+sway	1.12-r1	community	494448	i3-compatible window manager for Wayland	
+sway-bash-completion	1.12-r1	community	2399	Bash completions for sway	
 sway-contrib	1.12-r0	community	38331	A collection of user-contributed scripts for Sway	python3 py3-i3ipc
 sway-contrib-bash-completion	1.12-r0	community	1452	Bash completions for sway-contrib	
 sway-contrib-doc	1.12-r0	community	6247	A collection of user-contributed scripts for Sway (documentation)	
 sway-contrib-fish-completion	1.12-r0	community	553	Fish completions for sway-contrib	
 sway-contrib-zsh-completion	1.12-r0	community	380	Zsh completions for sway-contrib	
-sway-dbg	1.12-r0	community	5630960	i3-compatible window manager for Wayland (debug symbols)	
-sway-doc	1.12-r0	community	46586	i3-compatible window manager for Wayland (documentation)	
-sway-fish-completion	1.12-r0	community	6105	Fish completions for sway	
+sway-dbg	1.12-r1	community	5631484	i3-compatible window manager for Wayland (debug symbols)	
+sway-doc	1.12-r1	community	46767	i3-compatible window manager for Wayland (documentation)	
+sway-fish-completion	1.12-r1	community	6105	Fish completions for sway	
 sway-launcher-desktop	1.7.0-r1	community	12134	Text based launcher menu	bash gawk fzf
 sway-launcher-desktop-doc	1.7.0-r1	community	7040	Text based launcher menu (documentation)	
-sway-openrc	1.12-r0	community	195	i3-compatible window manager for Wayland (OpenRC init scripts)	
-sway-portalsconf	1.12-r0	community	28	xdg-desktop-portal configuration of compatible portals for Sway	/bin/sh
-sway-wallpapers	1.12-r0	community	5030108	Wallpapers for Sway	
-sway-zsh-completion	1.12-r0	community	1888	Zsh completions for sway	
-swaybar	1.12-r0	community	96024	Standard bar for Sway	
+sway-openrc	1.12-r1	community	195	i3-compatible window manager for Wayland (OpenRC init scripts)	
+sway-portalsconf	1.12-r1	community	28	xdg-desktop-portal configuration of compatible portals for Sway	/bin/sh
+sway-wallpapers	1.12-r1	community	5030108	Wallpapers for Sway	
+sway-zsh-completion	1.12-r1	community	1888	Zsh completions for sway	
+swaybar	1.12-r1	community	96024	Standard bar for Sway	
 swaybg	1.2.2-r0	community	30384	Wallpaper daemon for Wayland	
 swaybg-doc	1.2.2-r0	community	787	Wallpaper daemon for Wayland (documentation)	
 swaybg-openrc	1.2.2-r0	community	131	Wallpaper daemon for Wayland (OpenRC init scripts)	
@@ -23993,7 +23993,7 @@ swaylock-shadow	1.8.6-r0	community	55720	Screen locker for Wayland (shadow backe
 swaylock-zsh-completion	1.8.6-r0	community	5521	Zsh completions for swaylock	
 swaylockd	0.1.0-r1	community	28672	A dumb launcher to spawn swaylock and ensure it runs no matter what	swaylock
 swaylockd-doc	0.1.0-r1	community	24576	A dumb launcher to spawn swaylock and ensure it runs no matter what (documentation)	
-swaynag	1.12-r0	community	46744	CLI to show a warning or error message with buttons in Sway	
+swaynag	1.12-r1	community	46744	CLI to show a warning or error message with buttons in Sway	
 swaync	0.12.6-r0	community	644361	Notification daemon with a GTK GUI for notifications and the control center	dbus
 swaync-bash-completion	0.12.6-r0	community	2568	Bash completions for swaync	
 swaync-doc	0.12.6-r0	community	8259	Notification daemon with a GTK GUI for notifications and the control center (documentation)	
@@ -24033,23 +24033,23 @@ sxmo-st-dbg	0.8.4.1-r1	community	147456	St fork for Sxmo UI; supports scrollback
 sxmo-st-doc	0.8.4.1-r1	community	24576	St fork for Sxmo UI; supports scrollback, invert, and other patches (documentation)	
 sxmo-surf	2.0.3-r3	community	53248	Surf fork for Sxmo UI; supports externalpipe, keyword searching, non-JS by default	xprop libxml2-utils sxmo-dmenu
 sxmo-surf-doc	2.0.3-r3	community	40960	Surf fork for Sxmo UI; supports externalpipe, keyword searching, non-JS by default (documentation)	
-sxmo-utils	1.18.1-r5	community	1538210	Utility scripts, programs, and configs that hold the Sxmo UI environment together	coreutils gawk curl doas jq
-sxmo-utils-audio-bluetooth	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	coreutils gawk curl doas jq
-sxmo-utils-audio-bluetooth-pipewire	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	bluez pipewire-spa-bluez
-sxmo-utils-audio-bluetooth-pulseaudio	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	bluez pulseaudio-bluez !sxmo-utils-audio-pipewire
-sxmo-utils-audio-pipewire	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	pipewire-pulse pipewire wireplumber pipewire-alsa
-sxmo-utils-audio-pulseaudio	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	pulseaudio pulseaudio-alsa callaudiod
-sxmo-utils-common	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - common dependencies	sxmo-utils=1.18.1-r5 sxmo-utils-audio sxmo-utils-wm adwaita-icon-theme alsa-utils bemenu brightnessctl busctl codemadness-frontends conky dnsmasq dunst dunstify evtest expect file font-dejavu font-dejavu-sans-mono-nerd geoclue iio-sensor-proxy inotify-tools lisgd mediainfo mnc mpv ncurses pnc polkit pulseaudio-utils superd tinydm tzdata upower v4l-utils vim xdg-user-dirs yt-dlp
-sxmo-utils-doc	1.18.1-r5	community	25451	Utility scripts, programs, and configs that hold the Sxmo UI environment together (documentation)	
-sxmo-utils-dwm	1.18.1-r5	community	85	Utility scripts, programs, and configs that hold the Sxmo UI environment together - dwm dependencies	sxmo-utils-x11=1.18.1-r5 sxmo-dwm /bin/sh
-sxmo-utils-i3	1.18.1-r5	community	83	Utility scripts, programs, and configs that hold the Sxmo UI environment together - i3 dependencies	sxmo-utils-x11=1.18.1-r5 i3wm xbindkeys /bin/sh
-sxmo-utils-modem	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	modemmanager
-sxmo-utils-modem-mms	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	sxmo-utils-modem mmsd-tng
-sxmo-utils-modem-vvm	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	sxmo-utils-modem vvmd
-sxmo-utils-sway	1.18.1-r5	community	87	Utility scripts, programs, and configs that hold the Sxmo UI environment together - sway dependencies	sxmo-utils-wayland=1.18.1-r5 sway seatd xdg-desktop-portal-gtk xdg-desktop-portal-wlr /bin/sh
-sxmo-utils-udev	1.18.1-r5	community	1193	Utility scripts, programs, and configs that hold the Sxmo UI environment together (udev rules)	
-sxmo-utils-wayland	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - wayland dependencies	sxmo-utils-common=1.18.1-r5 foot grim slurp swaybg swayidle wl-clipboard wlr-randr wlopm wob wofi wtype wvkbd xwayland
-sxmo-utils-x11	1.18.1-r5	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - x11 dependencies	sxmo-utils-common=1.18.1-r5 autocutsel feh svkbd sxiv sxmo-dmenu sxmo-dwm sxmo-st unclutter-xfixes xcalib xclip xdotool xdpyinfo xinput xob xprintidle xprop xrandr xrdb xsel xset xsetroot xwininfo
+sxmo-utils	1.18.1-r6	community	1538210	Utility scripts, programs, and configs that hold the Sxmo UI environment together	coreutils gawk curl doas jq
+sxmo-utils-audio-bluetooth	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	coreutils gawk curl doas jq
+sxmo-utils-audio-bluetooth-pipewire	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	bluez pipewire-spa-bluez
+sxmo-utils-audio-bluetooth-pulseaudio	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	bluez pulseaudio-bluez !sxmo-utils-audio-pipewire
+sxmo-utils-audio-pipewire	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	pipewire-pulse pipewire wireplumber pipewire-alsa
+sxmo-utils-audio-pulseaudio	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	pulseaudio pulseaudio-alsa callaudiod
+sxmo-utils-common	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - common dependencies	sxmo-utils=1.18.1-r6 sxmo-utils-audio sxmo-utils-wm adwaita-icon-theme alsa-utils bemenu brightnessctl busctl codemadness-frontends conky dnsmasq dunst dunstify evtest expect file font-dejavu font-dejavu-sans-mono-nerd geoclue iio-sensor-proxy inotify-tools lisgd mediainfo mnc mpv ncurses pnc polkit pulseaudio-utils superd tinydm tzdata upower v4l-utils vim xdg-user-dirs yt-dlp
+sxmo-utils-doc	1.18.1-r6	community	25448	Utility scripts, programs, and configs that hold the Sxmo UI environment together (documentation)	
+sxmo-utils-dwm	1.18.1-r6	community	85	Utility scripts, programs, and configs that hold the Sxmo UI environment together - dwm dependencies	sxmo-utils-x11=1.18.1-r6 sxmo-dwm /bin/sh
+sxmo-utils-i3	1.18.1-r6	community	83	Utility scripts, programs, and configs that hold the Sxmo UI environment together - i3 dependencies	sxmo-utils-x11=1.18.1-r6 i3wm xbindkeys /bin/sh
+sxmo-utils-modem	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	modemmanager
+sxmo-utils-modem-mms	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	sxmo-utils-modem mmsd-tng
+sxmo-utils-modem-vvm	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together	sxmo-utils-modem vvmd
+sxmo-utils-sway	1.18.1-r6	community	87	Utility scripts, programs, and configs that hold the Sxmo UI environment together - sway dependencies	sxmo-utils-wayland=1.18.1-r6 sway seatd xdg-desktop-portal-gtk xdg-desktop-portal-wlr /bin/sh
+sxmo-utils-udev	1.18.1-r6	community	1193	Utility scripts, programs, and configs that hold the Sxmo UI environment together (udev rules)	
+sxmo-utils-wayland	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - wayland dependencies	sxmo-utils-common=1.18.1-r6 foot grim slurp swaybg swayidle wl-clipboard wlr-randr wlopm wob wofi wtype wvkbd xwayland
+sxmo-utils-x11	1.18.1-r6	community	0	Utility scripts, programs, and configs that hold the Sxmo UI environment together - x11 dependencies	sxmo-utils-common=1.18.1-r6 autocutsel feh svkbd sxiv sxmo-dmenu sxmo-dwm sxmo-st unclutter-xfixes xcalib xclip xdotool xdpyinfo xinput xob xprintidle xprop xrandr xrdb xsel xset xsetroot xwininfo
 sxmo-xdm-config	0.3.2-r1	community	61440	X Display Manager configuration for Sxmo; starts with virtual keyboard and launches Sxmo UI	sxmo-utils svkbd xdm
 sxmo-xdm-config-openrc	0.3.2-r1	community	16384	X Display Manager configuration for Sxmo; starts with virtual keyboard and launches Sxmo UI (OpenRC init scripts)	
 sympow	2.023.7-r3	community	5095681	Compute special values of symmetric power elliptic curve L-functions	pari
@@ -24525,9 +24525,9 @@ timblserver-dev	1.20-r0	community	2647342	Server part for TiMBL (memory-based le
 timblserver-doc	1.20-r0	community	1442	Server part for TiMBL (memory-based learning) (documentation)	
 time	1.10-r0	community	26360	utility to measure execution time	
 time-doc	1.10-r0	community	44992	utility to measure execution time (documentation)	
-timed	3.6.24-r2	community	1474932	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue	tzdata-timed /bin/sh
-timed-dev	3.6.24-r2	community	41328	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue (development files)	libdsme-dev libiodata-dev pcre-dev qt6-qtbase-dev sailfish-access-control timed=3.6.24-r2 pkgconfig
-timed-systemd	3.6.24-r2	community	302	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue (systemd files)	
+timed	3.6.24-r3	community	1507700	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue	tzdata-timed /bin/sh
+timed-dev	3.6.24-r3	community	41328	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue (development files)	libdsme-dev libiodata-dev pcre-dev qt6-qtbase-dev sailfish-access-control timed=3.6.24-r3 pkgconfig
+timed-systemd	3.6.24-r3	community	302	The time daemon manages system time, timezone and settings, executing actions at given time and managing the event queue (systemd files)	
 timg	1.6.3-r1	community	247380	24-Bit color image viewer for terminal	
 timg-doc	1.6.3-r1	community	26110	24-Bit color image viewer for terminal (documentation)	
 tin	2.6.6-r0	community	824963	Threaded NNTP and spool-based Usenet newsreader	aspell gnupg
@@ -24763,9 +24763,9 @@ traceroute-doc	2.1.6-r0	community	28672	New modern implementation of traceroute(
 tractor	4.5.1-r1	community	102836	Setup an onion routing proxy	gsettings-desktop-schemas py3-fire py3-gobject3 py3-pysocks py3-stem tor python3~3.14
 tractor-doc	4.5.1-r1	community	505	Setup an onion routing proxy (documentation)	
 tractor-pyc	4.5.1-r1	community	35314	Precompiled Python bytecode for tractor	python3~3.14
-traefik	3.7.19-r0	community	177252572	The Cloud Native Edge Router	/bin/sh
-traefik-doc	3.7.19-r0	community	1110	The Cloud Native Edge Router (documentation)	
-traefik-openrc	3.7.19-r0	community	646	The Cloud Native Edge Router (OpenRC init scripts)	
+traefik	3.7.19-r1	community	177252572	The Cloud Native Edge Router	/bin/sh
+traefik-doc	3.7.19-r1	community	1110	The Cloud Native Edge Router (documentation)	
+traefik-openrc	3.7.19-r1	community	646	The Cloud Native Edge Router (OpenRC init scripts)	
 translate-shell	0.9.7.1-r2	community	248711	Command-line online translator	bash gawk
 translate-shell-doc	0.9.7.1-r2	community	3447	Command-line online translator (documentation)	
 transmission	4.1.4-r0	community	0	Lightweight GTK BitTorrent client	transmission-gtk=4.1.4-r0
@@ -24853,7 +24853,7 @@ trurl	0.16.1-r2	community	30020	command line tool for URL parsing and manipulati
 trurl-doc	0.16.1-r2	community	8533	command line tool for URL parsing and manipulation (documentation)	
 ts	1.0.4-r0	community	50612	Simple Unix batch system	
 ts-doc	1.0.4-r0	community	4093	Simple Unix batch system (documentation)	
-tshark	4.6.10-r0	community	407624	Network protocol analyzer (Console version)	
+tshark	4.6.10-r1	community	407624	Network protocol analyzer (Console version)	
 tslib	1.24-r0	community	438731	Touchscreen Access Library	
 tslib-dev	1.24-r0	community	5104	Touchscreen Access Library (development files)	tslib=1.24-r0 pkgconfig
 tslib-doc	1.24-r0	community	36145	Touchscreen Access Library (documentation)	
@@ -25803,10 +25803,10 @@ wireplumber-logind	0.5.19-r0	community	13668	wireplumbers optional (e)logind int
 wireplumber-openrc	0.5.19-r0	community	206	Session / policy manager implementation for PipeWire (OpenRC init scripts)	
 wireplumber-systemd	0.5.19-r0	community	1246	Session / policy manager implementation for PipeWire (systemd files)	
 wireplumber-zsh-completion	0.5.19-r0	community	2526	Zsh completions for wireplumber	
-wireshark	4.6.10-r0	community	17519672	Network protocol analyzer	
-wireshark-common	4.6.10-r0	community	92995703	Network protoccol analyzer (Common files)	/bin/sh
-wireshark-dev	4.6.10-r0	community	5719708	Network protocol analyzer (development files)	wireshark-common=4.6.10-r0 pkgconfig
-wireshark-doc	4.6.10-r0	community	1191026	Network protocol analyzer (documentation)	
+wireshark	4.6.10-r1	community	17519672	Network protocol analyzer	
+wireshark-common	4.6.10-r1	community	92995703	Network protoccol analyzer (Common files)	/bin/sh
+wireshark-dev	4.6.10-r1	community	5719708	Network protocol analyzer (development files)	wireshark-common=4.6.10-r1 pkgconfig
+wireshark-doc	4.6.10-r1	community	1191047	Network protocol analyzer (documentation)	
 wl-clipboard	2.3.0-r0	community	65472	Command-line copy/paste utilities for Wayland	
 wl-clipboard-bash-completion	2.3.0-r0	community	4223	Bash completions for wl-clipboard	
 wl-clipboard-doc	2.3.0-r0	community	4438	Command-line copy/paste utilities for Wayland (documentation)	

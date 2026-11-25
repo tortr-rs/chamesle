@@ -358,7 +358,7 @@ agensgraph-plpython3	2.16.0-r3	community	120552	PL/Python3 procedural language f
 agensgraph-plpython3-contrib	2.16.0-r3	community	29469	PL/Python 3 extension modules distributed with AgensGraph	agensgraph-plpython3=2.16.0-r3
 agensgraph-pltcl	2.16.0-r3	community	60228	PL/Tcl procedural language for AgensGraph	agensgraph=2.16.0-r3 pgtcl
 agetty	2.42.4-r3	main	60664	agetty program from util-linux	
-agetty-openrc	0.63.2-r1	main	1438	agetty program from util-linux (OpenRC init scripts)	ifupdown-any openrc-user=0.63.2-r1
+agetty-openrc	0.64.1-r0	main	1438	agetty program from util-linux (OpenRC init scripts)	ifupdown-any openrc-user=0.64.1-r0
 agrep	0.9.0-r0	community	22432	approximate grepping	
 agrep-doc	0.9.0-r0	community	2493	POSIX compliant regexp matching library (documentation)	
 aha	0.5.1-r3	community	49152	ANSI color to HTML converter	
@@ -795,7 +795,7 @@ arturo-full	0.10.0-r1	community	5879512	Simple, expressive & portable programmin
 asciidoc	10.2.1-r1	main	858486	Text based documentation	python3 libxml2-utils docbook-xsl python3~3.14
 asciidoc-doc	10.2.1-r1	main	10218	Text based documentation (documentation)	
 asciidoc-pyc	10.2.1-r1	main	441917	Precompiled Python bytecode for asciidoc	python3~3.14
-asciidoctor	2.0.26-r1	main	1056116	Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats	ruby
+asciidoctor	2.0.26-r2	main	1056116	Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats	ruby ruby-logger
 asciinema	3.2.1-r0	community	5535880	Command line recorder for the asciinema.org service	
 asciinema-bash-completion	3.2.1-r0	community	20604	Bash completions for asciinema	
 asciinema-doc	3.2.1-r0	community	14593	Command line recorder for the asciinema.org service (documentation)	
@@ -2099,7 +2099,7 @@ chafa-doc	1.18.2-r2	community	1152899	Terminal graphics for the 21st century (do
 chafa-fish-completion	1.18.2-r2	community	5389	Fish completions for chafa	
 chafa-libs	1.18.2-r2	community	342392	Terminal graphics for the 21st century (libraries)	
 chafa-zsh-completion	1.18.2-r2	community	5326	Zsh completions for chafa	
-chamesle-base	20261124-r27	chamesle	2131674	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
+chamesle-base	20261124-r30	chamesle	2134020	the files in /etc and the tools of Chamesle	alpine-baselayout busybox busybox-binsh busybox-suid doas mksh agetty bash mount umount findmnt util-linux-misc chamesle-init openrc busybox-openrc eudev eudev-openrc udev-init-scripts udev-init-scripts-openrc dhcpcd-openrc kmod dhcpcd e2fsprogs dosfstools curl mag rifle
 chamesle-init	1	chamesle	0	moves a base from before r20 over to OpenRC	
 chamo	4.0-r6	community	20261659	Emacs-inspired text editor written in and configurable with OCaml	font-dejavu font-liberation
 chamo-byte	4.0-r6	community	8327056	Emacs-inspired text editor written in and configurable with OCaml (bytecode executable)	font-dejavu font-liberation ocaml-runtime
@@ -2591,8 +2591,8 @@ commons-daemon	1.4.1-r1	community	26690	Tools to allow Java programs to run as U
 commons-daemon-doc	1.4.1-r1	community	77715	Tools to allow Java programs to run as UNIX daemons (documentation)	
 compat-pvgrub	1-r2	main	20480	compatibility support for PV-GRUB 1.x	/bin/sh
 compiler-rt	23.1.6-r0	main	63692739	LLVM compiler-rt runtime libraries	
-composer	2.11.2-r0	community	3815704	Dependency manager for PHP	php85 php85-phar php85-curl php85-iconv php85-mbstring php85-openssl php85-zip p7zip
-composer-bash-completion	2.11.2-r0	community	2766	Bash completions for composer	
+composer	2.11.3-r0	community	3820223	Dependency manager for PHP	php85 php85-phar php85-curl php85-iconv php85-mbstring php85-openssl php85-zip p7zip
+composer-bash-completion	2.11.3-r0	community	2766	Bash completions for composer	
 composer-zsh-completion	5.9.2-r0	main	32230	Zsh completions for composer	
 comrak	1.0.0-r0	community	2305344	CommonMark + GFM compatible Markdown parser and renderer	
 comrak-doc	1.0.0-r0	community	30044	CommonMark + GFM compatible Markdown parser and renderer (documentation)	
@@ -3008,22 +3008,22 @@ db-c++	5.3.28-r7	main	1640720	C++ binding for libdb
 db-dev	5.3.28-r7	main	178142	The Berkeley DB embedded database system (development files)	db-c++=5.3.28-r7 db=5.3.28-r7
 db-doc	5.3.28-r7	main	86619103	The Berkeley DB embedded database system (documentation)	
 db-utils	5.3.28-r7	main	239320	Utils for The Berkeley DB embedded database system	
-dbus	1.16.4-r0	main	339017	Freedesktop.org message bus system	/bin/sh
+dbus	1.16.4-r1	main	339017	Freedesktop.org message bus system	/bin/sh
 dbus-cpp	5.0.6-r1	community	1047895	A header-only dbus-binding leveraging C++-11	
 dbus-cpp-dev	5.0.6-r1	community	218079	A header-only dbus-binding leveraging C++-11 (development files)	boost-dev properties-cpp-dev dbus-cpp=5.0.6-r1 pkgconfig
-dbus-daemon-launch-helper	1.16.4-r0	main	51384	DBus SUID launch helper for autospawning	
-dbus-dev	1.16.4-r0	main	131022	Freedesktop.org message bus system (development files)	dbus-libs=1.16.4-r0 pkgconfig
-dbus-doc	1.16.4-r0	main	694669	Freedesktop.org message bus system (documentation)	
+dbus-daemon-launch-helper	1.16.4-r1	main	51384	DBus SUID launch helper for autospawning	
+dbus-dev	1.16.4-r1	main	131022	Freedesktop.org message bus system (development files)	dbus-libs=1.16.4-r1 pkgconfig
+dbus-doc	1.16.4-r1	main	694729	Freedesktop.org message bus system (documentation)	
 dbus-glib	0.116-r0	main	145256	GLib bindings for DBUS	
 dbus-glib-dev	0.116-r0	main	130000	GLib bindings for DBUS (development files)	dbus-glib=0.116-r0 pkgconfig
 dbus-glib-doc	0.116-r0	main	431951	GLib bindings for DBUS (documentation)	
-dbus-libs	1.16.4-r0	main	296952	D-BUS access libraries	
-dbus-openrc	1.16.4-r0	main	1695	Freedesktop.org message bus system (OpenRC init scripts)	
+dbus-libs	1.16.4-r1	main	296952	D-BUS access libraries	
+dbus-openrc	1.16.4-r1	main	1668	Freedesktop.org message bus system (OpenRC init scripts)	
 dbus-test-runner	19.04.0-r4	community	81920	Run executabls under a new DBus session for testing	dbus python3 py3-dbusmock
 dbus-test-runner-dev	19.04.0-r4	community	61440	Run executabls under a new DBus session for testing (development files)	dbus-test-runner-libs=19.04.0-r4 pkgconfig
 dbus-test-runner-libs	19.04.0-r4	community	94208	Run executabls under a new DBus session for testing (libraries)	
 dbus-waiter	0.3.0-r0	community	1224200	Implement readiness notifications for dbus services	
-dbus-x11	1.16.4-r0	main	26672	X11 add-ons for D-BUS	dbus=1.16.4-r0
+dbus-x11	1.16.4-r1	main	26672	X11 add-ons for D-BUS	dbus=1.16.4-r1
 dcadec	0.2.0-r2	community	190352	DTS Coherent Acoustics decoder with support for HD extensions	
 dcadec-dev	0.2.0-r2	community	667762	DTS Coherent Acoustics decoder with support for HD extensions (development files)	pkgconfig
 dcc	2.3.169-r3	community	876149	Distributed Checksum Clearinghouses or DCC spam filter	/bin/sh
@@ -3359,10 +3359,10 @@ docopt-cpp-static	0.6.3-r3	community	614400	Command line arguments parser for C+
 docs	0.2-r6	main	4096	Meta package for pulling in all documentation	doc-provider man-pages
 doctest	2.4.12-r0	main	0	Fast header-only C++ unit testing	
 doctest-dev	2.4.12-r0	main	361852	Fast header-only C++ unit testing (development files)	
-doctl	2.7.0-r0	community	42370688	Official command line interface for the DigitalOcean API	
-doctl-bash-completion	2.7.0-r0	community	11711	Bash completions for doctl	
-doctl-fish-completion	2.7.0-r0	community	9600	Fish completions for doctl	
-doctl-zsh-completion	2.7.0-r0	community	7712	Zsh completions for doctl	
+doctl	2.8.0-r0	community	42912704	Official command line interface for the DigitalOcean API	
+doctl-bash-completion	2.8.0-r0	community	11711	Bash completions for doctl	
+doctl-fish-completion	2.8.0-r0	community	9600	Fish completions for doctl	
+doctl-zsh-completion	2.8.0-r0	community	7712	Zsh completions for doctl	
 docuum	0.26.0-r0	community	1480597	Perform least recently used (LRU) eviction of Docker images	/bin/sh
 docuum-openrc	0.26.0-r0	community	1592	Perform least recently used (LRU) eviction of Docker images (OpenRC init scripts)	
 dog	0.1.0-r5	community	589824	dog is a command-line DNS client	
@@ -5043,8 +5043,8 @@ fox-doc	1.6.59-r0	community	2933271	Free Objects for X (documentation)
 fox-pathfinder	1.6.59-r0	community	194696	Free Objects for X - fast file manager	
 fox-shutterbug	1.6.59-r0	community	75912	fox - screen snapshot application	
 fox-utils	1.6.59-r0	community	18320	fox (development utilities)	
-fping	5.5-r0	main	52448	A utility to ping multiple hosts at once	
-fping-doc	5.5-r0	main	5889	A utility to ping multiple hosts at once (documentation)	
+fping	5.5-r1	main	52448	A utility to ping multiple hosts at once	
+fping-doc	5.5-r1	main	5889	A utility to ping multiple hosts at once (documentation)	
 fplll	5.5.0-r1	community	139536	Lattice algorithms using floating-point arithmetic	
 fplll-dev	5.5.0-r1	community	376339	Lattice algorithms using floating-point arithmetic (development files)	fplll-libs=5.5.0-r1 pkgconfig
 fplll-libs	5.5.0-r1	community	25081864	Lattice algorithms using floating-point arithmetic (libraries)	
@@ -6548,14 +6548,14 @@ gst-rtsp-server	1.28.9-r0	community	614020	GStreamer RTSP server
 gst-rtsp-server-dev	1.28.9-r0	community	1020127	GStreamer RTSP server (development files)	gst-plugins-base-dev gst-rtsp-server=1.28.9-r0 pkgconfig
 gst-thumbnailers	1.1.0-r1	community	0	Thumbnail generator using GStreamer	gst-audio-thumbnailer gst-video-thumbnailer
 gst-video-thumbnailer	1.1.0-r1	community	580371	Thumbnail generator using GStreamer (video)	gst-plugins-good
-gstreamer	1.28.9-r0	main	3217157	GStreamer streaming media framework	
-gstreamer-bash-completion	1.28.9-r0	main	7870	Bash completions for gstreamer	
-gstreamer-dbg	1.28.9-r0	main	9799264	GStreamer streaming media framework (debug symbols)	
-gstreamer-dev	1.28.9-r0	main	7002999	GStreamer streaming media framework (development files)	libxml2-dev gstreamer=1.28.9-r0 pkgconfig
-gstreamer-doc	1.28.9-r0	main	9489	GStreamer streaming media framework (documentation)	
-gstreamer-lang	1.28.9-r0	main	1579490	Languages for package gstreamer	
-gstreamer-ptp-helper	1.28.9-r0	main	811840	GStreamer streaming media framework (ptp helper)	
-gstreamer-tools	1.28.9-r0	main	151240	Tools for GStreamer streaming media framework	pkgconfig
+gstreamer	1.28.9-r1	main	3217157	GStreamer streaming media framework	
+gstreamer-bash-completion	1.28.9-r1	main	7870	Bash completions for gstreamer	
+gstreamer-dbg	1.28.9-r1	main	9799264	GStreamer streaming media framework (debug symbols)	
+gstreamer-dev	1.28.9-r1	main	7002999	GStreamer streaming media framework (development files)	libxml2-dev gstreamer=1.28.9-r1 pkgconfig
+gstreamer-doc	1.28.9-r1	main	9489	GStreamer streaming media framework (documentation)	
+gstreamer-lang	1.28.9-r1	main	1579490	Languages for package gstreamer	
+gstreamer-ptp-helper	1.28.9-r1	main	811840	GStreamer streaming media framework (ptp helper)	
+gstreamer-tools	1.28.9-r1	main	151240	Tools for GStreamer streaming media framework	pkgconfig
 gtest	1.18.0-r0	main	429632	Google Test - C++ testing utility based on the xUnit framework (like JUnit)	
 gtest-dev	1.18.0-r0	main	1083770	Google Test - C++ testing utility based on the xUnit framework (like JUnit) (development files)	gtest=1.18.0-r0 gmock=1.18.0-r0 gmock=1.18.0-r0 gtest=1.18.0-r0 pkgconfig
 gtest-src	1.18.0-r0	main	484025	Google Test - C++ testing utility based on the xUnit framework (like JUnit)	
@@ -7654,10 +7654,10 @@ jackett-openrc	0.25.8-r0	community	745	API Support for your favorite torrent tra
 jackline	0.1.0-r4	community	12165229	Minimalistic and secure XMPP client written in OCaml	
 jacktrip	3.0.0-r0	community	2008779	Multi-machine audio network performance over the Internet	
 jacktrip-doc	3.0.0-r0	community	5714	Multi-machine audio network performance over the Internet (documentation)	
-janet	1.43.0-r0	community	798504	Dynamic Lisp dialect and bytecode VM	
-janet-dev	1.43.0-r0	community	95980	Dynamic Lisp dialect and bytecode VM (development files)	janet=1.43.0-r0 pkgconfig
-janet-doc	1.43.0-r0	community	42030	Dynamic Lisp dialect and bytecode VM (documentation)	
-janet-static	1.43.0-r0	community	2335858	Dynamic Lisp dialect and bytecode VM (static library)	janet-dev
+janet	1.43.1-r0	community	802600	Dynamic Lisp dialect and bytecode VM	
+janet-dev	1.43.1-r0	community	95980	Dynamic Lisp dialect and bytecode VM (development files)	janet=1.43.1-r0 pkgconfig
+janet-doc	1.43.1-r0	community	42030	Dynamic Lisp dialect and bytecode VM (documentation)	
+janet-static	1.43.1-r0	community	2343146	Dynamic Lisp dialect and bytecode VM (static library)	janet-dev
 jansson	2.15.1-r0	main	87832	lightweight JSON library	
 jansson-dev	2.15.1-r0	main	18401	lightweight JSON library (development files)	jansson=2.15.1-r0 pkgconfig
 jansson-static	2.15.1-r0	main	138874	lightweight JSON library (static library)	jansson-dev
@@ -13480,10 +13480,10 @@ mmsd-tng-systemd	2.6.4-r33	community	159	daemon for receiving and managing GSM M
 mmsd-tng-tools	2.6.4-r33	community	37440	daemon for receiving and managing GSM MMS messages (tools)	mobile-broadband-provider-info
 mmtc	0.3.2-r0	community	1030056	Minimal mpd terminal client that aims to be simple yet highly configurable	
 mnc	0.5-r17	community	2113344	get the time in seconds to next cron job	
-moarvm	2026.08-r0	community	8430758	VM with adaptive optimization and JIT compilation, built for Rakudo	
-moarvm-dbg	2026.08-r0	community	15064624	VM with adaptive optimization and JIT compilation, built for Rakudo (debug symbols)	
-moarvm-dev	2026.08-r0	community	2810482	VM with adaptive optimization and JIT compilation, built for Rakudo (development files)	moarvm=2026.08-r0 libffi-dev libuv-dev mimalloc2-dev perl zstd-dev pkgconfig
-moarvm-doc	2026.08-r0	community	573739	VM with adaptive optimization and JIT compilation, built for Rakudo (documentation)	
+moarvm	2026.08-r1	community	8430758	VM with adaptive optimization and JIT compilation, built for Rakudo	
+moarvm-dbg	2026.08-r1	community	15072848	VM with adaptive optimization and JIT compilation, built for Rakudo (debug symbols)	
+moarvm-dev	2026.08-r1	community	2810482	VM with adaptive optimization and JIT compilation, built for Rakudo (development files)	moarvm=2026.08-r1 libffi-dev libuv-dev mimalloc2-dev perl zstd-dev pkgconfig
+moarvm-doc	2026.08-r1	community	573739	VM with adaptive optimization and JIT compilation, built for Rakudo (documentation)	
 mobile-broadband-provider-info	20261111-r0	community	534962	Mobile broadband settings for various service providers	pkgconfig
 mobile-config-firefox	5.5.2-r1	community	97429	Firefox tweaks for mobile and privacy	
 mobile-config-firefox-librewolf	5.5.2-r1	community	5557	Firefox tweaks for mobile and privacy	librewolf
@@ -15422,25 +15422,25 @@ openpgl-dev	0.7.1-r0	community	131974	Intel Open Path Guiding Library (developme
 openpgl-doc	0.7.1-r0	community	255542	Intel Open Path Guiding Library (documentation)	
 openpgm	5.3.128-r1	community	280288	Implementation of the PGM reliable multicast protocol	
 openpgm-dev	5.3.128-r1	community	81332	Implementation of the PGM reliable multicast protocol (development files)	openpgm=5.3.128-r1 pkgconfig
-openrazer	3.12.4-r0	community	529825	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-daemonize py3-dbus py3-gobject3 py3-setproctitle py3-udev python3~3.14
-openrazer-doc	3.12.4-r0	community	2906	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (documentation)	
-openrazer-src	3.12.4-r0	community	930171	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	akms
-openrazer-systemd	3.12.4-r0	community	214	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (systemd files)	
-openrazer-udev	3.12.4-r0	community	3755	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (udev rules)	
-openrc	0.63.2-r1	main	1360737	OpenRC manages the services, startup and shutdown of a host	ifupdown-any openrc-user=0.63.2-r1 /bin/sh
-openrc-bash-completion	0.63.2-r1	main	6253	Bash completions for openrc	
-openrc-dbg	0.63.2-r1	main	1953976	OpenRC manages the services, startup and shutdown of a host (debug symbols)	
-openrc-dev	0.63.2-r1	main	27032	OpenRC manages the services, startup and shutdown of a host (development files)	openrc=0.63.2-r1 pkgconfig
-openrc-doc	0.63.2-r1	main	134329	OpenRC manages the services, startup and shutdown of a host (documentation)	
-openrc-init	0.63.2-r1	main	44856	OpenRC init process	ifupdown-any openrc-user=0.63.2-r1
+openrazer	3.12.5-r0	community	529825	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-daemonize py3-dbus py3-gobject3 py3-setproctitle py3-udev python3~3.14
+openrazer-doc	3.12.5-r0	community	2906	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (documentation)	
+openrazer-src	3.12.5-r0	community	929500	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	akms
+openrazer-systemd	3.12.5-r0	community	214	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (systemd files)	
+openrazer-udev	3.12.5-r0	community	3755	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux (udev rules)	
+openrc	0.64.1-r0	main	1464468	OpenRC manages the services, startup and shutdown of a host	ifupdown-any openrc-user=0.64.1-r0 /bin/sh
+openrc-bash-completion	0.64.1-r0	main	6253	Bash completions for openrc	
+openrc-dbg	0.64.1-r0	main	2156176	OpenRC manages the services, startup and shutdown of a host (debug symbols)	
+openrc-dev	0.64.1-r0	main	28042	OpenRC manages the services, startup and shutdown of a host (development files)	openrc=0.64.1-r0 pkgconfig
+openrc-doc	0.64.1-r0	main	136167	OpenRC manages the services, startup and shutdown of a host (documentation)	
+openrc-init	0.64.1-r0	main	44856	OpenRC init process	ifupdown-any openrc-user=0.64.1-r0
 openrc-settingsd	1.5.0-r3	community	148940	System settings D-Bus service for OpenRC	tzdata /bin/sh
 openrc-settingsd-doc	1.5.0-r3	community	1069	System settings D-Bus service for OpenRC (documentation)	
 openrc-settingsd-openrc	1.5.0-r3	community	476	System settings D-Bus service for OpenRC (OpenRC init scripts)	
-openrc-static	0.63.2-r1	main	418956	OpenRC manages the services, startup and shutdown of a host (static library)	openrc-dev
-openrc-tools	0.63.2-r1	main	1203	OpenRC manages the services, startup and shutdown of a host	perl
-openrc-user	0.63.2-r1	main	15291	OpenRC user services without PAM support	
-openrc-user-pam	0.63.2-r1	main	46269	OpenRC user services with PAM support	
-openrc-zsh-completion	0.63.2-r1	main	5020	Zsh completions for openrc	
+openrc-static	0.64.1-r0	main	440246	OpenRC manages the services, startup and shutdown of a host (static library)	openrc-dev
+openrc-tools	0.64.1-r0	main	1203	OpenRC manages the services, startup and shutdown of a host	perl
+openrc-user	0.64.1-r0	main	15467	OpenRC user services without PAM support	
+openrc-user-pam	0.64.1-r0	main	50541	OpenRC user services with PAM support	
+openrc-zsh-completion	0.64.1-r0	main	5020	Zsh completions for openrc	
 openrct2	0.5.5-r1	community	17957272	Open-source re-implementation of Roller Coaster Tycoon 2	openrct2-data /bin/sh
 openrct2-cli	0.5.5-r1	community	14320	Open-source re-implementation of Roller Coaster Tycoon 2	openrct2-data /bin/sh
 openrct2-data	0.5.5-r1	community	81641345	Open-source re-implementation of Roller Coaster Tycoon 2	
@@ -18779,11 +18779,11 @@ pnc-gawk	0.9.5-r40	community	26888	libphonenumber command-line wrapper - Sxmo ex
 pngcrush	1.8.13-r2	community	114688	PNG recompression utility	
 pngquant	3.0.3-r0	community	630784	Lossy PNG compressor	
 pngquant-doc	3.0.3-r0	community	24576	Lossy PNG compressor (documentation)	
-pnpm	11.28.13-r0	community	35031580	Fast, disk space efficient package manager	nodejs
-pnpm-bash-completion	11.28.13-r0	community	994	Bash completions for pnpm	
-pnpm-doc	11.28.13-r0	community	1312	Fast, disk space efficient package manager (documentation)	
-pnpm-fish-completion	11.28.13-r0	community	672	Fish completions for pnpm	
-pnpm-zsh-completion	11.28.13-r0	community	839	Zsh completions for pnpm	
+pnpm	11.29.0-r0	community	35871847	Fast, disk space efficient package manager	nodejs
+pnpm-bash-completion	11.29.0-r0	community	994	Bash completions for pnpm	
+pnpm-doc	11.29.0-r0	community	1312	Fast, disk space efficient package manager (documentation)	
+pnpm-fish-completion	11.29.0-r0	community	672	Fish completions for pnpm	
+pnpm-zsh-completion	11.29.0-r0	community	839	Zsh completions for pnpm	
 po4a	0.74-r1	main	904673	Tools for helping translation of documentation	diffutils gettext perl perl-pod-parser perl-syntax-keyword-try
 po4a-doc	0.74-r1	main	2229257	Tools for helping translation of documentation (documentation)	
 po4a-lang	0.74-r1	main	1255068	Languages for package po4a	
@@ -21119,8 +21119,8 @@ py3-openid-pyc	3.2.0-r3	community	481586	Precompiled Python bytecode for py3-ope
 py3-openimageio	3.1.17.0-r3	community	2176111	Python bindings for OpenImageIO image I/O library	python3~3.14
 py3-openpyxl	3.1.5-r1	community	864071	A Python library to read/write Excel 2010 xlsx/xlsm files	python3 py3-lxml py3-pandas py3-pillow python3~3.14
 py3-openpyxl-pyc	3.1.5-r1	community	1118952	Precompiled Python bytecode for py3-openpyxl	python3~3.14
-py3-openrazer	3.12.4-r0	community	242124	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-numpy python3~3.14
-py3-openrazer-pyc	3.12.4-r0	community	531567	Precompiled Python bytecode for py3-openrazer	python3~3.14
+py3-openrazer	3.12.5-r0	community	242124	Open source driver and user-space daemon to control Razer lighting and other features on GNU/Linux	py3-numpy python3~3.14
+py3-openrazer-pyc	3.12.5-r0	community	531567	Precompiled Python bytecode for py3-openrazer	python3~3.14
 py3-openssl	26.4.0-r0	community	224707	Python3 wrapper module around the OpenSSL library	python3 py3-cryptography py3-typing-extensions python3~3.14
 py3-openssl-pyc	26.4.0-r0	community	265569	Precompiled Python bytecode for py3-openssl	python3~3.14
 py3-openvdb	13.1.0-r1	community	2440808	Sparse volume data structure and tools (Python bindings)	python3~3.14
@@ -24430,8 +24430,8 @@ scrcpy-bash-completion	5.0.1-r1	community	7169	Bash completions for scrcpy
 scrcpy-doc	5.0.1-r1	community	8423	Display and control your Android device (documentation)	
 scrcpy-zsh-completion	5.0.1-r1	community	8700	Zsh completions for scrcpy	
 scream	4.0-r0	community	40960	client for scream virtual network sound card for Microsoft Windows	
-screen	5.0.2-r0	main	624628	Window manager that multiplexes a physical terminal	
-screen-doc	5.0.2-r0	main	55878	Window manager that multiplexes a physical terminal (documentation)	
+screen	5.0.3-r0	main	624628	Window manager that multiplexes a physical terminal	
+screen-doc	5.0.3-r0	main	55874	Window manager that multiplexes a physical terminal (documentation)	
 screen-message	0.29-r0	community	23859	Simple tool to display some text as large as possible	
 screen-message-doc	0.29-r0	community	1922	Simple tool to display some text as large as possible (documentation)	
 screengrab	3.2.0-r0	community	408356	Crossplatform tool for fast making screenshots	
