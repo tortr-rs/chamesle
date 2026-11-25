@@ -484,7 +484,7 @@ amber-mpris-qt5	1.2.10-r0	community	463220	MPRIS v.2 specification implementatio
 amber-mpris-qt5-dev	1.2.10-r0	community	29908	MPRIS v.2 specification implementation for Qt and QML plugin	amber-mpris-qt5 qt5-qtdeclarative-dev amber-mpris-qt5=1.2.10-r0 pkgconfig
 amberol	2026.1-r0	community	4352663	Plays music, and nothing else	gst-libav gst-plugins-bad gst-plugins-good
 amberol-lang	2026.1-r0	community	433722	Languages for package amberol	
-amd-ucode	20261019-r1	main	307200	Microcode update files for AMD CPUs	
+amd-ucode	20261124-r0	main	307200	Microcode update files for AMD CPUs	
 amfora	1.11.0-r11	community	15791610	terminal browser for the Gemini protocol	
 aml	1.0.0-r0	community	29988	Andri's Main Loop	
 aml-dbg	1.0.0-r0	community	51100	Andri's Main Loop (debug symbols)	!aml<1.0.0-r0 !aml>1.0.0-r0
@@ -2293,8 +2293,8 @@ cmus-bash-completion	2.13.0-r0	community	1448	Bash completions for cmus
 cmus-doc	2.13.0-r0	community	30560	feature-rich ncurses-based music player (documentation)	
 cmus-zsh-completion	2.13.0-r0	community	2423	Zsh completions for cmus	
 cni-plugin-flannel	1.8.0-r8	community	3468276	networking plugin, designed to work with flannel network fabric	
-cni-plugins	1.9.1-r4	community	79089224	Some standard networking plugins, maintained by the CNI team	
-cni-plugins-doc	1.9.1-r4	community	11357	Some standard networking plugins, maintained by the CNI team (documentation)	
+cni-plugins	1.10.0-r0	community	96457160	Some standard networking plugins, maintained by the CNI team	
+cni-plugins-doc	1.10.0-r0	community	11357	Some standard networking plugins, maintained by the CNI team (documentation)	
 cntlm	0.92.3-r5	community	151552	NTLM Session Response / NTLMv2 authenticating HTTP proxy	
 cntlm-doc	0.92.3-r5	community	32768	NTLM Session Response / NTLMv2 authenticating HTTP proxy (documentation)	
 cntlm-openrc	0.92.3-r5	community	16384	NTLM Session Response / NTLMv2 authenticating HTTP proxy (OpenRC init scripts)	
@@ -4593,10 +4593,10 @@ freeradius-sqlite	3.0.27-r4	main	76586	SQLite module for FreeRADIUS server	freer
 freeradius-static	3.0.27-r4	main	5235624	RADIUS (Remote Authentication Dial-In User Service) server (static library)	freeradius-dev
 freeradius-unixodbc	3.0.27-r4	main	13640	ODBC module for FreeRADIUS server	freeradius=3.0.27-r4
 freeradius-utils	3.0.27-r4	main	186665	FreeRADIUS utilities	freeradius-lib=3.0.27-r4
-freerdp	3.32.2-r0	community	1527320	FreeRDP client	
-freerdp-dev	3.32.2-r0	community	2283245	FreeRDP client (development files)	freerdp-libs=3.32.2-r0 pkgconfig
-freerdp-doc	3.32.2-r0	community	26163	FreeRDP client (documentation)	
-freerdp-libs	3.32.2-r0	community	4358776	FreeRDP client (libraries)	
+freerdp	3.33.1-r0	community	1556088	FreeRDP client	
+freerdp-dev	3.33.1-r0	community	2368239	FreeRDP client (development files)	freerdp-libs=3.33.1-r0 pkgconfig
+freerdp-doc	3.33.1-r0	community	27470	FreeRDP client (documentation)	
+freerdp-libs	3.33.1-r0	community	4481708	FreeRDP client (libraries)	
 freerdp2	2.11.7-r1	community	561400	FreeRDP client, version 2	
 freerdp2-dev	2.11.7-r1	community	1720165	FreeRDP client, version 2 (development files)	freerdp2-libs=2.11.7-r1 pkgconfig
 freerdp2-doc	2.11.7-r1	community	11966	FreeRDP client, version 2 (documentation)	
@@ -5201,9 +5201,9 @@ github-cli-fish-completion	2.105.0-r0	community	9325	Fish completions for github
 github-cli-zsh-completion	2.105.0-r0	community	7604	Zsh completions for github-cli	
 gitlab-release-cli	0.24.0-r12	community	10116500	GitLab Release command-line tool	
 gitlab-release-cli-doc	0.24.0-r12	community	22469	GitLab Release command-line tool (documentation)	
-gitlab-runner	19.5.2-r0	community	119710328	GitLab runner for CI/CD jobs	/bin/sh
-gitlab-runner-helper	19.5.2-r0	community	52727732	GitLab runner for CI/CD jobs (helper)	
-gitlab-runner-openrc	19.5.2-r0	community	2844	GitLab runner for CI/CD jobs (OpenRC init scripts)	
+gitlab-runner	19.6.1-r0	community	121098392	GitLab runner for CI/CD jobs	/bin/sh
+gitlab-runner-helper	19.6.1-r0	community	53326196	GitLab runner for CI/CD jobs (helper)	
+gitlab-runner-openrc	19.6.1-r0	community	2844	GitLab runner for CI/CD jobs (OpenRC init scripts)	
 gitlint	0.19.1-r3	community	132328	Linting for your git commit messages	py3-arrow py3-click python3~3.14
 gitlint-pyc	0.19.1-r3	community	166635	Precompiled Python bytecode for gitlint	python3~3.14
 gitolite	3.6.15-r0	main	309701	Centralized git server, with very fine-grained access control and many powerful features	git perl /bin/sh
@@ -5730,10 +5730,10 @@ grantleetheme-doc	26.08.3-r0	community	297907	KDE PIM mail related libraries (do
 grantleetheme-lang	26.08.3-r0	community	42960	Languages for package grantleetheme	
 graphene	1.10.8-r6	main	167136	A thin layer of graphic data types	
 graphene-dev	1.10.8-r6	main	868999	A thin layer of graphic data types (development files)	graphene=1.10.8-r6 pkgconfig
-graphicsmagick	1.3.48-r0	community	3748040	Image processing system	ghostscript-fonts
-graphicsmagick-c++	1.3.48-r0	community	432630	Image processing system (c++ module)	ghostscript-fonts
-graphicsmagick-dev	1.3.48-r0	community	646236	Image processing system (development files)	graphicsmagick-c++=1.3.48-r0 graphicsmagick=1.3.48-r0 pkgconfig
-graphicsmagick-doc	1.3.48-r0	community	8495201	Image processing system (documentation)	
+graphicsmagick	1.3.49-r0	community	3752136	Image processing system	ghostscript-fonts
+graphicsmagick-c++	1.3.49-r0	community	432630	Image processing system (c++ module)	ghostscript-fonts
+graphicsmagick-dev	1.3.49-r0	community	650151	Image processing system (development files)	graphicsmagick-c++=1.3.49-r0 graphicsmagick=1.3.49-r0 pkgconfig
+graphicsmagick-doc	1.3.49-r0	community	8554267	Image processing system (documentation)	
 graphicsmagick-zsh-completion	5.9.2-r0	main	28906	Zsh completions for graphicsmagick	
 graphite2	1.3.15-r0	main	128276	reimplementation of the SIL Graphite text processing engine	
 graphite2-dev	1.3.15-r0	main	46157	reimplementation of the SIL Graphite text processing engine (development files)	freetype-dev graphite2=1.3.15-r0 pkgconfig
@@ -5818,10 +5818,10 @@ grommunio-common-openrc	29-r1	community	175	Common configuration package for gro
 grommunio-dav	1.9-r1	community	2699161	CalDAV and CardDAV interface for grommunio	grommunio-gromox grommunio-mapi-header-php php84 php84-ctype php84-curl php84-dom php84-iconv php84-mbstring php84-openssl php84-pdo_sqlite php84-simplexml php84-xml php84-xmlreader php84-xmlwriter /bin/sh
 grommunio-dav-doc	1.9-r1	community	34612	CalDAV and CardDAV interface for grommunio (documentation)	
 grommunio-error-pages	1.0_git20231031-r1	community	437037	Grommunio-branded error pages for web servers	
-grommunio-gromox	3.13-r0	community	9445716	Open Source Groupware Solution	grommunio-common php84 php84-fpm postfix valkey /bin/sh
-grommunio-gromox-dev	3.13-r0	community	1	Open Source Groupware Solution (development files)	grommunio-gromox=3.13-r0
-grommunio-gromox-doc	3.13-r0	community	199569	Open Source Groupware Solution (documentation)	
-grommunio-gromox-openrc	3.13-r0	community	3321	Open Source Groupware Solution (OpenRC init scripts)	
+grommunio-gromox	3.14-r0	community	9848717	Open Source Groupware Solution	grommunio-common php84 php84-fpm postfix valkey /bin/sh
+grommunio-gromox-dev	3.14-r0	community	1	Open Source Groupware Solution (development files)	grommunio-gromox=3.14-r0
+grommunio-gromox-doc	3.14-r0	community	198539	Open Source Groupware Solution (documentation)	
+grommunio-gromox-openrc	3.14-r0	community	3321	Open Source Groupware Solution (OpenRC init scripts)	
 grommunio-index	1.4-r1	community	91763	Generator for grommunio-web search indexes	/bin/sh
 grommunio-index-doc	1.4-r1	community	34808	Generator for grommunio-web search indexes (documentation)	
 grommunio-mapi-header-php	2.4-r1	community	518464	Common PHP MAPI header files for grommunio	
@@ -6333,9 +6333,9 @@ hivex	1.3.25-r0	community	202678	System for extracting the contents of Windows R
 hivex-dev	1.3.25-r0	community	8018	System for extracting the contents of Windows Registry (development files)	hivex=1.3.25-r0 pkgconfig
 hivex-doc	1.3.25-r0	community	31481	System for extracting the contents of Windows Registry (documentation)	
 hivex-perl	1.3.25-r0	community	83083	System for extracting the contents of Windows Registry (Perl bindings)	perl perl-io-stringy
-hkdm	0.3.2-r0	community	857142	Lighter-weight hotkey daemon	
-hkdm-openrc	0.3.2-r0	community	126	Lighter-weight hotkey daemon (OpenRC init scripts)	
-hkdm-systemd	0.3.2-r0	community	220	Lighter-weight hotkey daemon (systemd files)	
+hkdm	0.3.2-r1	community	865410	Lighter-weight hotkey daemon	
+hkdm-openrc	0.3.2-r1	community	126	Lighter-weight hotkey daemon (OpenRC init scripts)	
+hkdm-systemd	0.3.2-r1	community	220	Lighter-weight hotkey daemon (systemd files)	
 homer-app	1.5.10-r11	community	34104598	HOMER 7.x Front-End and API Server	/bin/sh
 homer-app-doc	1.5.10-r11	community	98783	HOMER 7.x Front-End and API Server (documentation)	
 homer-app-openrc	1.5.10-r11	community	459	HOMER 7.x Front-End and API Server (OpenRC init scripts)	
@@ -6369,8 +6369,8 @@ htop-doc	3.5.3-r0	main	9941	Interactive process viewer (documentation)
 htpdate	2.0.2-r0	community	25980	HTTP Time protocol	
 htpdate-doc	2.0.2-r0	community	2194	HTTP Time protocol (documentation)	
 htpdate-openrc	2.0.2-r0	community	368	HTTP Time protocol (OpenRC init scripts)	
-httm	0.49.9-r0	community	2364848	Interactive, file-level Time Machine-like tool for ZFS/btrfs	
-httm-doc	0.49.9-r0	community	5792	Interactive, file-level Time Machine-like tool for ZFS/btrfs (documentation)	
+httm	0.49.9-r1	community	2303476	Interactive, file-level Time Machine-like tool for ZFS/btrfs	
+httm-doc	0.49.9-r1	community	5792	Interactive, file-level Time Machine-like tool for ZFS/btrfs (documentation)	
 http-parser	2.9.4-r0	community	53248	HTTP request/response parser for C	
 http-parser-dev	2.9.4-r0	community	36864	HTTP request/response parser for C (development files)	http-parser=2.9.4-r0
 httpie	3.2.4-r2	community	321573	CLI, cURL-like tool	py3-defusedxml py3-multidict py3-pip py3-pygments py3-pysocks py3-requests py3-requests-toolbelt py3-rich py3-setuptools py3-wheel python3 python3~3.14
@@ -6582,17 +6582,17 @@ icinga2-bash-completion	2.16.5-r1	community	289	Bash completions for icinga2	bas
 icinga2-doc	2.16.5-r1	community	10649686	An open source host, service and network monitoring program (documentation)	
 icinga2-openrc	2.16.5-r1	community	2391	An open source host, service and network monitoring program (OpenRC init scripts)	
 icinga2-vim	2.16.5-r1	community	17220	An open source host, service and network monitoring program (vim syntax)	
-icingaweb2	2.14.0-r0	community	8773431	Web Interface for Icinga2	php85 php85-intl php85-dom php85-session php85-curl php85-gettext php85-ctype php85-openssl php85-sockets icinga-php-library icinga-php-thirdparty /bin/sh
-icingaweb2-bash-completion	2.14.0-r0	community	235	Bash completions for icingaweb2	bash
-icingaweb2-doc	2.14.0-r0	community	35259	Web Interface for Icinga2 (documentation)	
-icingaweb2-ldap	2.14.0-r0	community	0	Icingaweb2 ldap support	icingaweb2 php85-ldap
+icingaweb2	2.14.1-r0	community	8801045	Web Interface for Icinga2	php85 php85-intl php85-dom php85-session php85-curl php85-gettext php85-ctype php85-openssl php85-sockets icinga-php-library icinga-php-thirdparty /bin/sh
+icingaweb2-bash-completion	2.14.1-r0	community	235	Bash completions for icingaweb2	bash
+icingaweb2-doc	2.14.1-r0	community	35259	Web Interface for Icinga2 (documentation)	
+icingaweb2-ldap	2.14.1-r0	community	0	Icingaweb2 ldap support	icingaweb2 php85-ldap
 icingaweb2-module-director	1.12.1-r0	community	4758326	Configuration frontend for Icinga 2, integrated automation	icingaweb2 php83-curl php83-pcntl icingaweb2-module-incubator /bin/sh
 icingaweb2-module-director-doc	1.12.1-r0	community	6648827	Configuration frontend for Icinga 2, integrated automation (documentation)	
 icingaweb2-module-incubator	0.23.0-r0	community	1136078	Bleeding edge libraries useful for Icinga Web 2 modules	icingaweb2
 icingaweb2-module-incubator-doc	0.23.0-r0	community	439	Bleeding edge libraries useful for Icinga Web 2 modules (documentation)	
-icingaweb2-mysql-backend	2.14.0-r0	community	7671	Icingaweb2 mysql backend	icingaweb2 php85-pdo_mysql
-icingaweb2-postgres-backend	2.14.0-r0	community	7219	Icingaweb2 postgresql backend	icingaweb2 php85-pgsql php85-pdo_pgsql
-icingaweb2-sqlite-backend	2.14.0-r0	community	0	Icingaweb2 sqlite3 backend	icingaweb2 php85-sqlite3 php85-pdo_sqlite
+icingaweb2-mysql-backend	2.14.1-r0	community	7671	Icingaweb2 mysql backend	icingaweb2 php85-pdo_mysql
+icingaweb2-postgres-backend	2.14.1-r0	community	7219	Icingaweb2 postgresql backend	icingaweb2 php85-pgsql php85-pdo_pgsql
+icingaweb2-sqlite-backend	2.14.1-r0	community	0	Icingaweb2 sqlite3 backend	icingaweb2 php85-sqlite3 php85-pdo_sqlite
 icon-naming-utils	0.8.90-r4	main	81920	Maps the new names of icons for Tango to the legacy names used by the GNOME and KDE desktops.	perl-xml-simple pkgconfig
 icoutils	0.32.3-r4	community	115027	Extracts and converts images in MS Windows(R) icon and cursor files.	perl-libwww
 icoutils-doc	0.32.3-r4	community	8351	Extracts and converts images in MS Windows(R) icon and cursor files. (documentation)	
@@ -10351,9 +10351,9 @@ libweston	16.0.0-r0	community	403900	Reference Wayland server (libraries)
 libwmf	0.2.15-r0	community	3029602	A library for reading vector images in Microsoft's native Windows Metafile Format (WMF).	
 libwmf-dev	0.2.15-r0	community	1500137	A library for reading vector images in Microsoft's native Windows Metafile Format (WMF). (development files)	libwmf=0.2.15-r0 libwmflite=0.2.15-r0 pkgconfig
 libwmflite	0.2.15-r0	community	92747	A library for parsing Windows MetaFile vector graphics (WMF).	
-libwmime	1.1.0-r1	community	1938996	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP	
-libwmime-dbg	1.1.0-r1	community	35175760	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP (debug symbols)	
-libwmime-dev	1.1.0-r1	community	37854855	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP (development files)	libwmime=1.1.0-r1 pkgconfig
+libwmime	1.3.0-r0	community	2049700	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP	
+libwmime-dbg	1.3.0-r0	community	37252372	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP (debug symbols)	
+libwmime-dev	1.3.0-r0	community	40405959	Library for working with RFC 5322, MIME messages and IMAP/POP/SMTP (development files)	libwmime=1.3.0-r0 pkgconfig
 libwnck3	43.3-r0	community	316960	Window Navigator Construction Kit	
 libwnck3-dev	43.3-r0	community	425335	Window Navigator Construction Kit (development files)	libwnck3=43.3-r0 pkgconfig
 libwnck3-lang	43.3-r0	community	1752170	Languages for package libwnck3	
@@ -10470,12 +10470,12 @@ libxklavier-dev	5.4-r8	community	233472	High-level API for X Keyboard Extension 
 libxklavier-doc	5.4-r8	community	126976	High-level API for X Keyboard Extension (documentation)	
 libxml++-2.6	2.42.4-r0	community	193992	libxml++ is a C++ wrapper for the libxml XML parser library.	
 libxml++-2.6-dev	2.42.4-r0	community	142863	libxml++ is a C++ wrapper for the libxml XML parser library. (development files)	libxml++-2.6=2.42.4-r0 pkgconfig
-libxml2	2.13.9-r3	main	1042496	XML parsing library, version 2	
-libxml2-dbg	2.13.9-r3	main	3230580	XML parsing library, version 2 (debug symbols)	
-libxml2-dev	2.13.9-r3	main	420436	XML parsing library, version 2 (development files)	zlib-dev xz-dev libxml2-utils=2.13.9-r3 libxml2=2.13.9-r3 pkgconfig
-libxml2-doc	2.13.9-r3	main	2735236	XML parsing library, version 2 (documentation)	
-libxml2-static	2.13.9-r3	main	4712152	XML parsing library, version 2 (static library)	libxml2-dev python3~3.14
-libxml2-utils	2.13.9-r3	main	72920	XML utilities	
+libxml2	2.13.9-r4	main	1042496	XML parsing library, version 2	
+libxml2-dbg	2.13.9-r4	main	3232700	XML parsing library, version 2 (debug symbols)	
+libxml2-dev	2.13.9-r4	main	420436	XML parsing library, version 2 (development files)	zlib-dev xz-dev libxml2-utils=2.13.9-r4 libxml2=2.13.9-r4 pkgconfig
+libxml2-doc	2.13.9-r4	main	2735236	XML parsing library, version 2 (documentation)	
+libxml2-static	2.13.9-r4	main	4714568	XML parsing library, version 2 (static library)	libxml2-dev python3~3.14
+libxml2-utils	2.13.9-r4	main	72920	XML utilities	
 libxmlb	0.3.30-r0	community	182692	Library to help create and query binary XML blobs	
 libxmlb-dbg	0.3.30-r0	community	551364	Library to help create and query binary XML blobs (debug symbols)	
 libxmlb-dev	0.3.30-r0	community	386287	Library to help create and query binary XML blobs (development files)	libxmlb=0.3.30-r0 pkgconfig
@@ -10616,112 +10616,113 @@ links	2.30-r1	main	1295892	Web browser running in both graphics and text mode
 links-doc	2.30-r1	main	5955	Web browser running in both graphics and text mode (documentation)	
 links-graphics	2.30-r1	community	4256112	Web browser running in both graphics and text mode	
 links-graphics-doc	2.30-r1	community	5955	Web browser running in both graphics and text mode (documentation)	
-linux-firmware	20261019-r1	main	0	firmware files for linux	linux-firmware-s5p-mfc=20261019-r1 linux-firmware-yamaha=20261019-r1 linux-firmware-xe=20261019-r1 linux-firmware-wfx=20261019-r1 linux-firmware-vxge=20261019-r1 linux-firmware-ueagle-atm=20261019-r1 linux-firmware-tigon=20261019-r1 linux-firmware-ti-keystone=20261019-r1 linux-firmware-ti-connectivity=20261019-r1 linux-firmware-ti=20261019-r1 linux-firmware-tehuti=20261019-r1 linux-firmware-synaptics=20261019-r1 linux-firmware-sxg=20261019-r1 linux-firmware-slicoss=20261019-r1 linux-firmware-sdca=20261019-r1 linux-firmware-sb16=20261019-r1 linux-firmware-rtw89=20261019-r1 linux-firmware-rtw88=20261019-r1 linux-firmware-rtlwifi=20261019-r1 linux-firmware-rtl_nic=20261019-r1 linux-firmware-rtl_bt=20261019-r1 linux-firmware-rsi=20261019-r1 linux-firmware-rockchip=20261019-r1 linux-firmware-realtek=20261019-r1 linux-firmware-radeon=20261019-r1 linux-firmware-r128=20261019-r1 linux-firmware-qlogic=20261019-r1 linux-firmware-qed=20261019-r1 linux-firmware-qcom=20261019-r1 linux-firmware-qca=20261019-r1 linux-firmware-powervr=20261019-r1 linux-firmware-ositech=20261019-r1 linux-firmware-nxp=20261019-r1 linux-firmware-nvidia=20261019-r1 linux-firmware-netronome=20261019-r1 linux-firmware-mwlwifi=20261019-r1 linux-firmware-mwl8k=20261019-r1 linux-firmware-mrvl=20261019-r1 linux-firmware-moxa=20261019-r1 linux-firmware-morsemicro=20261019-r1 linux-firmware-microchip=20261019-r1 linux-firmware-meson=20261019-r1 linux-firmware-mellanox=20261019-r1 linux-firmware-mediatek=20261019-r1 linux-firmware-matrox=20261019-r1 linux-firmware-lontium=20261019-r1 linux-firmware-liquidio=20261019-r1 linux-firmware-libertas=20261019-r1 linux-firmware-lenovo=20261019-r1 linux-firmware-keyspan_pda=20261019-r1 linux-firmware-keyspan=20261019-r1 linux-firmware-kaweth=20261019-r1 linux-firmware-ixp4xx=20261019-r1 linux-firmware-isci=20261019-r1 linux-firmware-intel=20261019-r1 linux-firmware-inside-secure=20261019-r1 linux-firmware-imx=20261019-r1 linux-firmware-i915=20261019-r1 linux-firmware-hp=20261019-r1 linux-firmware-go7007=20261019-r1 linux-firmware-ene-ub6250=20261019-r1 linux-firmware-emi26=20261019-r1 linux-firmware-edgeport=20261019-r1 linux-firmware-e100=20261019-r1 linux-firmware-dsp56k=20261019-r1 linux-firmware-dpaa2=20261019-r1 linux-firmware-dell=20261019-r1 linux-firmware-dabusb=20261019-r1 linux-firmware-cypress=20261019-r1 linux-firmware-cxgb4=20261019-r1 linux-firmware-cxgb3=20261019-r1 linux-firmware-cpia2=20261019-r1 linux-firmware-cnm=20261019-r1 linux-firmware-cis=20261019-r1 linux-firmware-cirrus=20261019-r1 linux-firmware-cavium=20261019-r1 linux-firmware-cadence=20261019-r1 linux-firmware-brcm=20261019-r1 linux-firmware-bnx2x=20261019-r1 linux-firmware-bnx2=20261019-r1 linux-firmware-av7110=20261019-r1 linux-firmware-atusb=20261019-r1 linux-firmware-atmel=20261019-r1 linux-firmware-ath9k_htc=20261019-r1 linux-firmware-ath6k=20261019-r1 linux-firmware-ath12k=20261019-r1 linux-firmware-ath11k=20261019-r1 linux-firmware-ath10k=20261019-r1 linux-firmware-arm=20261019-r1 linux-firmware-ar3k=20261019-r1 linux-firmware-amphion=20261019-r1 linux-firmware-amlogic=20261019-r1 linux-firmware-amdtee=20261019-r1 linux-firmware-amdnpu=20261019-r1 linux-firmware-amdgpu=20261019-r1 linux-firmware-amd-ucode=20261019-r1 linux-firmware-amd=20261019-r1 linux-firmware-airoha=20261019-r1 linux-firmware-aic=20261019-r1 linux-firmware-aeonsemi=20261019-r1 linux-firmware-advansys=20261019-r1 linux-firmware-adaptec=20261019-r1 linux-firmware-3com=20261019-r1 linux-firmware-other=20261019-r1
-linux-firmware-3com	20261019-r1	main	29643	firmware files for linux (3com folder)	
-linux-firmware-adaptec	20261019-r1	main	388	firmware files for linux (adaptec folder)	
-linux-firmware-advansys	20261019-r1	main	14323	firmware files for linux (advansys folder)	
-linux-firmware-aeonsemi	20261019-r1	main	166145	firmware files for linux (aeonsemi folder)	
-linux-firmware-aic	20261019-r1	main	251874	firmware files for linux (aic folder)	
-linux-firmware-airoha	20261019-r1	main	309746	firmware files for linux (airoha folder)	
-linux-firmware-amd	20261019-r1	main	391094	firmware files for linux (amd folder)	
-linux-firmware-amd-ucode	20261019-r1	main	306445	firmware files for linux (amd-ucode folder)	
-linux-firmware-amdgpu	20261019-r1	main	29115226	firmware files for linux (amdgpu folder)	
-linux-firmware-amdnpu	20261019-r1	main	544893	firmware files for linux (amdnpu folder)	
-linux-firmware-amdtee	20261019-r1	main	13207	firmware files for linux (amdtee folder)	
-linux-firmware-amlogic	20261019-r1	main	830928	firmware files for linux (amlogic folder)	
-linux-firmware-amphion	20261019-r1	main	340969	firmware files for linux (amphion folder)	
-linux-firmware-ar3k	20261019-r1	main	277708	firmware files for linux (ar3k folder)	
-linux-firmware-arm	20261019-r1	main	334006	firmware files for linux (arm folder)	
-linux-firmware-ath10k	20261019-r1	main	11039412	firmware files for linux (ath10k folder)	
-linux-firmware-ath11k	20261019-r1	main	23582914	firmware files for linux (ath11k folder)	
-linux-firmware-ath12k	20261019-r1	main	16687131	firmware files for linux (ath12k folder)	linux-firmware-ath11k=20261019-r1
-linux-firmware-ath6k	20261019-r1	main	704035	firmware files for linux (ath6k folder)	
-linux-firmware-ath9k_htc	20261019-r1	main	59917	firmware files for linux (ath9k_htc folder)	
-linux-firmware-atmel	20261019-r1	main	460927	firmware files for linux (atmel folder)	
-linux-firmware-atusb	20261019-r1	main	11602	firmware files for linux (atusb folder)	
-linux-firmware-av7110	20261019-r1	main	191	firmware files for linux (av7110 folder)	
-linux-firmware-bnx2	20261019-r1	main	101716	firmware files for linux (bnx2 folder)	
-linux-firmware-bnx2x	20261019-r1	main	2385858	firmware files for linux (bnx2x folder)	
-linux-firmware-brcm	20261019-r1	main	8255462	firmware files for linux (brcm folder)	linux-firmware-cypress=20261019-r1 linux-firmware-synaptics=20261019-r1
-linux-firmware-cadence	20261019-r1	main	22885	firmware files for linux (cadence folder)	
-linux-firmware-cavium	20261019-r1	main	35034	firmware files for linux (cavium folder)	
-linux-firmware-cirrus	20261019-r1	main	3155156	firmware files for linux (cirrus folder)	
-linux-firmware-cis	20261019-r1	main	1904	firmware files for linux (cis folder)	
-linux-firmware-cnm	20261019-r1	main	427148	firmware files for linux (cnm folder)	
-linux-firmware-cpia2	20261019-r1	main	723	firmware files for linux (cpia2 folder)	
-linux-firmware-cxgb3	20261019-r1	main	124050	firmware files for linux (cxgb3 folder)	
-linux-firmware-cxgb4	20261019-r1	main	2833548	firmware files for linux (cxgb4 folder)	
-linux-firmware-cypress	20261019-r1	main	5089837	firmware files for linux (cypress folder)	
-linux-firmware-dabusb	20261019-r1	main	11966	firmware files for linux (dabusb folder)	
-linux-firmware-dell	20261019-r1	main	999894	firmware files for linux (dell folder)	
-linux-firmware-dpaa2	20261019-r1	main	5615374	firmware files for linux (dpaa2 folder)	
-linux-firmware-dsp56k	20261019-r1	main	161	firmware files for linux (dsp56k folder)	
-linux-firmware-e100	20261019-r1	main	792	firmware files for linux (e100 folder)	
-linux-firmware-edgeport	20261019-r1	main	28669	firmware files for linux (edgeport folder)	
-linux-firmware-emi26	20261019-r1	main	59952	firmware files for linux (emi26 folder)	
-linux-firmware-ene-ub6250	20261019-r1	main	5049	firmware files for linux (ene-ub6250 folder)	
-linux-firmware-go7007	20261019-r1	main	56329	firmware files for linux (go7007 folder)	
-linux-firmware-hp	20261019-r1	main	691653	firmware files for linux (hp folder)	
-linux-firmware-i915	20261019-r1	main	9745611	firmware files for linux (i915 folder)	
-linux-firmware-imx	20261019-r1	main	3434	firmware files for linux (imx folder)	
-linux-firmware-inside-secure	20261019-r1	main	212	firmware files for linux (inside-secure folder)	
-linux-firmware-intel	20261019-r1	main	132435275	firmware files for linux (intel folder including iwlwifi)	linux-firmware-dell=20261019-r1 linux-firmware-hp=20261019-r1 linux-firmware-lenovo=20261019-r1
-linux-firmware-isci	20261019-r1	main	73	firmware files for linux (isci folder)	
-linux-firmware-ixp4xx	20261019-r1	main	20387	firmware files for linux (ixp4xx folder)	
-linux-firmware-kaweth	20261019-r1	main	2794	firmware files for linux (kaweth folder)	
-linux-firmware-keyspan	20261019-r1	main	38723	firmware files for linux (keyspan folder)	
-linux-firmware-keyspan_pda	20261019-r1	main	2425	firmware files for linux (keyspan_pda folder)	
-linux-firmware-lenovo	20261019-r1	main	1512394	firmware files for linux (lenovo folder)	
-linux-firmware-libertas	20261019-r1	main	1485001	firmware files for linux (libertas folder)	
-linux-firmware-liquidio	20261019-r1	main	1656105	firmware files for linux (liquidio folder)	
-linux-firmware-lontium	20261019-r1	main	89115	firmware files for linux (lontium folder)	
-linux-firmware-matrox	20261019-r1	main	3477	firmware files for linux (matrox folder)	
-linux-firmware-mediatek	20261019-r1	main	38769209	firmware files for linux (mediatek folder)	
-linux-firmware-mellanox	20261019-r1	main	106556553	firmware files for linux (mellanox folder)	
-linux-firmware-meson	20261019-r1	main	106752	firmware files for linux (meson folder)	
-linux-firmware-microchip	20261019-r1	main	1376	firmware files for linux (microchip folder)	
-linux-firmware-morsemicro	20261019-r1	main	216829	firmware files for linux (morsemicro folder)	
-linux-firmware-moxa	20261019-r1	main	214804	firmware files for linux (moxa folder)	
-linux-firmware-mrvl	20261019-r1	main	81396875	firmware files for linux (mrvl folder)	linux-firmware-libertas=20261019-r1
-linux-firmware-mwl8k	20261019-r1	main	407163	firmware files for linux (mwl8k folder)	
-linux-firmware-mwlwifi	20261019-r1	main	403810	firmware files for linux (mwlwifi folder)	
-linux-firmware-netronome	20261019-r1	main	5681449	firmware files for linux (netronome folder)	
-linux-firmware-none	20261019-r1	main	0	Empty linux firwmare package for those who does not need any firmware	
-linux-firmware-nvidia	20261019-r1	main	109068268	firmware files for linux (nvidia folder)	
-linux-firmware-nxp	20261019-r1	main	1630437	firmware files for linux (nxp folder)	
-linux-firmware-ositech	20261019-r1	main	1237	firmware files for linux (ositech folder)	
-linux-firmware-other	20261019-r1	main	5892874	firmware files for linux (uncategorized)	/bin/sh
-linux-firmware-powervr	20261019-r1	main	185896	firmware files for linux (powervr folder)	
-linux-firmware-qca	20261019-r1	main	2878774	firmware files for linux (qca folder)	
-linux-firmware-qcom	20261019-r1	main	219837018	firmware files for linux (qcom folder)	linux-firmware-ath10k=20261019-r1 linux-firmware-ath11k=20261019-r1
-linux-firmware-qed	20261019-r1	main	10589304	firmware files for linux (qed folder)	
-linux-firmware-qlogic	20261019-r1	main	58880	firmware files for linux (qlogic folder)	
-linux-firmware-r128	20261019-r1	main	657	firmware files for linux (r128 folder)	
-linux-firmware-radeon	20261019-r1	main	1626502	firmware files for linux (radeon folder)	linux-firmware-amdgpu=20261019-r1
-linux-firmware-realtek	20261019-r1	main	15467	firmware files for linux (realtek folder)	
-linux-firmware-rockchip	20261019-r1	main	40332	firmware files for linux (rockchip folder)	
-linux-firmware-rsi	20261019-r1	main	630487	firmware files for linux (rsi folder)	
-linux-firmware-rtl_bt	20261019-r1	main	859532	firmware files for linux (rtl_bt folder)	
-linux-firmware-rtl_nic	20261019-r1	main	75695	firmware files for linux (rtl_nic folder)	
-linux-firmware-rtlwifi	20261019-r1	main	595629	firmware files for linux (rtlwifi folder)	
-linux-firmware-rtw88	20261019-r1	main	425676	firmware files for linux (rtw88 folder)	
-linux-firmware-rtw89	20261019-r1	main	7089480	firmware files for linux (rtw89 folder)	
-linux-firmware-s5p-mfc	20261019-r1	main	1082922	firmware files for linux (S5P MFC firmware)	
-linux-firmware-sb16	20261019-r1	main	4161	firmware files for linux (sb16 folder)	
-linux-firmware-sdca	20261019-r1	main	88354	firmware files for linux (sdca folder)	
-linux-firmware-slicoss	20261019-r1	main	73194	firmware files for linux (slicoss folder)	
-linux-firmware-sxg	20261019-r1	main	35809	firmware files for linux (sxg folder)	
-linux-firmware-synaptics	20261019-r1	main	64867	firmware files for linux (synaptics folder)	
-linux-firmware-tehuti	20261019-r1	main	5634	firmware files for linux (tehuti folder)	
-linux-firmware-ti	20261019-r1	main	839115	firmware files for linux (ti folder)	linux-firmware-lontium=20261019-r1
-linux-firmware-ti-connectivity	20261019-r1	main	5191471	firmware files for linux (ti-connectivity folder)	
-linux-firmware-ti-keystone	20261019-r1	main	1186	firmware files for linux (ti-keystone folder)	
-linux-firmware-tigon	20261019-r1	main	6725	firmware files for linux (tigon folder)	
-linux-firmware-ueagle-atm	20261019-r1	main	178304	firmware files for linux (ueagle-atm folder)	
-linux-firmware-vxge	20261019-r1	main	839484	firmware files for linux (vxge folder)	
-linux-firmware-wfx	20261019-r1	main	312879	firmware files for linux (wfx folder)	
-linux-firmware-xe	20261019-r1	main	3587669	firmware files for linux (xe folder)	linux-firmware-ti=20261019-r1
-linux-firmware-yamaha	20261019-r1	main	1991	firmware files for linux (yamaha folder)	
+linux-firmware	20261124-r0	main	0	firmware files for linux	linux-firmware-s5p-mfc=20261124-r0 linux-firmware-yamaha=20261124-r0 linux-firmware-xe=20261124-r0 linux-firmware-wfx=20261124-r0 linux-firmware-vxge=20261124-r0 linux-firmware-ueagle-atm=20261124-r0 linux-firmware-tigon=20261124-r0 linux-firmware-ti-keystone=20261124-r0 linux-firmware-ti-connectivity=20261124-r0 linux-firmware-ti=20261124-r0 linux-firmware-tehuti=20261124-r0 linux-firmware-synaptics=20261124-r0 linux-firmware-sxg=20261124-r0 linux-firmware-slicoss=20261124-r0 linux-firmware-sdca=20261124-r0 linux-firmware-sb16=20261124-r0 linux-firmware-rtw89=20261124-r0 linux-firmware-rtw88=20261124-r0 linux-firmware-rtlwifi=20261124-r0 linux-firmware-rtl_nic=20261124-r0 linux-firmware-rtl_bt=20261124-r0 linux-firmware-rsi=20261124-r0 linux-firmware-rockchip=20261124-r0 linux-firmware-realtek=20261124-r0 linux-firmware-radeon=20261124-r0 linux-firmware-r128=20261124-r0 linux-firmware-qlogic=20261124-r0 linux-firmware-qed=20261124-r0 linux-firmware-qcom=20261124-r0 linux-firmware-qca=20261124-r0 linux-firmware-powervr=20261124-r0 linux-firmware-ositech=20261124-r0 linux-firmware-nxp=20261124-r0 linux-firmware-nvidia=20261124-r0 linux-firmware-netronome=20261124-r0 linux-firmware-mwlwifi=20261124-r0 linux-firmware-mwl8k=20261124-r0 linux-firmware-mrvl=20261124-r0 linux-firmware-moxa=20261124-r0 linux-firmware-morsemicro=20261124-r0 linux-firmware-microchip=20261124-r0 linux-firmware-meson=20261124-r0 linux-firmware-mellanox=20261124-r0 linux-firmware-mediatek=20261124-r0 linux-firmware-matrox=20261124-r0 linux-firmware-lontium=20261124-r0 linux-firmware-liquidio=20261124-r0 linux-firmware-libertas=20261124-r0 linux-firmware-lenovo=20261124-r0 linux-firmware-keyspan_pda=20261124-r0 linux-firmware-keyspan=20261124-r0 linux-firmware-kaweth=20261124-r0 linux-firmware-ixp4xx=20261124-r0 linux-firmware-isci=20261124-r0 linux-firmware-intel=20261124-r0 linux-firmware-inside-secure=20261124-r0 linux-firmware-imx=20261124-r0 linux-firmware-i915=20261124-r0 linux-firmware-hp=20261124-r0 linux-firmware-go7007=20261124-r0 linux-firmware-ene-ub6250=20261124-r0 linux-firmware-emi26=20261124-r0 linux-firmware-edgeport=20261124-r0 linux-firmware-e100=20261124-r0 linux-firmware-dsp56k=20261124-r0 linux-firmware-dpaa2=20261124-r0 linux-firmware-dell=20261124-r0 linux-firmware-dabusb=20261124-r0 linux-firmware-cypress=20261124-r0 linux-firmware-cxgb4=20261124-r0 linux-firmware-cxgb3=20261124-r0 linux-firmware-cpia2=20261124-r0 linux-firmware-cnm=20261124-r0 linux-firmware-cis=20261124-r0 linux-firmware-cirrus=20261124-r0 linux-firmware-cavium=20261124-r0 linux-firmware-cadence=20261124-r0 linux-firmware-brcm=20261124-r0 linux-firmware-bnx2x=20261124-r0 linux-firmware-bnx2=20261124-r0 linux-firmware-awinic=20261124-r0 linux-firmware-av7110=20261124-r0 linux-firmware-atusb=20261124-r0 linux-firmware-atmel=20261124-r0 linux-firmware-ath9k_htc=20261124-r0 linux-firmware-ath6k=20261124-r0 linux-firmware-ath12k=20261124-r0 linux-firmware-ath11k=20261124-r0 linux-firmware-ath10k=20261124-r0 linux-firmware-arm=20261124-r0 linux-firmware-ar3k=20261124-r0 linux-firmware-amphion=20261124-r0 linux-firmware-amlogic=20261124-r0 linux-firmware-amdtee=20261124-r0 linux-firmware-amdnpu=20261124-r0 linux-firmware-amdgpu=20261124-r0 linux-firmware-amd-ucode=20261124-r0 linux-firmware-amd=20261124-r0 linux-firmware-airoha=20261124-r0 linux-firmware-aic=20261124-r0 linux-firmware-aeonsemi=20261124-r0 linux-firmware-advansys=20261124-r0 linux-firmware-adaptec=20261124-r0 linux-firmware-3com=20261124-r0 linux-firmware-other=20261124-r0
+linux-firmware-3com	20261124-r0	main	29643	firmware files for linux (3com folder)	
+linux-firmware-adaptec	20261124-r0	main	388	firmware files for linux (adaptec folder)	
+linux-firmware-advansys	20261124-r0	main	14323	firmware files for linux (advansys folder)	
+linux-firmware-aeonsemi	20261124-r0	main	166145	firmware files for linux (aeonsemi folder)	
+linux-firmware-aic	20261124-r0	main	334159	firmware files for linux (aic folder)	
+linux-firmware-airoha	20261124-r0	main	309746	firmware files for linux (airoha folder)	
+linux-firmware-amd	20261124-r0	main	490977	firmware files for linux (amd folder)	
+linux-firmware-amd-ucode	20261124-r0	main	306445	firmware files for linux (amd-ucode folder)	
+linux-firmware-amdgpu	20261124-r0	main	30923964	firmware files for linux (amdgpu folder)	
+linux-firmware-amdnpu	20261124-r0	main	544893	firmware files for linux (amdnpu folder)	
+linux-firmware-amdtee	20261124-r0	main	24271	firmware files for linux (amdtee folder)	
+linux-firmware-amlogic	20261124-r0	main	830928	firmware files for linux (amlogic folder)	
+linux-firmware-amphion	20261124-r0	main	340969	firmware files for linux (amphion folder)	
+linux-firmware-ar3k	20261124-r0	main	277708	firmware files for linux (ar3k folder)	
+linux-firmware-arm	20261124-r0	main	334006	firmware files for linux (arm folder)	
+linux-firmware-ath10k	20261124-r0	main	11028408	firmware files for linux (ath10k folder)	
+linux-firmware-ath11k	20261124-r0	main	25690274	firmware files for linux (ath11k folder)	
+linux-firmware-ath12k	20261124-r0	main	16687131	firmware files for linux (ath12k folder)	linux-firmware-ath11k=20261124-r0
+linux-firmware-ath6k	20261124-r0	main	704035	firmware files for linux (ath6k folder)	
+linux-firmware-ath9k_htc	20261124-r0	main	59917	firmware files for linux (ath9k_htc folder)	
+linux-firmware-atmel	20261124-r0	main	470176	firmware files for linux (atmel folder)	
+linux-firmware-atusb	20261124-r0	main	11602	firmware files for linux (atusb folder)	
+linux-firmware-av7110	20261124-r0	main	191	firmware files for linux (av7110 folder)	
+linux-firmware-awinic	20261124-r0	main	27068	firmware files for linux (awinic folder)	
+linux-firmware-bnx2	20261124-r0	main	101716	firmware files for linux (bnx2 folder)	
+linux-firmware-bnx2x	20261124-r0	main	2385858	firmware files for linux (bnx2x folder)	
+linux-firmware-brcm	20261124-r0	main	8255462	firmware files for linux (brcm folder)	linux-firmware-cypress=20261124-r0 linux-firmware-synaptics=20261124-r0
+linux-firmware-cadence	20261124-r0	main	22885	firmware files for linux (cadence folder)	
+linux-firmware-cavium	20261124-r0	main	35034	firmware files for linux (cavium folder)	
+linux-firmware-cirrus	20261124-r0	main	3388477	firmware files for linux (cirrus folder)	
+linux-firmware-cis	20261124-r0	main	1904	firmware files for linux (cis folder)	
+linux-firmware-cnm	20261124-r0	main	427148	firmware files for linux (cnm folder)	
+linux-firmware-cpia2	20261124-r0	main	723	firmware files for linux (cpia2 folder)	
+linux-firmware-cxgb3	20261124-r0	main	124050	firmware files for linux (cxgb3 folder)	
+linux-firmware-cxgb4	20261124-r0	main	2833548	firmware files for linux (cxgb4 folder)	
+linux-firmware-cypress	20261124-r0	main	5089837	firmware files for linux (cypress folder)	
+linux-firmware-dabusb	20261124-r0	main	11966	firmware files for linux (dabusb folder)	
+linux-firmware-dell	20261124-r0	main	1322365	firmware files for linux (dell folder)	
+linux-firmware-dpaa2	20261124-r0	main	5615374	firmware files for linux (dpaa2 folder)	
+linux-firmware-dsp56k	20261124-r0	main	161	firmware files for linux (dsp56k folder)	
+linux-firmware-e100	20261124-r0	main	792	firmware files for linux (e100 folder)	
+linux-firmware-edgeport	20261124-r0	main	28669	firmware files for linux (edgeport folder)	
+linux-firmware-emi26	20261124-r0	main	59952	firmware files for linux (emi26 folder)	
+linux-firmware-ene-ub6250	20261124-r0	main	5049	firmware files for linux (ene-ub6250 folder)	
+linux-firmware-go7007	20261124-r0	main	56329	firmware files for linux (go7007 folder)	
+linux-firmware-hp	20261124-r0	main	691653	firmware files for linux (hp folder)	
+linux-firmware-i915	20261124-r0	main	9754496	firmware files for linux (i915 folder)	
+linux-firmware-imx	20261124-r0	main	3434	firmware files for linux (imx folder)	
+linux-firmware-inside-secure	20261124-r0	main	212	firmware files for linux (inside-secure folder)	
+linux-firmware-intel	20261124-r0	main	138873297	firmware files for linux (intel folder including iwlwifi)	linux-firmware-dell=20261124-r0 linux-firmware-hp=20261124-r0 linux-firmware-lenovo=20261124-r0
+linux-firmware-isci	20261124-r0	main	73	firmware files for linux (isci folder)	
+linux-firmware-ixp4xx	20261124-r0	main	20387	firmware files for linux (ixp4xx folder)	
+linux-firmware-kaweth	20261124-r0	main	2794	firmware files for linux (kaweth folder)	
+linux-firmware-keyspan	20261124-r0	main	38723	firmware files for linux (keyspan folder)	
+linux-firmware-keyspan_pda	20261124-r0	main	2425	firmware files for linux (keyspan_pda folder)	
+linux-firmware-lenovo	20261124-r0	main	1512394	firmware files for linux (lenovo folder)	
+linux-firmware-libertas	20261124-r0	main	1485001	firmware files for linux (libertas folder)	
+linux-firmware-liquidio	20261124-r0	main	1656105	firmware files for linux (liquidio folder)	
+linux-firmware-lontium	20261124-r0	main	89115	firmware files for linux (lontium folder)	
+linux-firmware-matrox	20261124-r0	main	3477	firmware files for linux (matrox folder)	
+linux-firmware-mediatek	20261124-r0	main	38763331	firmware files for linux (mediatek folder)	
+linux-firmware-mellanox	20261124-r0	main	106556553	firmware files for linux (mellanox folder)	
+linux-firmware-meson	20261124-r0	main	106752	firmware files for linux (meson folder)	
+linux-firmware-microchip	20261124-r0	main	1376	firmware files for linux (microchip folder)	
+linux-firmware-morsemicro	20261124-r0	main	451445	firmware files for linux (morsemicro folder)	
+linux-firmware-moxa	20261124-r0	main	214804	firmware files for linux (moxa folder)	
+linux-firmware-mrvl	20261124-r0	main	81396875	firmware files for linux (mrvl folder)	linux-firmware-libertas=20261124-r0
+linux-firmware-mwl8k	20261124-r0	main	407163	firmware files for linux (mwl8k folder)	
+linux-firmware-mwlwifi	20261124-r0	main	403810	firmware files for linux (mwlwifi folder)	
+linux-firmware-netronome	20261124-r0	main	5681449	firmware files for linux (netronome folder)	
+linux-firmware-none	20261124-r0	main	0	Empty linux firwmare package for those who does not need any firmware	
+linux-firmware-nvidia	20261124-r0	main	109068268	firmware files for linux (nvidia folder)	
+linux-firmware-nxp	20261124-r0	main	2244798	firmware files for linux (nxp folder)	
+linux-firmware-ositech	20261124-r0	main	1237	firmware files for linux (ositech folder)	
+linux-firmware-other	20261124-r0	main	5892874	firmware files for linux (uncategorized)	/bin/sh
+linux-firmware-powervr	20261124-r0	main	185896	firmware files for linux (powervr folder)	
+linux-firmware-qca	20261124-r0	main	3066175	firmware files for linux (qca folder)	
+linux-firmware-qcom	20261124-r0	main	220932160	firmware files for linux (qcom folder)	linux-firmware-ath10k=20261124-r0 linux-firmware-ath11k=20261124-r0
+linux-firmware-qed	20261124-r0	main	10589304	firmware files for linux (qed folder)	
+linux-firmware-qlogic	20261124-r0	main	58880	firmware files for linux (qlogic folder)	
+linux-firmware-r128	20261124-r0	main	657	firmware files for linux (r128 folder)	
+linux-firmware-radeon	20261124-r0	main	1626502	firmware files for linux (radeon folder)	linux-firmware-amdgpu=20261124-r0
+linux-firmware-realtek	20261124-r0	main	17763	firmware files for linux (realtek folder)	
+linux-firmware-rockchip	20261124-r0	main	40332	firmware files for linux (rockchip folder)	
+linux-firmware-rsi	20261124-r0	main	630487	firmware files for linux (rsi folder)	
+linux-firmware-rtl_bt	20261124-r0	main	859532	firmware files for linux (rtl_bt folder)	
+linux-firmware-rtl_nic	20261124-r0	main	75695	firmware files for linux (rtl_nic folder)	
+linux-firmware-rtlwifi	20261124-r0	main	595629	firmware files for linux (rtlwifi folder)	
+linux-firmware-rtw88	20261124-r0	main	425676	firmware files for linux (rtw88 folder)	
+linux-firmware-rtw89	20261124-r0	main	7112657	firmware files for linux (rtw89 folder)	
+linux-firmware-s5p-mfc	20261124-r0	main	1082922	firmware files for linux (S5P MFC firmware)	
+linux-firmware-sb16	20261124-r0	main	4161	firmware files for linux (sb16 folder)	
+linux-firmware-sdca	20261124-r0	main	113250	firmware files for linux (sdca folder)	
+linux-firmware-slicoss	20261124-r0	main	73194	firmware files for linux (slicoss folder)	
+linux-firmware-sxg	20261124-r0	main	35809	firmware files for linux (sxg folder)	
+linux-firmware-synaptics	20261124-r0	main	64867	firmware files for linux (synaptics folder)	
+linux-firmware-tehuti	20261124-r0	main	5634	firmware files for linux (tehuti folder)	
+linux-firmware-ti	20261124-r0	main	839115	firmware files for linux (ti folder)	linux-firmware-lontium=20261124-r0
+linux-firmware-ti-connectivity	20261124-r0	main	5191471	firmware files for linux (ti-connectivity folder)	
+linux-firmware-ti-keystone	20261124-r0	main	1186	firmware files for linux (ti-keystone folder)	
+linux-firmware-tigon	20261124-r0	main	6725	firmware files for linux (tigon folder)	
+linux-firmware-ueagle-atm	20261124-r0	main	178304	firmware files for linux (ueagle-atm folder)	
+linux-firmware-vxge	20261124-r0	main	839484	firmware files for linux (vxge folder)	
+linux-firmware-wfx	20261124-r0	main	312879	firmware files for linux (wfx folder)	
+linux-firmware-xe	20261124-r0	main	5424068	firmware files for linux (xe folder)	linux-firmware-ti=20261124-r0
+linux-firmware-yamaha	20261124-r0	main	1991	firmware files for linux (yamaha folder)	
 linux-headers	7.2.1-r0	main	7338962	Linux system headers	
 linux-lts	7.3.6-r0	main	82846005	Linux lts kernel	initramfs-generator linux-firmware-any
 linux-lts-dev	7.3.6-r0	main	76358779	Headers and script for third party modules for lts kernel	perl gmp-dev mpc1-dev mpfr-dev elfutils-dev bash flex bison zstd
@@ -11971,8 +11972,8 @@ makedumpfile-openrc	1.8.0-r0	community	3025	VMcore extraction tool (OpenRC init 
 makekit	0.2-r1	community	872448	Modular build system for POSIX environments	
 makepasswd	0.5.4-r4	community	17808	Generates (pseudo-)random passwords of a desired length	
 makepasswd-doc	0.5.4-r4	community	2050	Generates (pseudo-)random passwords of a desired length (documentation)	
-makepp	2.0.99.2-r1	community	756659	Compatible but reliable and improved replacement for GNU make	perl
-makepp-doc	2.0.99.2-r1	community	1293363	Compatible but reliable and improved replacement for GNU make (documentation)	
+makepp	2.0.99.2-r2	community	756653	Compatible but reliable and improved replacement for GNU make	perl
+makepp-doc	2.0.99.2-r2	community	1293375	Compatible but reliable and improved replacement for GNU make (documentation)	
 mako	1.11.0-r0	community	109530	A lightweight notification daemon for Wayland	
 mako-bash-completion	1.11.0-r0	community	2585	Bash completions for mako	
 mako-dbg	1.11.0-r0	community	285136	A lightweight notification daemon for Wayland (debug symbols)	!mako<1.11.0-r0 !mako>1.11.0-r0
@@ -12413,9 +12414,9 @@ minisign-doc	0.12-r2	community	2263	Simple tool to sign files and verify signatu
 minissdpd	1.6.0-r1	community	57344	MiniSSDP Daemon	
 minissdpd-doc	1.6.0-r1	community	24576	MiniSSDP Daemon (documentation)	
 minissdpd-openrc	1.6.0-r1	community	24576	MiniSSDP Daemon (OpenRC init scripts)	
-miniupnpc	2.3.3-r2	community	94165	Library and tool to control NAT in UPnP-enabled routers	
-miniupnpc-dev	2.3.3-r2	community	128978	Library and tool to control NAT in UPnP-enabled routers (development files)	miniupnpc=2.3.3-r2 pkgconfig
-miniupnpc-doc	2.3.3-r2	community	1267	Library and tool to control NAT in UPnP-enabled routers (documentation)	
+miniupnpc	2.3.5-r0	community	94165	Library and tool to control NAT in UPnP-enabled routers	
+miniupnpc-dev	2.3.5-r0	community	129195	Library and tool to control NAT in UPnP-enabled routers (development files)	miniupnpc=2.3.5-r0 pkgconfig
+miniupnpc-doc	2.3.5-r0	community	1267	Library and tool to control NAT in UPnP-enabled routers (documentation)	
 miniupnpd	2.3.10-r0	community	170898	Lightweight UPnP IGD & PCP/NAT-PMP daemon	uuidgen /bin/sh
 miniupnpd-doc	2.3.10-r0	community	1235	Lightweight UPnP IGD & PCP/NAT-PMP daemon (documentation)	
 miniupnpd-ip6tables	2.3.10-r0	community	1252	ip6tables scripts for miniupnpd	
@@ -12767,9 +12768,9 @@ mupdf-x11	1.28.5-r1	community	133944	Lightweight PDF and XPS viewer with X11 bac
 murex	7.2.1001-r5	community	16890292	Intuitive, typed and content aware shell	
 murex-doc	7.2.1001-r5	community	1118461	Intuitive, typed and content aware shell (documentation)	
 murmur-compat	1.5.939-r0	community	1	Symlinks from old murmur -> mumble-server	mumble-server mumble-server-openrc=1.5.939-r0 mumble-server=1.5.939-r0
-musescore	4.7.5-r0	community	175476781	Create, play and print beautiful sheet music	kirigami-addons sonnet pkgconfig
-musescore-doc	4.7.5-r0	community	6620	Create, play and print beautiful sheet music (documentation)	
-musescore-lang	4.7.5-r0	community	42062664	Translations for musescore	kirigami-addons sonnet
+musescore	4.7.6-r0	community	185468493	Create, play and print beautiful sheet music	kirigami-addons sonnet pkgconfig
+musescore-doc	4.7.6-r0	community	6620	Create, play and print beautiful sheet music (documentation)	
+musescore-lang	4.7.6-r0	community	42448624	Translations for musescore	kirigami-addons sonnet
 musl	1.2.6-r6	main	673544	the musl c library (libc) implementation	
 musl-dbg	1.2.6-r6	main	2627576	the musl c library (libc) implementation (debug symbols)	
 musl-dev	1.2.6-r6	main	7143078	the musl c library (libc) implementation (development files)	musl=1.2.6-r6
@@ -14332,17 +14333,17 @@ openrct2-data	0.5.5-r1	community	81641345	Open-source re-implementation of Rolle
 openrct2-doc	0.5.5-r1	community	505671	Open-source re-implementation of Roller Coaster Tycoon 2 (documentation)	
 openresolv	3.17.4-r0	main	69148	A framework for managing DNS information	
 openresolv-doc	3.17.4-r0	main	8815	A framework for managing DNS information (documentation)	
-openresty	1.31.8.1-r0	community	4463252	Scalable Web Platform by Extending NGINX with Lua	/bin/sh
-openresty-dbg	1.31.8.1-r0	community	13049432	Scalable Web Platform by Extending NGINX with Lua (debug symbols)	
-openresty-doc	1.31.8.1-r0	community	3392149	Scalable Web Platform by Extending NGINX with Lua (documentation)	
-openresty-mod-devel-kit	1.31.8.1-r0	community	17886	Scalable Web Platform by Extending NGINX with Lua (module ndk_http_module.so)	openresty
-openresty-mod-http-echo	1.31.8.1-r0	community	43431	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_echo_module.so)	openresty
-openresty-mod-http-headers-more	1.31.8.1-r0	community	26902	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_headers_more_filter_module.so)	openresty
-openresty-mod-http-lua	1.31.8.1-r0	community	521386	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_lua_module.so)	openresty openresty-mod-devel-kit
-openresty-mod-http-lua-upstream	1.31.8.1-r0	community	17815	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_lua_upstream_module.so)	openresty openresty-mod-http-lua
-openresty-mod-http-redis2	1.31.8.1-r0	community	22365	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_redis2_module.so)	openresty
-openresty-mod-http-set-misc	1.31.8.1-r0	community	31407	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_set_misc_module.so)	openresty openresty-mod-devel-kit
-openresty-openrc	1.31.8.1-r0	community	1479	Scalable Web Platform by Extending NGINX with Lua (OpenRC init scripts)	
+openresty	1.31.9.1-r0	community	4500463	Scalable Web Platform by Extending NGINX with Lua	/bin/sh
+openresty-dbg	1.31.9.1-r0	community	13060664	Scalable Web Platform by Extending NGINX with Lua (debug symbols)	
+openresty-doc	1.31.9.1-r0	community	3414568	Scalable Web Platform by Extending NGINX with Lua (documentation)	
+openresty-mod-devel-kit	1.31.9.1-r0	community	17886	Scalable Web Platform by Extending NGINX with Lua (module ndk_http_module.so)	openresty
+openresty-mod-http-echo	1.31.9.1-r0	community	43431	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_echo_module.so)	openresty
+openresty-mod-http-headers-more	1.31.9.1-r0	community	26902	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_headers_more_filter_module.so)	openresty
+openresty-mod-http-lua	1.31.9.1-r0	community	521386	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_lua_module.so)	openresty openresty-mod-devel-kit
+openresty-mod-http-lua-upstream	1.31.9.1-r0	community	17815	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_lua_upstream_module.so)	openresty openresty-mod-http-lua
+openresty-mod-http-redis2	1.31.9.1-r0	community	22365	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_redis2_module.so)	openresty
+openresty-mod-http-set-misc	1.31.9.1-r0	community	31407	Scalable Web Platform by Extending NGINX with Lua (module ngx_http_set_misc_module.so)	openresty openresty-mod-devel-kit
+openresty-openrc	1.31.9.1-r0	community	1479	Scalable Web Platform by Extending NGINX with Lua (OpenRC init scripts)	
 openrgb	1.1-r0	community	13796582	Open source RGB lighting control that doesn't depend on manufacturer software	/bin/sh
 openrgb-systemd	1.1-r0	community	260	Open source RGB lighting control that doesn't depend on manufacturer software (systemd files)	
 openrgb-udev	1.1-r0	community	335497	Open source RGB lighting control that doesn't depend on manufacturer software (udev rules)	
@@ -14642,12 +14643,12 @@ pangomm2.46	2.46.5-r0	community	189892	C++ bindings for pango
 pangomm2.46-dev	2.46.5-r0	community	310202	C++ bindings for pango (development files)	pangomm2.46=2.46.5-r0 pkgconfig
 paper-gtk-theme	2.1.0-r3	community	3750369	Paper Theme Suite	
 paper-icon-theme	1.5.0-r3	community	256892928	Paper is a modern freedesktop icon theme	
-papers	50.2-r0	community	5419017	simple document viewer for GNOME desktop	adwaita-icon-theme gsettings-desktop-schemas
-papers-dev	50.2-r0	community	1010716	simple document viewer for GNOME desktop (development files)	gobject-introspection-dev gtk4.0-dev libadwaita-dev libspectre-dev poppler-dev tiff-dev papers-libs=50.2-r0 pkgconfig
-papers-doc	50.2-r0	community	6286320	simple document viewer for GNOME desktop (documentation)	
-papers-lang	50.2-r0	community	3205123	Languages for package papers	
-papers-libs	50.2-r0	community	847665	simple document viewer for GNOME desktop (libraries)	
-papers-nautilus	50.2-r0	community	13600	papers (Nautilus extension)	adwaita-icon-theme gsettings-desktop-schemas
+papers	51.1-r0	community	5655183	simple document viewer for GNOME desktop	adwaita-icon-theme gsettings-desktop-schemas
+papers-dev	51.1-r0	community	1012277	simple document viewer for GNOME desktop (development files)	gobject-introspection-dev gtk4.0-dev libadwaita-dev libspectre-dev poppler-dev tiff-dev papers-libs=51.1-r0 pkgconfig
+papers-doc	51.1-r0	community	6542353	simple document viewer for GNOME desktop (documentation)	
+papers-lang	51.1-r0	community	3303445	Languages for package papers	
+papers-libs	51.1-r0	community	856097	simple document viewer for GNOME desktop (libraries)	
+papers-nautilus	51.1-r0	community	13600	papers (Nautilus extension)	adwaita-icon-theme gsettings-desktop-schemas
 papirus-icon-theme	20250201-r0	community	120456242	papirus icon theme	
 par2cmdline	2.0.0-r0	community	1091720	PAR 2.0 compatible file verification and repair tool	
 par2cmdline-dev	2.0.0-r0	community	2273818	PAR 2.0 compatible file verification and repair tool (development files)	
@@ -17088,7 +17089,7 @@ php83-pecl-pcov	1.0.12-r0	community	21935	Code coverage driver for PHP 8.3 - PEC
 php83-pecl-protobuf	5.34.0-r0	community	361759	PHP 8.3 extension: Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.	php83-common
 php83-pecl-psr	1.2.0-r0	community	147456	PHP 8.3 extension provides the accepted PSR interfaces, so they can be used in an extension - PECL	php83-common
 php83-pecl-rdkafka	6.0.5-r0	community	99742	librdkafka bindings for PHP 8.3 providing a working client for Kafka - PECL	php83-common
-php83-pecl-redis	6.3.0-r0	community	456200	PHP 8.3 extension for interfacing with Redis - PECL	php83-pecl-igbinary php83-pecl-msgpack php83-session
+php83-pecl-redis	6.4.0_rc1-r0	community	497160	PHP 8.3 extension for interfacing with Redis - PECL	php83-pecl-igbinary php83-pecl-msgpack php83-session
 php83-pecl-smbclient	1.2.0_pre-r0	community	55092	PHP 8.3 extension that uses Samba's libsmbclient library to provide Samba related functions and 'smb' streams to PHP programs.	php83-common
 php83-pecl-ssh2	1.6.0-r0	community	68387	PHP 8.3 extension provide bindings for the libssh2 library - PECL	php83-common
 php83-pecl-timezonedb	2026.6-r0	community	734625	Timezone Database to be used with PHP's date and time functions.	php83-common
@@ -17101,7 +17102,7 @@ php83-pecl-xhprof	2.3.10-r0	community	65536	A Hierarchical Profiler for PHP 8.3 
 php83-pecl-xhprof-assets	2.3.10-r0	community	1220608	A Hierarchical Profiler for PHP (UI assets)	php83-ctype graphviz ghostscript-fonts
 php83-pecl-xlswriter	2.0.3-r0	community	691656	PHP 8.3 extension for creating and reader XLSX files - PECL	php83-common
 php83-pecl-yaml	2.3.0-r0	community	42551	YAML syntax bindings for PHP 8.3 - PECL	php83-common
-php83-pecl-zstd	0.18.0-r0	community	41318	PHP 8.3 Zstandard extension - PECL	php83-common
+php83-pecl-zstd	0.19.0-r0	community	41318	PHP 8.3 Zstandard extension - PECL	php83-common
 php83-pgsql	8.3.37-r0	community	128324	PHP83 extension: PostgreSQL	php83-common
 php83-phar	8.3.37-r0	community	311497	PHP83 extension: PHP Archive	php83-common php83
 php83-phpdbg	8.3.37-r0	community	8392124	Interactive PHP83 debugger	php83-common
@@ -17193,7 +17194,7 @@ php84-pecl-pcov	1.0.12-r0	community	21935	Code coverage driver for PHP 8.4 - PEC
 php84-pecl-protobuf	5.34.0-r0	community	364479	PHP 8.4 extension: Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.	php84-common
 php84-pecl-psr	1.2.0-r1	community	67434	PHP 8.4 extension provides the accepted PSR interfaces, so they can be used in an extension - PECL	php84-common
 php84-pecl-rdkafka	6.0.5-r0	community	103838	librdkafka bindings for PHP 8.4 providing a working client for Kafka - PECL	php84-common
-php84-pecl-redis	6.3.0-r0	community	460296	PHP 8.4 extension for interfacing with Redis - PECL	php84-pecl-igbinary php84-pecl-msgpack php84-session
+php84-pecl-redis	6.4.0_rc1-r0	community	501256	PHP 8.4 extension for interfacing with Redis - PECL	php84-pecl-igbinary php84-pecl-msgpack php84-session
 php84-pecl-smbclient	1.2.0_pre-r0	community	59188	PHP 8.4 extension that uses Samba's libsmbclient library to provide Samba related functions and 'smb' streams to PHP programs.	php84-common
 php84-pecl-ssh2	1.6.0-r0	community	68707	PHP 8.4 extension provide bindings for the libssh2 library - PECL	php84-common
 php84-pecl-uploadprogress	2.0.2-r2	community	13733	PHP 8.4 extension to track progress of a file upload - PECL	php84-common
@@ -17204,7 +17205,7 @@ php84-pecl-xhprof	2.3.10-r1	community	26180	A Hierarchical Profiler for PHP 8.4 
 php84-pecl-xhprof-assets	2.3.10-r1	community	1140976	A Hierarchical Profiler for PHP (UI assets)	php84-ctype graphviz ghostscript-fonts
 php84-pecl-xlswriter	2.0.3-r0	community	693288	PHP 8.4 extension for creating and reader XLSX files - PECL	php84-common
 php84-pecl-yaml	2.3.0-r0	community	42599	YAML syntax bindings for PHP 8.4 - PECL	php84-common
-php84-pecl-zstd	0.18.0-r0	community	41542	PHP 8.4 Zstandard extension - PECL	php84-common
+php84-pecl-zstd	0.19.0-r0	community	41542	PHP 8.4 Zstandard extension - PECL	php84-common
 php84-pgsql	8.4.28-r0	community	156996	PHP84 extension: PostgreSQL	php84-common
 php84-phar	8.4.28-r0	community	307404	PHP84 extension: PHP Archive	php84-common php84
 php84-phpdbg	8.4.28-r0	community	8392184	Interactive PHP84 debugger	php84-common
@@ -17293,7 +17294,7 @@ php85-pecl-pcov	1.0.12-r0	community	21935	Code coverage driver for PHP 8.5 - PEC
 php85-pecl-protobuf	5.34.0-r0	community	364479	PHP 8.5 extension: Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.	php85-common
 php85-pecl-psr	1.2.0-r0	community	63338	PHP 8.5 extension provides the accepted PSR interfaces, so they can be used in an extension - PECL	php85-common
 php85-pecl-rdkafka	6.0.5-r0	community	99742	librdkafka bindings for PHP 8.5 providing a working client for Kafka - PECL	php85-common
-php85-pecl-redis	6.3.0-r0	community	460296	PHP 8.5 extension for interfacing with Redis - PECL	php85-pecl-igbinary php85-pecl-msgpack php85-session
+php85-pecl-redis	6.4.0_rc1-r0	community	501256	PHP 8.5 extension for interfacing with Redis - PECL	php85-pecl-igbinary php85-pecl-msgpack php85-session
 php85-pecl-smbclient	1.2.0_pre-r0	community	59188	PHP 8.5 extension that uses Samba's libsmbclient library to provide Samba related functions and 'smb' streams to PHP programs.	php85-common
 php85-pecl-ssh2	1.6.0-r0	community	68707	PHP 8.5 extension provide bindings for the libssh2 library - PECL	php85-common
 php85-pecl-uploadprogress	2.0.2-r1	community	13733	PHP 8.5 extension to track progress of a file upload - PECL	php85-common
@@ -17304,7 +17305,7 @@ php85-pecl-xhprof	2.3.10-r1	community	26180	A Hierarchical Profiler for PHP 8.5 
 php85-pecl-xhprof-assets	2.3.10-r1	community	1140976	A Hierarchical Profiler for PHP (UI assets)	php85-ctype graphviz ghostscript-fonts
 php85-pecl-xlswriter	2.0.3-r0	community	693288	PHP 8.5 extension for creating and reader XLSX files - PECL	php85-common
 php85-pecl-yaml	2.3.0-r0	community	42599	YAML syntax bindings for PHP 8.5 - PECL	php85-common
-php85-pecl-zstd	0.18.0-r0	community	41542	PHP 8.5 Zstandard extension - PECL	php85-common
+php85-pecl-zstd	0.19.0-r0	community	41542	PHP 8.5 Zstandard extension - PECL	php85-common
 php85-pgsql	8.5.13-r0	community	156996	PHP85 extension: PostgreSQL	php85-common
 php85-phar	8.5.13-r0	community	311510	PHP85 extension: PHP Archive	php85-common php85
 php85-phpdbg	8.5.13-r0	community	15465620	Interactive PHP85 debugger	php85-common
@@ -19561,8 +19562,8 @@ py3-libusbsio	2.1.13-r2	community	66654	Library for USB-HID communication over S
 py3-libuser	0.64-r3	community	45191	Python3 bindings for libuser	python3 python3~3.14
 py3-libvirt	12.8.0-r0	community	781984	The libvirt virtualization API python binding	python3~3.14
 py3-libvirt-pyc	12.8.0-r0	community	592662	Precompiled Python bytecode for py3-libvirt	python3~3.14
-py3-libxml2	2.13.9-r3	main	711234	libxml2 python3 bindings	python3 python3~3.14
-py3-libxml2-pyc	2.13.9-r3	main	958206	Precompiled Python bytecode for py3-libxml2	python3~3.14
+py3-libxml2	2.13.9-r4	main	711234	libxml2 python3 bindings	python3 python3~3.14
+py3-libxml2-pyc	2.13.9-r4	main	958206	Precompiled Python bytecode for py3-libxml2	python3~3.14
 py3-libzim	3.12.0-r0	community	2549282	Python binding for libzim	libzim python3~3.14
 py3-license-expression	30.4.4-r1	community	1116694	Library to parse, compare, simplify and normalize license expressions	python3 py3-boolean.py python3~3.14
 py3-license-expression-pyc	30.4.4-r1	community	93247	Precompiled Python bytecode for py3-license-expression	python3~3.14
@@ -19715,7 +19716,7 @@ py3-minijinja	3.1.0-r0	community	1444402	Python bindings for MiniJinja, a templa
 py3-minijinja-pyc	3.1.0-r0	community	10382	Precompiled Python bytecode for py3-minijinja	python3~3.14
 py3-minimock	1.3.0-r1	community	30675	Simple mock library	python3 python3~3.14
 py3-minimock-pyc	1.3.0-r1	community	24556	Precompiled Python bytecode for py3-minimock	python3~3.14
-py3-miniupnpc	2.3.3-r2	community	63098	Python bindings for miniupnpc	python3~3.14
+py3-miniupnpc	2.3.5-r0	community	63098	Python bindings for miniupnpc	python3~3.14
 py3-mirakuru	3.0.2-r1	community	72181	Process executor (not only) for tests.	py3-psutil python3~3.14
 py3-mirakuru-pyc	3.0.2-r1	community	63231	Precompiled Python bytecode for py3-mirakuru	python3~3.14
 py3-mistune	3.4.0-r0	community	212878	Python Markdown parser module	python3 python3~3.14
@@ -19786,8 +19787,8 @@ py3-nanobind-pyc	3.1.0-r0	community	90279	Precompiled Python bytecode for py3-na
 py3-nashpy	0.0.43-r2	community	99151	A library for the computation of Nash equilibria in two player games	python3 py3-deprecated py3-scipy py3-networkx py3-numpy python3~3.14
 py3-nashpy-doc	0.0.43-r2	community	6168	A library for the computation of Nash equilibria in two player games (documentation)	
 py3-nashpy-pyc	0.0.43-r2	community	119542	Precompiled Python bytecode for py3-nashpy	python3~3.14
-py3-nats	2.12.0-r0	community	321425	Python3 client for NATS	py3-aiohttp python3 python3~3.14
-py3-nats-pyc	2.12.0-r0	community	442895	Precompiled Python bytecode for py3-nats	python3~3.14
+py3-nats	2.17.0-r0	community	370945	Python3 client for NATS	py3-aiohttp python3 python3~3.14
+py3-nats-pyc	2.17.0-r0	community	506046	Precompiled Python bytecode for py3-nats	python3~3.14
 py3-natsort	8.4.0-r2	community	130924	module for natural sorting	python3~3.14
 py3-natsort-pyc	8.4.0-r2	community	120421	Precompiled Python bytecode for py3-natsort	python3~3.14
 py3-nbxmpp	7.4.0-r0	community	767547	A non-blocking XMPP implementation for python	python3 py3-idna py3-precis-i18n py3-packaging libsoup3 python3~3.14
@@ -21491,11 +21492,11 @@ qalculate-qt-doc	5.11.0-r0	community	850	Multi-purpose desktop calculator - Qt v
 qbe	1.3-r1	community	189572	Quick compiler backend	
 qbe-dbg	1.3-r1	community	531376	Quick compiler backend (debug symbols)	!qbe<1.3-r1 !qbe>1.3-r1
 qbe-doc	1.3-r1	community	49057	Quick compiler backend (documentation)	
-qbittorrent	5.3.0-r1	community	14548202	qBittorrent client	qt6-qtsvg
-qbittorrent-doc	5.3.0-r1	community	1312	qBittorrent client (documentation)	
-qbittorrent-nox	5.3.0-r1	community	11434280	qBittorrent client (webui)	/bin/sh
-qbittorrent-nox-doc	5.3.0-r1	community	1538	qBittorrent client (documentation)	
-qbittorrent-nox-openrc	5.3.0-r1	community	765	qBittorrent client (OpenRC init scripts) (webui) (OpenRC init scripts)	
+qbittorrent	5.3.1-r0	community	14798058	qBittorrent client	qt6-qtsvg
+qbittorrent-doc	5.3.1-r0	community	1312	qBittorrent client (documentation)	
+qbittorrent-nox	5.3.1-r0	community	11663656	qBittorrent client (webui)	/bin/sh
+qbittorrent-nox-doc	5.3.1-r0	community	1538	qBittorrent client (documentation)	
+qbittorrent-nox-openrc	5.3.1-r0	community	765	qBittorrent client (OpenRC init scripts) (webui) (OpenRC init scripts)	
 qbootctl	0.2.2-r1	community	34208	Tool for interacting with Android A/B slots	
 qbootctl-openrc	0.2.2-r1	community	366	Tool for interacting with Android A/B slots (OpenRC init scripts)	
 qbootctl-systemd	0.2.2-r1	community	215	Tool for interacting with Android A/B slots (systemd files)	
@@ -22068,6 +22069,7 @@ re2	2025.11.05-r5	community	521736	Efficient, principled regular expression libr
 re2-dev	2025.11.05-r5	community	60177	Efficient, principled regular expression library (development files)	re2=2025.11.05-r5 pkgconfig
 re2c	4.6-r0	main	8408665	Lexer generator for C, C++ and Go	
 re2c-doc	4.6-r0	main	468876	Lexer generator for C, C++ and Go (documentation)	
+reach	1	chamesle	39860	ssh by name on the local network	openssh-client-default
 read-it-later	0.6.1-r0	community	5379723	Wallabag Client built with GTK	
 reader	0.6.0-r1	community	28633620	reader parses a web page for its actual content and displays it in nicely highlighted text on the command line.	
 readline	8.3.3-r1	main	263856	GNU readline library	
@@ -22198,11 +22200,11 @@ rime-plum-tools	0_git20260508-r0	community	1403	Rime configuration manager and i
 rinutils	0.10.3-r0	community	0	C11 / gnu11 utilities C library	
 rinutils-dev	0.10.3-r0	community	20620	C11 / gnu11 utilities C library (development files)	pkgconfig
 ripdrag	0.4.13-r0	community	705024	Drag and Drop utilty written in Rust and GTK4	
-ripgrep	15.2.0-r0	community	2871248	ripgrep combines the usability of The Silver Searcher with the raw speed of grep	
-ripgrep-bash-completion	15.2.0-r0	community	21362	Bash completions for ripgrep	
-ripgrep-doc	15.2.0-r0	community	25041	ripgrep combines the usability of The Silver Searcher with the raw speed of grep (documentation)	
-ripgrep-fish-completion	15.2.0-r0	community	15144	Fish completions for ripgrep	
-ripgrep-zsh-completion	15.2.0-r0	community	30769	Zsh completions for ripgrep	
+ripgrep	16.0.0-r0	community	2863216	ripgrep combines the usability of The Silver Searcher with the raw speed of grep	
+ripgrep-bash-completion	16.0.0-r0	community	21887	Bash completions for ripgrep	
+ripgrep-doc	16.0.0-r0	community	25945	ripgrep combines the usability of The Silver Searcher with the raw speed of grep (documentation)	
+ripgrep-fish-completion	16.0.0-r0	community	15492	Fish completions for ripgrep	
+ripgrep-zsh-completion	16.0.0-r0	community	31210	Zsh completions for ripgrep	
 ripmime	1.4.0.10-r3	community	188416	Tool to extract the attached files out of a MIME package	
 ripmime-doc	1.4.0.10-r3	community	24576	Tool to extract the attached files out of a MIME package (documentation)	
 ristretto	0.14.0-r0	community	304970	Image viewer for Xfce	desktop-file-utils hicolor-icon-theme
@@ -23454,8 +23456,8 @@ sngrep-dbg	1.9.0-r0	community	463420	display SIP call message flows from a termi
 sngrep-doc	1.9.0-r0	community	2473	display SIP call message flows from a terminal (documentation)	
 sngtc_client	1.3.11-r5	main	282624	Sangoma Media Transcode client and lib	
 sngtc_client-dev	1.3.11-r5	main	69632	Sangoma Media Transcode client and lib (development files)	sngtc_client=1.3.11-r5
-sniffglue	0.16.2-r0	community	1667600	Secure multithreaded packet sniffer	/bin/sh
-sniffglue-doc	0.16.2-r0	community	1667	Secure multithreaded packet sniffer (documentation)	
+sniffglue	0.16.2-r1	community	1663572	Secure multithreaded packet sniffer	/bin/sh
+sniffglue-doc	0.16.2-r1	community	1670	Secure multithreaded packet sniffer (documentation)	
 snippets-ls	0.0.4_git20240617-r18	community	4085600	simple language server for inserting custom snippets into text editors	
 sniproxy	0.7.0-r1	community	67827	Proxies incoming HTTP and TLS connections based on the hostname	/bin/sh
 sniproxy-doc	0.7.0-r1	community	3162	Proxies incoming HTTP and TLS connections based on the hostname (documentation)	
@@ -26516,10 +26518,10 @@ yad	15.0-r0	community	294357	Fork of zenity - display graphical dialogs from she
 yad-dev	15.0-r0	community	1152	Fork of zenity - display graphical dialogs from shell scripts or command line (development files)	
 yad-doc	15.0-r0	community	16727	Fork of zenity - display graphical dialogs from shell scripts or command line (documentation)	
 yad-lang	15.0-r0	community	276963	Languages for package yad	
-yadifa	3.0.9-r0	community	1874047	Lightweight authoritative Name Server with DNSSEC capabilities	/bin/sh
-yadifa-dev	3.0.9-r0	community	2013332	Lightweight authoritative Name Server with DNSSEC capabilities (development files)	yadifa=3.0.9-r0
-yadifa-doc	3.0.9-r0	community	75377	Lightweight authoritative Name Server with DNSSEC capabilities (documentation)	
-yadifa-openrc	3.0.9-r0	community	938	Lightweight authoritative Name Server with DNSSEC capabilities (OpenRC init scripts)	
+yadifa	3.0.10-r0	community	1874049	Lightweight authoritative Name Server with DNSSEC capabilities	/bin/sh
+yadifa-dev	3.0.10-r0	community	2014220	Lightweight authoritative Name Server with DNSSEC capabilities (development files)	yadifa=3.0.10-r0
+yadifa-doc	3.0.10-r0	community	75375	Lightweight authoritative Name Server with DNSSEC capabilities (documentation)	
+yadifa-openrc	3.0.10-r0	community	938	Lightweight authoritative Name Server with DNSSEC capabilities (OpenRC init scripts)	
 yadm	3.5.0-r0	community	59305	Yet Another Dotfiles Manager	bash git gawk
 yadm-bash-completion	3.5.0-r0	community	2882	Bash completions for yadm	
 yadm-doc	3.5.0-r0	community	9652	Yet Another Dotfiles Manager (documentation)	
@@ -26594,12 +26596,12 @@ yasm	1.3.0-r4	community	1630208	A rewrite of NASM to allow for multiple syntax s
 yasm-dev	1.3.0-r4	community	1384448	A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.) (development files)	
 yasm-doc	1.3.0-r4	community	65536	A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.) (documentation)	
 yavta	0_git20240914-r0	community	53248	Yet Another V4L2 Test Application	linux-headers
-yazi	26.9.1-r0	community	17165532	Blazing fast terminal file manager written in Rust, based on async I/O	
-yazi-bash-completion	26.9.1-r0	community	1885	Bash completions for yazi	
-yazi-cli	26.9.1-r0	community	6304804	Blazing fast terminal file manager written in Rust, based on async I/O - CLI	yazi=26.9.1-r0
-yazi-doc	26.9.1-r0	community	1065	Blazing fast terminal file manager written in Rust, based on async I/O (documentation)	
-yazi-fish-completion	26.9.1-r0	community	541	Fish completions for yazi	
-yazi-zsh-completion	26.9.1-r0	community	1175	Zsh completions for yazi	
+yazi	26.9.1-r1	community	17100060	Blazing fast terminal file manager written in Rust, based on async I/O	
+yazi-bash-completion	26.9.1-r1	community	1885	Bash completions for yazi	
+yazi-cli	26.9.1-r1	community	6292584	Blazing fast terminal file manager written in Rust, based on async I/O - CLI	yazi=26.9.1-r1
+yazi-doc	26.9.1-r1	community	1065	Blazing fast terminal file manager written in Rust, based on async I/O (documentation)	
+yazi-fish-completion	26.9.1-r1	community	541	Fish completions for yazi	
+yazi-zsh-completion	26.9.1-r1	community	1175	Zsh completions for yazi	
 yeahconsole	0.3.4-r3	community	32768	Drop-down X terminal emulator wrapper	
 yelp	49.2-r0	community	1431704	Help browser for GNOME desktop	dconf desktop-file-utils hicolor-icon-theme yelp-xsl
 yelp-dev	49.2-r0	community	49799	Help browser for GNOME desktop (development files)	yelp=49.2-r0 pkgconfig

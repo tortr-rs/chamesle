@@ -23459,6 +23459,7 @@ re2	2025.11.05-r5	community	526376	Efficient, principled regular expression libr
 re2-dev	2025.11.05-r5	community	60177	Efficient, principled regular expression library (development files)	re2=2025.11.05-r5 pkgconfig
 re2c	4.6-r0	main	8596237	Lexer generator for C, C++ and Go	
 re2c-doc	4.6-r0	main	468876	Lexer generator for C, C++ and Go (documentation)	
+reach	1	chamesle	44304	ssh by name on the local network	openssh-client-default
 read-it-later	0.6.1-r0	community	5859443	Wallabag Client built with GTK	
 reader	0.6.0-r1	community	31465760	reader parses a web page for its actual content and displays it in nicely highlighted text on the command line.	
 readline	8.3.3-r1	main	299476	GNU readline library	
