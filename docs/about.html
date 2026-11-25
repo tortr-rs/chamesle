@@ -55,7 +55,6 @@ with them. The old code is still on <a href="https://github.com/tortr-rs/chamesl
 <li><b>rifle</b>, the coreutils, from scratch, in one C file. It is tested against GNU's tools: 810 cases pass.<br>
 The Rifle Shoots down the GNU<br>
 Unfortunately the GNU herd got so big the rifle doesn't have enough ammo to shoot all of it down.</li>
-<li><b>dinit</b>, the init, with Chamesle's own services and boot scripts.</li>
 <li><b><a href="https://github.com/tortr-rs/mag">mag</a></b>, the package manager, in one C file with its own inflate, zstd, tar, sha256, RSA and OpenPGP.
 It installs signed binary packages, and builds what no repo has from <a href="handbook-mag.html#s4-6">CRUX, Void and Exherbo</a> source trees.</li>
 <li><b>chamesle-bootstrap</b>, which puts the base on a mounted disk with mag, like debootstrap.</li>
@@ -68,6 +67,11 @@ It installs signed binary packages, and builds what no repo has from <a href="ha
 0.6: for NVIDIA's driver, Steam and what else only comes built for glibc. The installer asks which one.</p>
 <p>The rest, the kernel included, comes as binary packages from a large musl repo, which mag reads as it is. Nobody
 here compiles anything to install Chamesle, so it goes on old machines as fast as on new ones.</p>
+
+<h2 id="kisbis">KISBIS</h2>
+<p><b>Keep It Simple Because I'm Stupid.</b> Every part of Chamesle has to be small enough that
+one person can read all of it and fix it alone: one C file a tool, plain text for every setting, no daemon where a
+file does the job. If I can't understand it at 2 AM, it doesn't go in.</p>
 
 <h2 id="roadmap">Roadmap</h2>
 <p>Next: more of the base in our own repo, and more machines tested. There are no dates.</p>
