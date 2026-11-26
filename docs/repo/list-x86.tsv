@@ -1561,15 +1561,15 @@ btrbk-bash-completion	0.32.6-r0	community	24576	Bash completions for btrbk
 btrbk-doc	0.32.6-r0	community	204800	Backup tool for btrfs subvolumes with atomic snapshots & incremental transfers (documentation)	
 btrfs-compsize	1.5-r2	community	40960	Calculate compression ratio of a set of files on Btrfs	
 btrfs-compsize-doc	1.5-r2	community	24576	Calculate compression ratio of a set of files on Btrfs (documentation)	
-btrfs-progs	6.17.1-r1	main	1722657	BTRFS filesystem utilities	
-btrfs-progs-bash-completion	6.17.1-r1	main	3638	Bash completions for btrfs-progs	
-btrfs-progs-dev	6.17.1-r1	main	166872	BTRFS filesystem utilities (development files)	linux-headers btrfs-progs-libs=6.17.1-r1 pkgconfig
-btrfs-progs-doc	6.17.1-r1	main	237460	BTRFS filesystem utilities (documentation)	
-btrfs-progs-extra	6.17.1-r1	main	3495496	BTRFS filesystem extra utilities	btrfs-progs
-btrfs-progs-libs	6.17.1-r1	main	64204	BTRFS filesystem utilities (libraries)	
-btrfs-progs-openrc	6.17.1-r1	main	134	BTRFS filesystem utilities (OpenRC init scripts)	
-btrfs-progs-static	6.17.1-r1	main	59774	BTRFS filesystem utilities (static library)	
-btrfs-progs-udev	6.17.1-r1	main	733	BTRFS filesystem utilities (udev rules)	
+btrfs-progs	7.3-r0	main	1747269	BTRFS filesystem utilities	
+btrfs-progs-bash-completion	7.3-r0	main	3638	Bash completions for btrfs-progs	
+btrfs-progs-dev	7.3-r0	main	166866	BTRFS filesystem utilities (development files)	linux-headers btrfs-progs-libs=7.3-r0 pkgconfig
+btrfs-progs-doc	7.3-r0	main	245519	BTRFS filesystem utilities (documentation)	
+btrfs-progs-extra	7.3-r0	main	3561224	BTRFS filesystem extra utilities	btrfs-progs
+btrfs-progs-libs	7.3-r0	main	64204	BTRFS filesystem utilities (libraries)	
+btrfs-progs-openrc	7.3-r0	main	134	BTRFS filesystem utilities (OpenRC init scripts)	
+btrfs-progs-static	7.3-r0	main	58430	BTRFS filesystem utilities (static library)	btrfs-progs-dev
+btrfs-progs-udev	7.3-r0	main	733	BTRFS filesystem utilities (udev rules)	
 bubblejail	0.10.4-r0	community	203842	Bubblewrap based sandboxing for desktop applications	bubblewrap libseccomp py3-cattrs py3-lxns py3-tomli-w py3-xdg xdg-dbus-proxy python3~3.14
 bubblejail-bash-completion	0.10.4-r0	community	346	Bash completions for bubblejail	
 bubblejail-config	0.10.4-r0	community	23320	Bubblewrap based sandboxing for desktop applications	bubblejail=0.10.4-r0 py3-qt6 python3~3.14
@@ -3088,24 +3088,24 @@ docbook2mdoc	1.1.0-r5	main	42288	DocBook to mdoc converter
 docbook2mdoc-doc	1.1.0-r5	main	2494	DocBook to mdoc converter (documentation)	
 docbook2x	0.8.8-r10	main	1392640	DocBook converter to UNIX manpage and GNU Texinfo format	texinfo openjade docbook-xml docbook-xsl perl-xml-sax libxslt
 docbook2x-doc	0.8.8-r10	main	892928	DocBook converter to UNIX manpage and GNU Texinfo format (documentation)	
-docker	29.10.0-r0	community	0	Pack, ship and run any application as a lightweight container	docker-engine=29.10.0-r0 docker-cli=29.10.0-r0 docker-cli-buildx
+docker	29.10.1-r0	community	0	Pack, ship and run any application as a lightweight container	docker-engine=29.10.1-r0 docker-cli=29.10.1-r0 docker-cli-buildx
 docker-auth	1.14.0-r9	community	30485521	Authentication server for Docker Registry 2	/bin/sh
 docker-auth-doc	1.14.0-r9	community	29588	Authentication server for Docker Registry 2 (documentation)	
 docker-auth-openrc	1.14.0-r9	community	767	Authentication server for Docker Registry 2 (OpenRC init scripts)	
-docker-bash-completion	29.10.0-r0	community	114471	Bash completions for docker	
-docker-cli	29.10.0-r0	community	31122004	Docker CLI	ca-certificates
+docker-bash-completion	29.10.1-r0	community	114471	Bash completions for docker	
+docker-cli	29.10.1-r0	community	31122004	Docker CLI	ca-certificates
 docker-cli-buildx	0.39.1-r0	community	69582452	A Docker CLI plugin for extended build capabilities	
 docker-cli-compose	5.8.0-r0	community	31400756	Docker CLI plugin for extended build capabilities	docker-cli
-docker-doc	29.10.0-r0	community	135631	Documentation for Docker	
-docker-engine	29.10.0-r0	community	93052136	Docker Engine (dockerd)	ca-certificates containerd iptables tini-static /bin/sh
-docker-fish-completion	29.10.0-r0	community	52005	Fish completions for docker	
-docker-openrc	29.10.0-r0	community	2839	Pack, ship and run any application as a lightweight container (OpenRC init scripts)	log_proxy
+docker-doc	29.10.1-r0	community	135637	Documentation for Docker	
+docker-engine	29.10.1-r0	community	93060328	Docker Engine (dockerd)	ca-certificates containerd iptables tini-static /bin/sh
+docker-fish-completion	29.10.1-r0	community	52005	Fish completions for docker	
+docker-openrc	29.10.1-r0	community	2839	Pack, ship and run any application as a lightweight container (OpenRC init scripts)	log_proxy
 docker-registry	2.8.3-r25	community	27284929	An implementation of the Docker Registry HTTP API V2 for use with docker 1.6+	/bin/sh
 docker-registry-openrc	2.8.3-r25	community	1520	An implementation of the Docker Registry HTTP API V2 for use with docker 1.6+ (OpenRC init scripts)	
-docker-rootless-extras	29.10.0-r0	community	10740	Extras to run docker as in rootless mode	docker rootlesskit slirp4netns fuse-overlayfs
-docker-rootless-extras-openrc	29.10.0-r0	community	186	OpenRC scripts for running docker in rootless mode	docker-rootless-extras
-docker-systemd	29.10.0-r0	community	1563	Pack, ship and run any application as a lightweight container (systemd files)	
-docker-zsh-completion	29.10.0-r0	community	128105	Zsh completions for docker	
+docker-rootless-extras	29.10.1-r0	community	10740	Extras to run docker as in rootless mode	docker rootlesskit slirp4netns fuse-overlayfs
+docker-rootless-extras-openrc	29.10.1-r0	community	186	OpenRC scripts for running docker in rootless mode	docker-rootless-extras
+docker-systemd	29.10.1-r0	community	1563	Pack, ship and run any application as a lightweight container (systemd files)	
+docker-zsh-completion	29.10.1-r0	community	128105	Zsh completions for docker	
 dockviz	0.6.4-r34	community	8414260	Visualizing Docker Data	docker
 docopt-cpp	0.6.3-r3	community	278528	Command line arguments parser for C++11 and later	
 docopt-cpp-dev	0.6.3-r3	community	94208	Command line arguments parser for C++11 and later (development files)	docopt-cpp=0.6.3-r3 pkgconfig
@@ -3207,8 +3207,9 @@ drawpile-doc	2.3.1-r1	community	320776	Collaborative drawing program (documentat
 drawpile-server	2.3.1-r1	community	3490348	Collaborative drawing program (Drawpile server)	drawpile-base=2.3.1-r1 qt6-qtbase-sqlite /bin/sh
 drawpile-server-openrc	2.3.1-r1	community	428	Collaborative drawing program (OpenRC init scripts)	
 drawpile-tools	2.3.1-r1	community	11991068	Collaborative drawing program (Drawpile tools)	drawpile-base=2.3.1-r1
-drawterm	0_git20240320-r0	community	634880	Connect to Plan 9 CPU servers from other operating systems	
-drawterm-dbg	0_git20240320-r0	community	1458176	Connect to Plan 9 CPU servers from other operating systems (debug symbols)	
+drawterm	0_git20261114-r0	community	592267	Connect to Plan 9 CPU servers from other operating systems	
+drawterm-dbg	0_git20261114-r0	community	3006024	Connect to Plan 9 CPU servers from other operating systems (debug symbols)	
+drawterm-x11	0_git20261114-r0	community	586956	Connect to Plan 9 CPU servers from other operating systems (X11 version)	
 drbd-utils	9.36.0-r0	main	2356205	Network-based RAID 1	bash
 drbd-utils-bash-completion	9.36.0-r0	main	4834	Bash completions for drbd-utils	
 drbd-utils-doc	9.36.0-r0	main	255225	Network-based RAID 1 (documentation)	
@@ -5631,8 +5632,8 @@ gosec	2.30.0-r0	community	65912404	Go source code static analyzer, focusing on s
 gost	3.2.6-r7	community	37524660	GO Simple Tunnel - a simple tunnel written in golang	
 gost-doc	3.2.6-r7	community	1065	GO Simple Tunnel - a simple tunnel written in golang (documentation)	
 gosu	1.19-r6	community	1795860	Simple Go-based setuid+setgid+setgroups+exec	
-got	0.130.1-r0	community	4024660	A VCS which prioritizes ease of use and simplicity over flexibility	
-got-doc	0.130.1-r0	community	74641	A VCS which prioritizes ease of use and simplicity over flexibility (documentation)	
+got	0.131-r0	community	4024660	A VCS which prioritizes ease of use and simplicity over flexibility	
+got-doc	0.131-r0	community	74641	A VCS which prioritizes ease of use and simplicity over flexibility (documentation)	
 gotestfmt	2.5.0-r17	community	4355452	tool to format output of go test	
 gotestsum	1.13.0-r9	community	6690100	Go test runner with output optimized for humans, JUnit XML for CI integration, and a summary of the test results	
 gotify-cli	2.4.0-r1	community	12608276	A command line interface for pushing messages to gotify	
@@ -6960,9 +6961,9 @@ janet-static	1.43.1-r0	community	2255634	Dynamic Lisp dialect and bytecode VM (s
 jansson	2.15.1-r0	main	87360	lightweight JSON library	
 jansson-dev	2.15.1-r0	main	18401	lightweight JSON library (development files)	jansson=2.15.1-r0 pkgconfig
 jansson-static	2.15.1-r0	main	123318	lightweight JSON library (static library)	jansson-dev
-janus-gateway	1.4.3-r0	community	10649170	Janus WebRTC Server	/bin/sh pkgconfig
-janus-gateway-doc	1.4.3-r0	community	34641417	Janus WebRTC Server (documentation)	
-janus-gateway-openrc	1.4.3-r0	community	384	Janus WebRTC Server (OpenRC init scripts)	
+janus-gateway	1.4.4-r0	community	10672953	Janus WebRTC Server	/bin/sh pkgconfig
+janus-gateway-doc	1.4.4-r0	community	34666606	Janus WebRTC Server (documentation)	
+janus-gateway-openrc	1.4.4-r0	community	384	Janus WebRTC Server (OpenRC init scripts)	
 jasper	4.2.9-r0	community	320876	Software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard	
 jasper-dev	4.2.9-r0	community	236281	Software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard (development files)	jasper=4.2.9-r0 pkgconfig
 jasper-doc	4.2.9-r0	community	302608	Software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard (documentation)	
@@ -7486,39 +7487,38 @@ kdsoap-doc	2.3.0-r0	community	36236	A Qt-based client-side and server-side SOAP 
 kdsoap-ws-discovery-client	0.4.0-r0	community	303104	Library for finding WS-Discovery devices in the network using Qt and KDSoap	
 kdsoap-ws-discovery-client-dev	0.4.0-r0	community	94208	Library for finding WS-Discovery devices in the network using Qt and KDSoap (development files)	kdsoap-ws-discovery-client=0.4.0-r0
 kdsoap-ws-discovery-client-doc	0.4.0-r0	community	1380352	Library for finding WS-Discovery devices in the network using Qt and KDSoap (documentation)	
-kea	3.0.3-r0	main	0	DHCPv4 and DHCPv6 server from ISC	kea-dhcp4 kea-dhcp6
-kea-admin	3.0.3-r0	main	1230757	Databases administration tools for Kea DHCP server	kea-common=3.0.3-r0
-kea-common	3.0.3-r0	main	6678800	Common files and libraries for Kea DHCP Server	/bin/sh
-kea-ctrl-agent	3.0.3-r0	main	259029	Kea Control Agent - REST service for controlling Kea DHCP server	kea-common=3.0.3-r0
-kea-dev	3.0.3-r0	main	4262446	DHCPv4 and DHCPv6 server from ISC (development files)	boost-dev log4cplus-dev kea-common=3.0.3-r0 kea-dhcp-ddns=3.0.3-r0 kea-hook-lease-query=3.0.3-r0 kea-hook-mysql=3.0.3-r0 kea-hook-pgsql=3.0.3-r0 pkgconfig
-kea-dhcp-ddns	3.0.3-r0	main	825196	Kea DHCP Dynamic DNS Server	kea-common=3.0.3-r0
-kea-dhcp4	3.0.3-r0	main	868096	Kea IPv4 DHCP Server	kea-common=3.0.3-r0
-kea-dhcp6	3.0.3-r0	main	857100	Kea IPv6 DHCP Server	kea-common=3.0.3-r0
-kea-doc	3.0.3-r0	main	1743938	DHCPv4 and DHCPv6 server from ISC (documentation)	
-kea-hook-bootp	3.0.3-r0	main	34344	Kea hook for handling BOOTP client support	
-kea-hook-class-cmds	3.0.3-r0	main	79516	Kea hook providing runtime commands for managing client classes	
-kea-hook-ddns-tuning	3.0.3-r0	main	79444	Kea hook for adjusting and fine-tuning DHCP-DDNS update behavior	
-kea-hook-flex-id	3.0.3-r0	main	75408	Kea hook for generating client identifiers using flexible expressions	
-kea-hook-flex-option	3.0.3-r0	main	108108	Kea hook for dynamically assigning or modifying options via expressions	
-kea-hook-ha	3.0.3-r0	main	506576	Kea hook implementing High Availability failover and load-balancing modes	kea-hook-lease-cmds=3.0.3-r0
-kea-hook-host-cache	3.0.3-r0	main	165624	Kea hook adding host caching to reduce repeated database lookups	
-kea-hook-host-cmds	3.0.3-r0	main	120524	Kea hook adding commands for creating and modifying host reservations	
-kea-hook-lease-cmds	3.0.3-r0	main	263932	Kea hook providing commands for viewing, updating, and deleting leases	
-kea-hook-lease-query	3.0.3-r0	main	655136	Kea hook supporting DHCPv4 Leasequery and Bulk Leasequery protocols	
-kea-hook-legal-log	3.0.3-r0	main	190044	Kea hook producing legally compliant forensic logs of lease activity	
-kea-hook-limits	3.0.3-r0	main	120420	Kea hook enforcing rate limits and other server resource constraints	
-kea-hook-mysql	3.0.3-r0	main	1097280	Kea hook for storing leases and hosts in MySQL database	
-kea-hook-perfmon	3.0.3-r0	main	222880	Kea hook collecting performance metrics for monitoring and analysis	
-kea-hook-pgsql	3.0.3-r0	main	1232692	Kea hook for storing leases and hosts in PostgreSQL database	
-kea-hook-ping-check	3.0.3-r0	main	300984	Kea hook performing ICMP ping-checks before lease allocation	
-kea-hook-radius	3.0.3-r0	main	625229	Kea hook integrating DHCP operations with a RADIUS server	
-kea-hook-run-script	3.0.3-r0	main	95724	Kea hook running external scripts in response to hook events	
-kea-hook-stat-cmds	3.0.3-r0	main	79456	Kea hook providing commands for retrieving server statistics	
-kea-hook-subnet-cmds	3.0.3-r0	main	259908	Kea hook providing commands for managing and modifying subnets	
-kea-hooks	3.0.3-r0	main	0	Metapackage that installs all Kea hooks	kea-doc kea-dev kea-admin kea-ctrl-agent kea-dhcp-ddns kea-dhcp4 kea-dhcp6 kea-shell-pyc kea-shell kea-hook-bootp kea-hook-class-cmds kea-hook-ddns-tuning kea-hook-flex-id kea-hook-flex-option kea-hook-ha kea-hook-host-cache kea-hook-host-cmds kea-hook-lease-cmds kea-hook-lease-query kea-hook-legal-log kea-hook-limits kea-hook-mysql kea-hook-perfmon kea-hook-ping-check kea-hook-pgsql kea-hook-radius kea-hook-run-script kea-hook-stat-cmds kea-hook-subnet-cmds kea-perfdhcp kea-common
-kea-perfdhcp	3.0.3-r0	main	304808	DHCP benchmarking tool from Kea	
-kea-shell	3.0.3-r0	main	12167	Text client for Kea DHCP Control Agent	python3 python3~3.14
-kea-shell-pyc	3.0.3-r0	main	7097	Precompiled Python bytecode for kea-shell	python3~3.14
+kea	3.2.1-r0	main	0	DHCPv4 and DHCPv6 server from ISC	kea-dhcp4 kea-dhcp6
+kea-admin	3.2.1-r0	main	1409429	Databases administration tools for Kea DHCP server	kea-common=3.2.1-r0
+kea-common	3.2.1-r0	main	6875736	Common files and libraries for Kea DHCP Server	/bin/sh
+kea-dev	3.2.1-r0	main	4377758	DHCPv4 and DHCPv6 server from ISC (development files)	boost-dev log4cplus-dev kea-common=3.2.1-r0 kea-dhcp-ddns=3.2.1-r0 kea-hook-lease-query=3.2.1-r0 kea-hook-mysql=3.2.1-r0 kea-hook-pgsql=3.2.1-r0 pkgconfig
+kea-dhcp-ddns	3.2.1-r0	main	825200	Kea DHCP Dynamic DNS Server	kea-common=3.2.1-r0
+kea-dhcp4	3.2.1-r0	main	892698	Kea IPv4 DHCP Server	kea-common=3.2.1-r0
+kea-dhcp6	3.2.1-r0	main	889910	Kea IPv6 DHCP Server	kea-common=3.2.1-r0
+kea-doc	3.2.1-r0	main	1790785	DHCPv4 and DHCPv6 server from ISC (documentation)	
+kea-hook-bootp	3.2.1-r0	main	34344	Kea hook for handling BOOTP client support	
+kea-hook-class-cmds	3.2.1-r0	main	79516	Kea hook providing runtime commands for managing client classes	
+kea-hook-ddns-tuning	3.2.1-r0	main	79444	Kea hook for adjusting and fine-tuning DHCP-DDNS update behavior	
+kea-hook-flex-id	3.2.1-r0	main	75400	Kea hook for generating client identifiers using flexible expressions	
+kea-hook-flex-option	3.2.1-r0	main	108108	Kea hook for dynamically assigning or modifying options via expressions	
+kea-hook-ha	3.2.1-r0	main	514768	Kea hook implementing High Availability failover and load-balancing modes	kea-hook-lease-cmds=3.2.1-r0
+kea-hook-host-cache	3.2.1-r0	main	165632	Kea hook adding host caching to reduce repeated database lookups	
+kea-hook-host-cmds	3.2.1-r0	main	120524	Kea hook adding commands for creating and modifying host reservations	
+kea-hook-lease-cmds	3.2.1-r0	main	288676	Kea hook providing commands for viewing, updating, and deleting leases	
+kea-hook-lease-query	3.2.1-r0	main	765792	Kea hook supporting DHCPv4 Leasequery and Bulk Leasequery protocols	
+kea-hook-legal-log	3.2.1-r0	main	190044	Kea hook producing legally compliant forensic logs of lease activity	
+kea-hook-limits	3.2.1-r0	main	120420	Kea hook enforcing rate limits and other server resource constraints	
+kea-hook-mysql	3.2.1-r0	main	1163140	Kea hook for storing leases and hosts in MySQL database	
+kea-hook-perfmon	3.2.1-r0	main	222880	Kea hook collecting performance metrics for monitoring and analysis	
+kea-hook-pgsql	3.2.1-r0	main	1305812	Kea hook for storing leases and hosts in PostgreSQL database	
+kea-hook-ping-check	3.2.1-r0	main	300984	Kea hook performing ICMP ping-checks before lease allocation	
+kea-hook-radius	3.2.1-r0	main	720212	Kea hook integrating DHCP operations with a RADIUS server	
+kea-hook-run-script	3.2.1-r0	main	95724	Kea hook running external scripts in response to hook events	
+kea-hook-stat-cmds	3.2.1-r0	main	79456	Kea hook providing commands for retrieving server statistics	
+kea-hook-subnet-cmds	3.2.1-r0	main	259908	Kea hook providing commands for managing and modifying subnets	
+kea-hooks	3.2.1-r0	main	0	Metapackage that installs all Kea hooks	kea-doc kea-dev kea-admin kea-dhcp-ddns kea-dhcp4 kea-dhcp6 kea-shell-pyc kea-shell kea-hook-bootp kea-hook-class-cmds kea-hook-ddns-tuning kea-hook-flex-id kea-hook-flex-option kea-hook-ha kea-hook-host-cache kea-hook-host-cmds kea-hook-lease-cmds kea-hook-lease-query kea-hook-legal-log kea-hook-limits kea-hook-mysql kea-hook-perfmon kea-hook-ping-check kea-hook-pgsql kea-hook-radius kea-hook-run-script kea-hook-stat-cmds kea-hook-subnet-cmds kea-perfdhcp kea-common
+kea-perfdhcp	3.2.1-r0	main	304808	DHCP benchmarking tool from Kea	
+kea-shell	3.2.1-r0	main	11852	Text client for Kea DHCP Control Agent	python3 python3~3.14
+kea-shell-pyc	3.2.1-r0	main	6552	Precompiled Python bytecode for kea-shell	python3~3.14
 kealib	1.6.2-r1	community	382432	KEA is an image file format that provides a full implementation of the GDAL data model	
 kealib-dev	1.6.2-r1	community	63482	KEA is an image file format that provides a full implementation of the GDAL data model (development files)	kealib=1.6.2-r1
 keditbookmarks	26.08.3-r0	community	597097	Bookmark Organizer and Editor	
@@ -9738,9 +9738,9 @@ librda-lang	0.0.5-r1	community	1454080	Languages for package librda
 librdkafka	2.16.0-r0	community	3727016	The Apache Kafka C/C++ library	
 librdkafka-dev	2.16.0-r0	community	603281	The Apache Kafka C/C++ library (development files)	librdkafka=2.16.0-r0 pkgconfig
 librdkafka-doc	2.16.0-r0	community	30938	The Apache Kafka C/C++ library (documentation)	
-librelp	1.12.0-r0	main	79180	The Reliable Event Logging Protocol library	
-librelp-dev	1.12.0-r0	main	15046	The Reliable Event Logging Protocol library (development files)	librelp=1.12.0-r0 pkgconfig
-librelp-static	1.12.0-r0	main	115526	The Reliable Event Logging Protocol library (static library)	
+librelp	1.13.0-r0	main	79180	The Reliable Event Logging Protocol library	
+librelp-dev	1.13.0-r0	main	17203	The Reliable Event Logging Protocol library (development files)	librelp=1.13.0-r0 pkgconfig
+librelp-static	1.13.0-r0	main	116736	The Reliable Event Logging Protocol library (static library)	librelp-dev
 librem-ec	0.9.2-r2	community	38453	Librem laptop EC kernel module, with AKMS	akms
 libreoffice	25.8.7.3-r5	community	0	LibreOffice - Meta package for the full office suite	libreoffice-base libreoffice-calc libreoffice-common libreoffice-draw libreoffice-impress libreoffice-math libreoffice-connector-postgres libreoffice-writer
 libreoffice-base	25.8.7.3-r5	community	5224599	LibreOffice - Database frontend	libreoffice-common
@@ -9939,16 +9939,16 @@ libretro-virtualjaguar	0_git20241021-r0	community	2283832	port of Virtual Jaguar
 librevenge	0.0.6-r0	community	569688	Base library for writing document import filters	
 librevenge-dev	0.0.6-r0	community	165567	Base library for writing document import filters (development files)	boost-dev zlib-dev cppunit-dev librevenge=0.0.6-r0 pkgconfig
 librevenge-doc	0.0.6-r0	community	8989489	Base library for writing document import filters (documentation)	
-librime	1.17.0-r2	community	1551420	Rime input method engine	
-librime-dev	1.17.0-r2	community	34574	Rime input method engine (development files)	librime-tools=1.17.0-r2 librime=1.17.0-r2 pkgconfig
-librime-nolog	1.17.0-r2	community	1412124	Rime input method engine (with logging disabled)	
-librime-plugin-charcode	1.17.0-r2	community	58828	Rime input method engine (charcode plugin)	librime=1.17.0-r2
-librime-plugin-lua	1.17.0-r2	community	706684	Rime input method engine (lua plugin)	librime=1.17.0-r2
-librime-plugin-octagram	1.17.0-r2	community	50640	Rime input method engine (octagram plugin)	librime=1.17.0-r2
-librime-plugin-predict	1.17.0-r2	community	107980	Rime input method engine (predict plugin)	librime=1.17.0-r2
-librime-plugin-proto	1.17.0-r2	community	30144	Rime input method engine (proto plugin)	librime=1.17.0-r2
-librime-plugins	1.17.0-r2	community	0	Rime input method engine (meta package for installing all plugins)	librime-plugin-charcode=1.17.0-r2 librime-plugin-lua=1.17.0-r2 librime-plugin-octagram=1.17.0-r2 librime-plugin-predict=1.17.0-r2 librime-plugin-proto=1.17.0-r2
-librime-tools	1.17.0-r2	community	88012	Rime input method engine (tools)	
+librime	1.18.0-r0	community	1957028	Rime input method engine	
+librime-dev	1.18.0-r0	community	35184	Rime input method engine (development files)	librime-tools=1.18.0-r0 librime=1.18.0-r0 pkgconfig
+librime-nolog	1.18.0-r0	community	1530968	Rime input method engine (with logging disabled)	
+librime-plugin-charcode	1.18.0-r0	community	58828	Rime input method engine (charcode plugin)	librime=1.18.0-r0
+librime-plugin-lua	1.18.0-r0	community	706684	Rime input method engine (lua plugin)	librime=1.18.0-r0
+librime-plugin-octagram	1.18.0-r0	community	46544	Rime input method engine (octagram plugin)	librime=1.18.0-r0
+librime-plugin-predict	1.18.0-r0	community	99788	Rime input method engine (predict plugin)	librime=1.18.0-r0
+librime-plugin-proto	1.18.0-r0	community	30144	Rime input method engine (proto plugin)	librime=1.18.0-r0
+librime-plugins	1.18.0-r0	community	0	Rime input method engine (meta package for installing all plugins)	librime-plugin-charcode=1.18.0-r0 librime-plugin-lua=1.18.0-r0 librime-plugin-octagram=1.18.0-r0 librime-plugin-predict=1.18.0-r0 librime-plugin-proto=1.18.0-r0
+librime-tools	1.18.0-r0	community	79716	Rime input method engine (tools)	
 librist	0.2.15-r0	community	157024	Reliable Internet Stream Transport (RIST)	
 librist-dev	0.2.15-r0	community	59139	Reliable Internet Stream Transport (RIST) (development files)	librist=0.2.15-r0 pkgconfig
 librist-progs	0.2.15-r0	community	259164	Tools for working with RIST	
@@ -11934,7 +11934,7 @@ mado-fish-completion	0.3.0-r0	community	2527	Fish completions for mado
 mado-zsh-completion	0.3.0-r0	community	3731	Zsh completions for mado	
 madonctl	3.0.3-r11	community	11732340	CLI client for the Mastodon social network API	
 madonctl-doc	3.0.3-r11	community	4227	CLI client for the Mastodon social network API (documentation)	
-mag	0.7.3	chamesle	240832	the package manager	
+mag	0.7.4	chamesle	306620	the package manager	
 magic-wormhole-rs	0.8.1-r1	community	5198216	Rust implementation of Magic Wormhole, with new features and enhancements	
 magic-wormhole-rs-bash-completion	0.8.1-r1	community	12191	Bash completions for magic-wormhole-rs	
 magic-wormhole-rs-fish-completion	0.8.1-r1	community	19722	Fish completions for magic-wormhole-rs	
@@ -12898,7 +12898,7 @@ nanomsg-dev	1.2.4-r0	community	39067	Socket library that provides several common
 nanomsg-doc	1.2.4-r0	community	1261758	Socket library that provides several common communication patterns (documentation)	
 nasm	3.01-r0	main	2513744	80x86 assembler designed for portability and modularity	
 nasm-doc	3.01-r0	main	7062	80x86 assembler designed for portability and modularity (documentation)	
-nats-server	2.15.2-r0	community	17882900	High-Performance server for NATS.io	
+nats-server	2.15.3-r0	community	18100436	High-Performance server for NATS.io	
 nautilus	51.1-r0	community	1439482	GNOME file manager	desktop-file-utils gsettings-desktop-schemas localsearch
 nautilus-dev	51.1-r0	community	167342	GNOME file manager (development files)	gnome-autoar-dev gnome-desktop-dev nautilus=51.1-r0 pkgconfig
 nautilus-lang	51.1-r0	community	12685875	Languages for package nautilus	
@@ -13027,19 +13027,19 @@ netatalk-doc	4.6.1-r0	community	64679	Open Source AFP fileserver (documentation)
 netatalk-openrc	4.6.1-r0	community	1920	Open Source AFP fileserver (OpenRC init scripts)	
 netavark	2.1.0-r1	community	4815948	Container network stack	
 netavark-doc	2.1.0-r1	community	960	Container network stack (documentation)	
-netbird	0.83.0-r0	community	42600420	WireGuard-based overlay network and mesh VPN	openresolv /bin/sh
-netbird-bash-completion	0.83.0-r0	community	49359	Bash completions for netbird	
-netbird-doc	0.83.0-r0	community	1788	WireGuard-based overlay network and mesh VPN (documentation)	
-netbird-fish-completion	0.83.0-r0	community	30459	Fish completions for netbird	
-netbird-mgmt	0.83.0-r0	community	70544292	WireGuard-based overlay network and mesh VPN	/bin/sh
-netbird-mgmt-openrc	0.83.0-r0	community	493	WireGuard-based overlay network and mesh VPN	
-netbird-openrc	0.83.0-r0	community	259	WireGuard-based overlay network and mesh VPN	
-netbird-relay	0.83.0-r0	community	24804836	WireGuard-based overlay network and mesh VPN	/bin/sh
-netbird-relay-openrc	0.83.0-r0	community	480	WireGuard-based overlay network and mesh VPN	
-netbird-signal	0.83.0-r0	community	19507876	WireGuard-based overlay network and mesh VPN	/bin/sh
-netbird-signal-openrc	0.83.0-r0	community	377	WireGuard-based overlay network and mesh VPN	
-netbird-ui	0.83.0-r0	community	33325969	Graphical user interface for NetBird	openresolv
-netbird-zsh-completion	0.83.0-r0	community	23784	Zsh completions for netbird	
+netbird	0.83.2-r0	community	42600420	WireGuard-based overlay network and mesh VPN	openresolv /bin/sh
+netbird-bash-completion	0.83.2-r0	community	49359	Bash completions for netbird	
+netbird-doc	0.83.2-r0	community	1788	WireGuard-based overlay network and mesh VPN (documentation)	
+netbird-fish-completion	0.83.2-r0	community	30459	Fish completions for netbird	
+netbird-mgmt	0.83.2-r0	community	70544292	WireGuard-based overlay network and mesh VPN	/bin/sh
+netbird-mgmt-openrc	0.83.2-r0	community	493	WireGuard-based overlay network and mesh VPN	
+netbird-openrc	0.83.2-r0	community	259	WireGuard-based overlay network and mesh VPN	
+netbird-relay	0.83.2-r0	community	24804836	WireGuard-based overlay network and mesh VPN	/bin/sh
+netbird-relay-openrc	0.83.2-r0	community	480	WireGuard-based overlay network and mesh VPN	
+netbird-signal	0.83.2-r0	community	19507876	WireGuard-based overlay network and mesh VPN	/bin/sh
+netbird-signal-openrc	0.83.2-r0	community	377	WireGuard-based overlay network and mesh VPN	
+netbird-ui	0.83.2-r0	community	33325969	Graphical user interface for NetBird	openresolv
+netbird-zsh-completion	0.83.2-r0	community	23784	Zsh completions for netbird	
 netcat-openbsd	1.234.1-r0	main	34408	The TCP/IP swiss army knife. OpenBSD variant from debian.	
 netcat-openbsd-doc	1.234.1-r0	main	6538	The TCP/IP swiss army knife. OpenBSD variant from debian. (documentation)	
 netcdf	4.10.1-r2	community	1478804	Libraries for the Unidata network Common Data Format	
@@ -13294,57 +13294,57 @@ nghttp2-static	1.71.0-r0	main	1226998	HTTP/2 C client, server and proxy (static 
 nghttp3	1.19.0-r0	main	156456	HTTP/3 library written in C	
 nghttp3-dev	1.19.0-r0	main	131768	HTTP/3 library written in C (development files)	nghttp3=1.19.0-r0 pkgconfig
 nghttp3-static	1.19.0-r0	main	261184	HTTP/3 library written in C (static library)	nghttp3-dev
-nginx	1.30.7-r0	main	1143612	HTTP and reverse proxy server (stable version)	/bin/sh
-nginx-dbg	1.30.7-r0	main	19712792	HTTP and reverse proxy server (stable version) (debug symbols)	
-nginx-debug	1.30.7-r0	main	6607628	nginx built with support for debugging log	nginx=1.30.7-r0
-nginx-doc	1.30.7-r0	main	564241	HTTP and reverse proxy server (stable version) (documentation)	
-nginx-mod-dev	1.30.7-r0	main	10319608	NGINX module development files	gd-dev geoip-dev libxslt-dev linux-headers openssl-dev pcre2-dev perl-dev zlib-dev
-nginx-mod-devel-kit	1.30.7-r0	main	17894	Nginx third-party module devel-kit (version v0.3.5)	nginx=1.30.7-r0
-nginx-mod-dynamic-healthcheck	1.30.7-r0	main	101562	Nginx third-party module dynamic-healthcheck (version 1.3.8)	nginx=1.30.7-r0 nginx-mod-stream
-nginx-mod-dynamic-upstream	1.30.7-r0	main	51403	Nginx third-party module dynamic-upstream (version 2.3.5)	nginx=1.30.7-r0 nginx-mod-stream
-nginx-mod-http-accounting	1.30.7-r0	main	22737	Nginx third-party module http-accounting (version v3.0)	nginx=1.30.7-r0
-nginx-mod-http-acme	0.4.1-r7	community	832319	NGINX module implementing automatic certificate management (ACMEv2) protocol	nginx~1.30.7
-nginx-mod-http-array-var	1.30.7-r0	main	13876	Nginx third-party module http-array-var (version v0.06)	nginx=1.30.7-r0 nginx-mod-devel-kit
-nginx-mod-http-auth-jwt	1.30.7-r0	main	59647	Nginx third-party module kjdev/nginx-auth-jwt (version 0.11.0)	nginx=1.30.7-r0
-nginx-mod-http-brotli	1.30.7-r0	main	28012	Nginx third-party module http-brotli (version v1.0.0rc)	nginx=1.30.7-r0
-nginx-mod-http-cache-purge	1.30.7-r0	main	34582	Nginx third-party module http-cache-purge (version 3.0.4)	nginx=1.30.7-r0
-nginx-mod-http-cookie-flag	1.30.7-r0	main	13845	Nginx third-party module http-cookie-flag (version v1.1.0)	nginx=1.30.7-r0
-nginx-mod-http-dav-ext	1.30.7-r0	main	22938	Nginx third-party module http-dav-ext (version v3.0.0)	nginx=1.30.7-r0
-nginx-mod-http-echo	1.30.7-r0	main	35251	Nginx third-party module http-echo (version v0.65)	nginx=1.30.7-r0
-nginx-mod-http-encrypted-session	1.30.7-r0	main	13976	Nginx third-party module http-encrypted-session (version v0.10)	nginx=1.30.7-r0 nginx-mod-devel-kit
-nginx-mod-http-fancyindex	1.30.7-r0	main	26657	Nginx third-party module http-fancyindex (version v0.6.0)	nginx=1.30.7-r0
-nginx-mod-http-geoip	1.30.7-r0	main	14544	Nginx module http-geoip	nginx=1.30.7-r0
-nginx-mod-http-geoip2	1.30.7-r0	main	17961	Nginx third-party module http-geoip2 (version 3.4)	nginx=1.30.7-r0
-nginx-mod-http-headers-more	1.30.7-r0	main	18738	Nginx third-party module http-headers-more (version v0.40)	nginx=1.30.7-r0
-nginx-mod-http-image-filter	1.30.7-r0	main	18259	Nginx module http-image-filter	nginx=1.30.7-r0
-nginx-mod-http-keyval	1.30.7-r0	main	26185	Nginx third-party module http-keyval (version 0.5.0)	nginx=1.30.7-r0
-nginx-mod-http-log-zmq	1.30.7-r0	main	17994	Nginx third-party module http-log-zmq (version v1.0.0)	nginx=1.30.7-r0
-nginx-mod-http-lua	1.30.7-r0	main	349214	Nginx third-party module http-lua (version v0.10.31)	nginx=1.30.7-r0 nginx-mod-devel-kit lua-resty-core
-nginx-mod-http-lua-upstream	1.30.7-r0	main	13739	Nginx third-party module http-lua-upstream (version v0.08)	nginx=1.30.7-r0 nginx-mod-http-lua
-nginx-mod-http-naxsi	1.30.7-r0	main	324558	Nginx third-party module http-naxsi (version 1.7)	nginx=1.30.7-r0
-nginx-mod-http-nchan	1.30.7-r0	main	585155	Nginx third-party module http-nchan (version v1.3.8)	nginx=1.30.7-r0
-nginx-mod-http-perl	1.30.7-r0	main	58213	Nginx module http-perl	nginx=1.30.7-r0
-nginx-mod-http-redis2	1.30.7-r0	main	22377	Nginx third-party module http-redis2 (version v0.15)	nginx=1.30.7-r0
-nginx-mod-http-set-misc	1.30.7-r0	main	27327	Nginx third-party module http-set-misc (version v0.34)	nginx=1.30.7-r0 nginx-mod-devel-kit
-nginx-mod-http-shibboleth	1.30.7-r0	main	14129	Nginx third-party module http-shibboleth (version v2.0.2)	nginx=1.30.7-r0
-nginx-mod-http-slowfs-cache	1.30.7-r0	main	22493	Nginx third-party module http-slowfs-cache (version 1.12)	nginx=1.30.7-r0
-nginx-mod-http-untar	1.30.7-r0	main	17960	Nginx third-party module http-untar (version v1.1)	nginx=1.30.7-r0
-nginx-mod-http-upload	1.30.7-r0	main	43641	Nginx third-party module http-upload (version 2.3.0)	nginx=1.30.7-r0
-nginx-mod-http-upload-progress	1.30.7-r0	main	18537	Nginx third-party module http-upload-progress (version v0.9.4)	nginx=1.30.7-r0
-nginx-mod-http-upstream-fair	1.30.7-r0	main	17916	Nginx third-party module http-upstream-fair (version 0.1.3)	nginx=1.30.7-r0
-nginx-mod-http-vod	1.30.7-r0	main	453298	Nginx third-party module http-vod (version v1.11.1)	nginx=1.30.7-r0
-nginx-mod-http-vts	1.30.7-r0	main	166799	Nginx third-party module http-vts (version v0.2.7)	nginx=1.30.7-r0
-nginx-mod-http-xslt-filter	1.30.7-r0	main	18346	Nginx module http-xslt-filter	nginx=1.30.7-r0
-nginx-mod-http-zip	1.30.7-r0	main	26070	Nginx third-party module http-zip (version 1.3.0)	nginx=1.30.7-r0
-nginx-mod-http-zstd	1.30.7-r0	main	31988	Nginx third-party module http-zstd (version 0.1.1)	nginx=1.30.7-r0
-nginx-mod-mail	1.30.7-r0	main	83610	Nginx module mail	nginx=1.30.7-r0
-nginx-mod-rtmp	1.30.7-r0	main	224014	Nginx third-party module rtmp (version v1.2.2)	nginx=1.30.7-r0
-nginx-mod-stream	1.30.7-r0	main	158168	Nginx module stream	nginx=1.30.7-r0
-nginx-mod-stream-geoip	1.30.7-r0	main	14342	Nginx module stream-geoip	nginx=1.30.7-r0
-nginx-mod-stream-geoip2	1.30.7-r0	main	17879	Nginx third-party module stream-geoip2 (version 3.4)	nginx=1.30.7-r0 nginx-mod-stream
-nginx-mod-stream-keyval	1.30.7-r0	main	26167	Nginx third-party module stream-keyval (version 0.5.0)	nginx=1.30.7-r0 nginx-mod-stream
-nginx-openrc	1.30.7-r0	main	1756	HTTP and reverse proxy server (stable version) (OpenRC init scripts)	
-nginx-vim	1.30.7-r0	main	114030	HTTP and reverse proxy server (stable version) (vim syntax)	
+nginx	1.30.8-r0	main	1143612	HTTP and reverse proxy server (stable version)	/bin/sh
+nginx-dbg	1.30.8-r0	main	19795664	HTTP and reverse proxy server (stable version) (debug symbols)	
+nginx-debug	1.30.8-r0	main	6607780	nginx built with support for debugging log	nginx=1.30.8-r0
+nginx-doc	1.30.8-r0	main	564241	HTTP and reverse proxy server (stable version) (documentation)	
+nginx-mod-dev	1.30.8-r0	main	10320501	NGINX module development files	gd-dev geoip-dev libxslt-dev linux-headers openssl-dev pcre2-dev perl-dev zlib-dev
+nginx-mod-devel-kit	1.30.8-r0	main	17894	Nginx third-party module devel-kit (version v0.3.5)	nginx=1.30.8-r0
+nginx-mod-dynamic-healthcheck	1.30.8-r0	main	101562	Nginx third-party module dynamic-healthcheck (version 1.3.8)	nginx=1.30.8-r0 nginx-mod-stream
+nginx-mod-dynamic-upstream	1.30.8-r0	main	51403	Nginx third-party module dynamic-upstream (version 2.3.5)	nginx=1.30.8-r0 nginx-mod-stream
+nginx-mod-http-accounting	1.30.8-r0	main	22737	Nginx third-party module http-accounting (version v3.0.0)	nginx=1.30.8-r0
+nginx-mod-http-acme	0.4.1-r8	community	832319	NGINX module implementing automatic certificate management (ACMEv2) protocol	nginx~1.30.8
+nginx-mod-http-array-var	1.30.8-r0	main	17972	Nginx third-party module http-array-var (version v0.07)	nginx=1.30.8-r0 nginx-mod-devel-kit
+nginx-mod-http-auth-jwt	1.30.8-r0	main	80355	Nginx third-party module kjdev/nginx-auth-jwt (version 0.15.1)	nginx=1.30.8-r0
+nginx-mod-http-brotli	1.30.8-r0	main	28012	Nginx third-party module http-brotli (version v1.0.0rc)	nginx=1.30.8-r0
+nginx-mod-http-cache-purge	1.30.8-r0	main	34582	Nginx third-party module http-cache-purge (version 3.0.4)	nginx=1.30.8-r0
+nginx-mod-http-cookie-flag	1.30.8-r0	main	13845	Nginx third-party module http-cookie-flag (version v1.1.0)	nginx=1.30.8-r0
+nginx-mod-http-dav-ext	1.30.8-r0	main	22938	Nginx third-party module http-dav-ext (version v3.0.0)	nginx=1.30.8-r0
+nginx-mod-http-echo	1.30.8-r0	main	35251	Nginx third-party module http-echo (version v0.66)	nginx=1.30.8-r0
+nginx-mod-http-encrypted-session	1.30.8-r0	main	13976	Nginx third-party module http-encrypted-session (version v0.11)	nginx=1.30.8-r0 nginx-mod-devel-kit
+nginx-mod-http-fancyindex	1.30.8-r0	main	26657	Nginx third-party module http-fancyindex (version v0.6.0)	nginx=1.30.8-r0
+nginx-mod-http-geoip	1.30.8-r0	main	14544	Nginx module http-geoip	nginx=1.30.8-r0
+nginx-mod-http-geoip2	1.30.8-r0	main	17961	Nginx third-party module http-geoip2 (version 3.4)	nginx=1.30.8-r0
+nginx-mod-http-headers-more	1.30.8-r0	main	22834	Nginx third-party module http-headers-more (version v0.42)	nginx=1.30.8-r0
+nginx-mod-http-image-filter	1.30.8-r0	main	18259	Nginx module http-image-filter	nginx=1.30.8-r0
+nginx-mod-http-keyval	1.30.8-r0	main	26185	Nginx third-party module http-keyval (version 0.5.0)	nginx=1.30.8-r0
+nginx-mod-http-log-zmq	1.30.8-r0	main	17994	Nginx third-party module http-log-zmq (version v1.0.0)	nginx=1.30.8-r0
+nginx-mod-http-lua	1.30.8-r0	main	349214	Nginx third-party module http-lua (version v0.10.31)	nginx=1.30.8-r0 nginx-mod-devel-kit lua-resty-core
+nginx-mod-http-lua-upstream	1.30.8-r0	main	13739	Nginx third-party module http-lua-upstream (version v0.08)	nginx=1.30.8-r0 nginx-mod-http-lua
+nginx-mod-http-naxsi	1.30.8-r0	main	324558	Nginx third-party module http-naxsi (version 1.7)	nginx=1.30.8-r0
+nginx-mod-http-nchan	1.30.8-r0	main	585155	Nginx third-party module http-nchan (version v1.3.9)	nginx=1.30.8-r0
+nginx-mod-http-perl	1.30.8-r0	main	58213	Nginx module http-perl	nginx=1.30.8-r0
+nginx-mod-http-redis2	1.30.8-r0	main	22377	Nginx third-party module http-redis2 (version v0.15)	nginx=1.30.8-r0
+nginx-mod-http-set-misc	1.30.8-r0	main	27327	Nginx third-party module http-set-misc (version v0.34)	nginx=1.30.8-r0 nginx-mod-devel-kit
+nginx-mod-http-shibboleth	1.30.8-r0	main	14129	Nginx third-party module http-shibboleth (version v2.0.2)	nginx=1.30.8-r0
+nginx-mod-http-slowfs-cache	1.30.8-r0	main	22493	Nginx third-party module http-slowfs-cache (version 1.12)	nginx=1.30.8-r0
+nginx-mod-http-untar	1.30.8-r0	main	17960	Nginx third-party module http-untar (version v1.1)	nginx=1.30.8-r0
+nginx-mod-http-upload	1.30.8-r0	main	43641	Nginx third-party module http-upload (version 2.3.0)	nginx=1.30.8-r0
+nginx-mod-http-upload-progress	1.30.8-r0	main	18537	Nginx third-party module http-upload-progress (version v0.9.4)	nginx=1.30.8-r0
+nginx-mod-http-upstream-fair	1.30.8-r0	main	17916	Nginx third-party module http-upstream-fair (version 0.1.3)	nginx=1.30.8-r0
+nginx-mod-http-vod	1.30.8-r0	main	453298	Nginx third-party module http-vod (version v1.11.2)	nginx=1.30.8-r0
+nginx-mod-http-vts	1.30.8-r0	main	166799	Nginx third-party module http-vts (version v0.2.7)	nginx=1.30.8-r0
+nginx-mod-http-xslt-filter	1.30.8-r0	main	18346	Nginx module http-xslt-filter	nginx=1.30.8-r0
+nginx-mod-http-zip	1.30.8-r0	main	26070	Nginx third-party module http-zip (version 1.3.0)	nginx=1.30.8-r0
+nginx-mod-http-zstd	1.30.8-r0	main	31988	Nginx third-party module http-zstd (version 0.1.1)	nginx=1.30.8-r0
+nginx-mod-mail	1.30.8-r0	main	83610	Nginx module mail	nginx=1.30.8-r0
+nginx-mod-rtmp	1.30.8-r0	main	224014	Nginx third-party module rtmp (version v1.2.2)	nginx=1.30.8-r0
+nginx-mod-stream	1.30.8-r0	main	158168	Nginx module stream	nginx=1.30.8-r0
+nginx-mod-stream-geoip	1.30.8-r0	main	14342	Nginx module stream-geoip	nginx=1.30.8-r0
+nginx-mod-stream-geoip2	1.30.8-r0	main	17879	Nginx third-party module stream-geoip2 (version 3.4)	nginx=1.30.8-r0 nginx-mod-stream
+nginx-mod-stream-keyval	1.30.8-r0	main	26167	Nginx third-party module stream-keyval (version 0.5.0)	nginx=1.30.8-r0 nginx-mod-stream
+nginx-openrc	1.30.8-r0	main	1756	HTTP and reverse proxy server (stable version) (OpenRC init scripts)	
+nginx-vim	1.30.8-r0	main	114030	HTTP and reverse proxy server (stable version) (vim syntax)	
 ngircd	28-r0	main	229213	Next Generation IRC Daemon	/bin/sh
 ngircd-doc	28-r0	main	370266	Next Generation IRC Daemon (documentation)	
 ngircd-openrc	28-r0	main	774	Next Generation IRC Daemon (OpenRC init scripts)	
@@ -13582,11 +13582,13 @@ nvim-lspconfig	2.5.0-r2	community	689164	quickstart configurations for the neovi
 nvim-lspconfig-doc	2.5.0-r2	community	562009	quickstart configurations for the neovim LSP client (documentation)	
 nvim-treesitter	0.10.0-r1	community	1363125	nvim treesitter configurations and abstraction layer	neovim
 nvim-treesitter-doc	0.10.0-r1	community	102848	nvim treesitter configurations and abstraction layer (documentation)	
-nvme-cli	2.16-r1	main	1440019	NVM-Express user space tooling for Linux	
-nvme-cli-bash-completion	2.16-r1	main	42838	Bash completions for nvme-cli	
-nvme-cli-doc	2.16-r1	main	321292	NVM-Express user space tooling for Linux (documentation)	
-nvme-cli-udev	2.16-r1	main	3669	NVM-Express user space tooling for Linux (udev rules)	
-nvme-cli-zsh-completion	2.16-r1	main	109372	Zsh completions for nvme-cli	
+nvme-cli	3.2-r0	main	1679793	NVM-Express user space tooling for Linux	
+nvme-cli-bash-completion	3.2-r0	main	283806	Bash completions for nvme-cli	
+nvme-cli-dev	3.2-r0	main	1265076	NVM-Express user space tooling for Linux (development files)	nvme-cli-libs=3.2-r0 pkgconfig
+nvme-cli-doc	3.2-r0	main	1365134	NVM-Express user space tooling for Linux (documentation)	
+nvme-cli-libs	3.2-r0	main	312760	NVM-Express user space tooling for Linux (libraries)	
+nvme-cli-udev	3.2-r0	main	5098	NVM-Express user space tooling for Linux (udev rules)	
+nvme-cli-zsh-completion	3.2-r0	main	705048	Zsh completions for nvme-cli	
 nvui	0.3.1-r11	community	480175	A modern frontend for Neovim	hicolor-icon-theme neovim
 nwg-launchers	0.7.1.1-r1	community	14753	GTK+ launchers for sway, i3 and some other window managers	nwg-launchers-bar=0.7.1.1-r1 nwg-launchers-dmenu=0.7.1.1-r1 nwg-launchers-grid=0.7.1.1-r1
 nwg-launchers-bar	0.7.1.1-r1	community	252262	GTK+ launchers for sway, i3 and some other window managers	nwg-launchers-data
@@ -17751,7 +17753,7 @@ postgresql-orafce	4.10.0-r2	community	548816	Oracle's compatibility functions an
 postgresql-orafce-bitcode	4.10.0-r2	community	563484	Oracle's compatibility functions and packages for PostgreSQL (bitcode for JIT)	postgresql-orafce=4.10.0-r2
 postgresql-orafce-doc	4.10.0-r2	community	41197	Oracle's compatibility functions and packages for PostgreSQL (documentation)	
 postgresql-pg_cron	1.6.7-r0	community	193137	Cron-based scheduler for PostgreSQL 9.5+	postgresql18 /bin/sh
-postgresql-pg_graphql	1.6.1-r0	community	1428096	GraphQL support for PostgreSQL	postgresql18
+postgresql-pg_graphql	1.6.3-r0	community	1264280	GraphQL support for PostgreSQL	postgresql18
 postgresql-pg_partman	5.2.4-r0	community	7367703	Partition management extension for PostgreSQL	
 postgresql-pg_partman-bitcode	5.2.4-r0	community	24696	Partition management extension for PostgreSQL (bitcode for JIT)	postgresql-pg_partman=5.2.4-r0
 postgresql-pg_partman-doc	5.2.4-r0	community	223726	Partition management extension for PostgreSQL (documentation)	
@@ -18014,13 +18016,13 @@ proot-doc	5.4.0-r2	community	8780	User-space implementation of chroot, mount --b
 proot-static	5.4.0-r2	community	263572	User-space implementation of chroot, mount --bind, and binfmt_misc (static binary)	
 properties-cpp	0.0.4-r0	community	0	A very simple convenience library for handling properties and signals in C++11	
 properties-cpp-dev	0.0.4-r0	community	21574	A very simple convenience library for handling properties and signals in C++11 (development files)	pkgconfig
-prosody	13.0.7-r2	community	2223107	Lua based Jabber/XMPP server	ca-certificates icu-data-full lua5.4 lua5.4-busted lua5.4-expat lua5.4-filesystem lua5.4-sec lua5.4-socket lua5.4-unbound /bin/sh
-prosody-doc	13.0.7-r2	community	1956	Lua based Jabber/XMPP server (documentation)	
+prosody	13.0.8-r0	community	2241513	Lua based Jabber/XMPP server	ca-certificates icu-data-full lua5.4 lua5.4-busted lua5.4-expat lua5.4-filesystem lua5.4-sec lua5.4-socket lua5.4-unbound /bin/sh
+prosody-doc	13.0.8-r0	community	1956	Lua based Jabber/XMPP server (documentation)	
 prosody-filer	1.0.3-r22	community	6615252	Golang mod_http_upload_external server for Prosody and Ejabberd	/bin/sh
 prosody-filer-openrc	1.0.3-r22	community	724	Golang mod_http_upload_external server for Prosody and Ejabberd (OpenRC init scripts)	
-prosody-nftrules	13.0.7-r2	community	166	Lua based Jabber/XMPP server (nftables ruleset)	
-prosody-openrc	13.0.7-r2	community	1034	Lua based Jabber/XMPP server (OpenRC init scripts)	
-prosody-systemd	13.0.7-r2	community	522	Lua based Jabber/XMPP server (systemd files)	
+prosody-nftrules	13.0.8-r0	community	166	Lua based Jabber/XMPP server (nftables ruleset)	
+prosody-openrc	13.0.8-r0	community	1034	Lua based Jabber/XMPP server (OpenRC init scripts)	
+prosody-systemd	13.0.8-r0	community	522	Lua based Jabber/XMPP server (systemd files)	
 protobuf	31.1-r4	main	26976	Library for extensible, efficient structure packing	protoc=31.1-r4 libprotoc=31.1-r4 libprotobuf=31.1-r4 libprotobuf-lite=31.1-r4
 protobuf-c	1.5.2-r4	main	30040	Protocol Buffers implementation in C	
 protobuf-c-compiler	1.5.2-r4	main	149940	Protocol Buffers C compiler	
@@ -18416,7 +18418,7 @@ py3-brotli	1.2.1-r0	main	946049	Generic lossless compressor (python bindings)	py
 py3-brotli-pyc	1.2.1-r0	main	1916	Precompiled Python bytecode for py3-brotli	python3~3.14
 py3-brotlipy	0.7.0-r8	community	820026	Python bindings for the Brotli compression library	python3 python3~3.14
 py3-brotlipy-pyc	0.7.0-r8	community	28655	Precompiled Python bytecode for py3-brotlipy	python3~3.14
-py3-btrfs-progs	6.17.1-r1	main	57857	Python 3 bindings for btrfs-progs	python3~3.14
+py3-btrfs-progs	7.3-r0	main	66302	Python 3 bindings for btrfs-progs	python3~3.14
 py3-build	1.6.1-r0	main	92000	Correct PEP517 package builder	python3 py3-packaging py3-pyproject-hooks python3~3.14
 py3-build-pyc	1.6.1-r0	main	126853	Precompiled Python bytecode for py3-build	python3~3.14
 py3-cachecontrol	0.14.3-r1	community	56687	httplib2 caching for requests	py3-msgpack py3-requests python3~3.14
@@ -21795,9 +21797,9 @@ qvidcap	1.32.0-r1	community	231288	v4l2 video capture viewer
 qwt	6.3.0-r0	community	0	Qt Widgets for Technical Applications	
 qwt-dev	6.3.0-r0	community	491871	Qt Widgets for Technical Applications (development files)	pkgconfig qt5-qwt=6.3.0-r0 qt6-qwt=6.3.0-r0
 qwt-doc	6.3.0-r0	community	33159024	Qt Widgets for Technical Applications (documentation)	
-qxmpp	1.17.1-r0	community	4532068	Cross-platform C++ XMPP client and server library	
-qxmpp-dev	1.17.1-r0	community	659719	Cross-platform C++ XMPP client and server library (development files)	qxmpp=1.17.1-r0 pkgconfig
-qxmpp-doc	1.17.1-r0	community	464219	Cross-platform C++ XMPP client and server library (documentation)	
+qxmpp	1.17.1-r1	community	4540260	Cross-platform C++ XMPP client and server library	
+qxmpp-dev	1.17.1-r1	community	659719	Cross-platform C++ XMPP client and server library (development files)	qxmpp=1.17.1-r1 pkgconfig
+qxmpp-doc	1.17.1-r1	community	464219	Cross-platform C++ XMPP client and server library (documentation)	
 rabbitmq-c	0.15.0-r0	main	83328	RabbitMQ C client	
 rabbitmq-c-dev	0.15.0-r0	main	167645	RabbitMQ C client (development files)	popt-dev rabbitmq-c=0.15.0-r0 pkgconfig
 rabbitmq-c-doc	0.15.0-r0	main	7384	RabbitMQ C client (documentation)	
@@ -22241,9 +22243,9 @@ rng-tools-openrc	6.17-r2	main	3267	Random number generator daemon (OpenRC init s
 rnnoise	0.2-r0	community	1463572	Recurrent neural network for audio noise reduction	
 rnnoise-dev	0.2-r0	community	1495585	Recurrent neural network for audio noise reduction (development files)	rnnoise=0.2-r0 pkgconfig
 rnnoise-doc	0.2-r0	community	7256	Recurrent neural network for audio noise reduction (documentation)	
-rnote	0.13.1-r0	community	18542388	Sketch and take handwritten notes.	
-rnote-cli	0.13.1-r0	community	10086756	Convert files to and from .rnote	
-rnote-lang	0.13.1-r0	community	1276240	Languages for package rnote	
+rnote	0.13.1-r1	community	18124676	Sketch and take handwritten notes.	
+rnote-cli	0.13.1-r1	community	9710008	Convert files to and from .rnote	
+rnote-lang	0.13.1-r1	community	1276128	Languages for package rnote	
 rnp	0.18.1-r2	community	354164	High performance C++ OpenPGP library used by Mozilla Thunderbird (CLI tools)	
 rnp-dev	0.18.1-r2	community	216602	High performance C++ OpenPGP library used by Mozilla Thunderbird (development files)	librnp=0.18.1-r2 pkgconfig
 rnp-doc	0.18.1-r2	community	12894	High performance C++ OpenPGP library used by Mozilla Thunderbird (documentation)	
@@ -22365,53 +22367,54 @@ rsync	3.5.2-r1	main	451895	A file transfer program to keep remote files in sync
 rsync-doc	3.5.2-r1	main	110729	A file transfer program to keep remote files in sync (documentation)	
 rsync-openrc	3.5.2-r1	main	607	A file transfer program to keep remote files in sync (OpenRC init scripts)	
 rsync-zsh-completion	5.9.2-r0	main	16122	Zsh completions for rsync	
-rsyslog	8.2608.0-r0	main	1490639	Enhanced multi-threaded syslogd with database support and more	/bin/sh
-rsyslog-cisco	8.2608.0-r0	main	28168	rsyslog pmcisconames and pmciscoios module	rsyslog=8.2608.0-r0
-rsyslog-clickhouse	8.2608.0-r0	main	26412	rsyslog omclickhouse module	rsyslog=8.2608.0-r0
-rsyslog-crypto	8.2608.0-r0	main	44512	rsyslog lmcry_gcry module	rsyslog=8.2608.0-r0
-rsyslog-dbg	8.2608.0-r0	main	8728612	Enhanced multi-threaded syslogd with database support and more (debug symbols)	
-rsyslog-doc	8.2608.0-r0	main	16282	Enhanced multi-threaded syslogd with database support and more (documentation)	
-rsyslog-dtls	8.2608.0-r0	main	57848	rsyslog imdtls and omdtls module	rsyslog=8.2608.0-r0
-rsyslog-elasticsearch	8.2608.0-r0	main	55464	rsyslog omelasticsearch module	rsyslog=8.2608.0-r0
-rsyslog-gnutls	8.2608.0-r0	main	43120	rsyslog lmnsd_gtls module	rsyslog=8.2608.0-r0
-rsyslog-gssapi	8.2608.0-r0	main	51140	rsyslog lmgssutil and imgssapi and omgssapi module	rsyslog=8.2608.0-r0
-rsyslog-hiredis	8.2608.0-r0	main	22104	rsyslog omhiredis module	rsyslog=8.2608.0-r0
-rsyslog-http	8.2608.0-r0	main	65080	rsyslog omhttp and fmhttp module	rsyslog=8.2608.0-r0
-rsyslog-imdocker	8.2608.0-r0	main	39008	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-impcap	8.2608.0-r0	main	43616	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-libdbi	8.2608.0-r0	main	17872	rsyslog omlibdbi module	rsyslog=8.2608.0-r0
-rsyslog-mmaitag	8.2608.0-r0	main	17884	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmanon	8.2608.0-r0	main	30304	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmaudit	8.2608.0-r0	main	13636	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmcount	8.2608.0-r0	main	13708	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmdblookup	8.2608.0-r0	main	17836	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmfields	8.2608.0-r0	main	13668	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmjsonparse	8.2608.0-r0	main	18228	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmkubernetes	8.2608.0-r0	main	47208	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmnormalize	8.2608.0-r0	main	21972	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmpstrucdata	8.2608.0-r0	main	17820	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmrm1stspace	8.2608.0-r0	main	13640	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmsequence	8.2608.0-r0	main	13744	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmsnmptrapd	8.2608.0-r0	main	13640	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmtaghostname	8.2608.0-r0	main	13960	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mmutf8fix	8.2608.0-r0	main	17804	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-mysql	8.2608.0-r0	main	17984	rsyslog ommysql module	rsyslog=8.2608.0-r0
-rsyslog-omotel	8.2608.0-r0	main	88164	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-openrc	8.2608.0-r0	main	820	Enhanced multi-threaded syslogd with database support and more (OpenRC init scripts)	
-rsyslog-openssl	8.2608.0-r0	main	76560	rsyslog lmnsd_ossl module	rsyslog=8.2608.0-r0
-rsyslog-pgsql	8.2608.0-r0	main	17924	rsyslog ompgsql module	rsyslog=8.2608.0-r0
-rsyslog-pmaixforwardedfrom	8.2608.0-r0	main	14060	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-pmlastmsg	8.2608.0-r0	main	14052	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-pmnormalize	8.2608.0-r0	main	14152	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-pmsnare	8.2608.0-r0	main	18232	rsyslog  module	rsyslog=8.2608.0-r0
-rsyslog-prog	8.2608.0-r0	main	44456	rsyslog improg and omprog module	rsyslog=8.2608.0-r0
-rsyslog-rabbitmq	8.2608.0-r0	main	26588	rsyslog omrabbitmq module	rsyslog=8.2608.0-r0
-rsyslog-relp	8.2608.0-r0	main	57580	rsyslog imrelp and omrelp module	rsyslog=8.2608.0-r0
-rsyslog-snmp	8.2608.0-r0	main	22184	rsyslog omsnmp module	rsyslog=8.2608.0-r0
-rsyslog-testing	8.2608.0-r0	main	13636	rsyslog omtesting module	rsyslog=8.2608.0-r0
-rsyslog-udpspoof	8.2608.0-r0	main	18288	rsyslog omudpspoof module	rsyslog=8.2608.0-r0
-rsyslog-zmq	8.2608.0-r0	main	36312	rsyslog imczmq and omczmq module	rsyslog=8.2608.0-r0
-rsyslog-zstd	8.2608.0-r0	main	13636	rsyslog lmzstdw module	rsyslog=8.2608.0-r0
+rsyslog	8.2610.0-r1	main	1544583	Enhanced multi-threaded syslogd with database support and more	/bin/sh
+rsyslog-cisco	8.2610.0-r1	main	28168	rsyslog pmcisconames and pmciscoios module	rsyslog=8.2610.0-r1
+rsyslog-clickhouse	8.2610.0-r1	main	26412	rsyslog omclickhouse module	rsyslog=8.2610.0-r1
+rsyslog-crypto	8.2610.0-r1	main	44512	rsyslog lmcry_gcry module	rsyslog=8.2610.0-r1
+rsyslog-dbg	8.2610.0-r1	main	9142216	Enhanced multi-threaded syslogd with database support and more (debug symbols)	
+rsyslog-doc	8.2610.0-r1	main	16282	Enhanced multi-threaded syslogd with database support and more (documentation)	
+rsyslog-dtls	8.2610.0-r1	main	61944	rsyslog imdtls and omdtls module	rsyslog=8.2610.0-r1
+rsyslog-elasticsearch	8.2610.0-r1	main	55464	rsyslog omelasticsearch module	rsyslog=8.2610.0-r1
+rsyslog-gnutls	8.2610.0-r1	main	43120	rsyslog lmnsd_gtls module	rsyslog=8.2610.0-r1
+rsyslog-gssapi	8.2610.0-r1	main	51140	rsyslog lmgssutil and imgssapi and omgssapi module	rsyslog=8.2610.0-r1
+rsyslog-hiredis	8.2610.0-r1	main	22104	rsyslog omhiredis module	rsyslog=8.2610.0-r1
+rsyslog-http	8.2610.0-r1	main	65080	rsyslog omhttp and fmhttp module	rsyslog=8.2610.0-r1
+rsyslog-imdocker	8.2610.0-r1	main	39008	rsyslog imdocker module	rsyslog=8.2610.0-r1
+rsyslog-impcap	8.2610.0-r1	main	43616	rsyslog impcap module	rsyslog=8.2610.0-r1
+rsyslog-libdbi	8.2610.0-r1	main	17872	rsyslog omlibdbi module	rsyslog=8.2610.0-r1
+rsyslog-mmaitag	8.2610.0-r1	main	18028	rsyslog mmaitag module	rsyslog=8.2610.0-r1
+rsyslog-mmanon	8.2610.0-r1	main	30304	rsyslog mmanon module	rsyslog=8.2610.0-r1
+rsyslog-mmaudit	8.2610.0-r1	main	13636	rsyslog mmaudit module	rsyslog=8.2610.0-r1
+rsyslog-mmcount	8.2610.0-r1	main	13708	rsyslog mmcount module	rsyslog=8.2610.0-r1
+rsyslog-mmdblookup	8.2610.0-r1	main	17836	rsyslog mmdblookup module	rsyslog=8.2610.0-r1
+rsyslog-mmfields	8.2610.0-r1	main	13668	rsyslog mmfields module	rsyslog=8.2610.0-r1
+rsyslog-mmjsonparse	8.2610.0-r1	main	18228	rsyslog mmjsonparse module	rsyslog=8.2610.0-r1
+rsyslog-mmkubernetes	8.2610.0-r1	main	47208	rsyslog mmkubernetes module	rsyslog=8.2610.0-r1
+rsyslog-mmnormalize	8.2610.0-r1	main	21972	rsyslog mmnormalize module	rsyslog=8.2610.0-r1
+rsyslog-mmpstrucdata	8.2610.0-r1	main	17820	rsyslog mmpstrucdata module	rsyslog=8.2610.0-r1
+rsyslog-mmrm1stspace	8.2610.0-r1	main	13640	rsyslog mmrm1stspace module	rsyslog=8.2610.0-r1
+rsyslog-mmsequence	8.2610.0-r1	main	13744	rsyslog mmsequence module	rsyslog=8.2610.0-r1
+rsyslog-mmsnmptrapd	8.2610.0-r1	main	13640	rsyslog mmsnmptrapd module	rsyslog=8.2610.0-r1
+rsyslog-mmtaghostname	8.2610.0-r1	main	13960	rsyslog mmtaghostname module	rsyslog=8.2610.0-r1
+rsyslog-mmutf8fix	8.2610.0-r1	main	17804	rsyslog mmutf8fix module	rsyslog=8.2610.0-r1
+rsyslog-mysql	8.2610.0-r1	main	17984	rsyslog ommysql module	rsyslog=8.2610.0-r1
+rsyslog-omkinesis	8.2610.0-r1	main	21996	rsyslog omkinesis module	rsyslog=8.2610.0-r1
+rsyslog-omotel	8.2610.0-r1	main	88164	rsyslog omotel module	rsyslog=8.2610.0-r1
+rsyslog-openrc	8.2610.0-r1	main	820	Enhanced multi-threaded syslogd with database support and more (OpenRC init scripts)	
+rsyslog-openssl	8.2610.0-r1	main	76560	rsyslog lmnsd_ossl module	rsyslog=8.2610.0-r1
+rsyslog-pgsql	8.2610.0-r1	main	17924	rsyslog ompgsql module	rsyslog=8.2610.0-r1
+rsyslog-pmaixforwardedfrom	8.2610.0-r1	main	14060	rsyslog pmaixforwardedfrom module	rsyslog=8.2610.0-r1
+rsyslog-pmlastmsg	8.2610.0-r1	main	14052	rsyslog pmlastmsg module	rsyslog=8.2610.0-r1
+rsyslog-pmnormalize	8.2610.0-r1	main	14152	rsyslog pmnormalize module	rsyslog=8.2610.0-r1
+rsyslog-pmsnare	8.2610.0-r1	main	18232	rsyslog pmsnare module	rsyslog=8.2610.0-r1
+rsyslog-prog	8.2610.0-r1	main	44456	rsyslog improg and omprog module	rsyslog=8.2610.0-r1
+rsyslog-rabbitmq	8.2610.0-r1	main	26588	rsyslog omrabbitmq module	rsyslog=8.2610.0-r1
+rsyslog-relp	8.2610.0-r1	main	57580	rsyslog imrelp and omrelp module	rsyslog=8.2610.0-r1
+rsyslog-snmp	8.2610.0-r1	main	22184	rsyslog omsnmp module	rsyslog=8.2610.0-r1
+rsyslog-testing	8.2610.0-r1	main	17732	rsyslog omtesting module	rsyslog=8.2610.0-r1
+rsyslog-udpspoof	8.2610.0-r1	main	18288	rsyslog omudpspoof module	rsyslog=8.2610.0-r1
+rsyslog-zmq	8.2610.0-r1	main	36312	rsyslog imczmq and omczmq module	rsyslog=8.2610.0-r1
+rsyslog-zstd	8.2610.0-r1	main	13636	rsyslog lmzstdw module	rsyslog=8.2610.0-r1
 rt4	4.4.8-r0	community	28062076	Request Tracker - issue and bug tracker	perl font-droid perl-apache-session perl-business-hours perl-cache-simple-timedexpiry perl-cgi perl-cgi-emulate-psgi perl-cgi-psgi perl-class-accessor perl-convert-color perl-crypt-eksblowfish perl-crypt-ssleay perl-crypt-x509 perl-css-minifier-xs perl-css-squish perl-data-guid perl-data-ical perl-data-page-pageset perl-date-extract perl-date-manip perl-datetime perl-datetime-format-natural perl-datetime-locale perl-dbd-mysql perl-dbd-pg perl-dbi perl-dbix-searchbuilder perl-devel-globaldestruction perl-devel-stacktrace perl-digest-sha1 perl-email-address perl-email-address-list perl-fcgi perl-fcgi-procmanager perl-file-sharedir perl-file-which perl-getopt-long perl-html-formatter perl-html-formattext-withlinks perl-html-formattext-withlinks-andtables perl-html-mason perl-html-mason-psgihandler perl-html-parser perl-html-quoted perl-html-rewriteattributes>=0.05 perl-html-scrubber perl-html-tree perl-ipc-run3 perl-javascript-minifier perl-javascript-minifier-xs perl-json perl-list-moreutils perl-locale-maketext-fuzzy perl-locale-maketext-lexicon perl-log-dispatch perl-lwp-protocol-https perl-mailtools perl-mime-tools perl-mime-types perl-module-refresh perl-module-versions-report perl-mozilla-ca perl-net-cidr perl-net-ip perl-parallel-forkmanager perl-plack perl-pod-parser perl-regexp-common-net-cidr perl-regexp-ipv6 perl-role-basic perl-scope-upper perl-starlet perl-string-shellquote perl-sub-exporter perl-symbol-global-name perl-term-readkey perl-text-password-pronounceable perl-text-quoted perl-text-template perl-text-wikiformat perl-text-wrapper perl-time-hires perl-time-parsedate perl-tree-simple perl-universal-require perl-xml-rss /bin/sh
 rtapd	1.7-r10	main	139264	daemon for routing packets to rtnppd	rtnppd
 rtapd-dbg	1.7-r10	main	176128	daemon for routing packets to rtnppd (debug symbols)	rtnppd
@@ -22672,7 +22675,7 @@ runuser	2.42.4-r3	main	46512	Run a program with substitute user and group ID
 runvimtests	1.30-r2	community	135168	A testing framework for Vim	vim bash /bin/sh
 ruqola	2.9.0-r0	community	19324835	A Qt client for Rocket Chat	
 rust	1.100.0-r0	main	218856907	Rust Programming Language toolchain	gcc musl-dev
-rust-analyzer	2026.11.16-r0	community	20939716	Rust compiler front-end for IDEs	rust-src
+rust-analyzer	2026.11.23-r0	community	20943808	Rust compiler front-end for IDEs	rust-src
 rust-bindgen	0.73.2-r1	main	3247996	automatically generates Rust FFI bindings to C (and some C++) libraries	clang-libclang
 rust-bindgen-bash-completion	0.73.2-r1	main	13142	Bash completions for rust-bindgen	
 rust-bindgen-doc	0.73.2-r1	main	66414	automatically generates Rust FFI bindings to C (and some C++) libraries (documentation)	
@@ -22968,10 +22971,10 @@ sbctl-zsh-completion	0.18-r8	community	7712	Zsh completions for sbctl
 sbsigntool	0.9.5-r3	main	243488	Secure Boot signing tools	
 sbsigntool-doc	0.9.5-r3	main	2823	Secure Boot signing tools (documentation)	
 sc	7.16-r9	main	466944	Speadsheet Calculator	
-sc-controller	1.0.9-r0	community	5617418	User-mode driver and GTK4 based GUI for the Steam Controller	gtk4.0 gtk4-layer-shell librsvg py3-cairo py3-evdev py3-gobject3 py3-hidraw py3-ioctl-opt py3-libacl py3-libusb1 py3-vdf python3~3.14
-sc-controller-lang	1.0.9-r0	community	91005	Languages for package sc-controller	
-sc-controller-pyc	1.0.9-r0	community	2769361	Precompiled Python bytecode for sc-controller	python3~3.14
-sc-controller-udev	1.0.9-r0	community	1171	User-mode driver and GTK4 based GUI for the Steam Controller (udev rules)	
+sc-controller	1.1.0-r0	community	5749846	User-mode driver and GTK4 based GUI for the Steam Controller	gtk4.0 gtk4-layer-shell librsvg py3-cairo py3-evdev py3-gobject3 py3-hidraw py3-ioctl-opt py3-libacl py3-libusb1 py3-vdf python3~3.14
+sc-controller-lang	1.1.0-r0	community	105313	Languages for package sc-controller	
+sc-controller-pyc	1.1.0-r0	community	2978332	Precompiled Python bytecode for sc-controller	python3~3.14
+sc-controller-udev	1.1.0-r0	community	1171	User-mode driver and GTK4 based GUI for the Steam Controller (udev rules)	
 sc-doc	7.16-r9	main	86016	Speadsheet Calculator (documentation)	
 sc-im	0.8.5-r1	community	407345	ncurses spreadsheet program based on SC	
 sc-im-doc	0.8.5-r1	community	3089	ncurses spreadsheet program based on SC (documentation)	
@@ -23023,7 +23026,7 @@ scribus-doc	1.6.7-r0	community	55383230	libre desktop publishing (documentation)
 scribus-lang	1.6.7-r0	community	34807756	Languages for package scribus	
 scrot	2.0.0-r0	community	44292	Simple command-line screenshot utility for X	
 scrot-doc	2.0.0-r0	community	76801	Simple command-line screenshot utility for X (documentation)	
-scryer-prolog	0.10.0-r0	community	6262140	Modern Prolog implementation written in Rust	
+scryer-prolog	0.10.0-r1	community	6192588	Modern Prolog implementation written in Rust	
 scsi-tgt	1.0.98-r0	community	369423	user-space iSCSI target daemon	
 scsi-tgt-doc	1.0.98-r0	community	143804	user-space iSCSI target daemon (documentation)	
 scsi-tgt-openrc	1.0.98-r0	community	2496	user-space iSCSI target daemon (OpenRC init scripts)	
@@ -24058,9 +24061,9 @@ sympow	2.023.7-r3	community	5095681	Compute special values of symmetric power el
 sympow-doc	2.023.7-r3	community	1403	Compute special values of symmetric power elliptic curve L-functions (documentation)	
 synadm	0.49.2-r1	community	233599	Command line admin tool for Synapse	py3-tabulate py3-click py3-requests py3-yaml py3-click-option-group py3-dnspython python3~3.14
 synadm-pyc	0.49.2-r1	community	201444	Precompiled Python bytecode for synadm	python3~3.14
-synapse	1.165.0-r0	community	17274280	Matrix reference homeserver	python3 py3-asn1 py3-asn1-modules py3-attrs py3-authlib py3-bcrypt py3-bleach py3-canonicaljson py3-daemonize py3-eliot py3-icu py3-idna py3-ijson py3-immutabledict py3-jinja2 py3-jsonschema py3-jwt py3-lxml py3-matrix-common py3-maturin py3-msgpack py3-netaddr py3-openssl py3-phonenumbers py3-pillow py3-prometheus-client py3-psycopg2 py3-pydantic py3-pymacaroons py3-pynacl py3-python-multipart py3-saml2 py3-service_identity py3-setuptools py3-setuptools-rust py3-signedjson py3-sortedcontainers py3-treq py3-twisted py3-txredisapi py3-typing-extensions py3-yaml /bin/sh python3~3.14
-synapse-openrc	1.165.0-r0	community	745	Matrix reference homeserver (OpenRC init scripts)	
-synapse-pyc	1.165.0-r0	community	10814789	Precompiled Python bytecode for synapse	python3~3.14
+synapse	1.166.0-r0	community	17320633	Matrix reference homeserver	python3 py3-asn1 py3-asn1-modules py3-attrs py3-authlib py3-bcrypt py3-bleach py3-canonicaljson py3-daemonize py3-eliot py3-icu py3-idna py3-ijson py3-immutabledict py3-jinja2 py3-jsonschema py3-jwt py3-lxml py3-matrix-common py3-maturin py3-msgpack py3-netaddr py3-openssl py3-phonenumbers py3-pillow py3-prometheus-client py3-psycopg2 py3-pydantic py3-pymacaroons py3-pynacl py3-python-multipart py3-saml2 py3-service_identity py3-setuptools py3-setuptools-rust py3-signedjson py3-sortedcontainers py3-treq py3-twisted py3-txredisapi py3-typing-extensions py3-yaml /bin/sh python3~3.14
+synapse-openrc	1.166.0-r0	community	745	Matrix reference homeserver (OpenRC init scripts)	
+synapse-pyc	1.166.0-r0	community	10854061	Precompiled Python bytecode for synapse	python3~3.14
 syncbus	0.3.0-r0	community	2378343	D-Bus server for Syncthing	syncthing
 syncbus-systemd	0.3.0-r0	community	296	D-Bus server for Syncthing (systemd files)	
 syncoid	2.3.0-r0	community	84107	Policy-driven snapshot management and replication tools	procps perl-capture-tiny pv gzip lzop mbuffer
@@ -24196,11 +24199,11 @@ task-bash-completion	2.6.2-r2	community	28672	Bash completions for task
 task-doc	2.6.2-r2	community	745472	command-line to-do list manager (documentation)	
 task-fish-completion	2.6.2-r2	community	36864	Fish completions for task	
 task-zsh-completion	2.6.2-r2	community	32768	Zsh completions for task	
-task3	3.5.0-r2	community	10201608	Command-line to-do list manager	/bin/sh
-task3-bash-completion	3.5.0-r2	community	6614	Bash completions for task3	
-task3-doc	3.5.0-r2	community	541761	Command-line to-do list manager (documentation)	
-task3-fish-completion	3.5.0-r2	community	16387	Fish completions for task3	
-task3-zsh-completion	3.5.0-r2	community	8477	Zsh completions for task3	
+task3	3.6.0-r0	community	12189640	Command-line to-do list manager	/bin/sh
+task3-bash-completion	3.6.0-r0	community	6614	Bash completions for task3	
+task3-doc	3.6.0-r0	community	539472	Command-line to-do list manager (documentation)	
+task3-fish-completion	3.6.0-r0	community	16267	Fish completions for task3	
+task3-zsh-completion	3.6.0-r0	community	8407	Zsh completions for task3	
 tasksh	1.2.0-r1	community	253952	A shell command that wraps Taskwarrior commands	task
 tasksh-doc	1.2.0-r1	community	57344	A shell command that wraps Taskwarrior commands (documentation)	
 taskwarrior-tui	0.27.0-r1	community	2584392	A terminal user interface for taskwarrior	task3
@@ -25343,13 +25346,13 @@ valhalla-dev	3.9.1-r0	community	5245695	Open Source Routing Engine for OpenStree
 valhalla-doc	3.9.1-r0	community	714281	Open Source Routing Engine for OpenStreetMap (documentation)	
 vali	0.1.1-r1	community	77560	C library and code generator for Varlink	
 vali-dev	0.1.1-r1	community	10301	C library and code generator for Varlink (development files)	vali=0.1.1-r1 pkgconfig
-valkey	9.1.3-r0	main	3330674	Open source high-performance key/value datastore (fork of Redis)	/bin/sh
-valkey-benchmark	9.1.3-r0	main	460976	Valkey benchmarking tool	
-valkey-cli	9.1.3-r0	main	630208	Valkey CLI client	
-valkey-compat	9.1.3-r0	main	1	Valkey command symlinks and system group for compatibility with redis	!redis !redict-compat /bin/sh valkey-cli=9.1.3-r0 valkey=9.1.3-r0
-valkey-lua	9.1.3-r0	main	350782	Lua module for Valkey	valkey=9.1.3-r0
-valkey-openrc	9.1.3-r0	main	2653	Open source high-performance key/value datastore (fork of Redis) (OpenRC init scripts)	
-valkey-tls	9.1.3-r0	main	99866	TLS module for Valkey	valkey=9.1.3-r0
+valkey	9.2.0-r0	main	3952981	Open source high-performance key/value datastore (fork of Redis)	/bin/sh
+valkey-benchmark	9.2.0-r0	main	501908	Valkey benchmarking tool	
+valkey-cli	9.2.0-r0	main	673044	Valkey CLI client	
+valkey-compat	9.2.0-r0	main	1	Valkey command symlinks and system group for compatibility with redis	!redis !redict-compat /bin/sh valkey-cli=9.2.0-r0 valkey=9.2.0-r0
+valkey-lua	9.2.0-r0	main	354878	Lua module for Valkey	valkey=9.2.0-r0
+valkey-openrc	9.2.0-r0	main	2653	Open source high-performance key/value datastore (fork of Redis) (OpenRC init scripts)	
+valkey-tls	9.2.0-r0	main	103966	TLS module for Valkey	valkey=9.2.0-r0
 vamp-sdk	2.10.0-r3	community	281210	Framework for audio analysis and feature extraction	
 vamp-sdk-dev	2.10.0-r3	community	3156820	Framework for audio analysis and feature extraction (development files)	pkgconfig vamp-sdk-libs=2.10.0-r3
 vamp-sdk-libs	2.10.0-r3	community	269040	Framework for audio analysis and feature extraction (libraries)	
@@ -25734,13 +25737,13 @@ weston-terminal	16.0.0-r0	community	109804	Weston client: weston-terminal
 weston-xwayland	16.0.0-r0	community	75156	Wayland module to run X Clients	
 wev	1.1.0-r0	community	34428	Wayland event viewer	
 wev-doc	1.1.0-r0	community	720	Wayland event viewer (documentation)	
-wezterm	20240203.110809-r6	community	23670637	GPU-accelerated cross-platform terminal emulator and multiplexer written in Rust	wezterm-common=20240203.110809-r6 /bin/sh
-wezterm-bash-completion	20240203.110809-r6	community	62831	Bash completions for wezterm	
-wezterm-common	20240203.110809-r6	community	11319380	Common files for WezTerm GUI and multiplexer server	ncurses-terminfo
-wezterm-fish-completion	20240203.110809-r6	community	112362	Fish completions for wezterm	
-wezterm-fonts	20240203.110809-r6	community	0	Meta package for fonts bundled in Wezterm	font-jetbrains-mono-vf font-noto-emoji font-roboto
-wezterm-mux-server	20240203.110809-r6	community	10250116	WezTerm multiplexer server	wezterm-common=20240203.110809-r6
-wezterm-zsh-completion	20240203.110809-r6	community	53317	Zsh completions for wezterm	
+wezterm	20240203.110809-r7	community	23470033	GPU-accelerated cross-platform terminal emulator and multiplexer written in Rust	wezterm-common=20240203.110809-r7 /bin/sh
+wezterm-bash-completion	20240203.110809-r7	community	62831	Bash completions for wezterm	
+wezterm-common	20240203.110809-r7	community	11213016	Common files for WezTerm GUI and multiplexer server	ncurses-terminfo
+wezterm-fish-completion	20240203.110809-r7	community	112362	Fish completions for wezterm	
+wezterm-fonts	20240203.110809-r7	community	0	Meta package for fonts bundled in Wezterm	font-jetbrains-mono-vf font-noto-emoji font-roboto
+wezterm-mux-server	20240203.110809-r7	community	10155972	WezTerm multiplexer server	wezterm-common=20240203.110809-r7
+wezterm-zsh-completion	20240203.110809-r7	community	53317	Zsh completions for wezterm	
 wf-recorder	0.6.0-r1	community	87388	Screen recording for wlroots-based compositors	
 wf-recorder-doc	0.6.0-r1	community	2554	Screen recording for wlroots-based compositors (documentation)	
 wget	1.25.0-r3	main	427329	Network utility to retrieve files from the Web	
@@ -26447,7 +26450,7 @@ xrdp-openrc	0.10.6.1-r0	community	117	Open source RDP server (OpenRC init script
 xrdp-systemd	0.10.6.1-r0	community	770	Open source RDP server (systemd files)	
 xrefresh	1.1.0-r0	community	28672	refresh all or part of an X screen	
 xrefresh-doc	1.1.0-r0	community	24576	refresh all or part of an X screen (documentation)	
-xremap-wlr	0.15.12-r0	community	2457908	Key remapper for Wayland	
+xremap-wlr	0.15.12-r1	community	2441592	Key remapper for Wayland	
 xscreensaver	6.17-r0	community	13512058	Screensavers for X11 environment	bc
 xscreensaver-doc	6.17-r0	community	436333	Screensavers for X11 environment (documentation)	
 xscreensaver-extras	6.17-r0	community	10193041	An enhanced set of screensavers	bc
@@ -26642,17 +26645,17 @@ yq-go-fish-completion	4.54.1-r1	community	9325	Fish completions for yq-go
 yq-go-zsh-completion	4.54.1-r1	community	7604	Zsh completions for yq-go	
 yq-python	3.2.3-r1	community	52831	jq wrapper for YAML/XML/TOML documents	!yq-go jq py3-pyaml py3-xmltodict py3-tomlkit py3-argcomplete python3~3.14
 yq-python-pyc	3.2.3-r1	community	40540	Precompiled Python bytecode for yq-python	python3~3.14
-yt-dlp	2026.10.26-r0	community	0	Command-line program to download videos from YouTube	attr ca-certificates ffmpeg py3-brotli py3-mutagen py3-pycryptodomex py3-secretstorage py3-websockets yt-dlp-ejs yt-dlp-core=2026.10.26-r0
-yt-dlp-bash-completion	2026.10.26-r0	community	6009	Bash completions for yt-dlp	
-yt-dlp-core	2026.10.26-r0	community	10291134	Command-line program to download videos from YouTube	python3 python3~3.14
-yt-dlp-core-pyc	2026.10.26-r0	community	11349877	Precompiled Python bytecode for yt-dlp-core	python3~3.14
-yt-dlp-doc	2026.10.26-r0	community	216300	Command-line program to download videos from YouTube (documentation)	
+yt-dlp	2026.11.23-r0	community	0	Command-line program to download videos from YouTube	attr ca-certificates ffmpeg py3-brotli py3-mutagen py3-pycryptodomex py3-secretstorage py3-websockets yt-dlp-ejs yt-dlp-core=2026.11.23-r0
+yt-dlp-bash-completion	2026.11.23-r0	community	6009	Bash completions for yt-dlp	
+yt-dlp-core	2026.11.23-r0	community	10293091	Command-line program to download videos from YouTube	python3 python3~3.14
+yt-dlp-core-pyc	2026.11.23-r0	community	11346258	Precompiled Python bytecode for yt-dlp-core	python3~3.14
+yt-dlp-doc	2026.11.23-r0	community	214759	Command-line program to download videos from YouTube (documentation)	
 yt-dlp-ejs	0.8.0-r1	community	165368	External JavaScript for yt-dlp	yt-dlp-ejs-rt=0.8.0-r1 python3~3.14
 yt-dlp-ejs-pyc	0.8.0-r1	community	3110	Precompiled Python bytecode for yt-dlp-ejs	python3~3.14
 yt-dlp-ejs-rt-nodejs	0.8.0-r1	community	0	External JavaScript for yt-dlp	nodejs
 yt-dlp-ejs-rt-quickjs	0.8.0-r1	community	1	External JavaScript for yt-dlp	quickjs /bin/sh
-yt-dlp-fish-completion	2026.10.26-r0	community	51751	Fish completions for yt-dlp	
-yt-dlp-zsh-completion	2026.10.26-r0	community	6005	Zsh completions for yt-dlp	
+yt-dlp-fish-completion	2026.11.23-r0	community	51751	Fish completions for yt-dlp	
+yt-dlp-zsh-completion	2026.11.23-r0	community	6005	Zsh completions for yt-dlp	
 ytdl-sub	2026.08.26_p1-r0	community	914422	tool for downloading media with yt-dlp and creating metadata	ffmpeg py3-colorama py3-mediafile py3-mergedeep py3-yaml yt-dlp-core python3~3.14
 ytdl-sub-pyc	2026.08.26_p1-r0	community	1110630	Precompiled Python bytecode for ytdl-sub	python3~3.14
 ytfzf	2.6.2-r0	community	360448	Posix script to find and watch Youtube videos from the terminal	curl jq /bin/sh
@@ -26736,10 +26739,10 @@ zeitgeist	1.0.4-r5	community	741390	Activity logging framework
 zeitgeist-bash-completion	1.0.4-r5	community	460	Bash completions for zeitgeist	
 zeitgeist-dev	1.0.4-r5	community	388048	Activity logging framework (development files)	sqlite-dev gobject-introspection-dev xapian-core-dev telepathy-glib-dev gtk+3.0-dev json-glib-dev libzeitgeist=1.0.4-r5 pkgconfig
 zeitgeist-doc	1.0.4-r5	community	2953	Activity logging framework (documentation)	
-zellij	0.45.1-r0	community	33711524	Terminal multiplexer	
-zellij-bash-completion	0.45.1-r0	community	244552	Bash completions for zellij	
-zellij-fish-completion	0.45.1-r0	community	423772	Fish completions for zellij	
-zellij-zsh-completion	0.45.1-r0	community	238712	Zsh completions for zellij	
+zellij	0.45.1-r1	community	33662440	Terminal multiplexer	
+zellij-bash-completion	0.45.1-r1	community	244552	Bash completions for zellij	
+zellij-fish-completion	0.45.1-r1	community	423772	Fish completions for zellij	
+zellij-zsh-completion	0.45.1-r1	community	238712	Zsh completions for zellij	
 zenith	0.14.1-r4	community	1385523	Sort of like htop but with zoom-able charts, CPU, GPU, network, disk usage	
 zenity	4.2.2-r0	community	104421	Display dialog boxes from the command line and shell scripts	
 zenity-dbg	4.2.2-r0	community	315940	Display dialog boxes from the command line and shell scripts (debug symbols)	!zenity<4.2.2-r0 !zenity>4.2.2-r0
